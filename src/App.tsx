@@ -1,9 +1,11 @@
 import React from "react";
+import { ThemeProvider } from "themes";
+import { AppRouting } from "app-routing";
 
 export const App = () => {
   return (
-    <div>
-      <h1>Initial CREATE-REACT-APP</h1>
-    </div>
+    <ThemeProvider>
+      <AppRouting />
+    </ThemeProvider>
   );
 };
