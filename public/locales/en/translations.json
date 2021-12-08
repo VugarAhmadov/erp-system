@@ -1,0 +1,8 @@
+{
+  "common": {
+    "welcome": "Welcome to react"
+  },
+  "form": {
+    "required": "This is a test"
+  }
+}

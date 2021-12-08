@@ -1,0 +1,9 @@
+{
+  "common": {
+    "welcome": "React e xos gelmisiz"
+  },
+  "form": {
+    "required": "bu testdir",
+    "maxLength": "{{length}} bundan boyuk ola bilmez"
+  }
+}

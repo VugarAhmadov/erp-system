@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { ThemeProvider } from "themes";
 import { AppRouting } from "app-routing";
 import store from "store";
+import "translation";
 
 export const App = () => {
   return (
