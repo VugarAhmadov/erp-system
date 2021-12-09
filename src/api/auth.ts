@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import { defaultRequest } from "helpers";
 import { IUser } from "store/slices/auth/types";
 import { IDispatcherResponse } from "types";
