@@ -7,7 +7,7 @@ i18n.use(Backend).use(initReactI18next).init({
   defaultNS: "translations",
   ns: "translations",
   // resources: {},
-  debug: true,
+  debug: false,
 });
 
 export default i18n;

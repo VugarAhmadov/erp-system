@@ -4,6 +4,6 @@ const checkUser = async () => {
   return await defaultRequest.post("user/check");
 };
 
-export const userApi = {
+export const authApi = {
   checkUser,
 };

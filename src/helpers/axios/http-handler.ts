@@ -10,7 +10,7 @@ defaultRequest.interceptors.request.use(
 
     if (token) {
       config.headers = {
-        Authorization: `Codium ${token}`,
+        Auth: `Codium ${token}`,
       };
     }
 

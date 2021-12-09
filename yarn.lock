@@ -9526,6 +9526,11 @@ recursive-readdir@2.2.2:
   dependencies:
     minimatch "3.0.4"
 
+redux-first-history@^5.0.4:
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/redux-first-history/-/redux-first-history-5.0.4.tgz#475dc9dfdd0abdd6c026f0b74f727f347797d81a"
+  integrity sha512-1nnlgSYgY2MsuNwgciz6xkePGemZL32JkQC0ZkvQggKhU2+s7E+epi3xjOeF0+wEsgsiE1UU5HIjCab8ZhTy/w==
+
 redux-thunk@^2.3.0:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.4.1.tgz#0dd8042cf47868f4b29699941de03c9301a75714"
