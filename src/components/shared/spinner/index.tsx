@@ -4,7 +4,7 @@ import { StyledBox } from "./spinner.styled";
 
 export const Spinner: FC = () => {
   return (
-    <StyledBox sx={{ display: "flex" }}>
+    <StyledBox>
       <CircularProgress />
     </StyledBox>
   );

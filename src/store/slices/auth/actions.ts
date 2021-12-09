@@ -1,14 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { authApi } from "api/auth";
 import { push } from "redux-first-history";
+import { authApi } from "api/auth";
+import { ResponseStatus } from "types";
 
 export const checkUser = createAsyncThunk("auth/checkUser", async (_, { rejectWithValue, dispatch }) => {
   try {
     const { data } = await authApi.checkUser();
-    if (data.code === "OK") {
+    if (data.code === ResponseStatus.OK) {
       dispatch(push("/configuration"));
-      console.log("test");
-      return data;
+      return data.data;
     } else {
       return rejectWithValue(data.code);
     }

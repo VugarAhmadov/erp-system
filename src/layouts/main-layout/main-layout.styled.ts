@@ -14,6 +14,7 @@ export const StyledMainLayout = styled.div`
       flex: 1;
       overflow-y: auto;
       background-color: #95a5a6;
+      position: relative;
     }
   }
 `;

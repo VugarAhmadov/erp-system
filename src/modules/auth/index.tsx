@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 import { useQuery } from "hooks";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { checkUser } from "store/slices/auth/actions";
+import { AppState } from "store";
+import { Spinner } from "components/shared";
 
 export const Auth = () => {
   const dispatch = useDispatch();
   const query = useQuery();
   const token = query.get("token");
+  const loading = useSelector((state: AppState) => state.auth.loading.checkUser);
 
   useEffect(() => {
     if (token) {
@@ -15,9 +18,5 @@ export const Auth = () => {
     }
   }, [token]);
 
-  return (
-    <div>
-      <h1>Auth</h1>
-    </div>
-  );
+  return loading ? <Spinner /> : <></>;
 };

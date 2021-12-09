@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { checkUser } from "./actions";
 import { ILoading, IUser } from "./types";
 
@@ -25,15 +25,15 @@ export const authSlice = createSlice({
       state.loading.checkUser = true;
     },
     [checkUser.rejected.type]: (state, { payload }) => {
-      state.loading.checkUser = false;
+      state.loading.checkUser = true;
       state.isLoggedIn = false;
       state.user = {} as IUser;
       // state.errorMessage = payload;
     },
-    [checkUser.fulfilled.type]: (state, { payload }) => {
-      state.loading.checkUser = false;
+    [checkUser.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
+      state.loading.checkUser = true;
       state.isLoggedIn = true;
-      state.user = payload.data;
+      state.user = action.payload;
       // state.errorMessage = {} as IErrorMessage;
     },
   },
