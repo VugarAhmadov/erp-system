@@ -5,7 +5,7 @@ import { checkUser } from "store/slices/auth/actions";
 import { AppState } from "store";
 import { Spinner } from "components/shared";
 
-export const Auth = () => {
+export const CheckUser = () => {
   const dispatch = useDispatch();
   const query = useQuery();
   const token = query.get("token");

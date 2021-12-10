@@ -1,3 +1,3 @@
 export { Home } from "./home";
 export { Configuration } from "./configuration";
-export { Auth } from "./auth";
+// export { Auth } from "./auth";
