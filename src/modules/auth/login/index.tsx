@@ -1,12 +1,12 @@
 import React from "react";
 import { Form } from "react-final-form";
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
 import { TextField } from "components/shared";
 import { useValidators } from "hooks";
 import { StyledLogin } from "./login.styled";
-import { useTranslation } from "react-i18next";
 import { ILoginData } from "../store/types";
-import { useDispatch } from "react-redux";
 import { login } from "../store/actions";
 
 export const Login = () => {
