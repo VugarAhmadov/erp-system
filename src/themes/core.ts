@@ -2,7 +2,7 @@ import { ThemeOptions } from "@mui/material";
 
 export const coreTheme = {
   typography: {
-    fontFamily: "'SanFrancisco'",
+    fontFamily: "'OpensSans', sans-serif",
   },
   components: {
     MuiCssBaseline: {
@@ -13,6 +13,27 @@ export const coreTheme = {
         body: {
           fontFamily: "'OpensSans', sans-serif",
           height: "100%",
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          padding: "0.6rem 1rem",
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        input: {
+          padding: "0.875rem !important",
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          lineHeight: "1rem",
         },
       },
     },

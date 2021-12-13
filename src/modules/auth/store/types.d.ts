@@ -1,4 +1,5 @@
 export interface ILoading {
+  login: boolean;
   checkUser: boolean;
 }
 
@@ -107,4 +108,9 @@ export interface IMyUser {
   userType: string;
   role: IRole;
   currentStatus: number;
+}
+
+export interface ILoginData {
+  username: string;
+  password: string;
 }

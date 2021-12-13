@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useQuery } from "hooks";
 import { useDispatch, useSelector } from "react-redux";
-import { checkUser } from "store/slices/auth/actions";
+import { checkUser } from "modules/auth/store/actions";
 import { AppState } from "store";
 import { Spinner } from "components/shared";
 

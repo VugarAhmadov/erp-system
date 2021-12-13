@@ -1,11 +1,6 @@
 import { ISourceOptions } from "react-tsparticles";
 
 export const particleConfig: ISourceOptions = {
-  background: {
-    color: {
-      value: "#0d47a1",
-    },
-  },
   fpsLimit: 60,
   interactivity: {
     "detect_on": "canvas",

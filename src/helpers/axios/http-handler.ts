@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const defaultRequest = axios.create({
-  baseURL: `${process.env.REACT_APP_API_BASE_URL}/DispatcherRest/api/jwt`,
+  baseURL: `${process.env.REACT_APP_API_BASE_URL}/DispatcherRest/`,
 });
 
 defaultRequest.interceptors.request.use(

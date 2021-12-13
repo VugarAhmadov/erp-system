@@ -15,7 +15,7 @@ export const AppRouting = () => {
     <Router history={history}>
       <Suspense fallback={<Spinner />}>
         <Routes>
-          <Route path="/auth" element={<AuthLayout />}>
+          <Route path="auth" element={<AuthLayout />}>
             <Route path="login" element={<Login />} />
           </Route>
           <Route path="/" element={<MainLayout />}>

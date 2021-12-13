@@ -1,7 +1,8 @@
 import { configureStore, Action, ThunkAction } from "@reduxjs/toolkit";
 import { createBrowserHistory } from "history";
 import { createReduxHistoryContext } from "redux-first-history";
-import { authSlice, configurationSlice } from "./slices";
+import { configurationSlice } from "./slices";
+import { authSlice } from "modules/auth/store";
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
   history: createBrowserHistory(),

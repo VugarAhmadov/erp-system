@@ -1,14 +1,20 @@
 import React, { FC } from "react";
-import { particleConfig } from "configs";
+import { Outlet } from "react-router-dom";
 import Particles from "react-tsparticles";
+import { Paper, Typography } from "@mui/material";
+import { particleConfig } from "configs";
+import { StyledAuthLayout } from "./auth.styled";
 
 interface IAuthLayout {}
 
-export const AuthLayout: FC<IAuthLayout> = ({ children }) => {
+export const AuthLayout: FC<IAuthLayout> = () => {
   return (
-    <div>
-      <Particles id="tsparticles" options={particleConfig} />
-      <div>{children}</div>
-    </div>
+    <StyledAuthLayout>
+      <Particles id="tsparticles" className="particles" options={particleConfig} />
+      <Paper className="content">
+        <Typography variant="h4">Codeum</Typography>
+        <Outlet />
+      </Paper>
+    </StyledAuthLayout>
   );
 };

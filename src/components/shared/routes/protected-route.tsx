@@ -2,7 +2,7 @@ import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Route, RouteProps } from "react-router-dom";
 import { AppState } from "store";
-import { checkUser } from "store/slices/auth/actions";
+import { checkUser } from "modules/auth/store/actions";
 import { Spinner } from "components/shared";
 
 interface IProtectedRoute extends RouteProps {}
