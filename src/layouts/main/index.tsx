@@ -10,7 +10,7 @@ import { checkUser } from "modules/auth/store/actions";
 export const MainLayout: FC = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state: AppState) => state.auth.isLoggedIn);
-  const checkUserLoading = useSelector((state: AppState) => state.auth.loading.checkUser);
+  const user = useSelector((state: AppState) => state.auth.user);
   const navigate = useNavigate();
   const token = localStorage.getItem("codeum_jwt_token");
 
@@ -22,9 +22,9 @@ export const MainLayout: FC = () => {
         dispatch(checkUser());
       }
     }
-  }, [token]);
+  }, [token, user]);
 
-  return !checkUserLoading ? (
+  return Object.keys(user).length > 0 ? (
     <StyledMainLayout>
       <Sidebar />
       <div className="content">

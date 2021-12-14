@@ -1,4 +1,7 @@
 {
   "login": "Daxil ol",
-  "maxLength": "{{ length }} simvoldan böyük ola bilməz"
+  "maxLength": "{{ length }} simvoldan böyük ola bilməz",
+  "configurations": "Konfiqurasiyalar",
+  "tables": "Cədvəllər",
+  "views": "View-lar"
 }

@@ -1,28 +1,30 @@
 import React, { FC } from "react";
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Icon } from "@mui/material";
+import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Icon, Typography } from "@mui/material";
 import { StyledSidebar } from "./sidebar.styled";
+import { useSelector } from "react-redux";
+import { AppState } from "store";
+import { IModule } from "modules/auth/store/types";
 
 export const Sidebar: FC = () => {
+  const modules = useSelector((state: AppState) => state.auth.user?.applications[0]?.modules);
+
   return (
     <StyledSidebar>
-      <nav aria-label="sidebarnav">
+      <Typography variant="h5" className="app-name">
+        CODEUM SYSTEM
+      </Typography>
+      <nav aria-label="sidebarnav" className="nav-menu">
         <List>
-          <ListItem>
-            <ListItemButton>
-              <ListItemIcon>
-                <Icon>star</Icon>
-              </ListItemIcon>
-              <ListItemText primary="Inbox" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <Icon>star</Icon>
-              </ListItemIcon>
-              <ListItemText primary="Drafts" />
-            </ListItemButton>
-          </ListItem>
+          {modules.map((module: IModule) => (
+            <ListItem key={module.id}>
+              <ListItemButton>
+                <ListItemIcon>
+                  <Icon>{module.icon || "layers"}</Icon>
+                </ListItemIcon>
+                <ListItemText primary={module.name.az} />
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
       </nav>
     </StyledSidebar>
