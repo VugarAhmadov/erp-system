@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { push } from "redux-first-history";
-import { authApi } from "api/auth";
+import { authApi } from "api";
 import { ILoginData, IUser } from "./types";
 import { getUrl } from "./utils";
 

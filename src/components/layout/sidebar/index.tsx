@@ -17,7 +17,7 @@ export const Sidebar: FC = () => {
         <List>
           {modules.map((module: IModule) => (
             <ListItem key={module.id}>
-              <ListItemButton>
+              <ListItemButton selected={module.id === "1900000000"}>
                 <ListItemIcon>
                   <Icon>{module.icon || "layers"}</Icon>
                 </ListItemIcon>

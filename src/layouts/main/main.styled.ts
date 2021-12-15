@@ -12,10 +12,12 @@ export const StyledMainLayout = styled.div`
 
     & .main-content {
       flex: 1;
-      overflow-y: auto;
       background-color: #fff;
       position: relative;
       padding: 1rem 2rem;
+      overflow-y: auto;
+      /* border: 1px solid #000; */
+      /* margin: 1rem; */
     }
   }
 `;

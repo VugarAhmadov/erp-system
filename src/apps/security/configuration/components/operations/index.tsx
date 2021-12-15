@@ -10,13 +10,13 @@ export const Operations = () => {
   return (
     <StyledOperations>
       {apps.map((app) => (
-        <Accordion className="application">
+        <Accordion className="application" key={app.id}>
           <AccordionSummary expandIcon={<Icon>expand_more</Icon>} aria-controls="panel1a-content" id="panel1a-header">
             <Typography>{app.name.az}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             {app.modules.map((module) => (
-              <Accordion className="module">
+              <Accordion className="module" key={module.id}>
                 <AccordionSummary
                   expandIcon={<Icon>expand_more</Icon>}
                   aria-controls="panel2a-content"

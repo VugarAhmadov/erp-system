@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tab, Tabs } from "@mui/material";
-import { StyledConfiguration } from "./configuration.styled";
-import { Operations } from "./components";
-import { TabPanel } from "components/shared";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { a11yProps } from "helpers";
+import { StyledConfiguration } from "./configuration.styled";
+import { Operations, Views } from "./components";
+import { TabPanel } from "components/shared";
+import { getViews } from "./store/actions";
 
 export const Configuration = () => {
   const [value, setValue] = useState(0);
   const { t } = useTranslation("common");
+  const dispatch = useDispatch();
 
-  const a11yProps = (index: number) => ({
-    id: `tab-${index}`,
-    "aria-controls": `tabpanel-${index}`,
-  });
+  useEffect(() => {
+    dispatch(getViews());
+  }, []);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -33,7 +36,7 @@ export const Configuration = () => {
         Item Two
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <Views />
       </TabPanel>
     </StyledConfiguration>
   );

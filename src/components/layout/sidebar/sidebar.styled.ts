@@ -33,6 +33,17 @@ export const StyledSidebar = styled.div`
             }
           }
 
+          &.Mui-selected {
+            background-color: ${({ theme }) => theme.palette.primary.main};
+            & .MuiListItemIcon-root {
+              color: #fff;
+            }
+
+            & .MuiListItemText-root {
+              color: #fff;
+            }
+          }
+
           & .MuiListItemIcon-root {
             color: ${({ theme }) => theme.palette.grey[400]};
             min-width: auto;
