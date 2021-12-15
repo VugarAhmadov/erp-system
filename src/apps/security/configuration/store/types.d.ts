@@ -23,3 +23,8 @@ export interface IViewOperations {
   viewMethod: string;
   viewName: string;
 }
+
+export interface IViewInsertRequest {
+  oldName: string;
+  viewScript: string;
+}
