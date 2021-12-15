@@ -19,14 +19,15 @@ export const coreTheme = {
     MuiButton: {
       styleOverrides: {
         root: {
-          padding: "0.6rem 1rem",
+          // padding: "0.6rem 1rem",
+          textTransform: "initial",
         },
       },
     },
     MuiInputBase: {
       styleOverrides: {
         input: {
-          padding: "0.875rem !important",
+          // padding: "0.875rem !important",
         },
       },
     },
@@ -34,6 +35,22 @@ export const coreTheme = {
       styleOverrides: {
         root: {
           lineHeight: "1rem",
+        },
+      },
+    },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          marginTop: 0,
+          position: "absolute",
+          bottom: -20,
+        },
+      },
+    },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          marginBottom: "2rem",
         },
       },
     },

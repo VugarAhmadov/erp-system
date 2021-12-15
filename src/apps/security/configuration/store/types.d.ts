@@ -1,5 +1,6 @@
 export interface ILoading {
   getViews: boolean;
+  getTables: boolean;
 }
 
 export interface IView {

@@ -14,3 +14,17 @@ export const getViews = createAsyncThunk("configuration/getViews", async (_, { r
     throw error;
   }
 });
+
+export const getTables = createAsyncThunk("configuration/getTables", async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await configurationApi.getTables();
+    if (data) {
+      return data;
+    } else {
+      return rejectWithValue(data);
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});

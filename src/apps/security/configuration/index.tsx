@@ -6,7 +6,7 @@ import { a11yProps } from "helpers";
 import { StyledConfiguration } from "./configuration.styled";
 import { Operations, Views } from "./components";
 import { TabPanel } from "components/shared";
-import { getViews } from "./store/actions";
+import { getViews, getTables } from "./store/actions";
 
 export const Configuration = () => {
   const [value, setValue] = useState(0);
@@ -15,6 +15,7 @@ export const Configuration = () => {
 
   useEffect(() => {
     dispatch(getViews());
+    dispatch(getTables());
   }, []);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
