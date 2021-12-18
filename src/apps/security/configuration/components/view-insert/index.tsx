@@ -4,49 +4,52 @@ import {
   AccordionDetails,
   AccordionSummary,
   Button,
-  DialogActions,
   DialogContent,
-  DialogContentText,
-  DialogTitle,
   Grid,
   Icon,
   Paper,
   Typography,
 } from "@mui/material";
-import { StyledDialog } from "./view-insert.styled";
 import { Form } from "react-final-form";
-import { TextField } from "components/shared";
 import { useTranslation } from "react-i18next";
-import { useValidators } from "hooks";
 import { useSelector } from "react-redux";
+import { StyledDialog } from "./view-insert.styled";
+import { TextField } from "components/shared";
+import { useValidators } from "hooks";
 import { AppState } from "store";
+import { isNotNull } from "helpers";
+import { ISelectedView } from "../../store/types";
 
 interface IViewInsert {
   open: boolean;
-  handleClose(): void;
+  onClose(): void;
+  onSubmit(data: ISelectedView): void;
 }
 
-export const ViewInsert: FC<IViewInsert> = ({ open, handleClose }) => {
+export const ViewInsert: FC<IViewInsert> = ({ open, onClose, onSubmit }) => {
   const { t } = useTranslation("common");
   const { required } = useValidators();
   const tables = useSelector((state: AppState) => state.configuration.tables);
+  const selectedView = useSelector((state: AppState) => state.configuration.selectedView);
+
+  const initialValues = isNotNull(selectedView) ? selectedView : { oldName: "", viewScript: "" };
 
   return (
     <StyledDialog
       open={open}
-      onClose={handleClose}
+      onClose={onClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       fullWidth={true}
       maxWidth="md"
       scroll="paper"
     >
-      {/* <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle> */}
       <DialogContent>
         <Grid container spacing={4}>
           <Grid item xs={8}>
             <Form
-              onSubmit={(data) => console.log(data)}
+              onSubmit={onSubmit}
+              initialValues={initialValues}
               render={({ handleSubmit }) => (
                 <form onSubmit={handleSubmit} className="insert-form">
                   <Typography variant="h5" className="view-title">
@@ -56,17 +59,18 @@ export const ViewInsert: FC<IViewInsert> = ({ open, handleClose }) => {
                   <TextField
                     name="viewScript"
                     id="viewScript"
+                    className="view-script"
                     label={t("view-script")}
                     validate={required}
                     multiline
-                    rows={10}
+                    rows={18}
                   />
                   <div className="action-buttons">
-                    <Button variant="contained" color="inherit" className="back-btn" onClick={handleClose}>
+                    <Button variant="contained" color="inherit" className="back-btn" onClick={onClose}>
                       {t("back")}
                     </Button>
                     <Button variant="contained" color="warning" className="edit-btn" type="submit">
-                      {t("edit")}
+                      {t(isNotNull(selectedView) ? "edit" : "add")}
                     </Button>
                   </div>
                 </form>

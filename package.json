@@ -19,8 +19,11 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
+    "react-toastify": "^8.1.0",
     "react-tsparticles": "^1.37.5",
-    "redux-first-history": "^5.0.4"
+    "redux-first-history": "^5.0.4",
+    "sweetalert2": "^11.3.0",
+    "sweetalert2-react-content": "^4.2.0"
   },
   "devDependencies": {
     "@types/node": "^12.0.0",

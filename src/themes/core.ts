@@ -54,5 +54,12 @@ export const coreTheme = {
         },
       },
     },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        input: {
+          padding: "0.875rem",
+        },
+      },
+    },
   },
 } as ThemeOptions;

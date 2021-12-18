@@ -20,11 +20,19 @@ export const StyledDialog = styled(Dialog)`
     position: sticky;
     top: 0;
 
+    & .view-script {
+      & .MuiInputBase-input {
+        padding: 0;
+      }
+    }
+
     & .action-buttons {
+      display: flex;
+      justify-content: flex-end;
       margin-bottom: 2rem;
 
       & .back-btn {
-        margin-right: 1.5rem;
+        margin-right: 1rem;
       }
     }
   }

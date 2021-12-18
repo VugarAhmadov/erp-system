@@ -1,6 +1,10 @@
 export interface ILoading {
   getViews: boolean;
   getTables: boolean;
+  getViewScript: boolean;
+  editView: boolean;
+  addView: boolean;
+  deleteView: boolean;
 }
 
 export interface IView {
@@ -26,6 +30,19 @@ export interface IViewOperations {
 }
 
 export interface IViewInsertRequest {
-  oldName: string;
+  viewName: string;
   viewScript: string;
 }
+
+export interface ISelectedView {
+  viewName: string;
+  viewScript: string;
+}
+
+export interface IEditViewRequest {
+  oldName: string;
+  viewName: string;
+  viewScript: string;
+}
+
+export interface IAddViewRequest extends ISelectedView {}

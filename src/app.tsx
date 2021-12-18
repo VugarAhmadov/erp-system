@@ -4,6 +4,8 @@ import { ThemeProvider } from "themes";
 import { AppRouting } from "app-routing";
 import store from "store";
 import "translation";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const App = () => {
   return (
@@ -11,6 +13,7 @@ export const App = () => {
       <ThemeProvider>
         <AppRouting />
       </ThemeProvider>
+      <ToastContainer theme="colored" />
     </Provider>
   );
 };
