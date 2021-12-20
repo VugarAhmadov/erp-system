@@ -1,51 +1,48 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { addView, editView, getTables, getViews, getViewScript } from "./actions";
+import { getAll, add, edit, remove, getScript } from "./actions";
 import { ILoading, IView, ISelectedView } from "./types";
 
-export interface IConfigurationState {
+export interface IViewState {
   loading: ILoading;
   views: IView[];
-  tables: IView[];
   selectedView: ISelectedView;
-  viewDialogOpened: boolean;
+  dialogOpened: boolean;
 }
 
-const initialState: IConfigurationState = {
+const initialState: IViewState = {
   loading: {
-    getViews: false,
-    getTables: false,
-    getViewScript: false,
-    editView: false,
-    addView: false,
-    deleteView: false,
+    getScript: false,
+    getAll: false,
+    edit: false,
+    add: false,
+    delete: false,
   },
   views: [],
-  tables: [],
   selectedView: {} as ISelectedView,
-  viewDialogOpened: false,
+  dialogOpened: false,
 };
 
-export const configurationSlice = createSlice({
-  name: "configuration",
+export const viewSlice = createSlice({
+  name: "view",
   initialState: initialState,
   reducers: {
-    setViewDialogOpened: (state, action: PayloadAction<boolean>) => {
-      state.viewDialogOpened = action.payload;
+    setDialogOpened: (state, action: PayloadAction<boolean>) => {
+      state.dialogOpened = action.payload;
     },
     setSelectedView: (state, action: PayloadAction<ISelectedView>) => {
       state.selectedView = action.payload;
     },
   },
   extraReducers: {
-    [getViews.pending.type]: (state) => {
-      state.loading.getViews = true;
+    [getAll.pending.type]: (state) => {
+      state.loading.getAll = true;
     },
-    [getViews.rejected.type]: (state, { payload }) => {
-      state.loading.getViews = false;
+    [getAll.rejected.type]: (state, { payload }) => {
+      state.loading.getAll = false;
       state.views = [];
     },
-    [getViews.fulfilled.type]: (state, action: PayloadAction<IView[]>) => {
-      state.loading.getViews = false;
+    [getAll.fulfilled.type]: (state, action: PayloadAction<IView[]>) => {
+      state.loading.getAll = false;
       state.views = action.payload;
     },
     [getTables.pending.type]: (state) => {

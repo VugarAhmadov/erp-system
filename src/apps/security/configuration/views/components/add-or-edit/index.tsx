@@ -13,26 +13,26 @@ import {
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { StyledDialog } from "./view-insert.styled";
 import { TextField } from "components/shared";
 import { useValidators } from "hooks";
 import { AppState } from "store";
 import { isNotNull } from "helpers";
-import { ISelectedView } from "../../store/types";
+import { ISelectedView } from "../../../store/types";
+import { StyledDialog } from "./add-or-edit.styled";
 
-interface IViewInsert {
+interface IAddOrEdit {
   open: boolean;
   onClose(): void;
   onSubmit(data: ISelectedView): void;
 }
 
-export const ViewInsert: FC<IViewInsert> = ({ open, onClose, onSubmit }) => {
+export const AddOrEdit: FC<IAddOrEdit> = ({ open, onClose, onSubmit }) => {
   const { t } = useTranslation("common");
   const { required } = useValidators();
   const tables = useSelector((state: AppState) => state.configuration.tables);
   const selectedView = useSelector((state: AppState) => state.configuration.selectedView);
 
-  const initialValues = isNotNull(selectedView) ? selectedView : { oldName: "", viewScript: "" };
+  const initialValues = selectedView.viewName ? selectedView : { oldName: "", viewScript: "" };
 
   return (
     <StyledDialog

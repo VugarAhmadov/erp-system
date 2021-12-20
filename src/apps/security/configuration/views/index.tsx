@@ -16,34 +16,40 @@ import { useTranslation } from "react-i18next";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { AppState } from "store";
-import { StyledView } from "./views.styled";
-import { ISelectedView, IView } from "../../store/types";
-import { ViewInsert } from "..";
-import { editView, addView, deleteView, getViewScript } from "../../store/actions";
-import { clearSelectedView, setViewDialogOpened } from "../../store";
+import { StyledView } from "./views/views.styled";
+import { ISelectedView } from "../store/types";
+import { ViewInsert } from "../components";
+import { editView, addView, deleteView, getViewScript } from "../store/actions";
+import { setSelectedView, setViewDialogOpened } from "../store";
 import { isNotNull } from "helpers";
 
 export const Views = () => {
-  const [selectedView, setSelectedView] = useState<IView | null>(null);
+  // const [selectedView, setSelectedView] = useState<IView | null>(null);
   const dispatch = useDispatch();
   const _views = useSelector((state: AppState) => state.configuration.views);
+  const selectedView = useSelector((state: AppState) => state.configuration.selectedView);
   const dialogOpened = useSelector((state: AppState) => state.configuration.viewDialogOpened);
   const { t } = useTranslation();
 
+  const handleAddNew = () => {
+    dispatch(setSelectedView({} as ISelectedView));
+    dispatch(setViewDialogOpened(true));
+  };
+
   const handleViewEdit = () => {
-    dispatch(getViewScript(selectedView?.name as string));
+    dispatch(getViewScript(selectedView?.viewName as string));
   };
 
   const handleViewDialogClose = () => {
-    dispatch(clearSelectedView());
+    dispatch(setViewDialogOpened(false));
   };
 
   const handleOnSubmit = (data: ISelectedView) => {
     let requestData;
 
-    if (isNotNull(selectedView as IView)) {
+    if (isNotNull(selectedView)) {
       requestData = {
-        oldName: selectedView?.name as string,
+        oldName: selectedView.viewName,
         ...data,
       };
       dispatch(editView(requestData));
@@ -63,7 +69,7 @@ export const Views = () => {
       cancelButtonText: "cancel",
     }).then((result) => {
       if (result.value) {
-        dispatch(deleteView(selectedView?.name as string));
+        dispatch(deleteView(selectedView.viewName));
       }
     });
   };
@@ -75,7 +81,7 @@ export const Views = () => {
           <Grid item xs={4} className="views-grid">
             <div className="views-header">
               <Typography variant="h5">{t("views")}</Typography>
-              <Button variant="contained" onClick={() => dispatch(setViewDialogOpened(true))}>
+              <Button variant="contained" onClick={handleAddNew}>
                 {t("add-new-view")}
               </Button>
             </div>
@@ -84,7 +90,10 @@ export const Views = () => {
               <List className="views-list">
                 {_views.map((view) => (
                   <ListItem key={view.name}>
-                    <ListItemButton selected={view.name === selectedView?.name} onClick={() => setSelectedView(view)}>
+                    <ListItemButton
+                      selected={view.name === selectedView.viewName}
+                      onClick={() => dispatch(setSelectedView({ viewName: view.name, viewScript: "" }))}
+                    >
                       <ListItemText primary={view.name} />
                     </ListItemButton>
                   </ListItem>
@@ -93,11 +102,11 @@ export const Views = () => {
             </Paper>
           </Grid>
           <Grid item xs={8} className="view-detail-grid">
-            {selectedView && (
+            {isNotNull(selectedView) && (
               <Paper className="view-detail" elevation={3}>
                 <div className="view-detail-header">
                   <Typography variant="h6" className="view-name">
-                    {selectedView?.name}
+                    {selectedView.viewName}
                   </Typography>
                   <div className="view-detail-buttons">
                     <IconButton className="edit-btn" size="large" onClick={handleViewEdit}>
@@ -109,9 +118,11 @@ export const Views = () => {
                   </div>
                 </div>
                 <ul className="view-columns">
-                  {selectedView?.columns.map((column, index) => (
-                    <li key={index}>{column.name}</li>
-                  ))}
+                  {_views
+                    .filter((view) => view.name === selectedView.viewName)[0]
+                    .columns.map((column, index) => (
+                      <li key={index}>{column.name}</li>
+                    ))}
                 </ul>
               </Paper>
             )}
