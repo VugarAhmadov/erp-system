@@ -1,2 +1,2 @@
 export { authApi } from "./auth";
-export { viewApi } from "./view";
+export { viewsApi } from "./views";

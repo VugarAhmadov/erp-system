@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { viewApi } from "api";
+import { viewsApi } from "api";
 import { toast } from "react-toastify";
 import { IAddOrEditViewRequest } from "./types";
 
-export const getAll = createAsyncThunk("view/getAll", async (_, { rejectWithValue }) => {
+export const getAll = createAsyncThunk("views/getAll", async (_, { rejectWithValue }) => {
   try {
-    const { data } = await viewApi.getAll();
+    const { data } = await viewsApi.getAll();
     if (data) {
       return data;
     } else {
@@ -18,10 +18,10 @@ export const getAll = createAsyncThunk("view/getAll", async (_, { rejectWithValu
 });
 
 export const add = createAsyncThunk(
-  "view/add",
+  "views/add",
   async (requestData: IAddOrEditViewRequest, { rejectWithValue, dispatch }) => {
     try {
-      const { data } = await viewApi.add(requestData);
+      const { data } = await viewsApi.add(requestData);
       if (data.code === "OK") {
         await dispatch(getAll());
         toast.success("Əlavə edildi");
@@ -39,10 +39,10 @@ export const add = createAsyncThunk(
 );
 
 export const edit = createAsyncThunk(
-  "view/edit",
+  "views/edit",
   async (requestData: IAddOrEditViewRequest, { rejectWithValue, dispatch }) => {
     try {
-      const { data } = await viewApi.edit(requestData);
+      const { data } = await viewsApi.edit(requestData);
       if (data.code === "OK") {
         await dispatch(getAll());
         toast.success("Düzəliş edildi");
@@ -59,9 +59,9 @@ export const edit = createAsyncThunk(
   }
 );
 
-export const remove = createAsyncThunk("view/delete", async (viewName: string, { rejectWithValue, dispatch }) => {
+export const remove = createAsyncThunk("views/remove", async (viewName: string, { rejectWithValue, dispatch }) => {
   try {
-    const { data } = await viewApi.remove(viewName);
+    const { data } = await viewsApi.remove(viewName);
     if (data.code === "OK") {
       await dispatch(getAll());
       toast.success("Silindi");
@@ -77,9 +77,9 @@ export const remove = createAsyncThunk("view/delete", async (viewName: string, {
   }
 });
 
-export const getScript = createAsyncThunk("view/getScript", async (viewName: string, { rejectWithValue }) => {
+export const getScript = createAsyncThunk("views/getScript", async (viewName: string, { rejectWithValue }) => {
   try {
-    const { data } = await viewApi.getScript(viewName);
+    const { data } = await viewsApi.getScript(viewName);
     if (data) {
       return {
         viewName: viewName,

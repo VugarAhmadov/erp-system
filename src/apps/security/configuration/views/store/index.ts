@@ -1,29 +1,30 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getAll, add, edit, remove, getScript } from "./actions";
-import { ILoading, IView, ISelectedView } from "./types";
+import { IObject } from "types";
+import { ILoading, ISelectedView } from "./types";
 
 export interface IViewState {
   loading: ILoading;
-  views: IView[];
+  views: IObject[];
   selectedView: ISelectedView;
   dialogOpened: boolean;
 }
 
 const initialState: IViewState = {
   loading: {
-    getScript: false,
     getAll: false,
-    edit: false,
     add: false,
-    delete: false,
+    edit: false,
+    remove: false,
+    getScript: false,
   },
   views: [],
   selectedView: {} as ISelectedView,
   dialogOpened: false,
 };
 
-export const viewSlice = createSlice({
-  name: "view",
+export const viewsSlice = createSlice({
+  name: "views",
   initialState: initialState,
   reducers: {
     setDialogOpened: (state, action: PayloadAction<boolean>) => {
@@ -34,6 +35,7 @@ export const viewSlice = createSlice({
     },
   },
   extraReducers: {
+    //* GET ALL
     [getAll.pending.type]: (state) => {
       state.loading.getAll = true;
     },
@@ -41,55 +43,63 @@ export const viewSlice = createSlice({
       state.loading.getAll = false;
       state.views = [];
     },
-    [getAll.fulfilled.type]: (state, action: PayloadAction<IView[]>) => {
+    [getAll.fulfilled.type]: (state, action: PayloadAction<IObject[]>) => {
       state.loading.getAll = false;
       state.views = action.payload;
     },
-    [getTables.pending.type]: (state) => {
-      state.loading.getTables = true;
+    //* GET ALL END
+    //* ADD
+    [add.pending.type]: (state) => {
+      state.loading.add = true;
     },
-    [getTables.rejected.type]: (state) => {
-      state.loading.getTables = false;
-      state.tables = [];
+    [add.rejected.type]: (state) => {
+      state.loading.add = false;
     },
-    [getTables.fulfilled.type]: (state, action: PayloadAction<IView[]>) => {
-      state.loading.getTables = false;
-      state.tables = action.payload;
+    [add.fulfilled.type]: (state) => {
+      state.loading.add = false;
+      state.dialogOpened = false;
     },
-    [getViewScript.pending.type]: (state) => {
-      state.loading.getViewScript = true;
+    //* ADD END
+    //* EDIT
+    [edit.pending.type]: (state) => {
+      state.loading.edit = true;
     },
-    [getViewScript.rejected.type]: (state) => {
-      state.loading.getViewScript = false;
+    [edit.rejected.type]: (state) => {
+      state.loading.edit = false;
+    },
+    [edit.fulfilled.type]: (state) => {
+      state.loading.edit = false;
+      state.dialogOpened = false;
+    },
+    //* EDIT END
+    //* REMOVE
+    [remove.pending.type]: (state) => {
+      state.loading.remove = true;
+    },
+    [remove.rejected.type]: (state) => {
+      state.loading.remove = false;
+    },
+    [remove.fulfilled.type]: (state) => {
+      state.loading.remove = false;
+      state.dialogOpened = false;
+    },
+    //* REMOVE END
+    //* GET SCRIPT
+    [getScript.pending.type]: (state) => {
+      state.loading.getScript = true;
+    },
+    [getScript.rejected.type]: (state) => {
+      state.loading.getScript = false;
       state.selectedView.viewScript = "";
-      state.viewDialogOpened = false;
+      state.dialogOpened = false;
     },
-    [getViewScript.fulfilled.type]: (state, action: PayloadAction<ISelectedView>) => {
-      state.loading.getViewScript = false;
+    [getScript.fulfilled.type]: (state, action: PayloadAction<ISelectedView>) => {
+      state.loading.getScript = false;
       state.selectedView = action.payload;
-      state.viewDialogOpened = true;
+      state.dialogOpened = true;
     },
-    [editView.pending.type]: (state) => {
-      state.loading.editView = true;
-    },
-    [editView.rejected.type]: (state) => {
-      state.loading.editView = false;
-    },
-    [editView.fulfilled.type]: (state) => {
-      state.loading.editView = false;
-      state.viewDialogOpened = false;
-    },
-    [addView.pending.type]: (state) => {
-      state.loading.addView = true;
-    },
-    [addView.rejected.type]: (state) => {
-      state.loading.addView = false;
-    },
-    [addView.fulfilled.type]: (state) => {
-      state.loading.addView = false;
-      state.viewDialogOpened = false;
-    },
+    //* GET SCRIPT END
   },
 });
 
-export const { setViewDialogOpened, setSelectedView } = configurationSlice.actions;
+export const { setDialogOpened, setSelectedView } = viewsSlice.actions;

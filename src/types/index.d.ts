@@ -14,9 +14,9 @@ export interface IMessage {
 
 export interface IMainLoading {
   getAll: boolean;
-  edit: boolean;
   add: boolean;
-  delete: boolean;
+  edit: boolean;
+  remove: boolean;
 }
 
 export interface IObject {
