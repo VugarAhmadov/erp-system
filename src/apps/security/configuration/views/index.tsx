@@ -1,16 +1,5 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Grid,
-  Icon,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Button, Grid, Icon, IconButton, Paper, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import Swal from "sweetalert2";
@@ -22,6 +11,8 @@ import { AddOrEdit } from "./components";
 import { add, edit, remove, getScript } from "./store/actions";
 import { setSelectedView, setDialogOpened } from "./store";
 import { isNotNull } from "helpers";
+import { StyledList, StyledListItem, StyledListItemButton, StyledListItemText } from "components/styled";
+import { StyledGridHeader } from "../configuration.styled";
 
 export const Views = () => {
   // const [selectedView, setSelectedView] = useState<IView | null>(null);
@@ -78,27 +69,27 @@ export const Views = () => {
     <>
       <StyledView>
         <Grid container>
-          <Grid item xs={4} className="views-grid">
-            <div className="views-header">
+          <Grid item xs={4}>
+            <StyledGridHeader>
               <Typography variant="h5">{t("views")}</Typography>
               <Button variant="contained" onClick={handleAddNew}>
                 {t("add-new-view")}
               </Button>
-            </div>
+            </StyledGridHeader>
 
             <Paper elevation={3}>
-              <List className="views-list">
+              <StyledList className="views-list">
                 {_views.map((view) => (
-                  <ListItem key={view.name}>
-                    <ListItemButton
+                  <StyledListItem key={view.name}>
+                    <StyledListItemButton
                       selected={view.name === selectedView.viewName}
                       onClick={() => dispatch(setSelectedView({ viewName: view.name, viewScript: "" }))}
                     >
-                      <ListItemText primary={view.name} />
-                    </ListItemButton>
-                  </ListItem>
+                      <StyledListItemText primary={view.name} />
+                    </StyledListItemButton>
+                  </StyledListItem>
                 ))}
-              </List>
+              </StyledList>
             </Paper>
           </Grid>
           <Grid item xs={8} className="view-detail-grid">

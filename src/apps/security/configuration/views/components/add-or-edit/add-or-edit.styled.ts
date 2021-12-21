@@ -39,15 +39,22 @@ export const StyledDialog = styled(Dialog)`
 
   & .table-list {
     & .table {
+      /* box-shadow: none; */
+
+      &:before {
+        /* display: none; */
+      }
+
       &.Mui-expanded {
         margin: 0;
 
         &:before {
-          opacity: 1;
         }
       }
 
       & .MuiAccordionSummary-root {
+        border-bottom: ${({ theme }) => theme.palette.grey[900]};
+
         &.Mui-expanded {
           min-height: auto;
         }

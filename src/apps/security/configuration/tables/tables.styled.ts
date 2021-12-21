@@ -1,3 +1,3 @@
 import styled from "@emotion/styled";
 
-export const StyledDiv = styled.div``;
+export const StyledTables = styled.div``;
