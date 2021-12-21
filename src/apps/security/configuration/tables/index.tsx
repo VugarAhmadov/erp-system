@@ -32,6 +32,44 @@ export const Tables = () => {
   const data: Array<IPerson> = [
     { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
     { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
+    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
   ];
 
   return (
@@ -59,13 +97,28 @@ export const Tables = () => {
           </Paper>
         </Grid>
 
-        <Grid item xs={8} className="view-detail-grid">
-          <MaterialTable columns={columns} data={data} icons={tableIcons} />
+        <Grid item xs={8} className="detail-grid">
+          <div className="detail">
+            <MaterialTable
+              options={{
+                search: false,
+                toolbar: false,
+                headerStyle: {
+                  position: "sticky",
+                  top: "0",
+                },
+                maxBodyHeight: "calc(100vh - 270px)",
+              }}
+              columns={columns}
+              data={data}
+              icons={tableIcons}
+            />
+          </div>
 
           {/* {isNotNull(selectedView) && (
             <Paper className="view-detail" elevation={3}>
               <div className="view-detail-header">
-                <Typography variant="h6" className="view-name">
+                <Typography variant="h6" className="view-name"> 
                   {selectedView.viewName}
                 </Typography>
                 <div className="view-detail-buttons">
