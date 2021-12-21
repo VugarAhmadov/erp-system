@@ -4,9 +4,12 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { a11yProps } from "helpers";
 import { StyledConfiguration } from "./configuration.styled";
-import { Operations, Views } from "./components";
 import { TabPanel } from "components/shared";
-import { getViews, getTables } from "./store/actions";
+import { Operations } from "./operations";
+import { Tables } from "./tables";
+import { Views } from "./views";
+import { getAll as getAllViews } from "./views/store/actions";
+import { getAll as getAllTables } from "./tables/store/actions";
 
 export const Configuration = () => {
   const [value, setValue] = useState(0);
@@ -14,8 +17,8 @@ export const Configuration = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getViews());
-    dispatch(getTables());
+    dispatch(getAllViews());
+    dispatch(getAllTables());
   }, []);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -34,7 +37,7 @@ export const Configuration = () => {
         <Operations />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <Tables />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Views />

@@ -18,30 +18,30 @@ import withReactContent from "sweetalert2-react-content";
 import { AppState } from "store";
 import { StyledView } from "./views.styled";
 import { ISelectedView } from "./store/types";
-import { ViewInsert } from "../components";
-import { editView, addView, deleteView, getViewScript } from "../store/actions";
-import { setSelectedView, setViewDialogOpened } from "../store";
+import { AddOrEdit } from "./components";
+import { add, edit, remove, getScript } from "./store/actions";
+import { setSelectedView, setDialogOpened } from "./store";
 import { isNotNull } from "helpers";
 
 export const Views = () => {
   // const [selectedView, setSelectedView] = useState<IView | null>(null);
   const dispatch = useDispatch();
-  const _views = useSelector((state: AppState) => state.configuration.views);
-  const selectedView = useSelector((state: AppState) => state.configuration.selectedView);
-  const dialogOpened = useSelector((state: AppState) => state.configuration.viewDialogOpened);
+  const _views = useSelector((state: AppState) => state.views.views);
+  const selectedView = useSelector((state: AppState) => state.views.selectedView);
+  const dialogOpened = useSelector((state: AppState) => state.views.dialogOpened);
   const { t } = useTranslation();
 
   const handleAddNew = () => {
     dispatch(setSelectedView({} as ISelectedView));
-    dispatch(setViewDialogOpened(true));
+    dispatch(setDialogOpened(true));
   };
 
   const handleViewEdit = () => {
-    dispatch(getViewScript(selectedView?.viewName as string));
+    dispatch(getScript(selectedView?.viewName as string));
   };
 
   const handleViewDialogClose = () => {
-    dispatch(setViewDialogOpened(false));
+    dispatch(setDialogOpened(false));
   };
 
   const handleOnSubmit = (data: ISelectedView) => {
@@ -52,10 +52,10 @@ export const Views = () => {
         oldName: selectedView.viewName,
         ...data,
       };
-      dispatch(editView(requestData));
+      dispatch(edit(requestData));
     } else {
       requestData = data;
-      dispatch(addView(requestData));
+      // dispatch(add(requestData));
     }
   };
 
@@ -69,7 +69,7 @@ export const Views = () => {
       cancelButtonText: "cancel",
     }).then((result) => {
       if (result.value) {
-        dispatch(deleteView(selectedView.viewName));
+        dispatch(remove(selectedView.viewName));
       }
     });
   };
@@ -129,7 +129,7 @@ export const Views = () => {
           </Grid>
         </Grid>
       </StyledView>
-      <ViewInsert open={dialogOpened} onClose={handleViewDialogClose} onSubmit={handleOnSubmit} />
+      <AddOrEdit open={dialogOpened} onClose={handleViewDialogClose} onSubmit={handleOnSubmit} />
     </>
   );
 };

@@ -17,7 +17,7 @@ import { TextField } from "components/shared";
 import { useValidators } from "hooks";
 import { AppState } from "store";
 import { isNotNull } from "helpers";
-import { ISelectedView } from "../../../store/types";
+import { ISelectedView } from "../../store/types";
 import { StyledDialog } from "./add-or-edit.styled";
 
 interface IAddOrEdit {
@@ -29,8 +29,8 @@ interface IAddOrEdit {
 export const AddOrEdit: FC<IAddOrEdit> = ({ open, onClose, onSubmit }) => {
   const { t } = useTranslation("common");
   const { required } = useValidators();
-  const tables = useSelector((state: AppState) => state.configuration.tables);
-  const selectedView = useSelector((state: AppState) => state.configuration.selectedView);
+  const tables = useSelector((state: AppState) => state.tables.tables);
+  const selectedView = useSelector((state: AppState) => state.views.selectedView);
 
   const initialValues = selectedView.viewName ? selectedView : { oldName: "", viewScript: "" };
 

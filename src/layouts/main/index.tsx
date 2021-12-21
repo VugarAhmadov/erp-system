@@ -5,7 +5,7 @@ import { Header, Sidebar } from "components/layout";
 import { StyledMainLayout } from "./main.styled";
 import { Spinner } from "components/shared";
 import { AppState } from "store";
-import { checkUser } from "modules/auth/store/actions";
+import { checkUser } from "apps/auth/store/actions";
 
 export const MainLayout: FC = () => {
   const dispatch = useDispatch();

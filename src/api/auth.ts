@@ -1,5 +1,5 @@
 import { defaultRequest } from "helpers";
-import { ILoginData, IUser } from "modules/auth/store/types";
+import { ILoginData, IUser } from "apps/auth/store/types";
 import { IDispatcherResponse } from "types";
 
 const checkUser = async () => {

@@ -1,8 +1,9 @@
 import { configureStore, Action, ThunkAction } from "@reduxjs/toolkit";
 import { createBrowserHistory } from "history";
 import { createReduxHistoryContext } from "redux-first-history";
-import { configurationSlice } from "apps/security/configuration/store";
-import { authSlice } from "modules/auth/store";
+import { authSlice } from "apps/auth/store";
+import { tablesSlice } from "apps/security/configuration/tables/store";
+import { viewsSlice } from "apps/security/configuration/views/store";
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
   history: createBrowserHistory(),
@@ -12,7 +13,8 @@ const store = configureStore({
   reducer: {
     router: routerReducer,
     [authSlice.name]: authSlice.reducer,
-    [configurationSlice.name]: configurationSlice.reducer,
+    [tablesSlice.name]: tablesSlice.reducer,
+    [viewsSlice.name]: viewsSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(routerMiddleware),
 });

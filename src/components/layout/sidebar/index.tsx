@@ -3,7 +3,7 @@ import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Icon, Typog
 import { StyledSidebar } from "./sidebar.styled";
 import { useSelector } from "react-redux";
 import { AppState } from "store";
-import { IModule } from "modules/auth/store/types";
+import { IModule } from "apps/auth/store/types";
 
 export const Sidebar: FC = () => {
   const modules = useSelector((state: AppState) => state.auth.user?.applications[0]?.modules);
