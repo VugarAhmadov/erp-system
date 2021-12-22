@@ -47,13 +47,6 @@ export const coreTheme = {
         },
       },
     },
-    MuiFormControl: {
-      styleOverrides: {
-        root: {
-          marginBottom: "2rem",
-        },
-      },
-    },
     MuiOutlinedInput: {
       styleOverrides: {
         input: {
