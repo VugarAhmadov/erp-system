@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Grid, Paper, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -8,10 +8,12 @@ import { StyledList, StyledListItem, StyledListItemButton, StyledListItemText } 
 import { StyledGridHeader } from "../configuration.styled";
 import MaterialTable, { Column } from "@material-table/core";
 import { tableIcons } from "components/icons";
+import { IColumn } from "types";
 
 export const Tables = () => {
   const { t } = useTranslation("common");
   const _tables = useSelector((state: AppState) => state.tables.tables);
+  const [selectedTable, setSelectedTable] = useState("");
 
   interface IPerson {
     firstName: string;
@@ -20,56 +22,11 @@ export const Tables = () => {
     availability: boolean;
   }
 
-  const lookup = { true: "Available", false: "Unavailable" };
+  const types = { 1: "text", 2: "bigint", 3: "timestamp", 4: "smallint", 5: "int" };
 
-  const columns: Array<Column<IPerson>> = [
-    { title: "First Name", field: "firstName" },
-    { title: "Last Name", field: "lastName" },
-    { title: "Birth Year", field: "birthYear", type: "numeric" },
-    { title: "Availablity", field: "availability", lookup },
-  ];
-
-  const data: Array<IPerson> = [
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
-    { firstName: "Tod", lastName: "Miles", birthYear: 1987, availability: true },
-    { firstName: "Jess", lastName: "Smith", birthYear: 2000, availability: false },
+  const columns: Array<Column<IColumn>> = [
+    { title: "First Name", field: "name" },
+    { title: "Last Name", field: "type", lookup: types },
   ];
 
   return (
@@ -86,8 +43,8 @@ export const Tables = () => {
               {_tables.map((table) => (
                 <StyledListItem key={table.name}>
                   <StyledListItemButton
-                  // selected={view.name === selectedView.viewName}
-                  // onClick={() => dispatch(setSelectedView({ viewName: view.name, viewScript: "" }))}
+                    selected={table.name === selectedTable}
+                    onClick={() => setSelectedTable(table.name)}
                   >
                     <StyledListItemText primary={table.name} />
                   </StyledListItemButton>
@@ -98,47 +55,65 @@ export const Tables = () => {
         </Grid>
 
         <Grid item xs={8} className="detail-grid">
-          <div className="detail">
-            <MaterialTable
-              options={{
-                search: false,
-                toolbar: false,
-                headerStyle: {
-                  position: "sticky",
-                  top: "0",
-                },
-                maxBodyHeight: "calc(100vh - 270px)",
-              }}
-              columns={columns}
-              data={data}
-              icons={tableIcons}
-            />
-          </div>
-
-          {/* {isNotNull(selectedView) && (
-            <Paper className="view-detail" elevation={3}>
-              <div className="view-detail-header">
-                <Typography variant="h6" className="view-name"> 
-                  {selectedView.viewName}
-                </Typography>
-                <div className="view-detail-buttons">
+          {selectedTable && (
+            <>
+              <div className="detail-grid-header">
+                {/* <div className="view-detail-buttons">
                   <IconButton className="edit-btn" size="large" onClick={handleViewEdit}>
                     <Icon fontSize="small">edit</Icon>
                   </IconButton>
                   <IconButton className="delete-btn" size="large" onClick={handleViewDelete}>
                     <Icon fontSize="small">delete</Icon>
                   </IconButton>
-                </div>
+                </div> */}
               </div>
-              <ul className="view-columns">
-                {_views
-                  .filter((view) => view.name === selectedView.viewName)[0]
-                  .columns.map((column, index) => (
-                    <li key={index}>{column.name}</li>
-                  ))}
-              </ul>
-            </Paper>
-          )} */}
+              <MaterialTable
+                title={selectedTable}
+                options={{
+                  search: false,
+                  paging: false,
+                  headerStyle: {
+                    position: "sticky",
+                    top: "0",
+                  },
+                  actionsColumnIndex: -1,
+                  maxBodyHeight: "calc(100vh - 280px)",
+                }}
+                columns={columns}
+                data={_tables.filter((table) => table.name === selectedTable)[0].columns}
+                icons={tableIcons}
+                editable={{
+                  onRowAdd: (newData) =>
+                    new Promise((resolve, reject) => {
+                      setTimeout(() => {
+                        // setData([...data, newData]);
+                        // resolve();
+                      }, 1000);
+                    }),
+                  onRowUpdate: (newData, oldData) =>
+                    new Promise((resolve, reject) => {
+                      setTimeout(() => {
+                        // const dataUpdate = [...data];
+                        // const index = oldData.tableData.id;
+                        // dataUpdate[index] = newData;
+                        // setData([...dataUpdate]);
+                        // resolve();
+                      }, 1000);
+                    }),
+                  onRowDelete: (oldData) =>
+                    new Promise((resolve, reject) => {
+                      setTimeout(() => {
+                        // const dataDelete = [...data];
+                        // const index = oldData.tableData.id;
+                        // dataDelete.splice(index, 1);
+                        // setData([...dataDelete]);
+                        // resolve();
+                      }, 1000);
+                    }),
+                }}
+              />
+            </>
+          )}
         </Grid>
       </Grid>
     </StyledTables>
