@@ -1,4 +1,5 @@
 import {
+  IAddTableRequest,
   IEditTableRequest,
   IAddColumnRequest,
   IEditColumnRequest,
@@ -9,6 +10,12 @@ import { IDispatcherResponse, IObject } from "types";
 
 const getAll = async () => {
   return await defaultRequest.post<IObject[]>("api/jwt/tables");
+};
+
+const add = async (requestData: IAddTableRequest) => {
+  const { name, ...rest } = requestData;
+
+  return await defaultRequest.post<IDispatcherResponse<null>>(`api/jwt/generateObject/${name}/ADD`, rest);
 };
 
 const edit = async (requestData: IEditTableRequest) => {
@@ -31,11 +38,11 @@ const addColumn = async (requestData: IAddColumnRequest) => {
 };
 
 const editColumn = async (requestData: IEditColumnRequest) => {
-  const { tableName, fieldName, fieldType, oldFieldName, oldFieldType } = requestData;
+  const { tableName, fieldName, ...rest } = requestData;
 
   return await defaultRequest.post<IDispatcherResponse<null>>(
     `api/jwt/generate/object/${tableName}/${fieldName}/EDIT`,
-    { oldFieldType, oldFieldName, fieldType }
+    rest
   );
 };
 
@@ -50,6 +57,7 @@ const removeColumn = async (requestData: IRemoveColumnRequest) => {
 
 export const tablesApi = {
   getAll,
+  add,
   edit,
   remove,
   addColumn,

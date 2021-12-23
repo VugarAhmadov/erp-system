@@ -6,6 +6,13 @@ export interface ILoading extends IMainLoading {
   removeColumn: boolean;
 }
 
+export interface IAddTableRequest {
+  name: string;
+  createViewChecked?: "1";
+  createDefaultOperation?: "1";
+  applicationId?: string;
+}
+
 export interface IEditTableRequest {
   oldName: string;
   newName: string;

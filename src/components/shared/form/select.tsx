@@ -1,5 +1,7 @@
 import React, { ReactNode } from "react";
+
 import {
+  FormControl,
   FormControlProps,
   FormHelperTextProps,
   InputLabel,
@@ -8,10 +10,12 @@ import {
   MenuItemProps,
   Select as MuiSelect,
   SelectProps as MuiSelectProps,
-  FormControl,
 } from "@mui/material";
+
+import { ErrorMessage, getValidator, ShowErrorFunc, showErrorOnChange, useFieldForErrors } from "helpers";
 import { Field, FieldProps } from "react-final-form";
-import { ErrorMessage, ShowErrorFunc, showErrorOnChange, useFieldForErrors } from "helpers";
+import { FieldValidator } from "final-form";
+import { useTranslation } from "react-i18next";
 
 export interface SelectData {
   label: string;
@@ -33,6 +37,8 @@ export interface SelectProps extends Partial<Omit<MuiSelectProps, "onChange">> {
   menuItemProps?: Partial<MenuItemProps>;
   data?: SelectData[];
   children?: ReactNode;
+  validate?: FieldValidator<any> | FieldValidator<any>[];
+  emptyLabel?: string;
 }
 
 export const Select = (props: SelectProps) => {
@@ -50,6 +56,8 @@ export const Select = (props: SelectProps) => {
     formHelperTextProps,
     menuItemProps,
     showError = showErrorOnChange,
+    emptyLabel,
+    validate,
     ...restSelectProps
   } = props;
 
@@ -60,6 +68,7 @@ export const Select = (props: SelectProps) => {
   const { variant } = restSelectProps;
   const field = useFieldForErrors(name);
   const isError = showError(field);
+  const { t } = useTranslation("common");
 
   return (
     <Field
@@ -72,7 +81,7 @@ export const Select = (props: SelectProps) => {
         return (
           <FormControl required={required} error={isError} fullWidth={true} variant={variant} {...formControlProps}>
             {!!label && (
-              <InputLabel id={labelId} shrink={true} disableAnimation={true} variant="standard" {...inputLabelProps}>
+              <InputLabel id={labelId} {...inputLabelProps}>
                 {label}
               </InputLabel>
             )}
@@ -84,10 +93,11 @@ export const Select = (props: SelectProps) => {
               label={label}
               labelId={labelId}
               inputProps={{ required, ...restInput }}
-              variant="standard"
-              disableUnderline={true}
               {...restSelectProps}
             >
+              <MenuItem value="" disabled>
+                {emptyLabel ?? t("choose")}
+              </MenuItem>
               {data
                 ? data.map((item) => (
                     <MenuItem value={item.value} key={item.value} disabled={item.disabled} {...(menuItemProps as any)}>
@@ -106,6 +116,7 @@ export const Select = (props: SelectProps) => {
         );
       }}
       {...fieldProps}
+      validate={getValidator(validate)}
     />
   );
 };

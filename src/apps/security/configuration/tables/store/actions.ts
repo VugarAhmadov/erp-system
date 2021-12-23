@@ -1,7 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { tablesApi } from "api";
 import { toast } from "react-toastify";
-import { IEditColumnRequest, IRemoveColumnRequest, IAddColumnRequest, IEditTableRequest } from "./types";
+import {
+  IEditColumnRequest,
+  IRemoveColumnRequest,
+  IAddColumnRequest,
+  IEditTableRequest,
+  IAddTableRequest,
+} from "./types";
 
 export const getAll = createAsyncThunk("tables/getAll", async (_, { rejectWithValue }) => {
   try {
@@ -16,6 +22,26 @@ export const getAll = createAsyncThunk("tables/getAll", async (_, { rejectWithVa
     throw error;
   }
 });
+
+export const add = createAsyncThunk(
+  "tables/add",
+  async (requestData: IAddTableRequest, { rejectWithValue, dispatch }) => {
+    try {
+      const { data } = await tablesApi.add(requestData);
+
+      if (data.code === "OK") {
+        toast.success("Cedvel elave edildi");
+        await dispatch(getAll());
+        return data.data;
+      } else {
+        return rejectWithValue(data);
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+);
 
 export const edit = createAsyncThunk(
   "tables/edit",

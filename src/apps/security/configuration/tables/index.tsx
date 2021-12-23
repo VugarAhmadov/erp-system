@@ -11,9 +11,10 @@ import { StyledGridHeader } from "../configuration.styled";
 import MaterialTable, { Column } from "@material-table/core";
 import { tableIcons } from "components/icons";
 import { IColumn } from "types";
-import { remove, addColumn, editColumn, removeColumn, edit } from "./store/actions";
+import { add, edit, remove, addColumn, editColumn, removeColumn } from "./store/actions";
 import { setDialog, setSelectedTable } from "./store";
 import { AddOrEdit } from "./components";
+import { IAddTableRequest } from "./store/types";
 
 export const Tables = () => {
   const { t } = useTranslation("common");
@@ -49,9 +50,23 @@ export const Tables = () => {
     dispatch(setDialog({ opened: false, type: "" }));
   };
 
-  const handleOnSubmit = (data: any) => {
+  const handleOnSubmit = (data: IAddTableRequest) => {
     if (dialog.type === "edit") {
       dispatch(edit({ oldName: selectedTable, newName: data.name }));
+    } else {
+      let requestData: IAddTableRequest;
+      if (data.createViewChecked || data.createDefaultOperation) {
+        requestData = {
+          ...data,
+          createViewChecked: data.createViewChecked ? "1" : undefined,
+          createDefaultOperation: data.createDefaultOperation ? "1" : undefined,
+        };
+      } else {
+        requestData = {
+          name: data.name,
+        };
+      }
+      dispatch(add(requestData));
     }
   };
 
