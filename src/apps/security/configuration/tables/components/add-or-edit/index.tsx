@@ -36,7 +36,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit, selectedT
           render={({ handleSubmit, invalid }) => (
             <form onSubmit={handleSubmit}>
               <TextField name="name" label={t("tablename")} validate={required} />
-
+              {dialog.type === "add" && <></>}
               <div className="action-buttons">
                 <Button onClick={onClose}>{t("back")}</Button>
                 <Button type="submit" disabled={invalid}>
