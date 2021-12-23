@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { tablesApi } from "api";
 import { toast } from "react-toastify";
-import { IEditColumnRequest, IRemoveColumnRequest, IAddColumnRequest } from "./types";
+import { IEditColumnRequest, IRemoveColumnRequest, IAddColumnRequest, IEditTableRequest } from "./types";
 
 export const getAll = createAsyncThunk("tables/getAll", async (_, { rejectWithValue }) => {
   try {
@@ -17,12 +17,33 @@ export const getAll = createAsyncThunk("tables/getAll", async (_, { rejectWithVa
   }
 });
 
+export const edit = createAsyncThunk(
+  "tables/edit",
+  async (requestData: IEditTableRequest, { rejectWithValue, dispatch }) => {
+    try {
+      const { data } = await tablesApi.edit(requestData);
+
+      if (data.code === "OK") {
+        toast.success("Cedvel yenilendi");
+        await dispatch(getAll());
+        return data.data;
+      } else {
+        return rejectWithValue(data);
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+);
+
 export const remove = createAsyncThunk("tables/remove", async (name: string, { rejectWithValue, dispatch }) => {
   try {
     const { data } = await tablesApi.remove(name);
+
     if (data.code === "OK") {
-      await dispatch(getAll());
       toast.success("Cedvel silindi");
+      await dispatch(getAll());
       return data.data;
     } else {
       return rejectWithValue(data);
@@ -39,8 +60,8 @@ export const addColumn = createAsyncThunk(
     try {
       const { data } = await tablesApi.addColumn(requestData);
       if (data.code === "OK") {
-        await dispatch(getAll());
         toast.success("Column elave edildi");
+        await dispatch(getAll());
         return data.data;
       } else {
         return rejectWithValue(data);
@@ -58,8 +79,8 @@ export const editColumn = createAsyncThunk(
     try {
       const { data } = await tablesApi.editColumn(requestData);
       if (data.code === "OK") {
-        await dispatch(getAll());
         toast.success("Column yenilendi");
+        await dispatch(getAll());
         return data.data;
       } else {
         return rejectWithValue(data);
@@ -77,8 +98,8 @@ export const removeColumn = createAsyncThunk(
     try {
       const { data } = await tablesApi.removeColumn(requestData);
       if (data.code === "OK") {
-        await dispatch(getAll());
         toast.success("Column silindi");
+        await dispatch(getAll());
         return data.data;
       } else {
         return rejectWithValue(data);

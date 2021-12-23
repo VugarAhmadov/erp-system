@@ -40,3 +40,8 @@ export interface IOperations {
   viewMethod: string;
   viewName: string;
 }
+
+export interface IDialog {
+  type: "edit" | "add" | "";
+  opened: boolean;
+}

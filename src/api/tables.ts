@@ -1,13 +1,20 @@
 import {
-  IRemoveColumnRequest,
-  IEditColumnRequest,
+  IEditTableRequest,
   IAddColumnRequest,
+  IEditColumnRequest,
+  IRemoveColumnRequest,
 } from "apps/security/configuration/tables/store/types";
 import { defaultRequest } from "helpers";
 import { IDispatcherResponse, IObject } from "types";
 
 const getAll = async () => {
   return await defaultRequest.post<IObject[]>("api/jwt/tables");
+};
+
+const edit = async (requestData: IEditTableRequest) => {
+  const { oldName, newName } = requestData;
+
+  return await defaultRequest.post<IDispatcherResponse<null>>(`api/jwt/generateObject/${newName}/EDIT`, { oldName });
 };
 
 const remove = async (tableName: string) => {
@@ -43,6 +50,7 @@ const removeColumn = async (requestData: IRemoveColumnRequest) => {
 
 export const tablesApi = {
   getAll,
+  edit,
   remove,
   addColumn,
   editColumn,

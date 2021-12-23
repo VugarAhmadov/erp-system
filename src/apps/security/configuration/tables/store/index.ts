@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IObject } from "types";
-import { addColumn, editColumn, getAll, removeColumn } from "./actions";
+import { IDialog, IObject } from "types";
+import { addColumn, edit, editColumn, getAll, remove, removeColumn } from "./actions";
 import { ILoading } from "./types";
 
 export interface ITablesState {
   loading: ILoading;
   tables: IObject[];
+  selectedTable: string;
+  dialog: IDialog;
 }
 
 const initialState: ITablesState = {
@@ -18,13 +20,25 @@ const initialState: ITablesState = {
     editColumn: false,
     removeColumn: false,
   },
+  selectedTable: "",
+  dialog: {
+    type: "",
+    opened: false,
+  },
   tables: [],
 };
 
 export const tablesSlice = createSlice({
   name: "tables",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    setDialog: (state, action: PayloadAction<IDialog>) => {
+      state.dialog = action.payload;
+    },
+    setSelectedTable: (state, action: PayloadAction<string>) => {
+      state.selectedTable = action.payload;
+    },
+  },
   extraReducers: {
     //* GET ALL
     [getAll.pending.type]: (state) => {
@@ -39,6 +53,32 @@ export const tablesSlice = createSlice({
       state.tables = action.payload;
     },
     //* GET ALL END
+    //* EDIT
+    [edit.pending.type]: (state) => {
+      state.loading.edit = true;
+    },
+    [edit.rejected.type]: (state) => {
+      state.loading.edit = false;
+    },
+    [edit.fulfilled.type]: (state) => {
+      state.loading.edit = false;
+      state.selectedTable = "";
+      state.dialog.opened = false;
+      state.dialog.type = "";
+    },
+    //* EDIT END
+    //* REMOVE
+    [remove.pending.type]: (state) => {
+      state.loading.remove = true;
+    },
+    [remove.rejected.type]: (state) => {
+      state.loading.remove = false;
+    },
+    [remove.fulfilled.type]: (state) => {
+      state.loading.remove = false;
+      state.selectedTable = "";
+    },
+    //* REMOVE END
     //* ADD COLUMN
     [addColumn.pending.type]: (state) => {
       state.loading.addColumn = true;
@@ -74,3 +114,5 @@ export const tablesSlice = createSlice({
     //* REMOVE COLUMN END
   },
 });
+
+export const { setDialog, setSelectedTable } = tablesSlice.actions;

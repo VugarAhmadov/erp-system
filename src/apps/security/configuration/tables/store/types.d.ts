@@ -6,10 +6,9 @@ export interface ILoading extends IMainLoading {
   removeColumn: boolean;
 }
 
-export interface IRemoveColumnRequest {
-  tableName: string;
-  columnName: string;
-  columnType: string;
+export interface IEditTableRequest {
+  oldName: string;
+  newName: string;
 }
 
 export interface IAddColumnRequest {
@@ -24,4 +23,10 @@ export interface IEditColumnRequest {
   oldFieldType: string;
   fieldName: string;
   fieldType: string;
+}
+
+export interface IRemoveColumnRequest {
+  tableName: string;
+  columnName: string;
+  columnType: string;
 }
