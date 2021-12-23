@@ -12,9 +12,9 @@ import { getAll as getAllViews } from "./views/store/actions";
 import { getAll as getAllTables } from "./tables/store/actions";
 
 export const Configuration = () => {
-  const [value, setValue] = useState(0);
   const { t } = useTranslation("common");
   const dispatch = useDispatch();
+  const [value, setValue] = useState(0);
 
   useEffect(() => {
     dispatch(getAllViews());

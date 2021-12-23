@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IDialog, IObject } from "types";
-import { addColumn, edit, editColumn, getAll, remove, removeColumn } from "./actions";
+import { add, addColumn, edit, editColumn, getAll, remove, removeColumn } from "./actions";
 import { ILoading } from "./types";
 
 export interface ITablesState {
@@ -53,6 +53,19 @@ export const tablesSlice = createSlice({
       state.tables = action.payload;
     },
     //* GET ALL END
+    //* ADD
+    [add.pending.type]: (state) => {
+      state.loading.add = true;
+    },
+    [add.rejected.type]: (state) => {
+      state.loading.add = false;
+    },
+    [add.fulfilled.type]: (state) => {
+      state.loading.add = false;
+      state.dialog.opened = false;
+      state.dialog.type = "";
+    },
+    //* ADD END
     //* EDIT
     [edit.pending.type]: (state) => {
       state.loading.edit = true;
