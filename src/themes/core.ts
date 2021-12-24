@@ -24,20 +24,20 @@ export const coreTheme = {
         },
       },
     },
-    MuiInputBase: {
-      styleOverrides: {
-        input: {
-          // padding: "0.875rem !important",
-        },
-      },
-    },
-    MuiInputLabel: {
-      styleOverrides: {
-        root: {
-          lineHeight: "1rem",
-        },
-      },
-    },
+    // MuiInputBase: {
+    //   styleOverrides: {
+    //     input: {
+    //       padding: "0.875rem !important",
+    //     },
+    //   },
+    // },
+    // MuiInputLabel: {
+    //   styleOverrides: {
+    //     root: {
+    //       lineHeight: "1rem",
+    //     },
+    //   },
+    // },
     MuiFormHelperText: {
       styleOverrides: {
         root: {
@@ -47,12 +47,12 @@ export const coreTheme = {
         },
       },
     },
-    MuiOutlinedInput: {
-      styleOverrides: {
-        input: {
-          padding: "0.875rem",
-        },
-      },
-    },
+    // MuiOutlinedInput: {
+    //   styleOverrides: {
+    //     input: {
+    //       padding: "0.875rem",
+    //     },
+    //   },
+    // },
   },
 } as ThemeOptions;
