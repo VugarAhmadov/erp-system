@@ -106,7 +106,7 @@ function AutocompleteWrapper<
   let defaultValue: AutocompleteValue<T, Multiple, DisableClearable, FreeSolo> | undefined;
 
   if (!getOptionValue) {
-    defaultValue = value as AutocompleteValue<T, Multiple, DisableClearable, FreeSolo> | undefined;
+    defaultValue = value as any;
   } else if (value) {
     options.forEach((option) => {
       const optionValue = getOptionValue(option);

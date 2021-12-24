@@ -4,11 +4,21 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Autocomplete } from "components/shared";
 import { AppState } from "store";
-import { Checkbox } from "@mui/material";
+import { Checkbox, createFilterOptions, InputAdornment } from "@mui/material";
+import { AutocompleteData } from "components/shared/form/autocomplete";
 
 export const AllViewForm = () => {
   const { t } = useTranslation("common");
   const views = useSelector((state: AppState) => state.views.views);
+
+  const filter = createFilterOptions<AutocompleteData>();
+
+  const autocompleteData: AutocompleteData[] = [
+    { label: "Earth", value: "earth" },
+    { label: "Mars", value: "mars" },
+    { label: "Venus", value: "venus" },
+    { label: "Brown Dwarf Glese 229B", value: "229B" },
+  ];
 
   return (
     <Form
@@ -33,38 +43,37 @@ export const AllViewForm = () => {
             //   }
             // }}
           />
-          {/* <Autocomplete
+          <Autocomplete
             // key={key++}
             label="Choose at least one planet"
             name="planet"
             multiple={true}
             // required={required.planet}
-            options={views.map((view) => ({
-              label: view.name,
-              value: view.name,
-            }))}
+            options={autocompleteData}
             getOptionValue={(option) => option.value}
             getOptionLabel={(option) => option.label}
             disableCloseOnSelect={true}
-            renderOption={(props, option, { selected }) => (
-              // option.inputValue ? (
-              //   option.label
-              // ) :
-              <li {...props}>
-                <Checkbox style={{ marginRight: 8 }} checked={selected} />
-                {option.label}
-              </li>
-            )}
+            renderOption={(props, option, { selected }) =>
+              option.inputValue ? (
+                option.label
+              ) : (
+                <li {...props}>
+                  <Checkbox style={{ marginRight: 8 }} checked={selected} />
+                  {option.label}
+                </li>
+              )
+            }
             // helperText={helperText}
             freeSolo={true}
             onChange={(_event, newValue, reason, details) => {
-              // if (newValue && reason === "selectOption" && details?.option.inputValue) {
-              //   // Create a new value from the user input
-              //   autocompleteData.push({
-              //     value: details?.option.inputValue,
-              //     label: details?.option.inputValue,
-              //   });
-              // }
+              if (newValue && reason === "selectOption" && details?.option.inputValue) {
+                // Create a new value from the user input
+                console.log(details);
+                autocompleteData.push({
+                  value: details?.option.inputValue,
+                  label: details?.option.inputValue,
+                });
+              }
             }}
             filterOptions={(options, params) => {
               const filtered = filter(options, params);
@@ -89,7 +98,7 @@ export const AllViewForm = () => {
                 endAdornment: <InputAdornment position="end">🪐</InputAdornment>,
               },
             }}
-          /> */}
+          />
         </form>
       )}
     />
