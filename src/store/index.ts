@@ -4,6 +4,7 @@ import { createReduxHistoryContext } from "redux-first-history";
 import { authSlice } from "apps/auth/store";
 import { tablesSlice } from "apps/security/configuration/tables/store";
 import { viewsSlice } from "apps/security/configuration/views/store";
+import { operationsSlice } from "apps/security/configuration/operations/store";
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
   history: createBrowserHistory(),
@@ -15,6 +16,7 @@ const store = configureStore({
     [authSlice.name]: authSlice.reducer,
     [tablesSlice.name]: tablesSlice.reducer,
     [viewsSlice.name]: viewsSlice.reducer,
+    [operationsSlice.name]: operationsSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(routerMiddleware),
 });

@@ -30,4 +30,17 @@ export const StyledOperations = styled.div`
       margin: 0.75rem 0;
     }
   }
+
+  & .MuiTableRow-head {
+    background-color: #ecf0f1;
+
+    & th {
+      font-weight: bold;
+      font-size: 1rem;
+    }
+  }
+
+  & .MuiTableCell-root {
+    padding: 0.5rem;
+  }
 `;
