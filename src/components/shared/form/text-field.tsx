@@ -3,6 +3,7 @@ import { TextField as MuiTextField, TextFieldProps as MuiTextFieldProps } from "
 import { Field, FieldProps, FieldRenderProps } from "react-final-form";
 import { ShowErrorFunc, showErrorOnChange, getValidator } from "helpers";
 import { FieldValidator } from "final-form";
+import { useValidators } from "hooks";
 
 export const TYPE_PASSWORD = "password";
 export const TYPE_TEXT = "text";
@@ -39,14 +40,24 @@ export type TextFieldProps = Partial<Omit<MuiTextFieldProps, "type" | "onChange"
 };
 
 export const TextField = (props: TextFieldProps) => {
-  const { name, type, fieldProps, validate, ...rest } = props;
+  const { required: requiredValidator } = useValidators();
+  const { name, type, fieldProps, validate, required, ...rest } = props;
+
+  const defaultValidators = () => {
+    return [
+      // type === "email" ? email : undefined,
+      required ? requiredValidator : undefined,
+    ] as FieldValidator<any>[];
+  };
 
   return (
     <Field
       name={name}
       type={type}
-      render={({ input, meta }) => <TextFieldWrapper input={input} meta={meta} name={name} type={type} {...rest} />}
-      validate={getValidator(validate)}
+      render={({ input, meta }) => (
+        <TextFieldWrapper input={input} meta={meta} name={name} type={type} {...rest} required={required} />
+      )}
+      validate={getValidator(validate, defaultValidators())}
       {...fieldProps}
     />
   );

@@ -45,3 +45,29 @@ export interface IDialog {
   type: "edit" | "add" | "";
   opened: boolean;
 }
+
+export interface IGetAllResponse {
+  err: any[];
+  errMessage: any[];
+  kv: any;
+  tbl: IGetAllTable[];
+}
+
+export interface IGetAllTable {
+  allRowCount: number;
+  c: IGetAllTableColumn[];
+  endLimit: number;
+  hiddenColumn: string;
+  r: any[];
+  rowCount: number;
+  seqColumn: string;
+  startLimit: number;
+  tn: string;
+}
+
+export interface IGetAllTableColumn {
+  [key: string]: string;
+  i: string;
+  n: string;
+  t: string;
+}

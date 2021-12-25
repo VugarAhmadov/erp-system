@@ -12,6 +12,8 @@ const Configuration = lazy(() =>
   import("apps/security/configuration").then((module) => ({ default: module.Configuration }))
 );
 
+const Application = lazy(() => import("apps/security/application").then((module) => ({ default: module.Application })));
+
 export const AppRouting = () => {
   return (
     <Router history={history}>
@@ -22,7 +24,8 @@ export const AppRouting = () => {
           </Route>
           <Route path="/" element={<MainLayout />}>
             <Route path="security" element={<Security />}>
-              <Route path="configuration" element={<Configuration />} />
+              <Route path="application" element={<Configuration />} />
+              <Route path="configuration" element={<Application />} />
             </Route>
           </Route>
         </Routes>

@@ -23,19 +23,8 @@ export const coreTheme = {
           textTransform: "initial",
         },
       },
-    },
-    MuiInputBase: {
-      styleOverrides: {
-        input: {
-          // padding: "0.875rem !important",
-        },
-      },
-    },
-    MuiInputLabel: {
-      styleOverrides: {
-        root: {
-          lineHeight: "1rem",
-        },
+      defaultProps: {
+        variant: "contained",
       },
     },
     MuiFormHelperText: {
@@ -47,11 +36,10 @@ export const coreTheme = {
         },
       },
     },
-    MuiOutlinedInput: {
-      styleOverrides: {
-        input: {
-          padding: "0.875rem",
-        },
+    MuiTextField: {
+      defaultProps: {
+        variant: "outlined",
+        size: "small",
       },
     },
   },
