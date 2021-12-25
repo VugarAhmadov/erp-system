@@ -3,14 +3,14 @@ import { getAll, add, edit, remove, getScript } from "./actions";
 import { IObject } from "types";
 import { ILoading, ISelectedView } from "./types";
 
-export interface IViewState {
+export interface IViewsState {
   loading: ILoading;
   views: IObject[];
   selectedView: ISelectedView;
   dialogOpened: boolean;
 }
 
-const initialState: IViewState = {
+const initialState: IViewsState = {
   loading: {
     getAll: false,
     add: false,

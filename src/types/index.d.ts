@@ -42,7 +42,7 @@ export interface IOperations {
 }
 
 export interface IDialog {
-  type: "edit" | "add" | "";
+  type: "edit" | "add" | "all-view" | "add-priv" | "";
   opened: boolean;
 }
 
