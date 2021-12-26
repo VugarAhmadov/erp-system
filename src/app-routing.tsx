@@ -13,6 +13,8 @@ const Configuration = lazy(() =>
 );
 
 const Application = lazy(() => import("apps/security/application").then((module) => ({ default: module.Application })));
+const Module = lazy(() => import("apps/security/module").then((module) => ({ default: module.Module })));
+const Operation = lazy(() => import("apps/security/operation").then((module) => ({ default: module.Operation })));
 
 export const AppRouting = () => {
   return (
@@ -24,8 +26,10 @@ export const AppRouting = () => {
           </Route>
           <Route path="/" element={<MainLayout />}>
             <Route path="security" element={<Security />}>
-              <Route path="application" element={<Configuration />} />
-              <Route path="configuration" element={<Application />} />
+              <Route path="configuration" element={<Configuration />} />
+              <Route path="application" element={<Application />} />
+              <Route path="module" element={<Module />} />
+              <Route path="operation" element={<Operation />} />
             </Route>
           </Route>
         </Routes>

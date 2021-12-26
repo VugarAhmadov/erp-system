@@ -5,22 +5,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { add, edit, remove } from "./store/actions";
 import { AppState } from "store";
 import { Column } from "@material-table/core";
-import { setDialog, setSelectedApplication } from "./store";
+import { setDialog, setSelectedModule } from "./store";
 import { AddOrEdit } from "./components";
-import { IAddOrEditApplicationRequest } from "./store/types";
+import { IAddOrEditModuleRequest } from "./store/types";
 import { Icon, IconButton } from "@mui/material";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-import { StyledApplication } from "./application.styled";
+import { StyledModule } from "./module.styled";
 
-export const Application = () => {
+export const Module = () => {
   const { t } = useTranslation("common");
   const dispatch = useDispatch();
-  const applications = useSelector((state: AppState) => state.application.applications);
-  const loading = useSelector((state: AppState) => state.application.loading);
-  const seqColumns = applications?.seqColumn?.split(",");
-  const dialog = useSelector((state: AppState) => state.application.dialog);
-  const selectedApp = useSelector((state: AppState) => state.application.selectedApp);
+  const modules = useSelector((state: AppState) => state.module.modules);
+  const loading = useSelector((state: AppState) => state.module.loading);
+  const seqColumns = modules?.seqColumn?.split(",");
+  const dialog = useSelector((state: AppState) => state.module.dialog);
+  const selectedModule = useSelector((state: AppState) => state.module.selectedModule);
 
   const buildColumns = () => {
     let columns: Column<object>[] = [
@@ -31,13 +31,13 @@ export const Application = () => {
       },
     ];
 
-    applications?.c?.forEach((column) =>
+    modules?.c?.forEach((column) => {
       columns.push({
         title: column.n,
         field: column.i,
         hidden: !seqColumns.includes(column.i),
-      })
-    );
+      });
+    });
 
     columns.push({
       title: "",
@@ -61,7 +61,7 @@ export const Application = () => {
   const buildData = () => {
     let data: any[] = [];
 
-    applications?.r?.map((row, index) => {
+    modules?.r?.map((row, index) => {
       data.push({ index: index + 1, ...row });
     });
 
@@ -72,12 +72,12 @@ export const Application = () => {
     dispatch(setDialog({ opened: true, type: "add" }));
   };
 
-  const handleEditClick = (appId: string) => {
-    dispatch(setSelectedApplication(appId));
+  const handleEditClick = (moduleId: string) => {
+    dispatch(setSelectedModule(moduleId));
     dispatch(setDialog({ type: "edit", opened: true }));
   };
 
-  const handleRemove = (appId: string) => {
+  const handleRemove = (moduleId: string) => {
     const MySwal = withReactContent(Swal);
     MySwal.fire({
       text: "Are you sure to remove?",
@@ -87,7 +87,7 @@ export const Application = () => {
       cancelButtonText: "cancel",
     }).then((result) => {
       if (result.value) {
-        dispatch(remove(appId));
+        dispatch(remove(moduleId));
       }
     });
   };
@@ -96,19 +96,19 @@ export const Application = () => {
     dispatch(setDialog({ opened: false, type: "" }));
   };
 
-  const handleSubmit = (data: IAddOrEditApplicationRequest) => {
-    dialog.type === "edit" ? dispatch(edit({ ...data, id: selectedApp })) : dispatch(add(data));
+  const handleSubmit = (data: IAddOrEditModuleRequest) => {
+    dialog.type === "edit" ? dispatch(edit({ ...data, id: selectedModule })) : dispatch(add(data));
   };
 
   return (
     <>
       {" "}
-      <StyledApplication>
-        <SectionHeader title="Applications" />
+      <StyledModule>
+        <SectionHeader title="Modules" />
         <FilterBar
           addButton={{
             show: true,
-            title: t("addApplication"),
+            title: t("addModule"),
             onClick: handleAddClick,
           }}
         />
@@ -121,7 +121,7 @@ export const Application = () => {
             toolbar: false,
           }}
         />
-      </StyledApplication>
+      </StyledModule>
       <AddOrEdit dialog={dialog} onClose={handleDialogClose} onSubmit={handleSubmit} />
     </>
   );

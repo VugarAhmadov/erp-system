@@ -1,31 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Autocomplete } from "components/shared";
 import { AppState } from "store";
 import { Checkbox, createFilterOptions, InputAdornment } from "@mui/material";
-import { AutocompleteData } from "components/shared/form/autocomplete";
+// import { AutocompleteData } from "components/shared/form/autocomplete";
+import { StyledForm } from "./all-view-form.styled";
 
 export const AllViewForm = () => {
   const { t } = useTranslation("common");
-  const views = useSelector((state: AppState) => state.views.views);
+  const views = useSelector((state: AppState) => state.views?.views);
+  const loading = useSelector((state: AppState) => state.views.loading.getAll);
 
-  const filter = createFilterOptions<AutocompleteData>();
-
-  const autocompleteData: AutocompleteData[] = [
-    { label: "Earth", value: "earth" },
-    { label: "Mars", value: "mars" },
-    { label: "Venus", value: "venus" },
-    { label: "Brown Dwarf Glese 229B", value: "229B" },
-  ];
+  // const filter = createFilterOptions();
+  const [selectedDatas, setSelectedDatas] = useState<any[]>([]);
 
   return (
     <Form
       onSubmit={(data) => console.log(data)}
       // initialValues={initialValues}
-      render={({ handleSubmit }) => (
-        <form className="form" onSubmit={handleSubmit}>
+      render={({ handleSubmit, values }) => (
+        <StyledForm onSubmit={handleSubmit}>
           <Autocomplete
             name="view"
             id="view"
@@ -36,20 +32,22 @@ export const AllViewForm = () => {
             }))}
             getOptionValue={(option) => option.value}
             getOptionLabel={(option) => option.label}
-            // loading={loading.getCities}
-            // onChange={(e, selectedOption: any) => {
-            //   if (selectedOption) {
-            //     dispatch(getDistricts(selectedOption.value));
-            //   }
-            // }}
+            className="views"
+            loading={loading}
+            required
           />
           <Autocomplete
-            // key={key++}
             label="Choose at least one planet"
             name="planet"
             multiple={true}
-            // required={required.planet}
-            options={autocompleteData}
+            required
+            options={views
+              ?.filter((view) => view.name === values.view)[0]
+              ?.columns?.map((column) => ({
+                label: column.name,
+                value: column.name,
+                inputValue: false,
+              }))}
             getOptionValue={(option) => option.value}
             getOptionLabel={(option) => option.label}
             disableCloseOnSelect={true}
@@ -69,37 +67,32 @@ export const AllViewForm = () => {
               if (newValue && reason === "selectOption" && details?.option.inputValue) {
                 // Create a new value from the user input
                 console.log(details);
-                autocompleteData.push({
-                  value: details?.option.inputValue,
-                  label: details?.option.inputValue,
-                });
+                setSelectedDatas([
+                  ...selectedDatas,
+                  {
+                    value: details?.option.inputValue,
+                    label: details?.option.inputValue,
+                  },
+                ]);
               }
             }}
-            filterOptions={(options, params) => {
-              const filtered = filter(options, params);
-
-              // Suggest the creation of a new value
-              if (params.inputValue !== "") {
-                filtered.push({
-                  inputValue: params.inputValue,
-                  label: `Add "${params.inputValue}"`,
-                  value: params.inputValue,
-                });
-              }
-
-              return filtered;
-            }}
+            // filterOptions={(options, params) => {
+            // const filtered = filter(options, params);
+            // // Suggest the creation of a new value
+            // if (params.inputValue !== "") {
+            //   filtered.push({
+            //     inputValue: params.inputValue,
+            //     label: `Add "${params.inputValue}"`,
+            //     value: params.inputValue,
+            //   });
+            // }
+            // return filtered;
+            // }}
             selectOnFocus
             clearOnBlur
             handleHomeEndKeys
-            textFieldProps={{
-              InputProps: {
-                startAdornment: <InputAdornment position="start">🪐</InputAdornment>,
-                endAdornment: <InputAdornment position="end">🪐</InputAdornment>,
-              },
-            }}
           />
-        </form>
+        </StyledForm>
       )}
     />
   );

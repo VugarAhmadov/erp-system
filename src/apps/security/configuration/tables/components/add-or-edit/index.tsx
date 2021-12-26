@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Button, DialogContent, MenuItem } from "@mui/material";
+import { Button, DialogContent } from "@mui/material";
 import { StyledDialog } from "./add-or-edit.styled";
 import { Form } from "react-final-form";
 import { Checkboxes, Select, TextField } from "components/shared";

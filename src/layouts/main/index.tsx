@@ -22,7 +22,7 @@ export const MainLayout: FC = () => {
         dispatch(checkUser());
       }
     }
-  }, [token, user]);
+  }, [token, user, isLoggedIn]);
 
   return Object.keys(user).length > 0 ? (
     <StyledMainLayout>

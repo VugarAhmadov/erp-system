@@ -10,10 +10,11 @@ import { getValidator, ShowErrorFunc, showErrorOnChange } from "helpers";
 import React, { ReactNode } from "react";
 import TextField, { TextFieldProps as MuiTextFieldProps } from "@mui/material/TextField";
 import { FieldValidator } from "final-form";
+import { useValidators } from "hooks";
 
-export type AutocompleteData = {
-  [key: string]: any | null;
-};
+// export type AutocompleteData = {
+//   [key: string]: any | null;
+// };
 
 export interface AutocompleteProps<
   T,
@@ -43,14 +44,19 @@ export function Autocomplete<
   DisableClearable extends boolean | undefined,
   FreeSolo extends boolean | undefined
 >(props: AutocompleteProps<T, Multiple, DisableClearable, FreeSolo>): JSX.Element {
-  const { name, fieldProps, validate, ...rest } = props;
+  const { name, fieldProps, validate, required, ...rest } = props;
+  const { required: requiredValidator } = useValidators();
+
+  const defaultValidators = () => {
+    return [required ? requiredValidator : undefined] as FieldValidator<any>[];
+  };
 
   return (
     <Field
       name={name}
       render={(fieldRenderProps) => <AutocompleteWrapper {...fieldRenderProps} {...rest} />}
       {...fieldProps}
-      validate={getValidator(validate)}
+      validate={getValidator(validate, defaultValidators())}
     />
   );
 }

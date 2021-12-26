@@ -3,37 +3,37 @@ import { getAll, add, edit, remove } from "./actions";
 import { IDialog, IGetAllTable } from "types";
 import { ILoading } from "./types";
 
-export interface IApplicationState {
+export interface IModuleState {
   loading: ILoading;
-  applications: IGetAllTable;
+  modules: IGetAllTable;
   dialog: IDialog;
-  selectedApp: string;
+  selectedModule: string;
 }
 
-const initialState: IApplicationState = {
+const initialState: IModuleState = {
   loading: {
     getAll: false,
     add: false,
     edit: false,
     remove: false,
   },
-  applications: {} as IGetAllTable,
+  modules: {} as IGetAllTable,
   dialog: {
     opened: false,
     type: "",
   },
-  selectedApp: "",
+  selectedModule: "",
 };
 
-export const applicationSlice = createSlice({
-  name: "application",
+export const moduleSlice = createSlice({
+  name: "module",
   initialState: initialState,
   reducers: {
     setDialog: (state, action: PayloadAction<IDialog>) => {
       state.dialog = action.payload;
     },
-    setSelectedApplication: (state, action: PayloadAction<string>) => {
-      state.selectedApp = action.payload;
+    setSelectedModule: (state, action: PayloadAction<string>) => {
+      state.selectedModule = action.payload;
     },
   },
   extraReducers: {
@@ -43,11 +43,11 @@ export const applicationSlice = createSlice({
     },
     [getAll.rejected.type]: (state, { payload }) => {
       state.loading.getAll = false;
-      state.applications = {} as IGetAllTable;
+      state.modules = {} as IGetAllTable;
     },
     [getAll.fulfilled.type]: (state, action: PayloadAction<IGetAllTable>) => {
       state.loading.getAll = false;
-      state.applications = action.payload;
+      state.modules = action.payload;
     },
     //* GET ALL END
     //* ADD
@@ -90,4 +90,4 @@ export const applicationSlice = createSlice({
   },
 });
 
-export const { setDialog, setSelectedApplication } = applicationSlice.actions;
+export const { setDialog, setSelectedModule } = moduleSlice.actions;

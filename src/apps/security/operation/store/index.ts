@@ -3,37 +3,37 @@ import { getAll, add, edit, remove } from "./actions";
 import { IDialog, IGetAllTable } from "types";
 import { ILoading } from "./types";
 
-export interface IApplicationState {
+export interface IOperationState {
   loading: ILoading;
-  applications: IGetAllTable;
+  operations: IGetAllTable;
   dialog: IDialog;
-  selectedApp: string;
+  selectedOperation: string;
 }
 
-const initialState: IApplicationState = {
+const initialState: IOperationState = {
   loading: {
     getAll: false,
     add: false,
     edit: false,
     remove: false,
   },
-  applications: {} as IGetAllTable,
+  operations: {} as IGetAllTable,
   dialog: {
     opened: false,
     type: "",
   },
-  selectedApp: "",
+  selectedOperation: "",
 };
 
-export const applicationSlice = createSlice({
-  name: "application",
+export const operationSlice = createSlice({
+  name: "operation",
   initialState: initialState,
   reducers: {
     setDialog: (state, action: PayloadAction<IDialog>) => {
       state.dialog = action.payload;
     },
-    setSelectedApplication: (state, action: PayloadAction<string>) => {
-      state.selectedApp = action.payload;
+    setSelectedOperation: (state, action: PayloadAction<string>) => {
+      state.selectedOperation = action.payload;
     },
   },
   extraReducers: {
@@ -43,11 +43,11 @@ export const applicationSlice = createSlice({
     },
     [getAll.rejected.type]: (state, { payload }) => {
       state.loading.getAll = false;
-      state.applications = {} as IGetAllTable;
+      state.operations = {} as IGetAllTable;
     },
     [getAll.fulfilled.type]: (state, action: PayloadAction<IGetAllTable>) => {
       state.loading.getAll = false;
-      state.applications = action.payload;
+      state.operations = action.payload;
     },
     //* GET ALL END
     //* ADD
@@ -90,4 +90,4 @@ export const applicationSlice = createSlice({
   },
 });
 
-export const { setDialog, setSelectedApplication } = applicationSlice.actions;
+export const { setDialog, setSelectedOperation } = operationSlice.actions;

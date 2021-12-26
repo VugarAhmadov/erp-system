@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { applicationApi } from "api";
+import { moduleApi } from "api";
 import { toast } from "react-toastify";
-import { IAddOrEditApplicationRequest } from "./types";
+import { IAddOrEditModuleRequest } from "./types";
 
-export const getAll = createAsyncThunk("application/getAll", async (_, { rejectWithValue }) => {
+export const getAll = createAsyncThunk("module/getAll", async (_, { rejectWithValue }) => {
   try {
-    const { data } = await applicationApi.getAll();
+    const { data } = await moduleApi.getAll();
     if (data) {
       return data?.tbl[0];
     } else {
@@ -18,10 +18,10 @@ export const getAll = createAsyncThunk("application/getAll", async (_, { rejectW
 });
 
 export const add = createAsyncThunk(
-  "application/add",
-  async (requestData: IAddOrEditApplicationRequest, { rejectWithValue, dispatch }) => {
+  "module/add",
+  async (requestData: IAddOrEditModuleRequest, { rejectWithValue, dispatch }) => {
     try {
-      const { data } = await applicationApi.add(requestData);
+      const { data } = await moduleApi.add(requestData);
       if (data?.err.length === 0) {
         await dispatch(getAll());
         toast.success("Əlavə edildi");
@@ -39,10 +39,10 @@ export const add = createAsyncThunk(
 );
 
 export const edit = createAsyncThunk(
-  "application/edit",
-  async (requestData: IAddOrEditApplicationRequest, { rejectWithValue, dispatch }) => {
+  "module/edit",
+  async (requestData: IAddOrEditModuleRequest, { rejectWithValue, dispatch }) => {
     try {
-      const { data } = await applicationApi.edit(requestData);
+      const { data } = await moduleApi.edit(requestData);
       if (data?.err?.length === 0) {
         await dispatch(getAll());
         toast.success("Düzəliş edildi");
@@ -59,9 +59,9 @@ export const edit = createAsyncThunk(
   }
 );
 
-export const remove = createAsyncThunk("application/remove", async (appId: string, { rejectWithValue, dispatch }) => {
+export const remove = createAsyncThunk("module/remove", async (moduleId: string, { rejectWithValue, dispatch }) => {
   try {
-    const { data } = await applicationApi.remove(appId);
+    const { data } = await moduleApi.remove(moduleId);
     if (data?.err.length === 0) {
       await dispatch(getAll());
       toast.success("Silindi");

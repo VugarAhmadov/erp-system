@@ -14,7 +14,7 @@ export const FilterBar: FC<IFilterBar> = ({ addButton }) => {
   // };
 
   return (
-    <StyledPaper elevation={4}>
+    <StyledPaper elevation={2}>
       <Grid container>
         <Grid item xs={4}>
           {addButton.show && (

@@ -1,26 +1,30 @@
-import React from "react";
-import { DataTable, FilterBar, SectionHeader } from "components/shared";
+import React, { useEffect } from "react";
+import { DataTable, FilterBar, SectionHeader, Spinner } from "components/shared";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { add, edit, remove } from "./store/actions";
+import { add, edit, getAll, remove } from "./store/actions";
 import { AppState } from "store";
 import { Column } from "@material-table/core";
-import { setDialog, setSelectedApplication } from "./store";
+import { setDialog, setSelectedOperation } from "./store";
 import { AddOrEdit } from "./components";
-import { IAddOrEditApplicationRequest } from "./store/types";
+import { IAddOrEditOperationRequest } from "./store/types";
 import { Icon, IconButton } from "@mui/material";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-import { StyledApplication } from "./application.styled";
+import { StyledOperation } from "./operation.styled";
 
-export const Application = () => {
+export const Operation = () => {
   const { t } = useTranslation("common");
   const dispatch = useDispatch();
-  const applications = useSelector((state: AppState) => state.application.applications);
-  const loading = useSelector((state: AppState) => state.application.loading);
-  const seqColumns = applications?.seqColumn?.split(",");
-  const dialog = useSelector((state: AppState) => state.application.dialog);
-  const selectedApp = useSelector((state: AppState) => state.application.selectedApp);
+  const operations = useSelector((state: AppState) => state.operation.operations);
+  const loading = useSelector((state: AppState) => state.operation.loading);
+  const seqColumns = operations?.seqColumn?.split(",");
+  const dialog = useSelector((state: AppState) => state.operation.dialog);
+  const selectedOperation = useSelector((state: AppState) => state.operation.selectedOperation);
+
+  useEffect(() => {
+    dispatch(getAll());
+  }, []);
 
   const buildColumns = () => {
     let columns: Column<object>[] = [
@@ -31,13 +35,13 @@ export const Application = () => {
       },
     ];
 
-    applications?.c?.forEach((column) =>
+    operations?.c?.forEach((column) => {
       columns.push({
         title: column.n,
         field: column.i,
         hidden: !seqColumns.includes(column.i),
-      })
-    );
+      });
+    });
 
     columns.push({
       title: "",
@@ -61,7 +65,7 @@ export const Application = () => {
   const buildData = () => {
     let data: any[] = [];
 
-    applications?.r?.map((row, index) => {
+    operations?.r?.map((row, index) => {
       data.push({ index: index + 1, ...row });
     });
 
@@ -72,12 +76,12 @@ export const Application = () => {
     dispatch(setDialog({ opened: true, type: "add" }));
   };
 
-  const handleEditClick = (appId: string) => {
-    dispatch(setSelectedApplication(appId));
+  const handleEditClick = (operationId: string) => {
+    dispatch(setSelectedOperation(operationId));
     dispatch(setDialog({ type: "edit", opened: true }));
   };
 
-  const handleRemove = (appId: string) => {
+  const handleRemove = (operationId: string) => {
     const MySwal = withReactContent(Swal);
     MySwal.fire({
       text: "Are you sure to remove?",
@@ -87,7 +91,7 @@ export const Application = () => {
       cancelButtonText: "cancel",
     }).then((result) => {
       if (result.value) {
-        dispatch(remove(appId));
+        dispatch(remove(operationId));
       }
     });
   };
@@ -96,19 +100,19 @@ export const Application = () => {
     dispatch(setDialog({ opened: false, type: "" }));
   };
 
-  const handleSubmit = (data: IAddOrEditApplicationRequest) => {
-    dialog.type === "edit" ? dispatch(edit({ ...data, id: selectedApp })) : dispatch(add(data));
+  const handleSubmit = (data: IAddOrEditOperationRequest) => {
+    dialog.type === "edit" ? dispatch(edit({ ...data, id: selectedOperation })) : dispatch(add(data));
   };
 
   return (
     <>
       {" "}
-      <StyledApplication>
-        <SectionHeader title="Applications" />
+      <StyledOperation>
+        <SectionHeader title="Operations" />
         <FilterBar
           addButton={{
             show: true,
-            title: t("addApplication"),
+            title: t("addOperation"),
             onClick: handleAddClick,
           }}
         />
@@ -121,7 +125,7 @@ export const Application = () => {
             toolbar: false,
           }}
         />
-      </StyledApplication>
+      </StyledOperation>
       <AddOrEdit dialog={dialog} onClose={handleDialogClose} onSubmit={handleSubmit} />
     </>
   );

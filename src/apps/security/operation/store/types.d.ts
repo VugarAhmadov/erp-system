@@ -2,7 +2,7 @@ import { IMainLoading } from "types";
 
 export interface ILoading extends IMainLoading {}
 
-export interface IAddOrEditApplicationRequest {
+export interface IAddOrEditOperationRequest {
   nameAz: string;
   nameEn: string;
   nameRu: string;
@@ -11,6 +11,8 @@ export interface IAddOrEditApplicationRequest {
   shortNameRu: string;
   icon: string;
   url: string;
+  code: string;
+  applicationId: string;
   parentId: string;
   id?: string;
 }
