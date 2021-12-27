@@ -8,6 +8,7 @@ import { operationsSlice } from "apps/security/configuration/operations/store";
 import { applicationSlice } from "apps/security/application/store";
 import { moduleSlice } from "apps/security/module/store";
 import { operationSlice } from "apps/security/operation/store";
+import { dialogSlice } from "components/shared/dialog/store";
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
   history: createBrowserHistory(),
@@ -23,6 +24,7 @@ const store = configureStore({
     [applicationSlice.name]: applicationSlice.reducer,
     [moduleSlice.name]: moduleSlice.reducer,
     [operationSlice.name]: operationSlice.reducer,
+    [dialogSlice.name]: dialogSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(routerMiddleware),
 });

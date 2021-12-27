@@ -6,6 +6,7 @@ import store from "store";
 import "translation";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { DialogContainer } from "components/shared/dialog/container";
 
 export const App = () => {
   return (
@@ -14,6 +15,7 @@ export const App = () => {
         <AppRouting />
       </ThemeProvider>
       <ToastContainer theme="colored" />
+      <DialogContainer />
     </Provider>
   );
 };
