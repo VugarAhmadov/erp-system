@@ -14,11 +14,6 @@ export const FilterBar: FC<IFilterBar> = ({ addButton }) => {
   //   },
   //   ...config,
   // };
-  const openDialog = useDialog();
-
-  const handleDialogOpen = () => {
-    openDialog({ content: <div>salam</div>, fullWidth: true });
-  };
 
   return (
     <StyledPaper elevation={2}>
@@ -36,7 +31,6 @@ export const FilterBar: FC<IFilterBar> = ({ addButton }) => {
               {addButton.title}
             </Button>
           )}
-          <Button onClick={() => handleDialogOpen()}>open dialog</Button>
         </Grid>
         <Grid item xs={8}></Grid>
       </Grid>

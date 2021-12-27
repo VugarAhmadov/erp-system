@@ -1,31 +1,28 @@
-import { Icon, IconButton, Menu, MenuItem } from "@mui/material";
-import { Select } from "components/shared";
-import React, { FC } from "react";
+import React, { FC, MouseEvent, useState } from "react";
+import { Button, Icon, MenuItem, ListItemIcon, ListItemText } from "@mui/material";
 import { Form } from "react-final-form";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Select } from "components/shared";
 import { AppState } from "store";
-import { StyledHeader } from "./header.styled";
+import { StyledAppsMenu, StyledHeader } from "./header.styled";
 
 export const Header: FC = () => {
+  const { i18n } = useTranslation();
+  const navigate = useNavigate();
+  const [appMenu, setAppMenu] = useState<HTMLElement | null>(null);
   const apps = useSelector((state: AppState) => state.application.applications.r);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   return (
     <StyledHeader>
-      <div className="lang">
+      <div className="lang-container">
         <Form
           onSubmit={() => {}}
           render={() => (
             <Select
               name="lang"
-              value="az"
+              value={i18n.language}
               data={[
                 { label: "az", value: "az" },
                 { label: "en", value: "en" },
@@ -33,38 +30,48 @@ export const Header: FC = () => {
               ]}
               inputProps={{
                 onChange: (e: any) => {
-                  // router.push(router.pathname, undefined, { locale: e.target.value });
+                  i18n.changeLanguage(e.target.value);
                 },
               }}
+              showEmptyLabel={false}
+              IconComponent={() => <></>}
             />
           )}
         />
       </div>
-      <div className="apps">
-        <IconButton
+
+      <div className="apps-container">
+        <Button
+          variant="outlined"
           aria-label="more"
-          id="long-button"
+          id="apps-button"
+          className="apps-button"
           aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-          onClick={handleClick}
+          aria-expanded={appMenu ? "true" : undefined}
+          onClick={(event: MouseEvent<HTMLButtonElement>) => setAppMenu(event.currentTarget)}
+          color="inherit"
         >
           <Icon>apps</Icon>
-        </IconButton>
-        <Menu
-          id="long-menu"
+        </Button>
+        <StyledAppsMenu
+          id="apps-menu"
+          className="apps-menu"
           MenuListProps={{
-            "aria-labelledby": "long-button",
+            "aria-labelledby": "apps-button",
           }}
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
+          anchorEl={appMenu}
+          open={!!appMenu}
+          onClose={() => setAppMenu(null)}
         >
           {apps.map((app) => (
-            <MenuItem key={app.id} onClick={handleClose}>
-              {app.name}
+            <MenuItem key={app.id} onClick={() => navigate(app.url)} className="menu-item">
+              <ListItemIcon>
+                <Icon>{app.icon || "home"}</Icon>
+              </ListItemIcon>
+              <ListItemText>{app.name}</ListItemText>
             </MenuItem>
           ))}
-        </Menu>
+        </StyledAppsMenu>
       </div>
     </StyledHeader>
   );

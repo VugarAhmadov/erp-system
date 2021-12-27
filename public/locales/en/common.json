@@ -1,4 +1,7 @@
 {
-  "login": "Login",
-  "maxLength": "{{ length }} simvoldan böyük ola bilməz"
+  "login": "Daxil ol",
+  "maxLength": "{{ length }} simvoldan böyük ola bilməz",
+  "configurations": "Configurations",
+  "tables": "Tables",
+  "views": "Views"
 }

@@ -39,6 +39,7 @@ export interface SelectProps extends Partial<Omit<MuiSelectProps, "onChange">> {
   data?: SelectData[];
   children?: ReactNode;
   validate?: FieldValidator<any> | FieldValidator<any>[];
+  showEmptyLabel?: boolean;
   emptyLabel?: string;
 }
 
@@ -57,6 +58,7 @@ export const Select = (props: SelectProps) => {
     formHelperTextProps,
     menuItemProps,
     showError = showErrorOnChange,
+    showEmptyLabel = true,
     emptyLabel,
     validate,
     ...restSelectProps
@@ -102,9 +104,12 @@ export const Select = (props: SelectProps) => {
               inputProps={{ required, ...restInput }}
               {...restSelectProps}
             >
-              <MenuItem value="" disabled>
-                {emptyLabel ?? t("choose")}
-              </MenuItem>
+              {showEmptyLabel && (
+                <MenuItem value="" disabled>
+                  {emptyLabel ?? t("choose")}
+                </MenuItem>
+              )}
+
               {data
                 ? data.map((item) => (
                     <MenuItem value={item.value} key={item.value} disabled={item.disabled} {...(menuItemProps as any)}>
