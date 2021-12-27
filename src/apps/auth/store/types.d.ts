@@ -91,6 +91,7 @@ export interface IModule {
   icon?: string;
   code: string;
   operations: IOperation[];
+  url: string;
 }
 
 export interface IOperation {

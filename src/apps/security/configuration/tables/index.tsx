@@ -138,7 +138,7 @@ export const Tables = () => {
                       top: "0",
                       background: "#ecf0f1",
                     },
-                    actionsColumnIndex: -1,
+                    // actionsColumnIndex: -1,
                     maxBodyHeight: "calc(100vh - 280px)",
                     editCellStyle: {},
                   }}

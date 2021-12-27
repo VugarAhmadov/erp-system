@@ -19,7 +19,7 @@ export const Dialog: FC<IDialogProps> = ({ dialog, onClose }) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       fullWidth={true}
-      maxWidth="xs"
+      maxWidth="sm"
       scroll="paper"
     >
       <DialogContent>

@@ -16,6 +16,7 @@ import { ErrorMessage, getValidator, ShowErrorFunc, showErrorOnChange, useFieldF
 import { Field, FieldProps } from "react-final-form";
 import { FieldValidator } from "final-form";
 import { useTranslation } from "react-i18next";
+import { useValidators } from "hooks";
 
 export interface SelectData {
   label: string;
@@ -70,6 +71,12 @@ export const Select = (props: SelectProps) => {
   const isError = showError(field);
   const { t } = useTranslation("common");
 
+  const { required: requiredValidator } = useValidators();
+
+  const defaultValidators = () => {
+    return [required ? requiredValidator : undefined] as FieldValidator<any>[];
+  };
+
   return (
     <Field
       name={name}
@@ -116,7 +123,7 @@ export const Select = (props: SelectProps) => {
         );
       }}
       {...fieldProps}
-      validate={getValidator(validate)}
+      validate={getValidator(validate, defaultValidators())}
     />
   );
 };

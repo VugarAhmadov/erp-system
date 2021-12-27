@@ -42,5 +42,11 @@ export const coreTheme = {
         size: "small",
       },
     },
+    MuiSelect: {
+      defaultProps: {
+        variant: "outlined",
+        size: "small",
+      },
+    },
   },
 } as ThemeOptions;

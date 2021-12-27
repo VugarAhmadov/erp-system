@@ -7,7 +7,7 @@ export const DataTable: FC<IDataTable> = ({ options, ...rest }) => {
   return (
     <MaterialTable
       options={{
-        paging: false,
+        paging: true,
         headerStyle: {
           position: "sticky",
           top: "0",
