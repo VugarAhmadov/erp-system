@@ -9,9 +9,9 @@ interface ISectionHeader {
 export const SectionHeader: FC<ISectionHeader> = ({ title }) => {
   return (
     <StyledSectionHeader variant="h4">
-      <Helmet>
+      {/* <Helmet>
         <title>{`CODEUM | ${title}`}</title>
-      </Helmet>
+      </Helmet> */}
       {title}
     </StyledSectionHeader>
   );

@@ -3,9 +3,8 @@ import { Button, Grid, Icon, Paper } from "@mui/material";
 import { StyledPaper } from "./filter-bar.styled";
 import { IFilterBar, IFilterBarConfig } from "./type";
 import { Link as RouterLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { openDialog } from "../dialog/store";
 import { DialogFormContent } from "./form";
+import { useDialog } from "hooks";
 
 export const FilterBar: FC<IFilterBar> = ({ addButton }) => {
   // const initialConfig: IFilterBarConfig = {
@@ -15,10 +14,10 @@ export const FilterBar: FC<IFilterBar> = ({ addButton }) => {
   //   },
   //   ...config,
   // };
-  const dispatch = useDispatch();
+  const openDialog = useDialog();
 
   const handleDialogOpen = () => {
-    dispatch(openDialog({ id: 1, content: <DialogFormContent /> }));
+    openDialog({ content: <div>salam</div>, fullWidth: true });
   };
 
   return (

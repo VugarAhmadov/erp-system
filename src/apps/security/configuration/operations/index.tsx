@@ -16,17 +16,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "store";
 import { StyledOperations } from "./operations.styled";
 import { useTranslation } from "react-i18next";
-import { Dialog } from "./components";
+import { AddForm, Dialog } from "./components";
 import { setDialog, setSelectedOperation } from "./store";
+import { useDialog } from "hooks";
 
 export const Operations = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation("common");
-
+  const addDialog = useDialog();
   const apps = useSelector((state: AppState) => state.auth.user.applications);
   const dialog = useSelector((state: AppState) => state.operations.dialog);
 
   const handleDialogOpen = (type: "" | "add" | "edit" | "all-view" | "add-priv", operation: string) => {
+    addDialog({
+      content: <AddForm />,
+      maxWidth: "sm",
+      scroll: "paper",
+      fullWidth: true,
+    });
+
     dispatch(setSelectedOperation(operation));
     dispatch(setDialog({ type, opened: true }));
   };
@@ -101,7 +109,7 @@ export const Operations = () => {
           </Accordion>
         ))}
       </StyledOperations>
-      <Dialog dialog={dialog} onClose={handleDialogClose} onSubmit={() => {}} />
+      {/* <Dialog dialog={dialog} onClose={handleDialogClose} onSubmit={() => {}} /> */}
     </>
   );
 };
