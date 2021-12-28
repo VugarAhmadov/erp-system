@@ -1,8 +1,18 @@
 import styled from "@emotion/styled";
 
 export const StyledAddForm = styled.div`
-  & .MuiTypography-h5 {
+  & .form-header {
     margin-bottom: 1.5rem;
+    border-bottom: 1px solid ${({ theme }) => theme.palette.grey[300]};
+    padding-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+
+    & .action-buttons {
+      & .submit-btn {
+        margin-right: 1rem;
+      }
+    }
   }
 
   & .component-buttons {
@@ -14,9 +24,21 @@ export const StyledAddForm = styled.div`
 
   & .input-container {
     position: relative;
+    margin-bottom: 1rem;
 
     & .MuiTextField-root {
-      width: 100%;
+      & .MuiIconButton-root {
+        & .MuiIcon-root {
+          font-size: 1.2rem;
+        }
+
+        &.edit-btn {
+          color: ${({ theme }) => theme.palette.primary.main};
+        }
+        &.delete-btn {
+          color: ${({ theme }) => theme.palette.error.main};
+        }
+      }
     }
 
     & .action-buttons {
@@ -25,7 +47,6 @@ export const StyledAddForm = styled.div`
       right: 0;
 
       & .MuiIcon-root {
-        font-size: 1rem;
       }
     }
   }

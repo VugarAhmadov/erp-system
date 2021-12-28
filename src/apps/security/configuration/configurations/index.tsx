@@ -18,7 +18,8 @@ import { StyledConfigurations } from "./configurations.styled";
 import { useTranslation } from "react-i18next";
 import { Dialog } from "./components";
 import { setDialog, setSelectedOperation } from "./store";
-import { getHtmlFormOrViewname } from "apps/security/operation/store/actions";
+import { addHtmlForm } from "apps/security/operation/store/actions";
+import { IAddHtmlFormRequest } from "apps/security/operation/store/types";
 
 export const Configurations = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,10 @@ export const Configurations = () => {
 
   const handleDialogClose = () => {
     dispatch(setDialog({ type: "", opened: false }));
+  };
+
+  const handleAddFormSubmit = (data: IAddHtmlFormRequest) => {
+    dispatch(addHtmlForm(data));
   };
 
   return (
@@ -101,7 +106,7 @@ export const Configurations = () => {
           </Accordion>
         ))}
       </StyledConfigurations>
-      <Dialog dialog={dialog} onClose={handleDialogClose} onSubmit={() => {}} />
+      <Dialog dialog={dialog} onClose={handleDialogClose} onAddFormSubmit={handleAddFormSubmit} />
     </>
   );
 };

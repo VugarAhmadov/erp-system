@@ -1,7 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { operationApi } from "api";
+import { setDialog } from "apps/security/configuration/configurations/store";
 import { toast } from "react-toastify";
-import { IAddOrEditOperationRequest, IGetHtmlFormOrViewnameRequest } from "./types";
+import { IAddOrEditOperationRequest, IGetHtmlFormOrViewnameRequest, IAddHtmlFormRequest } from "./types";
 
 export const getAll = createAsyncThunk("operation/getAll", async (_, { rejectWithValue }) => {
   try {
@@ -87,6 +88,24 @@ export const getHtmlFormOrViewname = createAsyncThunk(
       const { data } = await operationApi.getHtmlFormOrViewname(request);
       if (data?.err?.length === 0) {
         return data.tbl[0].r[0];
+      } else {
+        return rejectWithValue(data);
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+);
+
+export const addHtmlForm = createAsyncThunk(
+  "operation/addHtmlForm",
+  async (request: IAddHtmlFormRequest, { rejectWithValue, dispatch }) => {
+    try {
+      const { data } = await operationApi.addHtmlForm(request);
+      if (data?.err?.length === 0) {
+        dispatch(setDialog({ opened: false, type: "" }));
+        return data;
       } else {
         return rejectWithValue(data);
       }

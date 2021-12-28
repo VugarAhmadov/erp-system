@@ -1,47 +1,97 @@
-import React, { useEffect, useState } from "react";
-import { Button, Icon, IconButton, TextField, Typography } from "@mui/material";
+import React, { FC, useEffect, useState } from "react";
+import { Button, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { StyledAddForm } from "./add-form.styled";
-import { Input } from "./components";
-import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "store";
-import { getHtmlFormOrViewname } from "apps/security/operation/store/actions";
 import { operationApi } from "api";
+import { InputDialog, InputElement } from "./components";
 
-export const AddForm = () => {
+interface IAddForm {
+  onClose(): void;
+  onSubmit(data: any): void;
+}
+
+interface IDialogState {
+  open: boolean;
+  data: IDialogStateData | null;
+}
+
+interface IDialogStateData {
+  type: string;
+  index: number;
+  params: any;
+  operationId: string;
+}
+
+export const AddForm: FC<IAddForm> = ({ onClose, onSubmit }) => {
   const { t, i18n } = useTranslation("common");
-  const dispatch = useDispatch();
-  const [dialogOpened, setDialogOpened] = useState(false);
+
+  const [dialog, setDialog] = useState<IDialogState>({ open: false, data: null });
+  const [formElements, setFormElements] = useState<any[]>([]);
 
   const selectedOperation = useSelector((state: AppState) => state.configurations.selectedOperation);
-
-  const [elements, setElements] = useState<any[]>([]);
 
   useEffect(() => {
     operationApi.getHtmlFormOrViewname({ lang: i18n.language, operationId: selectedOperation }).then(({ data }) => {
       if (data.err.length === 0) {
-        setElements(JSON.parse(data.tbl[0].r[0].operationHtml));
+        setFormElements(JSON.parse(data.tbl[0].r[0].operationHtml));
       }
     });
   }, [selectedOperation]);
 
-  const handleAddInputSubmit = (data: any) => {
-    setElements((elementsState) => [
-      ...elementsState,
-      {
-        element: "input",
-        index: elements.length,
-        params: data,
-      },
-    ]);
+  const handleDialogOpen = (type: string, index: number) => {
+    const params = formElements.find((element) => element.index === index)?.params || null;
+    setDialog({ open: true, data: { type, index, params, operationId: selectedOperation } });
   };
-  // console.log(elements);
+
+  const handleDialogClose = () => {
+    setDialog({ open: false, data: null });
+  };
+
+  const handleDeleteElement = (index: number) => {
+    let elementsCopy = [...formElements];
+    elementsCopy.splice(index, 1);
+    elementsCopy.forEach((el, i) => {
+      el.index = i;
+    });
+    setFormElements(elementsCopy);
+  };
+
+  const handleSubmit = (data: any) => {
+    let elementsCopy = [...formElements];
+    if (dialog.data?.index !== -1) {
+      elementsCopy[dialog.data?.index!].params = data;
+    } else {
+      elementsCopy.push({
+        element: dialog.data?.type,
+        index: elementsCopy.length,
+        params: data,
+      });
+    }
+    setFormElements(elementsCopy);
+    handleDialogClose();
+  };
+
   return (
     <>
       <StyledAddForm>
-        <Typography variant="h5">{t("addForm")}</Typography>
+        <div className="form-header">
+          <Typography variant="h5">{t("addForm")}</Typography>
+          <div className="action-buttons">
+            <Button
+              onClick={() => onSubmit({ operationHtml: JSON.stringify(formElements), operationId: selectedOperation })}
+              className="submit-btn"
+            >
+              {t("submit")}
+            </Button>
+            <Button onClick={onClose} variant="outlined">
+              {t("close")}
+            </Button>
+          </div>
+        </div>
         <div className="component-buttons">
-          <Button onClick={() => setDialogOpened(true)}>{t("input")}</Button>
+          <Button onClick={() => handleDialogOpen("input", -1)}>{t("input")}</Button>
           <Button onClick={() => console.log("test")}>{t("select")}</Button>
           <Button onClick={() => console.log("test")}>{t("checkbox")}</Button>
           <Button onClick={() => console.log("test")}>{t("label")}</Button>
@@ -49,32 +99,25 @@ export const AddForm = () => {
           <Button onClick={() => console.log("test")}>{t("button")}</Button>
         </div>
         <div className="drag-container">
-          {elements.map((element) => (
+          {formElements.map((element) => (
             <div key={element.index}>
               {element.element === "input" && (
-                <div className="input-container">
-                  <TextField
-                    type={element.params.type}
-                    name={element.params.name}
-                    label={t(element.params.label)}
-                    placeholder={element.params?.placeholder}
-                    size="medium"
-                  />
-                  <div className="action-buttons">
-                    <IconButton size="small">
-                      <Icon>edit</Icon>
-                    </IconButton>
-                    <IconButton>
-                      <Icon>delete</Icon>
-                    </IconButton>
-                  </div>
-                </div>
+                <InputElement
+                  handleEdit={() => handleDialogOpen("input", element.index)}
+                  handleDelete={() => handleDeleteElement(element.index)}
+                  {...element.params}
+                />
               )}
             </div>
           ))}
         </div>
       </StyledAddForm>
-      <Input open={dialogOpened} onClose={() => setDialogOpened(false)} onSubmit={handleAddInputSubmit} />
+      <InputDialog
+        open={dialog.open}
+        onClose={handleDialogClose}
+        onSubmit={handleSubmit}
+        params={dialog.data?.params}
+      />
     </>
   );
 };

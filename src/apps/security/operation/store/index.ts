@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getAll, add, edit, remove, getHtmlFormOrViewname } from "./actions";
+import { getAll, add, edit, remove, getHtmlFormOrViewname, addHtmlForm } from "./actions";
 import { IDialog, IGetAllTable } from "types";
 import { ILoading } from "./types";
 
@@ -18,6 +18,7 @@ const initialState: IOperationState = {
     edit: false,
     remove: false,
     getHtmlFormOrViewname: false,
+    addHtmlForm: false,
   },
   operations: {} as IGetAllTable,
   htmlFormOrViewname: {},
@@ -102,6 +103,17 @@ export const operationSlice = createSlice({
       state.htmlFormOrViewname = action.payload;
     },
     //* GET_HTML_FORM_OR_VIEWNAME END
+    //* ADD_HTML_FORM
+    [addHtmlForm.pending.type]: (state) => {
+      state.loading.addHtmlForm = true;
+    },
+    [addHtmlForm.rejected.type]: (state) => {
+      state.loading.addHtmlForm = false;
+    },
+    [addHtmlForm.fulfilled.type]: (state) => {
+      state.loading.addHtmlForm = false;
+    },
+    //* ADD_HTML_FORM END
   },
 });
 

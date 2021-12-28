@@ -2,6 +2,7 @@ import { IMainLoading } from "types";
 
 export interface ILoading extends IMainLoading {
   getHtmlFormOrViewname: boolean;
+  addHtmlForm: boolean;
 }
 
 export interface IAddOrEditOperationRequest {
@@ -21,5 +22,10 @@ export interface IAddOrEditOperationRequest {
 
 export interface IGetHtmlFormOrViewnameRequest {
   lang: string;
+  operationId: string;
+}
+
+export interface IAddHtmlFormRequest {
+  operationHtml: string;
   operationId: string;
 }
