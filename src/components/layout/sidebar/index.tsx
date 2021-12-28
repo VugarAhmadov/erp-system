@@ -4,10 +4,12 @@ import { StyledSidebar } from "./sidebar.styled";
 import { useSelector } from "react-redux";
 import { AppState } from "store";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export const Sidebar: FC = () => {
-  const modules = useSelector((state: AppState) => state.module.modules.r);
+  const modules = useSelector((state: AppState) => state.auth.user.applications[0].modules);
   const location = useLocation();
+  const { i18n } = useTranslation();
 
   return (
     <StyledSidebar>
@@ -18,11 +20,11 @@ export const Sidebar: FC = () => {
         <List>
           {modules?.map((module) => (
             <ListItem key={module.id}>
-              <ListItemButton selected={module.url === location.pathname} component={Link} to={module.url}>
+              <ListItemButton selected={module.url === location.pathname} component={Link} to={module.url ?? "/"}>
                 <ListItemIcon>
                   <Icon>{module.icon || "layers"}</Icon>
                 </ListItemIcon>
-                <ListItemText primary={module.name} />
+                <ListItemText primary={module.name[i18n.language as keyof typeof module.name]} />
               </ListItemButton>
             </ListItem>
           ))}

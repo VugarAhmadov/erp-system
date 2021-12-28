@@ -21,7 +21,7 @@ export const StyledSidebar = styled.div`
         padding: 0;
 
         & .MuiListItemButton-root {
-          padding: 0.5rem 1.5rem;
+          padding: 0.3rem 1.5rem;
 
           &:hover {
             & .MuiListItemIcon-root {
@@ -52,6 +52,10 @@ export const StyledSidebar = styled.div`
 
           & .MuiListItemText-root {
             color: ${({ theme }) => theme.palette.grey[400]};
+
+            & span {
+              font-size: 0.9rem;
+            }
           }
         }
       }
