@@ -1,6 +1,8 @@
 import { IMainLoading } from "types";
 
-export interface ILoading extends IMainLoading {}
+export interface ILoading extends IMainLoading {
+  getHtmlFormOrViewname: boolean;
+}
 
 export interface IAddOrEditOperationRequest {
   nameAz: string;
@@ -15,4 +17,9 @@ export interface IAddOrEditOperationRequest {
   applicationId: string;
   parentId: string;
   id?: string;
+}
+
+export interface IGetHtmlFormOrViewnameRequest {
+  lang: string;
+  operationId: string;
 }

@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { a11yProps } from "helpers";
 import { StyledConfiguration } from "./configuration.styled";
 import { TabPanel } from "components/shared";
-import { Operations } from "./operations";
+import { Configurations } from "./configurations";
 import { Tables } from "./tables";
 import { Views } from "./views";
 import { getAll as getAllViews } from "./views/store/actions";
@@ -34,7 +34,7 @@ export const Configuration = () => {
       </Tabs>
 
       <TabPanel value={value} index={0}>
-        <Operations />
+        <Configurations />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Tables />

@@ -14,27 +14,19 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "store";
-import { StyledOperations } from "./operations.styled";
+import { StyledConfigurations } from "./configurations.styled";
 import { useTranslation } from "react-i18next";
-import { AddForm, Dialog } from "./components";
+import { Dialog } from "./components";
 import { setDialog, setSelectedOperation } from "./store";
-import { useDialog } from "hooks";
+import { getHtmlFormOrViewname } from "apps/security/operation/store/actions";
 
-export const Operations = () => {
+export const Configurations = () => {
   const dispatch = useDispatch();
-  const { t } = useTranslation("common");
-  const addDialog = useDialog();
+  const { t, i18n } = useTranslation("common");
   const apps = useSelector((state: AppState) => state.auth.user.applications);
-  const dialog = useSelector((state: AppState) => state.operations.dialog);
+  const dialog = useSelector((state: AppState) => state.configurations.dialog);
 
   const handleDialogOpen = (type: "" | "add" | "edit" | "all-view" | "add-priv", operation: string) => {
-    addDialog({
-      content: <AddForm />,
-      maxWidth: "sm",
-      scroll: "paper",
-      fullWidth: true,
-    });
-
     dispatch(setSelectedOperation(operation));
     dispatch(setDialog({ type, opened: true }));
   };
@@ -45,7 +37,7 @@ export const Operations = () => {
 
   return (
     <>
-      <StyledOperations>
+      <StyledConfigurations>
         {apps.map((app) => (
           <Accordion className="application" key={app.id}>
             <AccordionSummary expandIcon={<Icon>expand_more</Icon>} aria-controls="panel1a-content" id="panel1a-header">
@@ -108,8 +100,8 @@ export const Operations = () => {
             </AccordionDetails>
           </Accordion>
         ))}
-      </StyledOperations>
-      {/* <Dialog dialog={dialog} onClose={handleDialogClose} onSubmit={() => {}} /> */}
+      </StyledConfigurations>
+      <Dialog dialog={dialog} onClose={handleDialogClose} onSubmit={() => {}} />
     </>
   );
 };

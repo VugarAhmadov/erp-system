@@ -2,12 +2,12 @@ import styled from "@emotion/styled";
 import { Menu } from "@mui/material";
 
 export const StyledHeader = styled.header`
-  height: 60px;
+  height: 50px;
   width: 100%;
   background-color: ${({ theme }) => theme.palette.grey[200]};
   display: flex;
   justify-content: flex-end;
-  padding: 0.6rem 1.5rem;
+  padding: 5px 1.5rem;
 
   & .lang-container {
     margin-right: 1rem;
@@ -42,14 +42,26 @@ export const StyledAppsMenu = styled(Menu)`
   & .MuiMenu-list {
     display: flex;
     flex-wrap: wrap;
-    width: 340px;
+    width: 250px;
+    justify-content: center;
 
-    & .menu-item {
+    & .MuiMenuItem-root {
       display: flex;
       flex-direction: column;
-      width: 110px;
-      height: 110px;
-      padding: 6px;
+      width: 120px;
+      padding: 5px;
+      border-radius: 0.5rem;
+
+      & .MuiListItemText-root {
+        margin-top: 5px;
+        text-align: center;
+
+        & span {
+          white-space: break-spaces;
+          font-size: 0.875rem;
+          text-align: center;
+        }
+      }
 
       & .MuiIcon-root {
         font-size: 2.5rem;

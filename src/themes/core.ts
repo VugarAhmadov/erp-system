@@ -48,5 +48,11 @@ export const coreTheme = {
         size: "small",
       },
     },
+    MuiFormControl: {
+      defaultProps: {
+        variant: "outlined",
+        size: "small",
+      },
+    },
   },
 } as ThemeOptions;

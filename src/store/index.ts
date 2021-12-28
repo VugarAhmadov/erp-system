@@ -4,11 +4,10 @@ import { createReduxHistoryContext } from "redux-first-history";
 import { authSlice } from "apps/auth/store";
 import { tablesSlice } from "apps/security/configuration/tables/store";
 import { viewsSlice } from "apps/security/configuration/views/store";
-import { operationsSlice } from "apps/security/configuration/operations/store";
+import { configurationsSlice } from "apps/security/configuration/configurations/store";
 import { applicationSlice } from "apps/security/application/store";
 import { moduleSlice } from "apps/security/module/store";
 import { operationSlice } from "apps/security/operation/store";
-import { dialogsSlice } from "components/shared/dialogs/store";
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
   history: createBrowserHistory(),
@@ -20,11 +19,10 @@ const store = configureStore({
     [authSlice.name]: authSlice.reducer,
     [tablesSlice.name]: tablesSlice.reducer,
     [viewsSlice.name]: viewsSlice.reducer,
-    [operationsSlice.name]: operationsSlice.reducer,
+    [configurationsSlice.name]: configurationsSlice.reducer,
     [applicationSlice.name]: applicationSlice.reducer,
     [moduleSlice.name]: moduleSlice.reducer,
     [operationSlice.name]: operationSlice.reducer,
-    [dialogsSlice.name]: dialogsSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

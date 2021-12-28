@@ -6,7 +6,7 @@ import { Dialog } from "./dialog";
 
 export const Dialogs: FC = ({}) => {
   const dispatch = useDispatch();
-  const dialogs = useSelector((state: AppState) => state.dialogs);
+  // const dialogs = useSelector((state: AppState) => state.dialogs);
 
   const handleDialogClose = (id: number) => {
     // dispatch(closeDialog(id));
@@ -15,9 +15,9 @@ export const Dialogs: FC = ({}) => {
 
   return (
     <>
-      {dialogs?.map((dialog, index) => (
+      {/* {dialogs?.map((dialog, index) => (
         <Dialog key={index} {...dialog} id={dialog.id} onClose={handleDialogClose} />
-      ))}
+      ))} */}
     </>
   );
 };

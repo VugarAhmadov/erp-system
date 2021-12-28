@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const StyledOperations = styled.div`
+export const StyledConfigurations = styled.div`
   padding: 1rem 0;
 
   & .application {

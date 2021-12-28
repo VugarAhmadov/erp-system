@@ -12,9 +12,10 @@ import { useTranslation } from "react-i18next";
 interface IInput {
   open: boolean;
   onClose(): void;
+  onSubmit(data: any): void;
 }
 
-export const Input: FC<IInput> = ({ open, onClose }) => {
+export const Input: FC<IInput> = ({ open, onClose, onSubmit }) => {
   const dispatch = useDispatch();
   const views = useSelector((state: AppState) => state.views.views);
   const selectedOperation = useSelector((state: AppState) => state.operation.selectedOperation);
@@ -35,18 +36,18 @@ export const Input: FC<IInput> = ({ open, onClose }) => {
     setAnchorEl(null);
   };
 
-  console.log(views.find((view) => view.name === selectedOperation));
+  // console.log(views.find((view) => view.name === selectedOperation));
 
   return (
     <Dialog open={open} onClose={onClose}>
       <Form
-        onSubmit={() => console.log("test")}
+        onSubmit={onSubmit}
         render={({ handleSubmit, invalid }) => (
           <StyledForm onSubmit={handleSubmit}>
             <Typography variant="h6">{t("addInputComponent")}</Typography>
             <div className="model-field">
               <TextField name="model" label="model" required />
-              <IconButton
+              {/* <IconButton
                 aria-label="more"
                 id="button"
                 className="select-button"
@@ -57,17 +58,18 @@ export const Input: FC<IInput> = ({ open, onClose }) => {
               >
                 <Icon>more_vert</Icon>
               </IconButton>
-              <Menu id="demo-customized-menu" anchorEl={anchorEl} open={_open} onClose={handleClose}>
+              <Menu id="button-menu" anchorEl={anchorEl} open={_open} onClose={handleClose}>
                 {views
                   .find((view) => view.name === selectedOperation)
                   ?.columns.map((column) => (
                     <MenuItem onClick={handleClose}>{column.name}</MenuItem>
                   ))}
-              </Menu>
+              </Menu> */}
             </div>
-            <TextField name="placeholder" label="placeholder" required className="field" />
+            <TextField name="label" label={t("label")} required className="field" />
+            <TextField name="placeholder" label="placeholder" className="field" />
             <Select
-              name="types"
+              name="type"
               data={[
                 { label: t("number"), value: "number" },
                 { label: t("text"), value: "text" },
@@ -76,12 +78,7 @@ export const Input: FC<IInput> = ({ open, onClose }) => {
               label={t("types")}
             />
             <div className="switch">
-              <Switches
-                label={t("required")}
-                name="required"
-                required
-                data={{ label: "required", value: "required" }}
-              />
+              <Switches name="required" required data={{ label: t("required"), value: "required" }} />
             </div>
 
             <div className="action-buttons">

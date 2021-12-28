@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { operationApi } from "api";
 import { toast } from "react-toastify";
-import { IAddOrEditOperationRequest } from "./types";
+import { IAddOrEditOperationRequest, IGetHtmlFormOrViewnameRequest } from "./types";
 
 export const getAll = createAsyncThunk("operation/getAll", async (_, { rejectWithValue }) => {
   try {
@@ -71,6 +71,23 @@ export const remove = createAsyncThunk(
       } else {
         //@ts-ignore
         toast.error(data.message?.az);
+        return rejectWithValue(data);
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+);
+
+export const getHtmlFormOrViewname = createAsyncThunk(
+  "operation/getHtmlFormOrViewname",
+  async (request: IGetHtmlFormOrViewnameRequest, { rejectWithValue, dispatch }) => {
+    try {
+      const { data } = await operationApi.getHtmlFormOrViewname(request);
+      if (data?.err?.length === 0) {
+        return data.tbl[0].r[0];
+      } else {
         return rejectWithValue(data);
       }
     } catch (error) {

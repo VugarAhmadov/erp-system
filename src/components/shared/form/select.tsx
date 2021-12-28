@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-
 import {
   FormControl,
   FormControlProps,
@@ -11,7 +10,6 @@ import {
   Select as MuiSelect,
   SelectProps as MuiSelectProps,
 } from "@mui/material";
-
 import { ErrorMessage, getValidator, ShowErrorFunc, showErrorOnChange, useFieldForErrors } from "helpers";
 import { Field, FieldProps } from "react-final-form";
 import { FieldValidator } from "final-form";
@@ -68,7 +66,7 @@ export const Select = (props: SelectProps) => {
     throw new Error("Please specify either children or data as an attribute.");
   }
 
-  const { variant } = restSelectProps;
+  const { variant, size } = restSelectProps;
   const field = useFieldForErrors(name);
   const isError = showError(field);
   const { t } = useTranslation("common");
@@ -90,7 +88,7 @@ export const Select = (props: SelectProps) => {
         return (
           <FormControl required={required} error={isError} fullWidth={true} variant={variant} {...formControlProps}>
             {!!label && (
-              <InputLabel id={labelId} {...inputLabelProps}>
+              <InputLabel id={labelId} {...inputLabelProps} variant={variant}>
                 {label}
               </InputLabel>
             )}
