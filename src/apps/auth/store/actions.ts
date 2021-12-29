@@ -3,16 +3,12 @@ import { push } from "redux-first-history";
 import { authApi } from "api";
 import { ILoginData, IUser } from "./types";
 import { getUrl } from "./utils";
-import { getAll as getAllApplications } from "apps/security/application/store/actions";
-import { getAll as getAllModules } from "apps/security/module/store/actions";
 
 export const checkUser = createAsyncThunk("auth/checkUser", async (_, { rejectWithValue, dispatch }) => {
   try {
     const { data, status } = await authApi.checkUser();
     if (data.code === "OK") {
       const url = getUrl(data.data as IUser);
-      await dispatch(getAllApplications());
-      await dispatch(getAllModules());
       dispatch(push(url));
 
       return data.data;

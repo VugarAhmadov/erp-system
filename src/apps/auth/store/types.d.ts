@@ -100,6 +100,10 @@ export interface IOperation {
   url: string;
   code: string;
   name: IName;
+  formHtml: string;
+  newType: string;
+  url: string;
+  viewName: string;
 }
 
 export interface IMyUser {

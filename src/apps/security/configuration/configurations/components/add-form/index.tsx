@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { StyledAddForm } from "./add-form.styled";
 import { AppState } from "store";
 import { operationApi } from "api";
-import { InputDialog, InputElement } from "./components";
+import { InputDialog, InputElement, SelectDialog, SelectElement } from "./components";
 
 interface IAddForm {
   onClose(): void;
@@ -33,7 +33,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit }) => {
   const selectedOperation = useSelector((state: AppState) => state.configurations.selectedOperation);
 
   useEffect(() => {
-    operationApi.getHtmlFormOrViewname({ lang: i18n.language, operationId: selectedOperation }).then(({ data }) => {
+    operationApi.getHtmlFormOrViewname({ lang: i18n.language, operationId: selectedOperation.id }).then(({ data }) => {
       if (data.err.length === 0) {
         setFormElements(JSON.parse(data.tbl[0].r[0].operationHtml));
       }
@@ -42,7 +42,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit }) => {
 
   const handleDialogOpen = (type: string, index: number) => {
     const params = formElements.find((element) => element.index === index)?.params || null;
-    setDialog({ open: true, data: { type, index, params, operationId: selectedOperation } });
+    setDialog({ open: true, data: { type, index, params, operationId: selectedOperation.id } });
   };
 
   const handleDialogClose = () => {
@@ -80,7 +80,9 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit }) => {
           <Typography variant="h5">{t("addForm")}</Typography>
           <div className="action-buttons">
             <Button
-              onClick={() => onSubmit({ operationHtml: JSON.stringify(formElements), operationId: selectedOperation })}
+              onClick={() =>
+                onSubmit({ operationHtml: JSON.stringify(formElements), operationId: selectedOperation.id })
+              }
               className="submit-btn"
             >
               {t("submit")}
@@ -92,7 +94,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit }) => {
         </div>
         <div className="component-buttons">
           <Button onClick={() => handleDialogOpen("input", -1)}>{t("input")}</Button>
-          <Button onClick={() => console.log("test")}>{t("select")}</Button>
+          <Button onClick={() => handleDialogOpen("select", -1)}>{t("select")}</Button>
           <Button onClick={() => console.log("test")}>{t("checkbox")}</Button>
           <Button onClick={() => console.log("test")}>{t("label")}</Button>
           <Button onClick={() => console.log("test")}>{t("tab")}</Button>
@@ -108,6 +110,13 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit }) => {
                   {...element.params}
                 />
               )}
+              {/* {element.element === "select" && (
+                <SelectElement
+                  handleEdit={() => handleDialogOpen("select", element.index)}
+                  handleDelete={() => handleDeleteElement(element.index)}
+                  {...element.params}
+                />
+              )} */}
             </div>
           ))}
         </div>
@@ -118,6 +127,12 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit }) => {
         onSubmit={handleSubmit}
         params={dialog.data?.params}
       />
+      {/* <SelectDialog
+        open={dialog.open}
+        onClose={handleDialogClose}
+        onSubmit={handleSubmit}
+        params={dialog.data?.params}
+      /> */}
     </>
   );
 };

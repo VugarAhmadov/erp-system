@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { DataTable, FilterBar, SectionHeader } from "components/shared";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { add, edit, remove } from "./store/actions";
+import { getAll, add, edit, remove } from "./store/actions";
 import { AppState } from "store";
 import { Column } from "@material-table/core";
 import { setDialog, setSelectedModule } from "./store";
@@ -21,6 +21,10 @@ export const Module = () => {
   const seqColumns = modules?.seqColumn?.split(",");
   const dialog = useSelector((state: AppState) => state.module.dialog);
   const selectedModule = useSelector((state: AppState) => state.module.selectedModule);
+
+  useEffect(() => {
+    dispatch(getAll());
+  }, []);
 
   const buildColumns = () => {
     let columns: Column<object>[] = [

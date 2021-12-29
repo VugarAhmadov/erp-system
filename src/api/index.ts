@@ -4,3 +4,4 @@ export { tablesApi } from "./tables";
 export { applicationApi } from "./application";
 export { moduleApi } from "./module";
 export { operationApi } from "./operation";
+export { dictionaryApi } from "./dictionary";

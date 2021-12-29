@@ -9,6 +9,7 @@ import { IDialog } from "types";
 import { IAddOrEditOperationRequest } from "../../store/types";
 import { StyledDialog } from "./add-or-edit.styled";
 import { getAll as getAllApplications } from "apps/security/application/store/actions";
+import { camelCase, capitalize, startCase, upperFirst } from "lodash";
 
 interface IAddOrEdit {
   dialog: IDialog;
@@ -69,6 +70,13 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
               <TextField name="icon" id="icon" label={t("icon")} />
               <TextField name="url" id="url" label={t("url")} required />
               <Autocomplete
+                name="operationName"
+                id="operationName"
+                label={t("operationName")}
+                options={["ADD", "EDIT", "DELETE", "VIEW"]}
+                required
+              />
+              <Autocomplete
                 name="applicationId"
                 id="applicationId"
                 label={t("applicationId")}
@@ -106,12 +114,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                 name="entityName"
                 id="entityName"
                 label={t("entityName")}
-                options={tables.map((table) => ({
-                  label: table.name,
-                  value: table.name,
-                }))}
-                getOptionValue={(option) => option.value}
-                getOptionLabel={(option) => option.label}
+                options={tables.map((table) => upperFirst(camelCase(table.name)))}
               />
               <div className="action-buttons">
                 <Button onClick={onClose} className="back-btn" variant="outlined" color="info">

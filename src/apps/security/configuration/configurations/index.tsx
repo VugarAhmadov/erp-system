@@ -21,6 +21,7 @@ import { Dialog } from "./components";
 import { setDialog, setSelectedOperation } from "./store";
 import { IAddHtmlFormRequest, IAddViewFormRequest } from "apps/security/operation/store/types";
 import { addHtmlForm, addViewForm } from "apps/security/operation/store/actions";
+import { IOperation } from "apps/auth/store/types";
 
 export const Configurations = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ export const Configurations = () => {
   const apps = useSelector((state: AppState) => state.auth.user.applications);
   const dialog = useSelector((state: AppState) => state.configurations.dialog);
 
-  const handleDialogOpen = (type: "" | "add" | "edit" | "all-view" | "add-priv", operation: string) => {
+  const handleDialogOpen = (type: "" | "add" | "edit" | "all-view" | "add-priv", operation: IOperation) => {
     dispatch(setSelectedOperation(operation));
     dispatch(setDialog({ type, opened: true }));
   };
@@ -77,7 +78,7 @@ export const Configurations = () => {
                             <TableCell>{operation.name.az}</TableCell>
                             <TableCell>
                               {operation.code === "ADD" && (
-                                <Button variant="contained" onClick={() => handleDialogOpen("add", operation.id)}>
+                                <Button variant="contained" onClick={() => handleDialogOpen("add", operation)}>
                                   {t("openAddDialog")}
                                 </Button>
                               )}
@@ -85,7 +86,7 @@ export const Configurations = () => {
                                 <Button
                                   variant="contained"
                                   color="success"
-                                  onClick={() => handleDialogOpen("add-priv", operation.id)}
+                                  onClick={() => handleDialogOpen("add-priv", operation)}
                                 >
                                   {t("openAddPrivDialog")}
                                 </Button>
@@ -94,7 +95,7 @@ export const Configurations = () => {
                                 <Button
                                   variant="contained"
                                   color="secondary"
-                                  onClick={() => handleDialogOpen("all-view", operation.id)}
+                                  onClick={() => handleDialogOpen("all-view", operation)}
                                 >
                                   {t("openAllViewDialog")}
                                 </Button>

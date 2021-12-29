@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { DataTable, FilterBar, SectionHeader } from "components/shared";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { add, edit, remove } from "./store/actions";
+import { getAll, add, edit, remove } from "./store/actions";
 import { AppState } from "store";
 import { Column } from "@material-table/core";
 import { setDialog, setSelectedApplication } from "./store";
@@ -21,6 +21,10 @@ export const Application = () => {
   const seqColumns = applications?.seqColumn?.split(",");
   const dialog = useSelector((state: AppState) => state.application.dialog);
   const selectedApp = useSelector((state: AppState) => state.application.selectedApp);
+
+  useEffect(() => {
+    dispatch(getAll());
+  }, []);
 
   const buildColumns = () => {
     let columns: Column<object>[] = [
@@ -102,7 +106,6 @@ export const Application = () => {
 
   return (
     <>
-      {" "}
       <StyledApplication>
         <SectionHeader title="Applications" />
         <FilterBar

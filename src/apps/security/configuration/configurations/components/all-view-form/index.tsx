@@ -22,7 +22,7 @@ export const AllViewForm: FC<IAllViewForm> = ({ onClose, onSubmit }) => {
   const selectedOperation = useSelector((state: AppState) => state.configurations.selectedOperation);
 
   useEffect(() => {
-    operationApi.getHtmlFormOrViewname({ lang: i18n.language, operationId: selectedOperation }).then(({ data }) => {
+    operationApi.getHtmlFormOrViewname({ lang: i18n.language, operationId: selectedOperation.id }).then(({ data }) => {
       if (data.err.length === 0) {
         setInitialValues({
           viewName: data.tbl[0].r[0].viewName,
@@ -36,7 +36,7 @@ export const AllViewForm: FC<IAllViewForm> = ({ onClose, onSubmit }) => {
     onSubmit({
       viewName: data.viewName,
       seqColumn: data.seqColumn.map((column: string) => camelCase(column)).join(", "),
-      operationId: selectedOperation,
+      operationId: selectedOperation.id,
       viewCode: "0",
     });
   };
