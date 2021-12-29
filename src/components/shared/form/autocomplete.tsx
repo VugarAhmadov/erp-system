@@ -1,20 +1,21 @@
+import React, { ReactNode } from "react";
 import {
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
-  default as MuiAutocomplete,
   AutocompleteProps as MuiAutocompleteProps,
-} from "@mui/material/Autocomplete";
+  TextField as MuiTextField,
+  Autocomplete as MuiAutocomplete,
+} from "@mui/material";
 import { AutocompleteValue, UseAutocompleteProps as MuiUseAutocompleteProps } from "@mui/material/useAutocomplete";
 import { Field, FieldProps, FieldRenderProps } from "react-final-form";
 import { getValidator, ShowErrorFunc, showErrorOnChange } from "helpers";
-import React, { ReactNode } from "react";
-import TextField, { TextFieldProps as MuiTextFieldProps } from "@mui/material/TextField";
+import { TextFieldProps as MuiTextFieldProps } from "@mui/material";
 import { FieldValidator } from "final-form";
 import { useValidators } from "hooks";
 
-// export type AutocompleteData = {
-//   [key: string]: any | null;
-// };
+export type AutocompleteData = {
+  [key: string]: any | null;
+};
 
 export interface AutocompleteProps<
   T,
@@ -54,7 +55,7 @@ export function Autocomplete<
   return (
     <Field
       name={name}
-      render={(fieldRenderProps) => <AutocompleteWrapper {...fieldRenderProps} {...rest} />}
+      render={(fieldRenderProps) => <AutocompleteWrapper {...fieldRenderProps} required={required} {...rest} />}
       {...fieldProps}
       validate={getValidator(validate, defaultValidators())}
     />
@@ -101,8 +102,19 @@ function AutocompleteWrapper<
       return values;
     }
 
-    // ternary hell...
-    return multiple ? (values ? values.map(getOptionValue) : null) : values ? getOptionValue(values) : null;
+    if (multiple) {
+      if (values) {
+        return values.map(getOptionValue);
+      } else {
+        return null;
+      }
+    } else {
+      if (values) {
+        return getOptionValue(values);
+      } else {
+        return null;
+      }
+    }
   }
 
   const { helperText, ...lessrest } = rest;
@@ -112,7 +124,7 @@ function AutocompleteWrapper<
   let defaultValue: AutocompleteValue<T, Multiple, DisableClearable, FreeSolo> | undefined;
 
   if (!getOptionValue) {
-    defaultValue = value as any;
+    defaultValue = value as AutocompleteValue<T, Multiple, DisableClearable, FreeSolo> | undefined;
   } else if (value) {
     options.forEach((option) => {
       const optionValue = getOptionValue(option);
@@ -134,11 +146,10 @@ function AutocompleteWrapper<
   }
 
   const onChangeFunc = (
-    // eslint-disable-next-line @typescript-eslint/ban-types
     event: React.SyntheticEvent,
     value: AutocompleteValue<T, Multiple, DisableClearable, FreeSolo>,
     reason: AutocompleteChangeReason,
-    details?: AutocompleteChangeDetails<any>
+    details?: AutocompleteChangeDetails<T>
   ) => {
     const gotValue = getValue(value);
     onChange(gotValue);
@@ -154,11 +165,15 @@ function AutocompleteWrapper<
   return (
     <MuiAutocomplete
       multiple={multiple}
+      // TODO vaxt olanda bax --> tsignore u yigisdir
+      //@ts-ignore
       onChange={onChangeFunc}
       options={options}
-      value={defaultValue}
+      // TODO vaxt olanda bax --> NULL-u sonradan eleva elemisem
+      //@ts-ignore
+      value={defaultValue ? defaultValue : multiple ? [] : null}
       renderInput={(params) => (
-        <TextField
+        <MuiTextField
           label={label}
           required={required}
           helperText={isError ? error || submitError : helperText}

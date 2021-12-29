@@ -1,97 +1,71 @@
-import React, { useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Autocomplete } from "components/shared";
 import { AppState } from "store";
-import { Checkbox, createFilterOptions, InputAdornment } from "@mui/material";
-// import { AutocompleteData } from "components/shared/form/autocomplete";
+import { Button, Checkbox, Typography } from "@mui/material";
 import { StyledForm } from "./all-view-form.styled";
+import { operationApi } from "api";
 
-export const AllViewForm = () => {
-  const { t } = useTranslation("common");
+interface IAllViewForm {
+  onClose(): void;
+}
+
+export const AllViewForm: FC<IAllViewForm> = ({ onClose }) => {
+  const { t, i18n } = useTranslation("common");
+  const [initialValues, setInitialValues] = useState({});
   const views = useSelector((state: AppState) => state.views?.views);
-  const loading = useSelector((state: AppState) => state.views.loading.getAll);
+  const selectedOperation = useSelector((state: AppState) => state.configurations.selectedOperation);
 
-  // const filter = createFilterOptions();
-  const [selectedDatas, setSelectedDatas] = useState<any[]>([]);
+  useEffect(() => {
+    operationApi.getHtmlFormOrViewname({ lang: i18n.language, operationId: selectedOperation }).then(({ data }) => {
+      if (data.err.length === 0) {
+        setInitialValues({ viewName: data.tbl[0].r[0].viewName, seqColumns: data.tbl[0].r[0].seqColumns });
+      }
+    });
+  }, []);
 
   return (
     <Form
       onSubmit={(data) => console.log(data)}
-      // initialValues={initialValues}
-      render={({ handleSubmit, values }) => (
+      initialValues={initialValues}
+      render={({ handleSubmit, values, invalid }) => (
         <StyledForm onSubmit={handleSubmit}>
+          <Typography variant="h5">{t("allView")}</Typography>
           <Autocomplete
-            name="view"
+            name="viewName"
             id="view"
             label={t("views")}
-            options={views.map((view) => ({
-              label: view.name,
-              value: view.name,
-            }))}
-            getOptionValue={(option) => option.value}
-            getOptionLabel={(option) => option.label}
+            options={views.map((view) => view.name)}
             className="views"
-            loading={loading}
             required
           />
           <Autocomplete
-            label="Choose at least one planet"
-            name="planet"
-            multiple={true}
-            required
-            options={views
-              ?.filter((view) => view.name === values.view)[0]
-              ?.columns?.map((column) => ({
-                label: column.name,
-                value: column.name,
-                inputValue: false,
-              }))}
-            getOptionValue={(option) => option.value}
-            getOptionLabel={(option) => option.label}
-            disableCloseOnSelect={true}
-            renderOption={(props, option, { selected }) =>
-              option.inputValue ? (
-                option.label
-              ) : (
-                <li {...props}>
-                  <Checkbox style={{ marginRight: 8 }} checked={selected} />
-                  {option.label}
-                </li>
-              )
+            label={t("columns")}
+            name="columns"
+            options={
+              views?.filter((view) => view.name === values.viewName)[0]?.columns?.map((column) => column.name) || []
             }
-            // helperText={helperText}
-            freeSolo={true}
-            onChange={(_event, newValue, reason, details) => {
-              if (newValue && reason === "selectOption" && details?.option.inputValue) {
-                // Create a new value from the user input
-                console.log(details);
-                setSelectedDatas([
-                  ...selectedDatas,
-                  {
-                    value: details?.option.inputValue,
-                    label: details?.option.inputValue,
-                  },
-                ]);
-              }
-            }}
-            // filterOptions={(options, params) => {
-            // const filtered = filter(options, params);
-            // // Suggest the creation of a new value
-            // if (params.inputValue !== "") {
-            //   filtered.push({
-            //     inputValue: params.inputValue,
-            //     label: `Add "${params.inputValue}"`,
-            //     value: params.inputValue,
-            //   });
-            // }
-            // return filtered;
-            // }}
-            selectOnFocus
-            clearOnBlur
-            handleHomeEndKeys
+            disabled={!values.viewName}
+            renderOption={(props, option, { selected }) => (
+              <li {...props}>
+                <Checkbox style={{ marginRight: 8 }} checked={selected} />
+                {option}
+              </li>
+            )}
+            multiple
+            freeSolo
+            disableCloseOnSelect
           />
+          <div className="action-buttons">
+            <Button variant="outlined" className="cancel-btn" onClick={onClose}>
+              {t("cancel")}
+            </Button>
+            <Button className="submit-btn" type="submit" disabled={invalid}>
+              {t("submit")}
+            </Button>
+          </div>
         </StyledForm>
       )}
     />

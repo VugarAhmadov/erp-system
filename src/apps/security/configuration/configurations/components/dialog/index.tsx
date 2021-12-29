@@ -25,7 +25,7 @@ export const Dialog: FC<IDialogProps> = ({ dialog, onClose, onAddFormSubmit }) =
     >
       <DialogContent>
         {dialog.type === "add" && <AddForm onClose={onClose} onSubmit={onAddFormSubmit} />}
-        {dialog.type === "all-view" && <AllViewForm />}
+        {dialog.type === "all-view" && <AllViewForm onClose={onClose} />}
         {dialog.type === "add-priv" && <AddPrivForm />}
       </DialogContent>
     </StyledDialog>
