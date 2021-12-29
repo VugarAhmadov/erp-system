@@ -3,16 +3,17 @@ import { DialogContent } from "@mui/material";
 import { IDialog } from "types";
 import { AddForm, AddPrivForm, AllViewForm } from "..";
 import { StyledDialog } from "./dialog.styled";
-import { IAddHtmlFormRequest } from "apps/security/operation/store/types";
+import { IAddHtmlFormRequest, IAddViewFormRequest } from "apps/security/operation/store/types";
 
 interface IDialogProps {
   dialog: IDialog;
   onClose(): void;
   onAddFormSubmit(data: IAddHtmlFormRequest): void;
+  onAllViewFormSubmit(data: IAddViewFormRequest): void;
   selectedOperation?: string;
 }
 
-export const Dialog: FC<IDialogProps> = ({ dialog, onClose, onAddFormSubmit }) => {
+export const Dialog: FC<IDialogProps> = ({ dialog, onClose, onAddFormSubmit, onAllViewFormSubmit }) => {
   return (
     <StyledDialog
       open={dialog.opened}
@@ -25,7 +26,7 @@ export const Dialog: FC<IDialogProps> = ({ dialog, onClose, onAddFormSubmit }) =
     >
       <DialogContent>
         {dialog.type === "add" && <AddForm onClose={onClose} onSubmit={onAddFormSubmit} />}
-        {dialog.type === "all-view" && <AllViewForm onClose={onClose} />}
+        {dialog.type === "all-view" && <AllViewForm onClose={onClose} onSubmit={onAllViewFormSubmit} />}
         {dialog.type === "add-priv" && <AddPrivForm />}
       </DialogContent>
     </StyledDialog>

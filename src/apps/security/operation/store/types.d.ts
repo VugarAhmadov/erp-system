@@ -29,3 +29,10 @@ export interface IAddHtmlFormRequest {
   operationHtml: string;
   operationId: string;
 }
+
+export interface IAddViewFormRequest {
+  operationId: string;
+  seqColumn: string;
+  viewCode: string;
+  viewName: string;
+}

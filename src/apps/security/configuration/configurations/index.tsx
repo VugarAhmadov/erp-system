@@ -13,13 +13,14 @@ import {
   Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { camelCase } from "lodash";
 import { AppState } from "store";
 import { StyledConfigurations } from "./configurations.styled";
-import { useTranslation } from "react-i18next";
 import { Dialog } from "./components";
 import { setDialog, setSelectedOperation } from "./store";
-import { addHtmlForm } from "apps/security/operation/store/actions";
-import { IAddHtmlFormRequest } from "apps/security/operation/store/types";
+import { IAddHtmlFormRequest, IAddViewFormRequest } from "apps/security/operation/store/types";
+import { addHtmlForm, addViewForm } from "apps/security/operation/store/actions";
 
 export const Configurations = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,10 @@ export const Configurations = () => {
 
   const handleAddFormSubmit = (data: IAddHtmlFormRequest) => {
     dispatch(addHtmlForm(data));
+  };
+
+  const handleAllViewFormSubmit = (data: IAddViewFormRequest) => {
+    dispatch(addViewForm(data));
   };
 
   return (
@@ -106,7 +111,12 @@ export const Configurations = () => {
           </Accordion>
         ))}
       </StyledConfigurations>
-      <Dialog dialog={dialog} onClose={handleDialogClose} onAddFormSubmit={handleAddFormSubmit} />
+      <Dialog
+        dialog={dialog}
+        onClose={handleDialogClose}
+        onAddFormSubmit={handleAddFormSubmit}
+        onAllViewFormSubmit={handleAllViewFormSubmit}
+      />
     </>
   );
 };

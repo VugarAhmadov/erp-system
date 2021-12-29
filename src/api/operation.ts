@@ -3,6 +3,7 @@ import { IGetAllResponse } from "types";
 import {
   IAddHtmlFormRequest,
   IAddOrEditOperationRequest,
+  IAddViewFormRequest,
   IGetHtmlFormOrViewnameRequest,
 } from "apps/security/operation/store/types";
 
@@ -38,6 +39,12 @@ const addHtmlForm = async (requestData: IAddHtmlFormRequest) => {
   });
 };
 
+const addViewForm = async (requestData: IAddViewFormRequest) => {
+  return await defaultRequest.post<IGetAllResponse>(`api/jwt/CodiumSystem/Operation/OperationViewForm`, {
+    kv: requestData,
+  });
+};
+
 export const operationApi = {
   getAll,
   add,
@@ -45,4 +52,5 @@ export const operationApi = {
   remove,
   getHtmlFormOrViewname,
   addHtmlForm,
+  addViewForm,
 };
