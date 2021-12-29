@@ -9,14 +9,14 @@ export const checkUser = createAsyncThunk("auth/checkUser", async (_, { rejectWi
     const { data, status } = await authApi.checkUser();
     if (data.code === "OK") {
       const url = getUrl(data.data as IUser);
-      dispatch(push(url));
+      dispatch(push(`${process.env.PUBLIC_URL}/${url}`));
 
       return data.data;
       // TODO: burani duzelt
     } else if (status === 401 || data?.code === "UNAUTHORIZED") {
-      dispatch(push("/auth/login"));
+      dispatch(push(`${process.env.PUBLIC_URL}/auth/login`));
     } else {
-      dispatch(push("/auth/login"));
+      dispatch(push(`${process.env.PUBLIC_URL}/auth/login`));
       return rejectWithValue(data.code);
     }
   } catch (error) {
@@ -32,7 +32,7 @@ export const login = createAsyncThunk("auth/login", async (loginData: ILoginData
       localStorage.setItem("codeum_jwt_token", headers.auth);
 
       const url = getUrl(data.data as IUser);
-      dispatch(push(url));
+      dispatch(push(`${process.env.PUBLIC_URL}/${url}`));
 
       return data.data;
     } else {

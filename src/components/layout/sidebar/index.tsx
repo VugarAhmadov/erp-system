@@ -20,7 +20,11 @@ export const Sidebar: FC = () => {
         <List>
           {modules?.map((module) => (
             <ListItem key={module.id}>
-              <ListItemButton selected={module.url === location.pathname} component={Link} to={module.url ?? "/"}>
+              <ListItemButton
+                selected={module.url === location.pathname}
+                component={Link}
+                to={`${process.env.PUBLIC_URL}/${module.url}` ?? "/codeum_react/"}
+              >
                 <ListItemIcon>
                   <Icon>{module.icon || "layers"}</Icon>
                 </ListItemIcon>

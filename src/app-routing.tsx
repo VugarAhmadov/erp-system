@@ -18,18 +18,18 @@ const Operation = lazy(() => import("apps/security/operation").then((module) => 
 
 export const AppRouting = () => {
   return (
-    <Router history={history}>
+    <Router history={history} basename="/codeum_react">
       <Suspense fallback={<Spinner />}>
         <Routes>
-          <Route path="auth" element={<AuthLayout />}>
-            <Route path="login" element={<Login />} />
+          <Route path={`${process.env.PUBLIC_URL}/auth`} element={<AuthLayout />}>
+            <Route path={`${process.env.PUBLIC_URL}/login`} element={<Login />} />
           </Route>
-          <Route path="/" element={<MainLayout />}>
-            <Route path="security" element={<Security />}>
-              <Route path="configuration" element={<Configuration />} />
-              <Route path="application" element={<Application />} />
-              <Route path="module" element={<Module />} />
-              <Route path="operation" element={<Operation />} />
+          <Route path={`${process.env.PUBLIC_URL}/`} element={<MainLayout />}>
+            <Route path={`${process.env.PUBLIC_URL}/security`} element={<Security />}>
+              <Route path={`${process.env.PUBLIC_URL}/configuration`} element={<Configuration />} />
+              <Route path={`${process.env.PUBLIC_URL}/application`} element={<Application />} />
+              <Route path={`${process.env.PUBLIC_URL}/module`} element={<Module />} />
+              <Route path={`${process.env.PUBLIC_URL}/operation`} element={<Operation />} />
             </Route>
           </Route>
         </Routes>
