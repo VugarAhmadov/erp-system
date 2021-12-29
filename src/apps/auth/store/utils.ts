@@ -4,7 +4,7 @@ export const getUrl = (user: IUser) => {
   const appUrl = getAppUrl(user.applications[0].id);
   const moduleUrl = getModuleUrl(user.applications[0].modules[0].id as string);
 
-  return `/${appUrl}/${moduleUrl}`;
+  return `${appUrl}/${moduleUrl}`;
 };
 
 export const getAppUrl = (appId: string) => {
