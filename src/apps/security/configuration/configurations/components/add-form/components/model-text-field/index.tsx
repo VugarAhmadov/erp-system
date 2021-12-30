@@ -40,6 +40,7 @@ export const ModelTextField: FC<IModelTextField> = ({ form, menuData, fieldName,
       <Menu id="customized-menu" anchorEl={anchorEl} open={_open} onClose={handleClose}>
         {menuData.map((privilage) => (
           <MenuItem
+            key={privilage}
             onClick={() => {
               form.change(fieldName, privilage);
               handleClose();

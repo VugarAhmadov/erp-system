@@ -4,7 +4,7 @@ import { HistoryRouter as Router } from "redux-first-history/rr6";
 import { AuthLayout, MainLayout } from "layouts";
 import { Spinner } from "components/shared";
 import { history } from "store";
-import { Security } from "apps/security";
+import { Security, DynamicApp } from "apps";
 
 const Login = lazy(() => import("apps/auth").then((module) => ({ default: module.Login })));
 
@@ -15,6 +15,10 @@ const Configuration = lazy(() =>
 const Application = lazy(() => import("apps/security/application").then((module) => ({ default: module.Application })));
 const Module = lazy(() => import("apps/security/module").then((module) => ({ default: module.Module })));
 const Operation = lazy(() => import("apps/security/operation").then((module) => ({ default: module.Operation })));
+
+const DynamicModule = lazy(() =>
+  import("apps/dynamic-app/dynamic-module").then((module) => ({ default: module.DynamicModule }))
+);
 
 export const AppRouting = () => {
   return (
@@ -30,6 +34,9 @@ export const AppRouting = () => {
               <Route path="application" element={<Application />} />
               <Route path="module" element={<Module />} />
               <Route path="operation" element={<Operation />} />
+            </Route>
+            <Route path=":dynamicApp" element={<DynamicApp />}>
+              <Route path=":dynamicModule" element={<DynamicModule />} />
             </Route>
           </Route>
         </Routes>

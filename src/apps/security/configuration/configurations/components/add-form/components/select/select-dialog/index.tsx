@@ -5,10 +5,9 @@ import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "store";
-import { Dialog } from "..";
+import { Dialog, ModelTextField } from "../..";
 import { StyledForm } from "./select-dialog.styled";
 import { getDictionaryTypeList } from "apps/security/configuration/configurations/store/actions";
-import { ModelTextField } from "../model-text-field";
 
 interface ISelectDialog {
   open: boolean;
@@ -65,21 +64,26 @@ export const SelectDialog: FC<ISelectDialog> = ({ open, onClose, onSubmit, param
               inputProps={{
                 onChange: (e: any) => {
                   if (e.target.value === "dic") {
-                    form.change("dataUrl");
-                    form.resetFieldState("dataUrl");
-
-                    form.change("dataName");
-                    form.resetFieldState("dataName");
-
                     dispatch(getDictionaryTypeList());
+
+                    if (values?.dataUrl) {
+                      form.change("dataUrl");
+                      form.resetFieldState("dataUrl");
+                    }
+                    if (values?.dataName) {
+                      form.change("dataName");
+                      form.resetFieldState("dataName");
+                    }
                   } else {
-                    form.change("dicId");
-                    form.resetFieldState("dicId");
+                    if (values?.dicId) {
+                      form.change("dicId");
+                      form.resetFieldState("dicId");
+                    }
                   }
                 },
               }}
             />
-            {values.dataType === "dic" && (
+            {values?.dataType === "dic" && (
               <Select
                 name="dicId"
                 data={dicTypes.map((type) => ({
@@ -87,10 +91,10 @@ export const SelectDialog: FC<ISelectDialog> = ({ open, onClose, onSubmit, param
                   value: type.id,
                 }))}
                 required
-                label={t("dataTypes")}
+                label={t("dicId")}
               />
             )}
-            {values.dataType === "rest" && (
+            {values?.dataType === "rest" && (
               <>
                 <ModelTextField
                   menuData={privilageList.filter((x) => x.split("/")[x.split("/").length - 1] === "AllViewByCommon")!}

@@ -121,18 +121,22 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit }) => {
           ))}
         </div>
       </StyledAddForm>
-      <InputDialog
-        open={dialog.open}
-        onClose={handleDialogClose}
-        onSubmit={handleSubmit}
-        params={dialog.data?.params}
-      />
-      {/* <SelectDialog
-        open={dialog.open}
-        onClose={handleDialogClose}
-        onSubmit={handleSubmit}
-        params={dialog.data?.params}
-      /> */}
+      {dialog?.data?.type === "input" && (
+        <InputDialog
+          open={dialog.open}
+          onClose={handleDialogClose}
+          onSubmit={handleSubmit}
+          params={dialog.data?.params}
+        />
+      )}
+      {dialog?.data?.type === "select" && (
+        <SelectDialog
+          open={dialog.open}
+          onClose={handleDialogClose}
+          onSubmit={handleSubmit}
+          params={dialog.data?.params}
+        />
+      )}
     </>
   );
 };
