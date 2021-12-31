@@ -8,8 +8,8 @@ import { AppState } from "store";
 import { IDialog } from "types";
 import { IAddOrEditOperationRequest } from "../../store/types";
 import { StyledDialog } from "./add-or-edit.styled";
-import { getAll as getAllApplications } from "apps/security/application/store/actions";
-import { camelCase, capitalize, startCase, upperFirst } from "lodash";
+import { getAll as getAllModules } from "apps/security/module/store/actions";
+import { camelCase, upperFirst } from "lodash";
 
 interface IAddOrEdit {
   dialog: IDialog;
@@ -22,18 +22,18 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
   const dispatch = useDispatch();
   const operations = useSelector((state: AppState) => state.operation.operations.r);
   const selectedOperation = useSelector((state: AppState) => state.operation.selectedOperation);
-  const apps = useSelector((state: AppState) => state.application.applications);
-  const appsLoadding = useSelector((state: AppState) => state.application.loading.getAll);
+  const modules = useSelector((state: AppState) => state.module.modules);
+  const moduleLoadding = useSelector((state: AppState) => state.module.loading.getAll);
   const views = useSelector((state: AppState) => state.views.views);
   const tables = useSelector((state: AppState) => state.tables.tables);
 
   useEffect(() => {
-    dispatch(getAllApplications());
+    dispatch(getAllModules());
   }, []);
 
   const initialValues = operations
     ?.filter((operation) => operation.id === selectedOperation)
-    .map((operation: any) => ({
+    ?.map((operation: any) => ({
       nameAz: operation.nameAz,
       nameEn: operation.nameEn,
       nameRu: operation.nameRu,
@@ -77,22 +77,22 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                 required
               />
               <Autocomplete
-                name="applicationId"
-                id="applicationId"
-                label={t("applicationId")}
-                options={apps?.r.map((app) => ({
-                  label: app.name,
-                  value: app.id,
+                name="moduleId"
+                id="moduleId"
+                label={t("moduleId")}
+                options={modules?.r?.map((module) => ({
+                  label: module.name,
+                  value: module.id,
                 }))}
                 getOptionValue={(option) => option.value}
                 getOptionLabel={(option) => option.label}
-                loading={appsLoadding}
+                loading={moduleLoadding}
               />
               {/* <Autocomplete
                 name="operationId"
                 id="operationId"
                 label={t("operationId")}
-                options={operations.map((operation) => ({
+                options={operations?.map((operation) => ({
                   label: operation.name,
                   value: operation.id,
                 }))}
@@ -103,7 +103,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                 name="viewName"
                 id="viewName"
                 label={t("viewName")}
-                options={views.map((view) => ({
+                options={views?.map((view) => ({
                   label: view.name,
                   value: view.name,
                 }))}
@@ -111,10 +111,10 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                 getOptionLabel={(option) => option.label}
               />
               <Autocomplete
-                name="entityName"
+                name="entity"
                 id="entityName"
                 label={t("entityName")}
-                options={tables.map((table) => upperFirst(camelCase(table.name)))}
+                options={tables?.map((table) => upperFirst(camelCase(table.name)))}
               />
               <div className="action-buttons">
                 <Button onClick={onClose} className="back-btn" variant="outlined" color="info">

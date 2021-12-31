@@ -109,7 +109,7 @@ export const Select = (props: SelectProps) => {
               )}
 
               {data
-                ? data.map((item) => (
+                ? data?.map((item) => (
                     <MenuItem value={item.value} key={item.value} disabled={item.disabled} {...(menuItemProps as any)}>
                       {item.label}
                     </MenuItem>

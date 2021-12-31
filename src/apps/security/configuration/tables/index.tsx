@@ -95,7 +95,7 @@ export const Tables = () => {
 
             <Paper elevation={3}>
               <StyledList>
-                {_tables.map((table) => (
+                {_tables?.map((table) => (
                   <StyledListItem key={table.name}>
                     <StyledListItemButton
                       selected={table.name === selectedTable}

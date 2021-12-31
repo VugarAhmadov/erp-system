@@ -9,14 +9,13 @@ export interface IAddOrEditOperationRequest {
   nameAz: string;
   nameEn: string;
   nameRu: string;
-  shortNameAz: string;
-  shortNameEn: string;
-  shortNameRu: string;
   icon: string;
   url: string;
   code: string;
-  applicationId: string;
-  parentId: string;
+  operationName: string;
+  moduleId: string;
+  viewName: string;
+  entityName: string;
   id?: string;
 }
 

@@ -51,8 +51,8 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit }) => {
 
   const handleDeleteElement = (index: number) => {
     let elementsCopy = [...formElements];
-    elementsCopy.splice(index, 1);
-    elementsCopy.forEach((el, i) => {
+    elementsCopy?.splice(index, 1);
+    elementsCopy?.forEach((el, i) => {
       el.index = i;
     });
     setFormElements(elementsCopy);
@@ -101,7 +101,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit }) => {
           <Button onClick={() => console.log("test")}>{t("button")}</Button>
         </div>
         <div className="drag-container">
-          {formElements.map((element) => (
+          {formElements?.map((element) => (
             <div key={element.index}>
               {element.element === "input" && (
                 <InputElement

@@ -38,7 +38,7 @@ export const ModelTextField: FC<IModelTextField> = ({ form, menuData, fieldName,
         <Icon>more_vert</Icon>
       </IconButton>
       <Menu id="customized-menu" anchorEl={anchorEl} open={_open} onClose={handleClose}>
-        {menuData.map((privilage) => (
+        {menuData?.map((privilage) => (
           <MenuItem
             key={privilage}
             onClick={() => {

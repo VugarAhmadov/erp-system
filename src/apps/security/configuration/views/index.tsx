@@ -79,7 +79,7 @@ export const Views = () => {
 
             <Paper elevation={3}>
               <StyledList className="views-list">
-                {_views.map((view) => (
+                {_views?.map((view) => (
                   <StyledListItem key={view.name}>
                     <StyledListItemButton
                       selected={view.name === selectedView.viewName}
@@ -111,7 +111,7 @@ export const Views = () => {
                 <ul className="view-columns">
                   {_views
                     .filter((view) => view.name === selectedView.viewName)[0]
-                    .columns.map((column, index) => (
+                    .columns?.map((column, index) => (
                       <li key={index}>{column.name}</li>
                     ))}
                 </ul>

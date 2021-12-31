@@ -104,7 +104,7 @@ function AutocompleteWrapper<
 
     if (multiple) {
       if (values) {
-        return values.map(getOptionValue);
+        return values?.map(getOptionValue);
       } else {
         return null;
       }
@@ -126,13 +126,13 @@ function AutocompleteWrapper<
   if (!getOptionValue) {
     defaultValue = value as AutocompleteValue<T, Multiple, DisableClearable, FreeSolo> | undefined;
   } else if (value) {
-    options.forEach((option) => {
+    options?.forEach((option) => {
       const optionValue = getOptionValue(option);
       if (multiple) {
         if (!defaultValue) {
           defaultValue = [] as any;
         }
-        (value as any).forEach((v: any) => {
+        (value as any)?.forEach((v: any) => {
           if (v === optionValue) {
             (defaultValue as any).push(option);
           }

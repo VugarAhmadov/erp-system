@@ -22,7 +22,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
 
   const initialValues = apps
     ?.filter((app) => app.id === selectedApp)
-    .map((app: any) => ({
+    ?.map((app: any) => ({
       nameAz: app.nameAz,
       nameEn: app.nameEn,
       nameRu: app.nameRu,
@@ -69,7 +69,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                 name="parentId"
                 id="parentId"
                 label={t("parentId")}
-                options={apps.map((app) => ({
+                options={apps?.map((app) => ({
                   label: app.name,
                   value: app.id,
                 }))}

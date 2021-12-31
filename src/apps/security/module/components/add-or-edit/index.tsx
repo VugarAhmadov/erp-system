@@ -25,7 +25,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
 
   const initialValues = modules
     ?.filter((module) => module.id === selectedModule)
-    .map((module: any) => ({
+    ?.map((module: any) => ({
       nameAz: module.nameAz,
       nameEn: module.nameEn,
       nameRu: module.nameRu,
@@ -75,7 +75,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                 name="applicationId"
                 id="applicationId"
                 label={t("applicationId")}
-                options={apps?.r.map((app) => ({
+                options={apps?.r?.map((app) => ({
                   label: app.name,
                   value: app.id,
                 }))}
@@ -87,7 +87,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                 name="parentId"
                 id="parentId"
                 label={t("parentId")}
-                options={modules.map((module) => ({
+                options={modules?.map((module) => ({
                   label: module.name,
                   value: module.id,
                 }))}

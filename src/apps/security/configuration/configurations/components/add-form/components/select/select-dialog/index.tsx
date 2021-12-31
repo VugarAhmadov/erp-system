@@ -45,7 +45,7 @@ export const SelectDialog: FC<ISelectDialog> = ({ open, onClose, onSubmit, param
                         .find((module) => module.id === selectedOperation.moduleId)
                         ?.operations.find((operation) => operation.code === "ALL_VIEW")?.viewName
                   )
-                  ?.columns.map((column) => column.name)!
+                  ?.columns?.map((column) => column.name)!
               }
               fieldName="model"
               fieldLabel="model"
@@ -86,7 +86,7 @@ export const SelectDialog: FC<ISelectDialog> = ({ open, onClose, onSubmit, param
             {values?.dataType === "dic" && (
               <Select
                 name="dicId"
-                data={dicTypes.map((type) => ({
+                data={dicTypes?.map((type) => ({
                   label: type.name,
                   value: type.id,
                 }))}

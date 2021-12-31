@@ -22,7 +22,7 @@ const DynamicModule = lazy(() =>
 
 export const AppRouting = () => {
   return (
-    <Router history={history} basename="/codeum_react">
+    <Router history={history}>
       <Suspense fallback={<Spinner />}>
         <Routes>
           <Route path="auth" element={<AuthLayout />}>

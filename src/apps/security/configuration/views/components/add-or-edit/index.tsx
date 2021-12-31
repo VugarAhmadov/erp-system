@@ -82,7 +82,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ open, onClose, onSubmit }) => {
               {t("tables")}
             </Typography>
             <Paper className="table-list">
-              {tables.map((table) => (
+              {tables?.map((table) => (
                 <Accordion className="table" key={table.name} TransitionProps={{ unmountOnExit: true }}>
                   <AccordionSummary
                     expandIcon={<Icon>expand_more</Icon>}
@@ -93,7 +93,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ open, onClose, onSubmit }) => {
                   </AccordionSummary>
                   <AccordionDetails>
                     <ul className="table-columns">
-                      {table.columns.map((column) => (
+                      {table.columns?.map((column) => (
                         <li key={column.name}>{column.name}</li>
                       ))}
                     </ul>

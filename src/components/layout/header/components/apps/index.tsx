@@ -36,7 +36,7 @@ export const Apps = () => {
         open={!!appMenu}
         onClose={() => setAppMenu(null)}
       >
-        {apps.map((app) => (
+        {apps?.map((app) => (
           <MenuItem key={app.id} onClick={() => navigate(app.url)} className="menu-item">
             <ListItemIcon>
               <Icon>{app.icon || "home"}</Icon>

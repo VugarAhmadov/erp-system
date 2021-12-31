@@ -49,7 +49,7 @@ export const InputDialog: FC<IInputDialog> = ({ open, onClose, onSubmit, params 
                         .find((module) => module.id === selectedOperation.moduleId)
                         ?.operations.find((operation) => operation.code === "ALL_VIEW")?.viewName
                   )
-                  ?.columns.map((column) => column.name)!
+                  ?.columns?.map((column) => column.name)!
               }
               fieldName="model"
               fieldLabel="model"

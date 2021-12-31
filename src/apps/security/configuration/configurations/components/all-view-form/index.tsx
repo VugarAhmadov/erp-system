@@ -26,7 +26,7 @@ export const AllViewForm: FC<IAllViewForm> = ({ onClose, onSubmit }) => {
       if (data.err.length === 0) {
         setInitialValues({
           viewName: data.tbl[0].r[0].viewName,
-          seqColumn: data.tbl[0].r[0].seqColumns.split(", ").map((column: string) => snakeCase(column)),
+          seqColumn: data.tbl[0].r[0].seqColumns?.split(", ")?.map((column: string) => snakeCase(column)),
         });
       }
     });
@@ -35,7 +35,7 @@ export const AllViewForm: FC<IAllViewForm> = ({ onClose, onSubmit }) => {
   const handleSubmit = (data: any) => {
     onSubmit({
       viewName: data.viewName,
-      seqColumn: data.seqColumn.map((column: string) => camelCase(column)).join(", "),
+      seqColumn: data.seqColumn?.map((column: string) => camelCase(column)).join(", "),
       operationId: selectedOperation.id,
       viewCode: "0",
     });

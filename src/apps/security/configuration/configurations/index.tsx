@@ -49,13 +49,13 @@ export const Configurations = () => {
   return (
     <>
       <StyledConfigurations>
-        {apps.map((app) => (
+        {apps?.map((app) => (
           <Accordion className="application" key={app.id}>
             <AccordionSummary expandIcon={<Icon>expand_more</Icon>} aria-controls="panel1a-content" id="panel1a-header">
               <Typography>{app.name.az}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              {app.modules.map((module) => (
+              {app?.modules?.map((module) => (
                 <Accordion className="module" key={module.id}>
                   <AccordionSummary
                     expandIcon={<Icon>expand_more</Icon>}
@@ -73,7 +73,7 @@ export const Configurations = () => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {module.operations.map((operation) => (
+                        {module?.operations?.map((operation) => (
                           <TableRow key={operation.id}>
                             <TableCell>{operation.name.az}</TableCell>
                             <TableCell>

@@ -54,7 +54,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit, selectedT
                       id="applicationId"
                       label={t("applicationId")}
                       variant="outlined"
-                      data={applications.map((app) => ({ label: app.name.az, value: app.id }))}
+                      data={applications?.map((app) => ({ label: app.name.az, value: app.id }))}
                       validate={required}
                       required
                     />
