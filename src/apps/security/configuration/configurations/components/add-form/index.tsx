@@ -178,12 +178,12 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
           <Button onClick={() => handleDialogOpen("input", -1)}>{t("input")}</Button>
           <Button onClick={() => handleDialogOpen("select", -1)}>{t("select")}</Button>
           <Button onClick={() => handleDialogOpen("checkbox", -1)}>{t("checkbox")}</Button>
-          {/* <Button onClick={() => handleDialogOpen("radio", -1)}>{t("radioButton")}</Button> */}
+          <Button onClick={() => handleDialogOpen("radio", -1)}>{t("radioButton")}</Button>
           <Button onClick={() => handleDialogOpen("datepicker", -1)}>{t("datepicker")}</Button>
-          {/* <Button onClick={() => console.log("test")}>{t("timepicker")}</Button> */}
+          <Button onClick={() => console.log("test")}>{t("timepicker")}</Button>
           <Button onClick={() => handleDialogOpen("label", -1)}>{t("label")}</Button>
-          {/* <Button onClick={() => console.log("test")}>{t("photo")}</Button> */}
-          {/* <Button onClick={() => console.log("test")}>{t("file")}</Button> */}
+          <Button onClick={() => console.log("test")}>{t("photo")}</Button>
+          <Button onClick={() => console.log("test")}>{t("file")}</Button>
           <Button onClick={() => console.log("test")}>{t("button")}</Button>
         </div>
 

@@ -47,7 +47,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       fullWidth={true}
-      maxWidth={data.dialogSize}
+      maxWidth={data?.dialogSize || "sm"}
       scroll="paper"
     >
       <DialogContent>
@@ -84,7 +84,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
           initialValues={dialog.type === "edit" ? initialValues : {}}
           render={({ handleSubmit, invalid }) => (
             <form onSubmit={handleSubmit} className="form">
-              {data.formElements?.map((element: any) => (
+              {data?.formElements?.map((element: any) => (
                 <Fragment key={element.index}>
                   {element.element === "input" && (
                     <TextField

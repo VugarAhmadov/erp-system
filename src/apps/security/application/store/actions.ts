@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { applicationApi } from "api";
+import { checkUser } from "apps/auth/store/actions";
 import { toast } from "react-toastify";
 import { IAddOrEditApplicationRequest } from "./types";
 
@@ -24,6 +25,7 @@ export const add = createAsyncThunk(
       const { data } = await applicationApi.add(requestData);
       if (data?.err.length === 0) {
         await dispatch(getAll());
+        await dispatch(checkUser());
         toast.success("Əlavə edildi");
         return data;
       } else {
@@ -45,6 +47,7 @@ export const edit = createAsyncThunk(
       const { data } = await applicationApi.edit(requestData);
       if (data?.err?.length === 0) {
         await dispatch(getAll());
+        await dispatch(checkUser());
         toast.success("Düzəliş edildi");
         return data;
       } else {
@@ -64,6 +67,7 @@ export const remove = createAsyncThunk("application/remove", async (appId: strin
     const { data } = await applicationApi.remove(appId);
     if (data?.err.length === 0) {
       await dispatch(getAll());
+      await dispatch(checkUser());
       toast.success("Silindi");
       return data;
     } else {

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { operationApi } from "api";
+import { checkUser } from "apps/auth/store/actions";
 import { setDialog } from "apps/security/configuration/configurations/store";
 import { toast } from "react-toastify";
 import {
@@ -30,6 +31,7 @@ export const add = createAsyncThunk(
       const { data } = await operationApi.add(requestData);
       if (data?.err.length === 0) {
         await dispatch(getAll());
+        await dispatch(checkUser());
         toast.success("Əlavə edildi");
         return data;
       } else {
@@ -51,6 +53,7 @@ export const edit = createAsyncThunk(
       const { data } = await operationApi.edit(requestData);
       if (data?.err?.length === 0) {
         await dispatch(getAll());
+        await dispatch(checkUser());
         toast.success("Düzəliş edildi");
         return data;
       } else {
@@ -72,6 +75,7 @@ export const remove = createAsyncThunk(
       const { data } = await operationApi.remove(operationId);
       if (data?.err.length === 0) {
         await dispatch(getAll());
+        await dispatch(checkUser());
         toast.success("Silindi");
         return data;
       } else {
@@ -110,6 +114,8 @@ export const addHtmlForm = createAsyncThunk(
       const { data } = await operationApi.addHtmlForm(request);
       if (data?.err?.length === 0) {
         dispatch(setDialog({ opened: false, type: "" }));
+        console.log("testtt");
+        await dispatch(checkUser());
         return data;
       } else {
         return rejectWithValue(data);
@@ -127,6 +133,7 @@ export const addViewForm = createAsyncThunk(
       const { data } = await operationApi.addViewForm(request);
       if (data?.err?.length === 0) {
         dispatch(setDialog({ opened: false, type: "" }));
+        await dispatch(checkUser());
         return data;
       } else {
         return rejectWithValue(data);
