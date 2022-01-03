@@ -9,4 +9,11 @@ export const StyledTextField = styled(TextField)`
   & .MuiInputBase-input {
     cursor: move;
   }
+
+  /* 
+  & .action-buttons {
+    position: absolute;
+    top: 0;
+    right: 0;
+  } */
 `;

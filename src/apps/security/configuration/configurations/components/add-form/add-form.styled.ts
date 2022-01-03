@@ -59,33 +59,4 @@ export const StyledAddForm = styled.div`
       background-position-y: 5px;
     }
   }
-
-  & .input-container {
-    position: relative;
-    margin-bottom: 1rem;
-
-    & .MuiTextField-root {
-      & .MuiIconButton-root {
-        & .MuiIcon-root {
-          font-size: 1.2rem;
-        }
-
-        &.edit-btn {
-          color: ${({ theme }) => theme.palette.primary.main};
-        }
-        &.delete-btn {
-          color: ${({ theme }) => theme.palette.error.main};
-        }
-      }
-    }
-
-    & .action-buttons {
-      position: absolute;
-      top: 0;
-      right: 0;
-
-      & .MuiIcon-root {
-      }
-    }
-  }
 `;

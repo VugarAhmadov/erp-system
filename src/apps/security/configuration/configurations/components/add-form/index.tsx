@@ -189,13 +189,14 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                   {...element.params}
                 />
               )}
-              {/* {element.element === "select" && (
+              {element.element === "select" && (
                 <SelectElement
                   handleEdit={() => handleDialogOpen("select", element.index)}
                   handleDelete={() => handleDeleteElement(element.index)}
+                  index={element.index}
                   {...element.params}
                 />
-              )} */}
+              )}
             </Fragment>
           ))}
         </div>

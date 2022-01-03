@@ -53,6 +53,7 @@ export const SelectDialog: FC<ISelectDialog> = ({ open, onClose, onSubmit, param
             />
 
             <TextField name="label" label={t("label")} required className="field" />
+            <TextField name="placeholder" label={t("placeholder")} className="field" />
             <Select
               name="dataType"
               data={[

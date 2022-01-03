@@ -95,6 +95,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                         transform: `translate3d(${element.params.left}px, ${element.params.top}px, 0)`,
                       }}
                       fullWidth={false}
+                      required={element.params.required}
                     />
                   )}
                 </Fragment>
