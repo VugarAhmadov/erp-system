@@ -17,12 +17,21 @@ import { StyledAddForm } from "./add-form.styled";
 import { AppState } from "store";
 import { operationApi } from "api";
 import { IAddForm, IDialogState } from "./types";
-import { InputDialog, InputElement, SelectDialog, SelectElement } from "./components";
+import {
+  InputElement,
+  InputDialog,
+  SelectElement,
+  SelectDialog,
+  CheckboxElement,
+  CheckboxDialog,
+  LabelElement,
+  LabelDialog,
+} from "./components";
 
 export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
   const { t, i18n } = useTranslation("common");
   const [dialog, setDialog] = useState<IDialogState>({
-    open: { input: false, select: false, checkbox: false, label: false },
+    open: { input: false, select: false, checkbox: false, label: false, radio: false },
     data: null,
   });
   const [formElements, setFormElements] = useState<any[]>([]);
@@ -168,13 +177,13 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
         <div className="component-buttons">
           <Button onClick={() => handleDialogOpen("input", -1)}>{t("input")}</Button>
           <Button onClick={() => handleDialogOpen("select", -1)}>{t("select")}</Button>
-          <Button onClick={() => console.log("test")}>{t("checkbox")}</Button>
-          <Button onClick={() => console.log("test")}>{t("radioButton")}</Button>
-          <Button onClick={() => console.log("test")}>{t("datepicker")}</Button>
-          <Button onClick={() => console.log("test")}>{t("timepicker")}</Button>
-          <Button onClick={() => console.log("test")}>{t("label")}</Button>
-          <Button onClick={() => console.log("test")}>{t("photo")}</Button>
-          <Button onClick={() => console.log("test")}>{t("file")}</Button>
+          <Button onClick={() => handleDialogOpen("checkbox", -1)}>{t("checkbox")}</Button>
+          {/* <Button onClick={() => handleDialogOpen("radio", -1)}>{t("radioButton")}</Button> */}
+          <Button onClick={() => handleDialogOpen("datepicker", -1)}>{t("datepicker")}</Button>
+          {/* <Button onClick={() => console.log("test")}>{t("timepicker")}</Button> */}
+          <Button onClick={() => handleDialogOpen("label", -1)}>{t("label")}</Button>
+          {/* <Button onClick={() => console.log("test")}>{t("photo")}</Button> */}
+          {/* <Button onClick={() => console.log("test")}>{t("file")}</Button> */}
           <Button onClick={() => console.log("test")}>{t("button")}</Button>
         </div>
 
@@ -197,6 +206,22 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                   {...element.params}
                 />
               )}
+              {element.element === "checkbox" && (
+                <CheckboxElement
+                  handleEdit={() => handleDialogOpen("checkbox", element.index)}
+                  handleDelete={() => handleDeleteElement(element.index)}
+                  index={element.index}
+                  {...element.params}
+                />
+              )}
+              {element.element === "label" && (
+                <LabelElement
+                  handleEdit={() => handleDialogOpen("label", element.index)}
+                  handleDelete={() => handleDeleteElement(element.index)}
+                  index={element.index}
+                  {...element.params}
+                />
+              )}
             </Fragment>
           ))}
         </div>
@@ -210,6 +235,18 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
       <SelectDialog
         open={dialog.open.select}
         onClose={() => handleDialogClose("select")}
+        onSubmit={handleSubmit}
+        params={dialog.data?.params}
+      />
+      <CheckboxDialog
+        open={dialog.open.checkbox}
+        onClose={() => handleDialogClose("checkbox")}
+        onSubmit={handleSubmit}
+        params={dialog.data?.params}
+      />
+      <LabelDialog
+        open={dialog.open.label}
+        onClose={() => handleDialogClose("label")}
         onSubmit={handleSubmit}
         params={dialog.data?.params}
       />

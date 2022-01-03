@@ -17,6 +17,7 @@ export interface IDialogOpen {
   select: boolean;
   checkbox: boolean;
   label: boolean;
+  radio: boolean;
 }
 
 export interface IDialogStateData {

@@ -2,10 +2,10 @@ import React, { FC, memo } from "react";
 import { Checkbox, FormControlLabel, Icon, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useDrag } from "react-dnd";
-import { StyledFormControl } from "./checkbox-element.styled";
+import { StyledFormControl } from "./radio-element.styled";
 import { StyledElementContainer } from "components/styled";
 
-interface ICheckboxElement {
+interface IRadioElement {
   handleDelete(): void;
   handleEdit(): void;
   index: number;
@@ -17,7 +17,7 @@ interface ICheckboxElement {
   top: number;
 }
 
-export const CheckboxElement: FC<ICheckboxElement> = memo(
+export const RadioElement: FC<IRadioElement> = memo(
   ({ handleDelete, handleEdit, label, name, required, index, left = 0, top = 0 }) => {
     const { t } = useTranslation("common");
 

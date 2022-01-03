@@ -1,24 +1,21 @@
 import React, { FC, memo } from "react";
-import { Checkbox, FormControlLabel, Icon, IconButton } from "@mui/material";
+import { Icon, IconButton, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useDrag } from "react-dnd";
-import { StyledFormControl } from "./checkbox-element.styled";
 import { StyledElementContainer } from "components/styled";
 
-interface ICheckboxElement {
+interface IButtonElement {
   handleDelete(): void;
   handleEdit(): void;
   index: number;
-  type: "number" | "text";
-  name: string;
+  type: string;
   label: string;
-  required?: string;
   left: number;
   top: number;
 }
 
-export const CheckboxElement: FC<ICheckboxElement> = memo(
-  ({ handleDelete, handleEdit, label, name, required, index, left = 0, top = 0 }) => {
+export const ButtonElement: FC<IButtonElement> = memo(
+  ({ handleDelete, handleEdit, label, type, index, left = 0, top = 0 }) => {
     const { t } = useTranslation("common");
 
     const [{ isDragging }, drag] = useDrag(
@@ -44,9 +41,6 @@ export const CheckboxElement: FC<ICheckboxElement> = memo(
           cursor: "move",
         }}
       >
-        <StyledFormControl required={!!required}>
-          <FormControlLabel control={<Checkbox name={name} />} label={label} />
-        </StyledFormControl>
         <div className="action-btns">
           <IconButton size="small" className="edit-btn" onClick={handleEdit}>
             <Icon>edit</Icon>
