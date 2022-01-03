@@ -1,0 +1,16 @@
+image: docker
+
+services:
+  - docker:dind
+
+stages:
+  - deploy
+
+deploy-prod:
+  stage: deploy
+  only:
+    - production
+  script:
+    - sudo docker-compose up -d --build
+    - sudo docker rmi -f $(sudo docker images -f "dangling=true" -q)
+  environment: production
