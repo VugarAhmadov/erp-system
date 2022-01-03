@@ -5,3 +5,4 @@ export { applicationApi } from "./application";
 export { moduleApi } from "./module";
 export { operationApi } from "./operation";
 export { dictionaryApi } from "./dictionary";
+export { dynamicApi } from "./dynamic";

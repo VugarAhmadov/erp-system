@@ -6,14 +6,11 @@ export const StyledApps = styled.div`
     padding: 0.36rem 0.5rem;
     min-width: auto;
     border-color: rgba(0, 0, 0, 0.23);
+    height: 100%;
 
     &:hover {
       border-color: rgba(0, 0, 0, 0.87);
     }
-  }
-
-  & .apps-menu {
-    display: flex;
   }
 `;
 

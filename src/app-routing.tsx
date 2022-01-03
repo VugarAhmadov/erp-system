@@ -5,6 +5,7 @@ import { AuthLayout, MainLayout } from "layouts";
 import { Spinner } from "components/shared";
 import { history } from "store";
 import { Security, DynamicApp } from "apps";
+import { RouterOutlet } from "components/shared/routes";
 
 const Login = lazy(() => import("apps/auth").then((module) => ({ default: module.Login })));
 
@@ -29,13 +30,14 @@ export const AppRouting = () => {
             <Route path="login" element={<Login />} />
           </Route>
           <Route path="/" element={<MainLayout />}>
-            <Route path="security" element={<Security />}>
+            <Route path="security" element={<RouterOutlet />}>
               <Route path="configuration" element={<Configuration />} />
               <Route path="application" element={<Application />} />
               <Route path="module" element={<Module />} />
               <Route path="operation" element={<Operation />} />
+              <Route path=":dynamicModule" element={<DynamicModule />} />
             </Route>
-            <Route path=":dynamicApp" element={<DynamicApp />}>
+            <Route path=":dynamicApp" element={<RouterOutlet />}>
               <Route path=":dynamicModule" element={<DynamicModule />} />
             </Route>
           </Route>

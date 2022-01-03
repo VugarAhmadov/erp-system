@@ -6,11 +6,12 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppState } from "store";
 import { StyledHeader } from "./header.styled";
-import { Lang, Apps } from "./components";
+import { Lang, Apps, Profile } from "./components";
 
 export const Header: FC = () => {
   return (
     <StyledHeader>
+      <Profile />
       <Lang />
       <Apps />
     </StyledHeader>

@@ -10,5 +10,9 @@ export const StyledDialog = styled(Dialog)`
       height: 100%;
       max-height: 98%;
     }
+
+    & .MuiDialogContent-root {
+      padding: 1rem;
+    }
   }
 `;

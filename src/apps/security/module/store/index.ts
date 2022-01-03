@@ -2,12 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getAll, add, edit, remove } from "./actions";
 import { IDialog, IGetAllTable } from "types";
 import { ILoading } from "./types";
+import { IModule } from "apps/auth/store/types";
 
 export interface IModuleState {
   loading: ILoading;
   modules: IGetAllTable;
   dialog: IDialog;
   selectedModule: string;
+  module: IModule;
 }
 
 const initialState: IModuleState = {
@@ -18,6 +20,7 @@ const initialState: IModuleState = {
     remove: false,
   },
   modules: {} as IGetAllTable,
+  module: {} as IModule,
   dialog: {
     opened: false,
     type: "",
@@ -34,6 +37,9 @@ export const moduleSlice = createSlice({
     },
     setSelectedModule: (state, action: PayloadAction<string>) => {
       state.selectedModule = action.payload;
+    },
+    setModule: (state, action: PayloadAction<IModule>) => {
+      state.module = action.payload;
     },
   },
   extraReducers: {
@@ -90,4 +96,4 @@ export const moduleSlice = createSlice({
   },
 });
 
-export const { setDialog, setSelectedModule } = moduleSlice.actions;
+export const { setDialog, setSelectedModule, setModule } = moduleSlice.actions;

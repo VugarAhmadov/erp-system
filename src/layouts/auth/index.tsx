@@ -14,10 +14,9 @@ export const AuthLayout: FC<IAuthLayout> = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoggedIn) {
-      navigate("/");
-    }
-    // eslint-disable-next-line
+    // if (isLoggedIn) {
+    //   navigate("/");
+    // }
   }, [isLoggedIn]);
 
   return (

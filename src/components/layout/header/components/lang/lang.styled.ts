@@ -3,8 +3,12 @@ import styled from "@emotion/styled";
 export const StyledLang = styled.div`
   margin-right: 1rem;
 
-  & .MuiInputBase-root:hover {
-    background-color: rgba(0, 0, 0, 0.04);
+  & .MuiInputBase-root {
+    height: 100%;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
   }
 
   & .MuiSelect-select {

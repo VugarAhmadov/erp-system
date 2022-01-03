@@ -5,12 +5,18 @@ import { useNavigate } from "react-router-dom";
 import { AppState } from "store";
 import { StyledApps, StyledAppsMenu } from "./apps.styled";
 import { useTranslation } from "react-i18next";
+import { IName } from "apps/auth/store/types";
 
 export const Apps = () => {
   const navigate = useNavigate();
   const { i18n } = useTranslation();
   const [appMenu, setAppMenu] = useState<HTMLElement | null>(null);
   const apps = useSelector((state: AppState) => state.auth.user.applications);
+
+  const handleMenuItemClick = (appUrl: string) => {
+    setAppMenu(null);
+    navigate(appUrl);
+  };
 
   return (
     <StyledApps>
@@ -37,11 +43,11 @@ export const Apps = () => {
         onClose={() => setAppMenu(null)}
       >
         {apps?.map((app) => (
-          <MenuItem key={app.id} onClick={() => navigate(app.url)} className="menu-item">
+          <MenuItem key={app.id} onClick={() => handleMenuItemClick(app.url)} className="menu-item">
             <ListItemIcon>
               <Icon>{app.icon || "home"}</Icon>
             </ListItemIcon>
-            <ListItemText>{app.name[i18n.language as keyof typeof app.name]}</ListItemText>
+            <ListItemText>{app.name[i18n.language as keyof IName]}</ListItemText>
           </MenuItem>
         ))}
       </StyledAppsMenu>

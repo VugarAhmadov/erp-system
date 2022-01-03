@@ -1,6 +1,7 @@
 export interface IFilterBar {
   // config: IFilterBarConfig;
   addButton: IAddButton;
+  title?: string;
 }
 
 export interface IFilterBarConfig {}

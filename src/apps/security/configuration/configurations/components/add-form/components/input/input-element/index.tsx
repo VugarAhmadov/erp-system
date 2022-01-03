@@ -1,6 +1,8 @@
-import React, { FC } from "react";
-import { Icon, IconButton, InputAdornment, TextField } from "@mui/material";
+import React, { FC, memo } from "react";
+import { Icon, IconButton, InputAdornment } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useDrag } from "react-dnd";
+import { StyledTextField } from "./input-element.styled";
 
 interface IInputElement {
   handleDelete(): void;
@@ -11,9 +13,11 @@ interface IInputElement {
   label?: string;
   placeholder?: string;
   required?: string;
+  left: number;
+  top: number;
 }
 
-export const InputElement: FC<IInputElement> = ({
+export const InputElement: FC<IInputElement> = memo(function InputElement({
   handleDelete,
   handleEdit,
   placeholder,
@@ -21,17 +25,42 @@ export const InputElement: FC<IInputElement> = ({
   type,
   name,
   required,
-}) => {
+  index,
+  left = 0,
+  top = 0,
+}) {
   const { t } = useTranslation("common");
 
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      type: "box",
+      item: { index, left, top },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
+    }),
+    [index, left, top]
+  );
+
   return (
-    <div className="input-container">
-      <TextField
+    <div
+      ref={drag}
+      className="input-container"
+      style={{
+        position: "absolute",
+        transform: `translate3d(${left}px, ${top}px, 0)`,
+        opacity: isDragging ? 0 : 1,
+        height: isDragging ? 0 : "",
+        cursor: "move",
+      }}
+    >
+      <StyledTextField
         type={type}
         name={name}
         required={!!required}
         label={label && t(label)}
         placeholder={placeholder && t(placeholder)}
+        sx={{ cursor: "move" }}
         InputProps={{
           readOnly: true,
           endAdornment: (
@@ -48,4 +77,4 @@ export const InputElement: FC<IInputElement> = ({
       />
     </div>
   );
-};
+});

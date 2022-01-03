@@ -5,8 +5,9 @@ import { IFilterBar, IFilterBarConfig } from "./type";
 import { Link as RouterLink } from "react-router-dom";
 import { DialogFormContent } from "./form";
 import { useDialog } from "hooks";
+import { SectionHeader } from "..";
 
-export const FilterBar: FC<IFilterBar> = ({ addButton }) => {
+export const FilterBar: FC<IFilterBar> = ({ addButton, title }) => {
   // const initialConfig: IFilterBarConfig = {
   //   addButton: {
   //     show: true,
@@ -18,6 +19,9 @@ export const FilterBar: FC<IFilterBar> = ({ addButton }) => {
   return (
     <StyledPaper elevation={2}>
       <Grid container>
+        <Grid item xs={2} className="title">
+          <SectionHeader title={title || ""} />
+        </Grid>
         <Grid item xs={4}>
           {addButton.show && (
             <Button
@@ -32,7 +36,7 @@ export const FilterBar: FC<IFilterBar> = ({ addButton }) => {
             </Button>
           )}
         </Grid>
-        <Grid item xs={8}></Grid>
+        <Grid item xs={6}></Grid>
       </Grid>
     </StyledPaper>
   );
