@@ -5,3 +5,5 @@ services:
     build: .
     restart: always
     container_name: codeum_front
+    ports:
+      - 80
