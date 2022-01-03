@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Button, Typography } from "@mui/material";
-import { Switches, TextField } from "components/shared";
+import { Select, Switches, TextField } from "components/shared";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -48,6 +48,19 @@ export const DatepickerDialog: FC<IDatepickerDialog> = ({ open, onClose, onSubmi
             />
 
             <TextField name="label" label={t("label")} required className="field" />
+
+            <Select
+              name="type"
+              data={[
+                { label: "Year only", value: "year" },
+                { label: "Year and Month", value: "year/month" },
+                { label: "Year, month and day", value: "year/month/day" },
+                { label: "Day, month and year", value: "day/month/year" },
+                { label: "Just day", value: "day" },
+              ]}
+              required
+              label={t("types")}
+            />
 
             <div className="switch">
               <Switches name="required" data={{ label: t("required"), value: "required" }} />

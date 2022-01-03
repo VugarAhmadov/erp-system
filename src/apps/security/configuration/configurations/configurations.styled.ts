@@ -5,6 +5,15 @@ export const StyledConfigurations = styled.div`
 
   & .application {
     border-radius: 0.4rem;
+    margin-bottom: 1rem;
+
+    &:before {
+      content: none;
+    }
+
+    &:last-of-type {
+      border-radius: 0.4rem;
+    }
 
     & > .MuiAccordionSummary-root {
       background-color: ${({ theme }) => theme.palette.primary.main};

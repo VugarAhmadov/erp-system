@@ -18,6 +18,8 @@ export interface IDialogOpen {
   checkbox: boolean;
   label: boolean;
   radio: boolean;
+  datepicker: boolean;
+  button: boolean;
 }
 
 export interface IDialogStateData {

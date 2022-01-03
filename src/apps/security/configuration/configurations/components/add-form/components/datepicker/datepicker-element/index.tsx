@@ -1,15 +1,18 @@
 import React, { FC, memo } from "react";
-import { Checkbox, FormControlLabel, Icon, IconButton } from "@mui/material";
+import { Checkbox, FormControlLabel, Icon, IconButton, TextField } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useDrag } from "react-dnd";
 import { StyledFormControl } from "./datepicker-element.styled";
 import { StyledElementContainer } from "components/styled";
+import { DatePicker, LocalizationProvider } from "@mui/lab";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { DatePickerView } from "@mui/lab/DatePicker/shared";
 
 interface IDatepickerElement {
   handleDelete(): void;
   handleEdit(): void;
   index: number;
-  type: "number" | "text";
+  type: string;
   name: string;
   label: string;
   required?: string;
@@ -18,8 +21,9 @@ interface IDatepickerElement {
 }
 
 export const DatepickerElement: FC<IDatepickerElement> = memo(
-  ({ handleDelete, handleEdit, label, name, required, index, left = 0, top = 0 }) => {
+  ({ handleDelete, handleEdit, label, name, required, index, type, left = 0, top = 0 }) => {
     const { t } = useTranslation("common");
+    const [value, setValue] = React.useState<Date | null>(null);
 
     const [{ isDragging }, drag] = useDrag(
       () => ({
@@ -44,9 +48,18 @@ export const DatepickerElement: FC<IDatepickerElement> = memo(
           cursor: "move",
         }}
       >
-        <StyledFormControl required={!!required}>
-          <FormControlLabel control={<Checkbox name={name} />} label={label} />
-        </StyledFormControl>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <StyledFormControl required={!!required}>
+            <DatePicker
+              views={type.split("/") as DatePickerView[]}
+              label={label}
+              value={value}
+              readOnly
+              onChange={(newValue) => setValue(newValue)}
+              renderInput={(params) => <TextField {...params} name={name} />}
+            />
+          </StyledFormControl>
+        </LocalizationProvider>
         <div className="action-btns">
           <IconButton size="small" className="edit-btn" onClick={handleEdit}>
             <Icon>edit</Icon>
