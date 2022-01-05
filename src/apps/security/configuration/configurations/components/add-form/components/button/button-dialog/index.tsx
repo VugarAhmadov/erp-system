@@ -23,34 +23,65 @@ export const ButtonDialog: FC<IButtonDialog> = ({ open, onClose, onSubmit, param
       <Form
         onSubmit={onSubmit}
         initialValues={params}
-        render={({ handleSubmit, invalid }) => (
+        render={({ handleSubmit, invalid, values }) => (
           <StyledForm onSubmit={handleSubmit}>
-            <Typography variant="h6">{t("addSelectComponent")}</Typography>
+            <Typography variant="h6">{t("addButtonComponent")}</Typography>
+
             <TextField name="label" label={t("label")} required className="field" />
 
             <Select
               name="type"
               data={[
-                { label: "h1", value: "h1" },
-                { label: "h2", value: "h2" },
-                { label: "h3", value: "h3" },
-                { label: "h4", value: "h4" },
-                { label: "h5", value: "h5" },
-                { label: "h6", value: "h6" },
-                { label: "subtitle1", value: "subtitle1" },
-                { label: "subtitle2", value: "subtitle2" },
-                { label: "body1", value: "body1" },
-                { label: "body2", value: "body2" },
-                { label: "caption", value: "caption" },
-                { label: "button", value: "button" },
-                { label: "overline", value: "overline" },
+                { label: "Button", value: "button" },
+                { label: "Link", value: "link" },
+                { label: "Icon", value: "icon" },
               ]}
               required
               label={t("types")}
             />
-            <div className="switch">
-              <Switches name="required" data={{ label: t("required"), value: "required" }} />
-            </div>
+
+            {values?.type !== "icon" && (
+              <Select
+                name="variant"
+                data={[
+                  { label: "Text", value: "text" },
+                  { label: "Contained", value: "contained" },
+                  { label: "Outlined", value: "outlined" },
+                ]}
+                required
+                label={t("variants")}
+              />
+            )}
+
+            {values?.type === "icon" && <TextField name="iconName" label={t("iconName")} required className="field" />}
+            {values?.type === "link" && <TextField name="linkUrl" label={t("linkUrl")} required className="field" />}
+
+            <Select
+              name="color"
+              data={[
+                { label: "Error", value: "error" },
+                { label: "Info", value: "info" },
+                { label: "Warning", value: "warning" },
+                { label: "Success", value: "success" },
+                { label: "Primary", value: "primary" },
+                { label: "Secondary", value: "secondary" },
+                { label: "Inherit", value: "inherit" },
+              ]}
+              required
+              label={t("colors")}
+            />
+
+            <Select
+              name="size"
+              data={[
+                { label: "Small", value: "small" },
+                { label: "Medium", value: "medium" },
+                { label: "Large", value: "large" },
+              ]}
+              required
+              label={t("sizes")}
+            />
+
             <div className="action-buttons">
               <Button onClick={onClose} className="cancel-btn">
                 {t("cancel")}

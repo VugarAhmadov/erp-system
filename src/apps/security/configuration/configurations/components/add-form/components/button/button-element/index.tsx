@@ -1,5 +1,5 @@
 import React, { FC, memo } from "react";
-import { Icon, IconButton, Typography } from "@mui/material";
+import { Button, Icon, IconButton, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useDrag } from "react-dnd";
 import { StyledElementContainer } from "components/styled";
@@ -8,14 +8,19 @@ interface IButtonElement {
   handleDelete(): void;
   handleEdit(): void;
   index: number;
-  type: string;
+  type: "icon" | "button" | "link";
+  size: "small" | "medium" | "large";
+  variant: "text" | "outlined" | "contained";
+  color: "error" | "info" | "warning" | "success" | "inherit" | "primary" | "secondary";
+  iconName?: string;
+  linkUrl?: string;
   label: string;
   left: number;
   top: number;
 }
 
 export const ButtonElement: FC<IButtonElement> = memo(
-  ({ handleDelete, handleEdit, label, type, index, left = 0, top = 0 }) => {
+  ({ handleDelete, handleEdit, label, variant, size, iconName, color, type, index, linkUrl, left = 0, top = 0 }) => {
     const { t } = useTranslation("common");
 
     const [{ isDragging }, drag] = useDrag(
@@ -41,6 +46,15 @@ export const ButtonElement: FC<IButtonElement> = memo(
           cursor: "move",
         }}
       >
+        {type === "icon" ? (
+          <IconButton size={size} color={color}>
+            <Icon>{iconName}</Icon>
+          </IconButton>
+        ) : (
+          <Button variant={variant} href={type === "link" ? linkUrl : undefined} size={size} color={color}>
+            {label}
+          </Button>
+        )}
         <div className="action-btns">
           <IconButton size="small" className="edit-btn" onClick={handleEdit}>
             <Icon>edit</Icon>
