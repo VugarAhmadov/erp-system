@@ -35,8 +35,8 @@ export type TextFieldProps = Partial<Omit<MuiTextFieldProps, "type" | "onChange"
   name: string;
   type?: TEXT_FIELD_TYPE;
   fieldProps?: Partial<Omit<FieldProps<any, any>, "validate">>;
-  validate?: FieldValidator<any> | FieldValidator<any>[];
   showError?: ShowErrorFunc;
+  validate?: FieldValidator<any> | FieldValidator<any>[];
 };
 
 export const TextField = (props: TextFieldProps) => {

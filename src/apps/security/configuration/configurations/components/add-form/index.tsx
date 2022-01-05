@@ -31,6 +31,7 @@ import {
   ButtonElement,
   ButtonDialog,
 } from "./components";
+import { Form } from "react-final-form";
 
 export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
   const { t, i18n } = useTranslation("common");
@@ -200,24 +201,59 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
         </div>
 
         <div ref={drop} className={clsx("drag-container", grid === "on" && "grid-view")}>
-          {formElements?.map((element) => (
+          <Form
+            onSubmit={() => {}}
+            render={({ handleSubmit }) => (
+              <form onSubmit={handleSubmit}>
+                {formElements?.map((element) => (
+                  <Fragment key={element.index}>
+                    {element.element === "input" && (
+                      <InputElement
+                        handleEdit={handleDialogOpen}
+                        handleDelete={handleDeleteElement}
+                        index={element.index}
+                        {...element.params}
+                      />
+                    )}
+                    {element.element === "label" && (
+                      <LabelElement
+                        handleEdit={handleDialogOpen}
+                        handleDelete={handleDeleteElement}
+                        index={element.index}
+                        {...element.params}
+                      />
+                    )}
+                    {element.element === "button" && (
+                      <ButtonElement
+                        handleEdit={handleDialogOpen}
+                        handleDelete={handleDeleteElement}
+                        index={element.index}
+                        {...element.params}
+                      />
+                    )}
+                    {element.element === "select" && (
+                      <SelectElement
+                        handleEdit={handleDialogOpen}
+                        handleDelete={handleDeleteElement}
+                        index={element.index}
+                        {...element.params}
+                      />
+                    )}
+                    {element.element === "datepicker" && (
+                      <DatepickerElement
+                        handleEdit={handleDialogOpen}
+                        handleDelete={handleDeleteElement}
+                        index={element.index}
+                        {...element.params}
+                      />
+                    )}
+                  </Fragment>
+                ))}
+              </form>
+            )}
+          />
+          {/* {formElements?.map((element) => (
             <Fragment key={element.index}>
-              {element.element === "input" && (
-                <InputElement
-                  handleEdit={() => handleDialogOpen("input", element.index)}
-                  handleDelete={() => handleDeleteElement(element.index)}
-                  index={element.index}
-                  {...element.params}
-                />
-              )}
-              {element.element === "select" && (
-                <SelectElement
-                  handleEdit={() => handleDialogOpen("select", element.index)}
-                  handleDelete={() => handleDeleteElement(element.index)}
-                  index={element.index}
-                  {...element.params}
-                />
-              )}
               {element.element === "checkbox" && (
                 <CheckboxElement
                   handleEdit={() => handleDialogOpen("checkbox", element.index)}
@@ -226,32 +262,8 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                   {...element.params}
                 />
               )}
-              {element.element === "label" && (
-                <LabelElement
-                  handleEdit={() => handleDialogOpen("label", element.index)}
-                  handleDelete={() => handleDeleteElement(element.index)}
-                  index={element.index}
-                  {...element.params}
-                />
-              )}
-              {element.element === "datepicker" && (
-                <DatepickerElement
-                  handleEdit={() => handleDialogOpen("datepicker", element.index)}
-                  handleDelete={() => handleDeleteElement(element.index)}
-                  index={element.index}
-                  {...element.params}
-                />
-              )}
-              {element.element === "button" && (
-                <ButtonElement
-                  handleEdit={() => handleDialogOpen("button", element.index)}
-                  handleDelete={() => handleDeleteElement(element.index)}
-                  index={element.index}
-                  {...element.params}
-                />
-              )}
             </Fragment>
-          ))}
+          ))} */}
         </div>
       </StyledAddForm>
       <InputDialog

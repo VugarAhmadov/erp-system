@@ -1,11 +1,9 @@
 import React, { FC } from "react";
 import { Button, Typography } from "@mui/material";
-import { Select, Switches, TextField } from "components/shared";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
-import { AppState } from "store";
-import { Dialog, ModelTextField } from "../..";
+import { Select, TextField } from "components/shared";
+import { Dialog } from "../..";
 import { StyledForm } from "./button-dialog.styled";
 
 interface IButtonDialog {
@@ -27,60 +25,65 @@ export const ButtonDialog: FC<IButtonDialog> = ({ open, onClose, onSubmit, param
           <StyledForm onSubmit={handleSubmit}>
             <Typography variant="h6">{t("addButtonComponent")}</Typography>
 
-            <TextField name="label" label={t("label")} required className="field" />
+            <div>
+              <TextField name="label" label={t("label")} required className="field" />
 
-            <Select
-              name="type"
-              data={[
-                { label: "Button", value: "button" },
-                { label: "Link", value: "link" },
-                { label: "Icon", value: "icon" },
-              ]}
-              required
-              label={t("types")}
-            />
-
-            {values?.type !== "icon" && (
               <Select
-                name="variant"
+                name="sort"
                 data={[
-                  { label: "Text", value: "text" },
-                  { label: "Contained", value: "contained" },
-                  { label: "Outlined", value: "outlined" },
+                  { label: "Button", value: "button" },
+                  { label: "Link", value: "link" },
+                  { label: "Icon", value: "icon" },
                 ]}
                 required
-                label={t("variants")}
+                label={t("sorts")}
               />
-            )}
 
-            {values?.type === "icon" && <TextField name="iconName" label={t("iconName")} required className="field" />}
-            {values?.type === "link" && <TextField name="linkUrl" label={t("linkUrl")} required className="field" />}
+              {values?.sort !== "icon" && (
+                <Select
+                  name="variant"
+                  data={[
+                    { label: "Text", value: "text" },
+                    { label: "Contained", value: "contained" },
+                    { label: "Outlined", value: "outlined" },
+                  ]}
+                  required
+                  label={t("variants")}
+                />
+              )}
 
-            <Select
-              name="color"
-              data={[
-                { label: "Error", value: "error" },
-                { label: "Info", value: "info" },
-                { label: "Warning", value: "warning" },
-                { label: "Success", value: "success" },
-                { label: "Primary", value: "primary" },
-                { label: "Secondary", value: "secondary" },
-                { label: "Inherit", value: "inherit" },
-              ]}
-              required
-              label={t("colors")}
-            />
+              {values?.sort === "icon" && (
+                <TextField name="iconName" label={t("iconName")} required className="field" />
+              )}
 
-            <Select
-              name="size"
-              data={[
-                { label: "Small", value: "small" },
-                { label: "Medium", value: "medium" },
-                { label: "Large", value: "large" },
-              ]}
-              required
-              label={t("sizes")}
-            />
+              {values?.sort === "link" && <TextField name="linkUrl" label={t("linkUrl")} required className="field" />}
+
+              <Select
+                name="color"
+                data={[
+                  { label: "Error", value: "error" },
+                  { label: "Info", value: "info" },
+                  { label: "Warning", value: "warning" },
+                  { label: "Success", value: "success" },
+                  { label: "Primary", value: "primary" },
+                  { label: "Secondary", value: "secondary" },
+                  { label: "Inherit", value: "inherit" },
+                ]}
+                required
+                label={t("colors")}
+              />
+
+              <Select
+                name="size"
+                data={[
+                  { label: "Small", value: "small" },
+                  { label: "Medium", value: "medium" },
+                  { label: "Large", value: "large" },
+                ]}
+                required
+                label={t("sizes")}
+              />
+            </div>
 
             <div className="action-buttons">
               <Button onClick={onClose} className="cancel-btn">

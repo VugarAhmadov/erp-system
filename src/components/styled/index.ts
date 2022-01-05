@@ -1,2 +1,4 @@
+import styled from "@emotion/styled";
+
 export * from "./list";
-export * from "./element-container";
+export const StyledElementContainer = styled.div``;

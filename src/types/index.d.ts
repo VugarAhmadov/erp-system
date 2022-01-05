@@ -71,3 +71,8 @@ export interface IGetAllTableColumn {
   n: string;
   t: string;
 }
+
+export interface ISelectData {
+  value: string;
+  label: string;
+}
