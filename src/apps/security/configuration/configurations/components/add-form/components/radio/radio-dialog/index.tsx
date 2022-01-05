@@ -5,7 +5,7 @@ import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { AppState } from "store";
-import { Dialog, ModelTextField } from "../..";
+import { Dialog } from "../..";
 import { StyledForm } from "./radio-dialog.styled";
 
 interface IRadioDialog {
@@ -30,22 +30,6 @@ export const RadioDialog: FC<IRadioDialog> = ({ open, onClose, onSubmit, params 
         render={({ handleSubmit, invalid, form, values }) => (
           <StyledForm onSubmit={handleSubmit}>
             <Typography variant="h6">{t("addSelectComponent")}</Typography>
-            <ModelTextField
-              menuData={
-                views
-                  .find(
-                    (view) =>
-                      view.name ===
-                      modules
-                        .find((module) => module.id === selectedOperation.moduleId)
-                        ?.operations.find((operation) => operation.code === "ALL_VIEW")?.viewName
-                  )
-                  ?.columns?.map((column) => column.name)!
-              }
-              fieldName="model"
-              fieldLabel="model"
-              form={form}
-            />
 
             <TextField name="label" label={t("label")} required className="field" />
 

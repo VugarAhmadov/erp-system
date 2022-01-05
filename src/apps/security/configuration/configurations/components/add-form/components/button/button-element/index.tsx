@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import { Button, Icon, IconButton } from "@mui/material";
 import { IElement, Element } from "../..";
+import { Button } from "./button";
 
 interface IButtonElement extends IElement {
   sort: "icon" | "button" | "link";
@@ -22,17 +22,11 @@ export const ButtonElement: FC<IButtonElement> = ({
   linkUrl,
   ...rest
 }) => {
+  const buttonProps = { label, variant, size, iconName, color, sort, linkUrl };
+
   return (
     <Element {...rest} type="button">
-      {sort === "icon" ? (
-        <IconButton size={size} color={color}>
-          <Icon>{iconName}</Icon>
-        </IconButton>
-      ) : (
-        <Button variant={variant} href={sort === "link" ? linkUrl : undefined} size={size} color={color}>
-          {label}
-        </Button>
-      )}
+      <Button {...buttonProps} fromConf />
     </Element>
   );
 };

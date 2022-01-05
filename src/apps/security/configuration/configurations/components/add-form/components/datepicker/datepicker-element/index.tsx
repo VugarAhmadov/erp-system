@@ -1,7 +1,6 @@
 import React, { FC } from "react";
-import { DatePickerView } from "@mui/lab/DatePicker/shared";
-import { DatePicker } from "components/shared";
 import { Element, IElement } from "../..";
+import { Datepicker } from "./datepicker";
 
 interface IDatepickerElement extends IElement {
   model: string;
@@ -11,9 +10,11 @@ interface IDatepickerElement extends IElement {
 }
 
 export const DatepickerElement: FC<IDatepickerElement> = ({ label, model, required, variant, ...rest }) => {
+  const datepickerProps = { label, model, required, variant };
+
   return (
     <Element {...rest} type="datepicker">
-      <DatePicker name={model} label={label} required={!!required} views={variant.split("/") as DatePickerView[]} />
+      <Datepicker {...datepickerProps} fromConf />
     </Element>
   );
 };

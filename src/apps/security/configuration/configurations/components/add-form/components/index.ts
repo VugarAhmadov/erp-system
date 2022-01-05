@@ -1,5 +1,4 @@
 export { Dialog } from "./dialog";
-export { ModelTextField } from "./model-text-field";
 export * from "./element";
 export * from "./input";
 export * from "./select";

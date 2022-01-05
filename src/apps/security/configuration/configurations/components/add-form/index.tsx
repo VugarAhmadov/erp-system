@@ -191,13 +191,13 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
           <Button onClick={() => handleDialogOpen("input", -1)}>{t("input")}</Button>
           <Button onClick={() => handleDialogOpen("select", -1)}>{t("select")}</Button>
           <Button onClick={() => handleDialogOpen("checkbox", -1)}>{t("checkbox")}</Button>
-          {/* <Button onClick={() => handleDialogOpen("radio", -1)}>{t("radioButton")}</Button> */}
           <Button onClick={() => handleDialogOpen("datepicker", -1)}>{t("datepicker")}</Button>
-          {/* <Button onClick={() => console.log("test")}>{t("timepicker")}</Button> */}
           <Button onClick={() => handleDialogOpen("label", -1)}>{t("label")}</Button>
+          <Button onClick={() => handleDialogOpen("button", -1)}>{t("button")}</Button>
+          {/* <Button onClick={() => console.log("test")}>{t("timepicker")}</Button> */}
+          {/* <Button onClick={() => handleDialogOpen("radio", -1)}>{t("radioButton")}</Button> */}
           {/* <Button onClick={() => console.log("test")}>{t("photo")}</Button> */}
           {/* <Button onClick={() => console.log("test")}>{t("file")}</Button> */}
-          <Button onClick={() => handleDialogOpen("button", -1)}>{t("button")}</Button>
         </div>
 
         <div ref={drop} className={clsx("drag-container", grid === "on" && "grid-view")}>
@@ -247,23 +247,19 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                         {...element.params}
                       />
                     )}
+                    {element.element === "checkbox" && (
+                      <CheckboxElement
+                        handleEdit={handleDialogOpen}
+                        handleDelete={handleDeleteElement}
+                        index={element.index}
+                        {...element.params}
+                      />
+                    )}
                   </Fragment>
                 ))}
               </form>
             )}
           />
-          {/* {formElements?.map((element) => (
-            <Fragment key={element.index}>
-              {element.element === "checkbox" && (
-                <CheckboxElement
-                  handleEdit={() => handleDialogOpen("checkbox", element.index)}
-                  handleDelete={() => handleDeleteElement(element.index)}
-                  index={element.index}
-                  {...element.params}
-                />
-              )}
-            </Fragment>
-          ))} */}
         </div>
       </StyledAddForm>
       <InputDialog

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { checkUserAccess } from "helpers";
 import { AppState } from "store";
-import { getAll } from "./store/actions";
+import { add, getAll } from "./store/actions";
 import { DataTable, FilterBar, SectionHeader } from "components/shared";
 import { useTranslation } from "react-i18next";
 import { Column } from "@material-table/core";
@@ -86,7 +86,12 @@ export const DynamicModule = () => {
     dispatch(setDialog({ opened: false, type: "" }));
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = (data: any) => {
+    if (checkUserAccess(module, "ADD")) {
+      dispatch(add(data));
+    }
+  };
+  // onSubmit({ operationHtml: JSON.stringify(formElements), operationId: selectedOperation.id })
 
   return (
     <>

@@ -1,8 +1,6 @@
-import React, { FC, useEffect, useState } from "react";
-import { dictionaryApi, dynamicApi } from "api";
-import { Select } from "components/shared";
-import { ISelectData } from "types";
+import React, { FC } from "react";
 import { IElement, Element } from "../..";
+import { Select } from "./select";
 
 interface ISelectElement extends IElement {
   model: string;
@@ -26,23 +24,20 @@ export const SelectElement: FC<ISelectElement> = ({
   dataName,
   ...rest
 }) => {
-  const [selectData, setSelectData] = useState<ISelectData[]>([]);
-
-  useEffect(() => {
-    if (dataType === "dic") {
-      dictionaryApi
-        .getDictionariesListByCommon({ typeId: dicId!, parentId: parentId })
-        .then((res) => setSelectData(res.data.tbl[0].r.map((row) => ({ value: row.id, label: row.name }))));
-    } else if (dataType === "rest") {
-      dynamicApi
-        .getAll(dataUrl!)
-        .then((res) => setSelectData(res.data.tbl[0].r.map((row) => ({ value: row.id, label: row[dataName!] }))));
-    }
-  }, []);
+  const selectProps = {
+    label,
+    model,
+    required,
+    dataType,
+    dicId,
+    parentId,
+    dataUrl,
+    dataName,
+  };
 
   return (
     <Element {...rest} type="select">
-      <Select name={model} data={selectData} required={!!required} label={label} sx={{ minWidth: "120px" }} />
+      <Select {...selectProps} fromConf />
     </Element>
   );
 };

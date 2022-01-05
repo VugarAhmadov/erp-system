@@ -5,7 +5,7 @@ import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { AppState } from "store";
-import { Dialog, ModelTextField } from "../..";
+import { Dialog } from "../..";
 import { StyledForm } from "./label-dialog.styled";
 
 interface ILabelDialog {

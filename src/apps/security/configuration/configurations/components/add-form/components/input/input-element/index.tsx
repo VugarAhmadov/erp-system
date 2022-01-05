@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { TextField } from "components/shared";
 import { Element, IElement } from "../..";
+import { Input } from "./input";
 
 interface IInputElement extends IElement {
   model: string;
@@ -11,20 +12,11 @@ interface IInputElement extends IElement {
 }
 
 export const InputElement: FC<IInputElement> = ({ variant, model, label, placeholder, required, ...rest }) => {
+  const inputProps = { variant, model, label, placeholder, required };
+
   return (
     <Element {...rest} type="input">
-      <TextField
-        name={model}
-        type={variant}
-        label={label}
-        placeholder={placeholder}
-        required={!!required}
-        InputProps={{
-          readOnly: true,
-        }}
-        // label={label && t(label)} !!NOTE: eslinde bele olmalidi
-        // placeholder={placeholder && t(placeholder)} !!NOTE: eslinde bele olmalidi
-      />
+      <Input {...inputProps} fromConf />
     </Element>
   );
 };

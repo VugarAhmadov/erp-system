@@ -6,8 +6,8 @@ const getAll = async (url: string) => {
   return await defaultRequest.post<IGetAllResponse>(`api${url}`);
 };
 
-const add = async (requestData: IAddOrEditApplicationRequest) => {
-  return await defaultRequest.post<IGetAllResponse>(`api/jwt/CodiumSystem/Application/Add`, {
+const add = async (url: string, requestData: IAddOrEditApplicationRequest) => {
+  return await defaultRequest.post<IGetAllResponse>(`api${url}`, {
     kv: requestData,
   });
 };

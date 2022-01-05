@@ -1,7 +1,6 @@
 import React, { FC } from "react";
-import { Typography } from "@mui/material";
 import { Element, IElement } from "../..";
-import { t } from "i18next";
+import { Label } from "./label";
 
 interface ILabelElement extends IElement {
   variant:
@@ -23,10 +22,11 @@ interface ILabelElement extends IElement {
 }
 
 export const LabelElement: FC<ILabelElement> = ({ label, variant, ...rest }) => {
+  const labelProps = { label, variant };
+
   return (
     <Element {...rest} type="label">
-      {/* {label && t(label)} */}
-      <Typography variant={variant}>{label}</Typography>
+      <Label {...labelProps} fromConf />
     </Element>
   );
 };
