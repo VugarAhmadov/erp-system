@@ -20,9 +20,20 @@ export const StyledDialog = styled(Dialog)`
     position: sticky;
     top: 0;
 
-    & .view-script {
-      & .MuiInputBase-input {
-        padding: 0;
+    & .form-content {
+      display: flex;
+      flex-direction: column;
+
+      & .view-name {
+        margin-bottom: 1rem;
+      }
+
+      & .view-script {
+        margin-bottom: 1rem;
+
+        & .MuiInputBase-input {
+          padding: 0;
+        }
       }
     }
 

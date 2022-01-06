@@ -5,7 +5,7 @@ export interface ILoading extends IMainLoading {
 }
 
 export interface IAddOrEditViewRequest {
-  oldName: string;
+  oldName?: string;
   viewName: string;
   viewScript: string;
 }

@@ -12,24 +12,28 @@ export const StyledDialog = styled(Dialog)`
     }
   }
 
-  & .form-header {
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid ${({ theme }) => theme.palette.grey[300]};
-    padding-bottom: 1rem;
-    display: flex;
-    justify-content: space-between;
-
-    & .action-buttons {
-      & .submit-btn {
-        margin-right: 1rem;
-      }
-    }
-  }
-
   & .form {
     display: flex;
     flex-direction: column;
     position: relative;
     height: calc(100% - 80px);
+
+    &-header {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid ${({ theme }) => theme.palette.grey[300]};
+      padding-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+
+      & .action-buttons {
+        & .submit-btn {
+          margin-right: 1rem;
+        }
+      }
+    }
+
+    &-content {
+      position: relative;
+    }
   }
 `;

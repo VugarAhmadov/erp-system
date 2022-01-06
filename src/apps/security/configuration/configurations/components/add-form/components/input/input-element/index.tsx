@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import { TextField } from "components/shared";
 import { Element, IElement } from "../..";
 import { Input } from "./input";
 

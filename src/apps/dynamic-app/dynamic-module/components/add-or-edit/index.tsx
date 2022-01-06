@@ -83,16 +83,18 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                 </div>
               </div>
 
-              {data?.formElements?.map((element: any) => (
-                <Fragment key={element.index}>
-                  {element.element === "input" && <Input {...element.params} />}
-                  {element.element === "select" && <Select {...element.params} />}
-                  {element.element === "datepicker" && <Datepicker {...element.params} />}
-                  {element.element === "checkbox" && <Checkbox {...element.params} />}
-                  {element.element === "label" && <Label {...element.params} />}
-                  {element.element === "button" && <Button {...element.params} />}
-                </Fragment>
-              ))}
+              <div className="form-content">
+                {data?.formElements?.map((element: any) => (
+                  <Fragment key={element.index}>
+                    {element.element === "input" && <Input {...element.params} />}
+                    {element.element === "select" && <Select {...element.params} />}
+                    {element.element === "datepicker" && <Datepicker {...element.params} />}
+                    {element.element === "checkbox" && <Checkbox {...element.params} />}
+                    {element.element === "label" && <Label {...element.params} />}
+                    {element.element === "button" && <Button {...element.params} />}
+                  </Fragment>
+                ))}
+              </div>
             </form>
           )}
         />
