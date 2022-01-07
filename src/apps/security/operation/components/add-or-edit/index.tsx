@@ -41,9 +41,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
       code: operation.code,
       viewName: operation.viewName,
       applicationId: operation.applicationId,
-      entityName: operation.enditiyName,
-      operationId: operation.operationId,
-      operationName: operation.operationName,
+      moduleId: operation.moduleId,
     }))[0];
 
   return (
@@ -60,7 +58,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
         <Form
           onSubmit={onSubmit}
           initialValues={dialog.type === "edit" ? initialValues : {}}
-          render={({ handleSubmit, invalid }) => (
+          render={({ handleSubmit, invalid, values }) => (
             <form onSubmit={handleSubmit} className="form">
               <Typography variant="h6">Add Operation</Typography>
               <TextField name="nameAz" id="nameAz" label={t("nameAz")} required />
@@ -69,13 +67,28 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
               <TextField name="code" id="code" label={t("code")} required />
               <TextField name="icon" id="icon" label={t("icon")} />
               <TextField name="url" id="url" label={t("url")} required />
-              <Autocomplete
-                name="operationName"
-                id="operationName"
-                label={t("operationName")}
-                options={["ADD", "EDIT", "DELETE", "VIEW"]}
-                required
-              />
+              {dialog.type === "add" && (
+                <>
+                  <Autocomplete
+                    name="operationName"
+                    id="operationName"
+                    label={t("operationName")}
+                    options={["ADD", "EDIT", "DELETE", "VIEW"]}
+                    required
+                  />
+                  <Autocomplete
+                    name="entity"
+                    id="entityName"
+                    label={t("entityName")}
+                    options={
+                      values.operationName === "VIEW"
+                        ? views?.map((view) => `V_${camelCase(view.name).substr(1)}`)
+                        : tables?.map((table) => upperFirst(camelCase(table.name)))
+                    }
+                  />
+                </>
+              )}
+
               <Autocomplete
                 name="moduleId"
                 id="moduleId"
@@ -89,17 +102,6 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                 loading={moduleLoadding}
               />
               {/* <Autocomplete
-                name="operationId"
-                id="operationId"
-                label={t("operationId")}
-                options={operations?.map((operation) => ({
-                  label: operation.name,
-                  value: operation.id,
-                }))}
-                getOptionValue={(option) => option.value}
-                getOptionLabel={(option) => option.label}
-              /> */}
-              <Autocomplete
                 name="viewName"
                 id="viewName"
                 label={t("viewName")}
@@ -109,13 +111,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                 }))}
                 getOptionValue={(option) => option.value}
                 getOptionLabel={(option) => option.label}
-              />
-              <Autocomplete
-                name="entity"
-                id="entityName"
-                label={t("entityName")}
-                options={tables?.map((table) => upperFirst(camelCase(table.name)))}
-              />
+              /> */}
               <div className="action-buttons">
                 <Button onClick={onClose} className="back-btn" variant="outlined" color="info">
                   {t("back")}
