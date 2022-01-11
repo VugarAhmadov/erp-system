@@ -1,47 +1,17 @@
-import React, { FC, memo } from "react";
-import { Icon, IconButton } from "@mui/material";
-import { useDrag } from "react-dnd";
-import { StyledElement } from "./element.styled";
+import React, { CSSProperties, FC } from "react";
 
-export interface IElement {
-  handleEdit(type: string, index: number): void;
-  handleDelete(index: number): void;
-  index: number;
-  top: number;
+interface IElement {
   left: number;
-  type: string;
+  top: number;
+  width?: number;
 }
 
-export const Element: FC<IElement> = memo(({ children, handleEdit, handleDelete, index, top = 0, left = 0, type }) => {
-  const [{ isDragging }, drag] = useDrag(
-    () => ({
-      type: "box",
-      item: { index, left, top },
-      collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-      }),
-    }),
-    [index, left, top]
-  );
+export const Element: FC<IElement> = ({ children, left, top, width }) => {
+  const style = {
+    position: "absolute",
+    transform: `translate3d(${left}px, ${top}px, 0)`,
+    width: width ?? "auto",
+  } as CSSProperties;
 
-  return (
-    <StyledElement
-      ref={drag}
-      style={{
-        transform: `translate3d(${left}px, ${top}px, 0)`,
-        opacity: isDragging ? 0 : 1,
-        height: isDragging ? 0 : "",
-      }}
-    >
-      {children}
-      <div className="action-btns">
-        <IconButton size="small" className="edit-btn" onClick={() => handleEdit(type, index)}>
-          <Icon>edit</Icon>
-        </IconButton>
-        <IconButton className="delete-btn" onClick={() => handleDelete(index)}>
-          <Icon>delete</Icon>
-        </IconButton>
-      </div>
-    </StyledElement>
-  );
-});
+  return <div style={style}>{children}</div>;
+};

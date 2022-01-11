@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import { IElement, Element } from "../..";
+import { IElementWithDnd, ElementWithDnd } from "../..";
 import { Select } from "./select";
 
-interface ISelectElement extends IElement {
+interface ISelectElement extends IElementWithDnd {
   model: string;
   label: string;
   required?: string;
@@ -36,8 +36,8 @@ export const SelectElement: FC<ISelectElement> = ({
   };
 
   return (
-    <Element {...rest} type="select">
+    <ElementWithDnd {...rest} type="select">
       <Select {...selectProps} fromConf />
-    </Element>
+    </ElementWithDnd>
   );
 };

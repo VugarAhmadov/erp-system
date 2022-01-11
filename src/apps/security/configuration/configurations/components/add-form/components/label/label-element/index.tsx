@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import { Element, IElement } from "../..";
+import { ElementWithDnd, IElementWithDnd } from "../..";
 import { Label } from "./label";
 
-interface ILabelElement extends IElement {
+interface ILabelElement extends IElementWithDnd {
   variant:
     | "h1"
     | "h2"
@@ -25,8 +25,8 @@ export const LabelElement: FC<ILabelElement> = ({ label, variant, ...rest }) => 
   const labelProps = { label, variant };
 
   return (
-    <Element {...rest} type="label">
+    <ElementWithDnd {...rest} type="label">
       <Label {...labelProps} fromConf />
-    </Element>
+    </ElementWithDnd>
   );
 };

@@ -1,4 +1,5 @@
 export { Dialog } from "./dialog";
+export * from "./element-with-dnd";
 export * from "./element";
 export * from "./input";
 export * from "./select";

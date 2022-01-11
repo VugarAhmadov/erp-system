@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import { IElement, Element } from "../..";
+import { IElementWithDnd, ElementWithDnd } from "../..";
 import { Button } from "./button";
 
-interface IButtonElement extends IElement {
+interface IButtonElement extends IElementWithDnd {
   sort: "icon" | "button" | "link";
   size: "small" | "medium" | "large";
   variant: "text" | "outlined" | "contained";
@@ -25,8 +25,8 @@ export const ButtonElement: FC<IButtonElement> = ({
   const buttonProps = { label, variant, size, iconName, color, sort, linkUrl };
 
   return (
-    <Element {...rest} type="button">
+    <ElementWithDnd {...rest} type="button">
       <Button {...buttonProps} fromConf />
-    </Element>
+    </ElementWithDnd>
   );
 };

@@ -209,13 +209,14 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                   <Fragment key={element.index}>
                     {element.element === "input" && (
                       <InputElement
+                        withDnd
                         handleEdit={handleDialogOpen}
                         handleDelete={handleDeleteElement}
                         index={element.index}
                         {...element.params}
                       />
                     )}
-                    {element.element === "label" && (
+                    {/* {element.element === "label" && (
                       <LabelElement
                         handleEdit={handleDialogOpen}
                         handleDelete={handleDeleteElement}
@@ -254,7 +255,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                         index={element.index}
                         {...element.params}
                       />
-                    )}
+                    )} */}
                   </Fragment>
                 ))}
               </form>

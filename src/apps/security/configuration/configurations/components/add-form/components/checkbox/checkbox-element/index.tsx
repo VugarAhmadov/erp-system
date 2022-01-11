@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import { IElement, Element } from "../..";
+import { IElementWithDnd, ElementWithDnd } from "../..";
 import { Checkbox } from "./checkbox";
 
-interface ICheckboxElement extends IElement {
+interface ICheckboxElement extends IElementWithDnd {
   model: string;
   label: string;
   required?: string;
@@ -12,8 +12,8 @@ export const CheckboxElement: FC<ICheckboxElement> = ({ label, model, required, 
   const checkboxProps = { label, model, required };
 
   return (
-    <Element {...rest} type="checkbox">
+    <ElementWithDnd {...rest} type="checkbox">
       <Checkbox {...checkboxProps} fromConf />
-    </Element>
+    </ElementWithDnd>
   );
 };

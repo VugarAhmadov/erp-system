@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import { Element, IElement } from "../..";
+import { ElementWithDnd, IElementWithDnd } from "../..";
 import { Datepicker } from "./datepicker";
 
-interface IDatepickerElement extends IElement {
+interface IDatepickerElement extends IElementWithDnd {
   model: string;
   label: string;
   variant: string;
@@ -13,8 +13,8 @@ export const DatepickerElement: FC<IDatepickerElement> = ({ label, model, requir
   const datepickerProps = { label, model, required, variant };
 
   return (
-    <Element {...rest} type="datepicker">
+    <ElementWithDnd {...rest} type="datepicker">
       <Datepicker {...datepickerProps} fromConf />
-    </Element>
+    </ElementWithDnd>
   );
 };
