@@ -52,8 +52,15 @@ export const LabelDialog: FC<ILabelDialog> = ({ open, onClose, onSubmit, params 
               />
             </div>
 
+            <div className="styles">
+              <Typography variant="h6">{t("Styles")}</Typography>
+              <TextField name="top" label="top" className="field" />
+              <TextField name="left" label="left" className="field" />
+              <TextField name="width" label="width" className="field" />
+            </div>
+
             <div className="action-buttons">
-              <Button onClick={onClose} className="cancel-btn">
+              <Button onClick={onClose} className="cancel-btn" variant="outlined">
                 {t("cancel")}
               </Button>
               <Button type="submit" className="add-btn" disabled={invalid}>

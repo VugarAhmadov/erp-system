@@ -1,8 +1,9 @@
 import React, { FC } from "react";
-import { ElementWithDnd, IElementWithDnd } from "../..";
-import { Label } from "./label";
+import { Typography } from "@mui/material";
+import { ElementWithDnd, Element } from "../..";
 
-interface ILabelElement extends IElementWithDnd {
+interface ILabelElement {
+  withDnd?: boolean;
   variant:
     | "h1"
     | "h2"
@@ -19,14 +20,24 @@ interface ILabelElement extends IElementWithDnd {
     | "overline"
     | "inherit";
   label: string;
+  top: number;
+  left: number;
+  width?: string;
+  index: number;
+  handleEdit?(type: string, index: number): void;
+  handleDelete?(index: number): void;
 }
 
-export const LabelElement: FC<ILabelElement> = ({ label, variant, ...rest }) => {
-  const labelProps = { label, variant };
+export const LabelElement: FC<ILabelElement> = ({ withDnd, label, variant, ...rest }) => {
+  const labelComp = <Typography variant={variant}>{label}</Typography>;
 
-  return (
+  return withDnd ? (
     <ElementWithDnd {...rest} type="label">
-      <Label {...labelProps} fromConf />
+      {labelComp}
     </ElementWithDnd>
+  ) : (
+    <Element top={rest.top} left={rest.left} width={rest.width}>
+      {labelComp}
+    </Element>
   );
 };

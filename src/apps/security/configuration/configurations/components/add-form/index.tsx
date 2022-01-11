@@ -226,14 +226,16 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                         {...element.params}
                       />
                     )}
-                    {/* {element.element === "label" && (
+                    {element.element === "label" && (
                       <LabelElement
+                        withDnd
                         handleEdit={handleDialogOpen}
                         handleDelete={handleDeleteElement}
                         index={element.index}
                         {...element.params}
                       />
                     )}
+                    {/* 
                     {element.element === "button" && (
                       <ButtonElement
                         handleEdit={handleDialogOpen}

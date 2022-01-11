@@ -121,7 +121,7 @@ export const SelectDialog: FC<ISelectDialog> = ({ open, onClose, onSubmit, param
             </div>
 
             <div className="action-buttons">
-              <Button onClick={onClose} className="cancel-btn">
+              <Button onClick={onClose} className="cancel-btn" variant="outlined">
                 {t("cancel")}
               </Button>
               <Button type="submit" className="add-btn" disabled={invalid}>
