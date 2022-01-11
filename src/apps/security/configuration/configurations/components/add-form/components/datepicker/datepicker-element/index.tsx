@@ -1,20 +1,34 @@
 import React, { FC } from "react";
-import { ElementWithDnd, IElementWithDnd } from "../..";
-import { Datepicker } from "./datepicker";
+import { DatePickerView } from "@mui/lab/DatePicker/shared";
+import { ElementWithDnd, Element } from "../..";
+import { DatePicker } from "components/shared";
 
-interface IDatepickerElement extends IElementWithDnd {
+interface IDatepickerElement {
+  withDnd?: boolean;
   model: string;
   label: string;
   variant: string;
   required?: string;
+  top: number;
+  left: number;
+  width?: string;
+  index: number;
+  handleEdit?(type: string, index: number): void;
+  handleDelete?(index: number): void;
 }
 
-export const DatepickerElement: FC<IDatepickerElement> = ({ label, model, required, variant, ...rest }) => {
-  const datepickerProps = { label, model, required, variant };
+export const DatepickerElement: FC<IDatepickerElement> = ({ withDnd, label, model, required, variant, ...rest }) => {
+  const datepicker = (
+    <DatePicker name={model} label={label} required={!!required} views={variant?.split("/") as DatePickerView[]} />
+  );
 
-  return (
+  return withDnd ? (
     <ElementWithDnd {...rest} type="datepicker">
-      <Datepicker {...datepickerProps} fromConf />
+      {datepicker}
     </ElementWithDnd>
+  ) : (
+    <Element top={rest.top} left={rest.left} width={rest.width}>
+      {datepicker}
+    </Element>
   );
 };

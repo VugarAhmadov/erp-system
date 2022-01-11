@@ -244,6 +244,15 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                         {...element.params}
                       />
                     )}
+                    {element.element === "datepicker" && (
+                      <DatepickerElement
+                        withDnd
+                        handleEdit={handleDialogOpen}
+                        handleDelete={handleDeleteElement}
+                        index={element.index}
+                        {...element.params}
+                      />
+                    )}
                     {/* 
                     {element.element === "button" && (
                       <ButtonElement
@@ -254,14 +263,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                       />
                     )}
                     
-                    {element.element === "datepicker" && (
-                      <DatepickerElement
-                        handleEdit={handleDialogOpen}
-                        handleDelete={handleDeleteElement}
-                        index={element.index}
-                        {...element.params}
-                      />
-                    )}
+                    
                      */}
                   </Fragment>
                 ))}

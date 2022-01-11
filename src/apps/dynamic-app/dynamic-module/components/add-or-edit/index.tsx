@@ -12,7 +12,7 @@ import { IName } from "apps/auth/store/types";
 import { InputElement } from "apps/security/configuration/configurations/components/add-form/components/input/input-element";
 import { SelectElement } from "apps/security/configuration/configurations/components/add-form/components/select/select-element";
 import { LabelElement } from "apps/security/configuration/configurations/components/add-form/components/label/label-element";
-// import { Datepicker } from "apps/security/configuration/configurations/components/add-form/components/datepicker/datepicker-element/datepicker";
+import { DatepickerElement } from "apps/security/configuration/configurations/components/add-form/components/datepicker/datepicker-element";
 import { CheckboxElement } from "apps/security/configuration/configurations/components/add-form/components/checkbox/checkbox-element";
 // import { Button } from "apps/security/configuration/configurations/components/add-form/components/button/button-element/button";
 
@@ -73,8 +73,9 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                     {element.element === "select" && <SelectElement {...element.params} />}
                     {element.element === "label" && <LabelElement {...element.params} />}
                     {element.element === "checkbox" && <CheckboxElement {...element.params} />}
+                    {element.element === "datepicker" && <DatepickerElement {...element.params} />}
                     {/* 
-                  {element.element === "datepicker" && <Datepicker {...element.params} />}
+                  
                   
                   
                   {element.element === "button" && <Button {...element.params} />} */}
