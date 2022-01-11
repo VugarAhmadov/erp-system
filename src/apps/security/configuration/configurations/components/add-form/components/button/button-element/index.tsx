@@ -1,8 +1,9 @@
 import React, { FC } from "react";
-import { IElementWithDnd, ElementWithDnd } from "../..";
-import { Button } from "./button";
+import { Icon, IconButton, Button as MuiButton } from "@mui/material";
+import { ElementWithDnd, Element } from "../..";
 
-interface IButtonElement extends IElementWithDnd {
+interface IButtonElement {
+  withDnd?: boolean;
   sort: "icon" | "button" | "link";
   size: "small" | "medium" | "large";
   variant: "text" | "outlined" | "contained";
@@ -10,9 +11,16 @@ interface IButtonElement extends IElementWithDnd {
   iconName?: string;
   linkUrl?: string;
   label: string;
+  top: number;
+  left: number;
+  width?: string;
+  index: number;
+  handleEdit?(type: string, index: number): void;
+  handleDelete?(index: number): void;
 }
 
 export const ButtonElement: FC<IButtonElement> = ({
+  withDnd,
   label,
   variant,
   size,
@@ -22,11 +30,24 @@ export const ButtonElement: FC<IButtonElement> = ({
   linkUrl,
   ...rest
 }) => {
-  const buttonProps = { label, variant, size, iconName, color, sort, linkUrl };
+  const button =
+    sort === "icon" ? (
+      <IconButton size={size} color={color}>
+        <Icon>{iconName}</Icon>
+      </IconButton>
+    ) : (
+      <MuiButton variant={variant} href={sort === "link" ? linkUrl : undefined} size={size} color={color} fullWidth>
+        {label}
+      </MuiButton>
+    );
 
-  return (
+  return withDnd ? (
     <ElementWithDnd {...rest} type="button">
-      <Button {...buttonProps} fromConf />
+      {button}
     </ElementWithDnd>
+  ) : (
+    <Element top={rest.top} left={rest.left} width={rest.width}>
+      {button}
+    </Element>
   );
 };

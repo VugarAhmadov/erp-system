@@ -19,7 +19,13 @@ interface IDatepickerElement {
 
 export const DatepickerElement: FC<IDatepickerElement> = ({ withDnd, label, model, required, variant, ...rest }) => {
   const datepicker = (
-    <DatePicker name={model} label={label} required={!!required} views={variant?.split("/") as DatePickerView[]} />
+    <DatePicker
+      name={model}
+      label={label}
+      required={!!required}
+      views={variant?.split("/") as DatePickerView[]}
+      fullWidth
+    />
   );
 
   return withDnd ? (
