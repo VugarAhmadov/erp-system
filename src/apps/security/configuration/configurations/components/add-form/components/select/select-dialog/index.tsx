@@ -113,6 +113,13 @@ export const SelectDialog: FC<ISelectDialog> = ({ open, onClose, onSubmit, param
               <Switches name="required" data={{ label: t("required"), value: "required" }} />
             </div>
 
+            <div className="styles">
+              <Typography variant="h6">{t("Styles")}</Typography>
+              <TextField name="top" label="top" className="field" />
+              <TextField name="left" label="left" className="field" />
+              <TextField name="width" label="width" className="field" />
+            </div>
+
             <div className="action-buttons">
               <Button onClick={onClose} className="cancel-btn">
                 {t("cancel")}

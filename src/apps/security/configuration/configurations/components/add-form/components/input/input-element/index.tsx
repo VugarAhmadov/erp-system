@@ -18,17 +18,15 @@ interface IInputElement {
 }
 
 export const InputElement: FC<IInputElement> = ({ withDnd, variant, model, label, placeholder, required, ...rest }) => {
-  const input = () => (
-    <TextField name={model} type={variant} label={label} placeholder={placeholder} required={!!required} />
-  );
+  const input = <TextField name={model} type={variant} label={label} placeholder={placeholder} required={!!required} />;
 
   return withDnd ? (
     <ElementWithDnd {...rest} type="input">
-      {input()}
+      {input}
     </ElementWithDnd>
   ) : (
     <Element top={rest.top} left={rest.left} width={rest.width}>
-      {input()}
+      {input}
     </Element>
   );
 };

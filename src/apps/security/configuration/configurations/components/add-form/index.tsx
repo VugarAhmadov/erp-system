@@ -217,6 +217,15 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                         {...element.params}
                       />
                     )}
+                    {element.element === "select" && (
+                      <SelectElement
+                        withDnd
+                        handleEdit={handleDialogOpen}
+                        handleDelete={handleDeleteElement}
+                        index={element.index}
+                        {...element.params}
+                      />
+                    )}
                     {/* {element.element === "label" && (
                       <LabelElement
                         handleEdit={handleDialogOpen}
@@ -233,14 +242,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                         {...element.params}
                       />
                     )}
-                    {element.element === "select" && (
-                      <SelectElement
-                        handleEdit={handleDialogOpen}
-                        handleDelete={handleDeleteElement}
-                        index={element.index}
-                        {...element.params}
-                      />
-                    )}
+                    
                     {element.element === "datepicker" && (
                       <DatepickerElement
                         handleEdit={handleDialogOpen}
