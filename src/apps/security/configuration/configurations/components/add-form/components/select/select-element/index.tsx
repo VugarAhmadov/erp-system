@@ -48,7 +48,7 @@ export const SelectElement: FC<ISelectElement> = ({
     }
   }, []);
 
-  const select = () => (
+  const select = (
     <Select
       name={model}
       data={selectData}
@@ -61,11 +61,11 @@ export const SelectElement: FC<ISelectElement> = ({
 
   return withDnd ? (
     <ElementWithDnd {...rest} type="select">
-      {select()}
+      {select}
     </ElementWithDnd>
   ) : (
     <Element top={rest.top} left={rest.left} width={rest.width}>
-      {select()}
+      {select}
     </Element>
   );
 };
