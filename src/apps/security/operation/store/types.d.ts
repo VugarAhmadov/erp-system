@@ -14,8 +14,8 @@ export interface IAddOrEditOperationRequest {
   code: string;
   operationName: string;
   moduleId: string;
-  viewName: string;
-  entityName: string;
+  viewName?: string;
+  entity: string;
   id?: string;
 }
 

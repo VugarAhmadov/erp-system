@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { Button, Typography } from "@mui/material";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
+import { camelCase } from "lodash";
 import { useSelector } from "react-redux";
 import { Autocomplete, Select, Switches, TextField } from "components/shared";
 import { AppState } from "store";
@@ -43,7 +44,9 @@ export const InputDialog: FC<IInputDialog> = ({ open, onClose, onSubmit, params 
                 id="model"
                 label={t("model")}
                 options={
-                  tables?.find((table) => table.name === values?.table)?.columns?.map((column) => column.name) || []
+                  tables
+                    ?.find((table) => table.name === values?.table)
+                    ?.columns?.map((column) => camelCase(column.name)) || []
                 }
                 disabled={!values?.table}
                 required

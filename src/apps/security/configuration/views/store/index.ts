@@ -70,6 +70,7 @@ export const viewsSlice = createSlice({
     [edit.fulfilled.type]: (state) => {
       state.loading.edit = false;
       state.dialogOpened = false;
+      state.selectedView = {} as ISelectedView;
     },
     //* EDIT END
     //* REMOVE
@@ -82,6 +83,7 @@ export const viewsSlice = createSlice({
     [remove.fulfilled.type]: (state) => {
       state.loading.remove = false;
       state.dialogOpened = false;
+      state.selectedView = {} as ISelectedView;
     },
     //* REMOVE END
     //* GET SCRIPT

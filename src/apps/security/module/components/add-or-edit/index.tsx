@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { Button, DialogContent, Typography } from "@mui/material";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
@@ -8,6 +8,7 @@ import { AppState } from "store";
 import { IDialog } from "types";
 import { IAddOrEditModuleRequest } from "../../store/types";
 import { StyledDialog } from "./add-or-edit.styled";
+import { getAll as getAllApps } from "apps/security/application/store/actions";
 
 interface IAddOrEdit {
   dialog: IDialog;
@@ -20,8 +21,12 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
   const dispatch = useDispatch();
   const modules = useSelector((state: AppState) => state.module.modules.r);
   const selectedModule = useSelector((state: AppState) => state.module.selectedModule);
-  const apps = useSelector((state: AppState) => state.application.applications);
+  const apps = useSelector((state: AppState) => state.application.applications.r);
   const appsLoadding = useSelector((state: AppState) => state.application.loading.getAll);
+
+  useEffect(() => {
+    dispatch(getAllApps());
+  }, []);
 
   const initialValues = modules
     ?.filter((module) => module.id === selectedModule)
@@ -75,10 +80,13 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                 name="applicationId"
                 id="applicationId"
                 label={t("applicationId")}
-                options={apps?.r?.map((app) => ({
-                  label: app.name,
-                  value: app.id,
-                }))}
+                options={apps?.map(
+                  (app) =>
+                    ({
+                      label: app.name,
+                      value: app.id,
+                    } || [])
+                )}
                 getOptionValue={(option) => option.value}
                 getOptionLabel={(option) => option.label}
                 loading={appsLoadding}

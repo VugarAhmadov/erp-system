@@ -46,7 +46,7 @@ export const Views = () => {
       dispatch(edit(requestData));
     } else {
       requestData = data;
-      // dispatch(add(requestData));
+      dispatch(add(requestData));
     }
   };
 
@@ -111,7 +111,7 @@ export const Views = () => {
                 <ul className="view-columns">
                   {_views
                     .filter((view) => view.name === selectedView.viewName)[0]
-                    .columns?.map((column, index) => (
+                    ?.columns?.map((column, index) => (
                       <li key={index}>{column.name}</li>
                     ))}
                 </ul>

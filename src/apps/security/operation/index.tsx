@@ -12,6 +12,7 @@ import { Icon, IconButton } from "@mui/material";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { StyledOperation } from "./operation.styled";
+import { snakeCase } from "lodash";
 
 export const Operation = () => {
   const { t } = useTranslation("common");
@@ -101,7 +102,9 @@ export const Operation = () => {
   };
 
   const handleSubmit = (data: IAddOrEditOperationRequest) => {
-    dialog.type === "edit" ? dispatch(edit({ ...data, id: selectedOperation })) : dispatch(add(data));
+    dialog.type === "edit"
+      ? dispatch(edit({ ...data, id: selectedOperation }))
+      : dispatch(add({ ...data, viewName: data.operationName === "VIEW" ? snakeCase(data.entity) : undefined }));
   };
 
   return (

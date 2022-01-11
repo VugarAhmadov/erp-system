@@ -70,7 +70,7 @@ export const TextFieldWrapper = (props: TextWrapperProps) => {
     input: { name, value, type, onChange, onBlur, onFocus, ...restInput },
     meta,
     required,
-    fullWidth = true,
+    fullWidth,
     helperText,
     showError = showErrorOnChange,
     ...rest

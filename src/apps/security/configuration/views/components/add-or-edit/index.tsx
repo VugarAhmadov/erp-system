@@ -55,16 +55,26 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ open, onClose, onSubmit }) => {
                   <Typography variant="h5" className="view-title">
                     {t("view-detail")}
                   </Typography>
-                  <TextField name="viewName" id="viewName" label={t("view-name")} validate={required} />
-                  <TextField
-                    name="viewScript"
-                    id="viewScript"
-                    className="view-script"
-                    label={t("view-script")}
-                    validate={required}
-                    multiline
-                    rows={18}
-                  />
+
+                  <div className="form-content">
+                    <TextField
+                      name="viewName"
+                      id="viewName"
+                      className="view-name"
+                      label={t("view-name")}
+                      validate={required}
+                    />
+                    <TextField
+                      name="viewScript"
+                      id="viewScript"
+                      className="view-script"
+                      label={t("view-script")}
+                      validate={required}
+                      multiline
+                      rows={18}
+                    />
+                  </div>
+
                   <div className="action-buttons">
                     <Button variant="contained" color="inherit" className="back-btn" onClick={onClose}>
                       {t("back")}

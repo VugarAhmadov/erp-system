@@ -1,7 +1,8 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { Button, Typography } from "@mui/material";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
+import { camelCase } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { Autocomplete, Select, Switches, TextField } from "components/shared";
 import { AppState } from "store";
@@ -26,6 +27,10 @@ export const SelectDialog: FC<ISelectDialog> = ({ open, onClose, onSubmit, param
 
   const dicTypes = useSelector((state: AppState) => state.configurations.dictionaryTpyeList);
 
+  useEffect(() => {
+    dispatch(getDictionaryTypeList());
+  }, []);
+
   return (
     <Dialog open={open} onClose={onClose}>
       <Form
@@ -49,7 +54,9 @@ export const SelectDialog: FC<ISelectDialog> = ({ open, onClose, onSubmit, param
                 id="model"
                 label={t("model")}
                 options={
-                  tables?.find((table) => table.name === values?.table)?.columns?.map((column) => column.name) || []
+                  tables
+                    ?.find((table) => table.name === values?.table)
+                    ?.columns?.map((column) => camelCase(column.name)) || []
                 }
                 disabled={!values?.table}
                 required
@@ -68,8 +75,6 @@ export const SelectDialog: FC<ISelectDialog> = ({ open, onClose, onSubmit, param
                 inputProps={{
                   onChange: (e: any) => {
                     if (e.target.value === "dic") {
-                      dispatch(getDictionaryTypeList());
-
                       if (values?.dataUrl) {
                         form.change("dataUrl");
                         form.resetFieldState("dataUrl");

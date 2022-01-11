@@ -3,6 +3,7 @@ import { Button, Typography } from "@mui/material";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { camelCase } from "lodash";
 import { Autocomplete, Switches, TextField } from "components/shared";
 import { AppState } from "store";
 import { Dialog } from "../..";
@@ -43,7 +44,9 @@ export const CheckboxDialog: FC<ICheckboxDialog> = ({ open, onClose, onSubmit, p
                 id="model"
                 label={t("model")}
                 options={
-                  tables?.find((table) => table.name === values?.table)?.columns?.map((column) => column.name) || []
+                  tables
+                    ?.find((table) => table.name === values?.table)
+                    ?.columns?.map((column) => camelCase(column.name)) || []
                 }
                 disabled={!values?.table}
                 required

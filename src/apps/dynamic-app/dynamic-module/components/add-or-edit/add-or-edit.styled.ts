@@ -32,10 +32,15 @@ export const StyledDialog = styled(Dialog)`
       }
     }
 
+<<<<<<< HEAD
     &-elements {
       position: relative;
       height: 100%;
       overflow-y: auto;
+=======
+    &-content {
+      position: relative;
+>>>>>>> 7a3aac433f86346a4ba75d154d67dbef324a64ac
     }
   }
 `;
