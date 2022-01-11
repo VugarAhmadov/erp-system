@@ -134,6 +134,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
     [moveElement]
   );
 
+  // console.log(formElements);
   return (
     <>
       <StyledAddForm>

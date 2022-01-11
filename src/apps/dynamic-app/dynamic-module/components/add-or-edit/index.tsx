@@ -24,26 +24,10 @@ interface IAddOrEdit {
 
 export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
   const { t } = useTranslation("common");
-  const apps = useSelector((state: AppState) => state.application.applications.r);
-  const selectedApp = useSelector((state: AppState) => state.application.selectedApp);
 
   const module = useSelector((state: AppState) => state.module.module);
 
   const data = JSON.parse(module.operations.find((op) => op.code === "ADD")?.formHtml!);
-
-  const initialValues = apps
-    ?.filter((app) => app.id === selectedApp)
-    ?.map((app: any) => ({
-      nameAz: app.nameAz,
-      nameEn: app.nameEn,
-      nameRu: app.nameRu,
-      shortNameAz: app.shortNameAz,
-      shortNameEn: app.shortNameEn,
-      shortNameRu: app.shortNameRu,
-      url: app.url,
-      icon: app.icon,
-      parentId: app.parentId,
-    }))[0];
 
   return (
     <StyledDialog
@@ -58,7 +42,6 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
       <DialogContent>
         <Form
           onSubmit={onSubmit}
-          initialValues={dialog.type === "edit" ? initialValues : {}}
           render={({ handleSubmit, invalid }) => (
             <form onSubmit={handleSubmit} className="form">
               <div className="form-header">
@@ -83,16 +66,18 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                 </div>
               </div>
 
-              {data?.formElements?.map((element: any) => (
-                <Fragment key={element.index}>
-                  {element.element === "input" && <InputElement {...element.params} />}
-                  {/* {element.element === "select" && <Select {...element.params} />}
+              <div className="form-elements">
+                {data?.formElements?.map((element: any) => (
+                  <Fragment key={element.index}>
+                    {element.element === "input" && <InputElement {...element.params} />}
+                    {/* {element.element === "select" && <Select {...element.params} />}
                   {element.element === "datepicker" && <Datepicker {...element.params} />}
                   {element.element === "checkbox" && <Checkbox {...element.params} />}
                   {element.element === "label" && <Label {...element.params} />}
                   {element.element === "button" && <Button {...element.params} />} */}
-                </Fragment>
-              ))}
+                  </Fragment>
+                ))}
+              </div>
             </form>
           )}
         />

@@ -11,6 +11,7 @@ interface IInputElement {
   required?: string;
   top: number;
   left: number;
+  width?: string;
   index: number;
   handleEdit?(type: string, index: number): void;
   handleDelete?(index: number): void;
@@ -26,7 +27,7 @@ export const InputElement: FC<IInputElement> = ({ withDnd, variant, model, label
       {input()}
     </ElementWithDnd>
   ) : (
-    <Element top={rest.top} left={rest.left}>
+    <Element top={rest.top} left={rest.left} width={rest.width}>
       {input()}
     </Element>
   );
