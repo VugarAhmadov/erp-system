@@ -235,6 +235,15 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                         {...element.params}
                       />
                     )}
+                    {element.element === "checkbox" && (
+                      <CheckboxElement
+                        withDnd
+                        handleEdit={handleDialogOpen}
+                        handleDelete={handleDeleteElement}
+                        index={element.index}
+                        {...element.params}
+                      />
+                    )}
                     {/* 
                     {element.element === "button" && (
                       <ButtonElement
@@ -253,14 +262,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                         {...element.params}
                       />
                     )}
-                    {element.element === "checkbox" && (
-                      <CheckboxElement
-                        handleEdit={handleDialogOpen}
-                        handleDelete={handleDeleteElement}
-                        index={element.index}
-                        {...element.params}
-                      />
-                    )} */}
+                     */}
                   </Fragment>
                 ))}
               </form>

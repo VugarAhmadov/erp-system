@@ -1,19 +1,39 @@
 import React, { FC } from "react";
-import { IElementWithDnd, ElementWithDnd } from "../..";
-import { Checkbox } from "./checkbox";
+import { Checkboxes } from "components/shared";
+import { ElementWithDnd, Element } from "../..";
 
-interface ICheckboxElement extends IElementWithDnd {
+interface ICheckboxElement {
+  withDnd?: boolean;
   model: string;
   label: string;
   required?: string;
+  top: number;
+  left: number;
+  width?: string;
+  index: number;
+  handleEdit?(type: string, index: number): void;
+  handleDelete?(index: number): void;
 }
 
-export const CheckboxElement: FC<ICheckboxElement> = ({ label, model, required, ...rest }) => {
-  const checkboxProps = { label, model, required };
+export const CheckboxElement: FC<ICheckboxElement> = ({ withDnd, label, model, required, ...rest }) => {
+  const checkbox = (
+    <Checkboxes
+      name={model}
+      data={{
+        label,
+        value: "0",
+      }}
+      required={!!required}
+    />
+  );
 
-  return (
+  return withDnd ? (
     <ElementWithDnd {...rest} type="checkbox">
-      <Checkbox {...checkboxProps} fromConf />
+      {checkbox}
     </ElementWithDnd>
+  ) : (
+    <Element top={rest.top} left={rest.left} width={rest.width}>
+      {checkbox}
+    </Element>
   );
 };

@@ -13,7 +13,7 @@ import { InputElement } from "apps/security/configuration/configurations/compone
 import { SelectElement } from "apps/security/configuration/configurations/components/add-form/components/select/select-element";
 import { LabelElement } from "apps/security/configuration/configurations/components/add-form/components/label/label-element";
 // import { Datepicker } from "apps/security/configuration/configurations/components/add-form/components/datepicker/datepicker-element/datepicker";
-// import { Checkbox } from "apps/security/configuration/configurations/components/add-form/components/checkbox/checkbox-element/checkbox";
+import { CheckboxElement } from "apps/security/configuration/configurations/components/add-form/components/checkbox/checkbox-element";
 // import { Button } from "apps/security/configuration/configurations/components/add-form/components/button/button-element/button";
 
 interface IAddOrEdit {
@@ -72,9 +72,10 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                     {element.element === "input" && <InputElement {...element.params} />}
                     {element.element === "select" && <SelectElement {...element.params} />}
                     {element.element === "label" && <LabelElement {...element.params} />}
+                    {element.element === "checkbox" && <CheckboxElement {...element.params} />}
                     {/* 
                   {element.element === "datepicker" && <Datepicker {...element.params} />}
-                  {element.element === "checkbox" && <Checkbox {...element.params} />}
+                  
                   
                   {element.element === "button" && <Button {...element.params} />} */}
                   </Fragment>
