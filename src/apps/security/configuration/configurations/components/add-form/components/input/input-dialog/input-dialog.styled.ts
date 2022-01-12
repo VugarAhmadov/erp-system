@@ -14,6 +14,7 @@ export const StyledForm = styled.form`
   }
 
   & .MuiFormControl-root {
+    width: 100%;
     margin-bottom: 1.5rem;
   }
 

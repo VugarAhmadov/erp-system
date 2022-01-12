@@ -14,6 +14,7 @@ interface ISelectElement {
   parentId?: string;
   dataUrl?: string;
   dataName?: string;
+  onSelectChange(data: any): void;
   top: number;
   left: number;
   width?: string;
@@ -32,29 +33,33 @@ export const SelectElement: FC<ISelectElement> = ({
   parentId,
   dataUrl,
   dataName,
+  onSelectChange,
   ...rest
 }) => {
-  const [selectData, setSelectData] = useState<ISelectData[]>([]);
+  const [selectData, setSelectData] = useState<any[]>([]);
 
   useEffect(() => {
     if (dataType === "dic") {
       dictionaryApi
         .getDictionariesListByCommon({ typeId: dicId!, parentId: parentId })
-        .then((res) => setSelectData(res.data.tbl[0].r.map((row) => ({ value: row.id, label: row.name }))));
+        .then((res) => setSelectData(res.data.tbl[0].r));
     } else if (dataType === "rest") {
-      dynamicApi
-        .getAll(dataUrl!)
-        .then((res) => setSelectData(res.data.tbl[0].r.map((row) => ({ value: row.id, label: row[dataName!] }))));
+      dynamicApi.getAll(dataUrl!).then((res) => setSelectData(res.data.tbl[0].r));
     }
   }, []);
 
   const select = (
     <Select
       name={model}
-      data={selectData}
+      data={selectData.map((row) => ({ value: row.id, label: dataType === "dic" ? row.name : row[dataName!] }))}
       required={!!required}
       label={label}
       style={{ minWidth: "120px" }}
+      inputProps={{
+        onChange: (e: any) => {
+          onSelectChange(selectData.filter((data) => data.id === e.target.value));
+        },
+      }}
       fullWidth
     />
   );

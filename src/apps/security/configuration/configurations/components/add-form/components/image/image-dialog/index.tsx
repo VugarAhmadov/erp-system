@@ -4,16 +4,16 @@ import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
 import { Select, TextField } from "components/shared";
 import { Dialog } from "../..";
-import { StyledForm } from "./label-dialog.styled";
+import { StyledForm } from "./image-dialog.styled";
 
-interface ILabelDialog {
+interface IImageDialog {
   open: boolean;
   onClose(): void;
   onSubmit(data: any): void;
   params: any;
 }
 
-export const LabelDialog: FC<ILabelDialog> = ({ open, onClose, onSubmit, params }) => {
+export const ImageDialog: FC<IImageDialog> = ({ open, onClose, onSubmit, params }) => {
   const { t } = useTranslation("common");
 
   return (
@@ -23,28 +23,16 @@ export const LabelDialog: FC<ILabelDialog> = ({ open, onClose, onSubmit, params 
         initialValues={params}
         render={({ handleSubmit, invalid }) => (
           <StyledForm onSubmit={handleSubmit}>
-            <Typography variant="h6">{t("addLabelComponent")}</Typography>
+            <Typography variant="h6">{t("addImageComponent")}</Typography>
 
             <div>
-              <TextField name="label" label={t("label")} required className="field" />
-
+              <TextField name="src" label={t("src")} className="field" />
+              <TextField name="alt" label={t("alt")} className="field" />
+              <TextField name="dependedModelName" label={t("dependedModelName")} className="field" />
+              <TextField name="dependedModelField" label={t("dependedModelField")} className="field" />
               <Select
-                name="variant"
-                data={[
-                  { label: "h1", value: "h1" },
-                  { label: "h2", value: "h2" },
-                  { label: "h3", value: "h3" },
-                  { label: "h4", value: "h4" },
-                  { label: "h5", value: "h5" },
-                  { label: "h6", value: "h6" },
-                  { label: "subtitle1", value: "subtitle1" },
-                  { label: "subtitle2", value: "subtitle2" },
-                  { label: "body1", value: "body1" },
-                  { label: "body2", value: "body2" },
-                  { label: "caption", value: "caption" },
-                  { label: "button", value: "button" },
-                  { label: "overline", value: "overline" },
-                ]}
+                name="dependedComponentName"
+                data={[{ label: "select", value: "select" }]}
                 required
                 label={t("variants")}
               />
@@ -55,6 +43,7 @@ export const LabelDialog: FC<ILabelDialog> = ({ open, onClose, onSubmit, params 
               <TextField name="top" label="top" className="field" />
               <TextField name="left" label="left" className="field" />
               <TextField name="width" label="width" className="field" />
+              <TextField name="height" label="height" className="field" />
             </div>
 
             <div className="action-buttons">

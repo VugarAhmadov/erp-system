@@ -12,6 +12,7 @@ export const StyledElement = styled.div`
 
   & .action-btns {
     display: flex;
+    align-items: center;
     margin-left: 0.5rem;
 
     & .MuiIconButton-root {

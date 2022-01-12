@@ -51,6 +51,7 @@ export const StyledAddForm = styled.div`
     border: 1px solid ${({ theme }) => theme.palette.grey[300]};
     border-radius: 0.4rem;
     padding: 1rem 1rem 0 1rem;
+    overflow-y: auto;
 
     &.grid-view {
       background-image: linear-gradient(rgba(132, 134, 245, 0.1) 0.05em, transparent 0.1em),

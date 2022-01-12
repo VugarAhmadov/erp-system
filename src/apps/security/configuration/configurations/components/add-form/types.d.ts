@@ -20,6 +20,7 @@ export interface IDialogOpen {
   radio: boolean;
   datepicker: boolean;
   button: boolean;
+  image: boolean;
 }
 
 export interface IDialogStateData {

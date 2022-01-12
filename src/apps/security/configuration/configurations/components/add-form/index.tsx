@@ -30,6 +30,8 @@ import {
   DatepickerDialog,
   ButtonElement,
   ButtonDialog,
+  ImageElement,
+  ImageDialog,
 } from "./components";
 import { Form } from "react-final-form";
 
@@ -44,11 +46,14 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
       radio: false,
       datepicker: false,
       button: false,
+      image: false,
     },
     data: null,
   });
   const [formElements, setFormElements] = useState<any[]>([]);
   const [grid, setGrid] = useState("off");
+
+  const [selectData, setSelectData] = useState<any[]>([]);
 
   const selectedOperation = useSelector((state: AppState) => state.configurations.selectedOperation);
 
@@ -134,7 +139,8 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
     [moveElement]
   );
 
-  // console.log(formElements);
+  const handleDependedFieldValue = () => {};
+
   return (
     <>
       <StyledAddForm>
@@ -195,6 +201,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
           <Button onClick={() => handleDialogOpen("datepicker", -1)}>{t("datepicker")}</Button>
           <Button onClick={() => handleDialogOpen("label", -1)}>{t("label")}</Button>
           <Button onClick={() => handleDialogOpen("button", -1)}>{t("button")}</Button>
+          <Button onClick={() => handleDialogOpen("image", -1)}>{t("image")}</Button>
           {/* <Button onClick={() => console.log("test")}>{t("timepicker")}</Button> */}
           {/* <Button onClick={() => handleDialogOpen("radio", -1)}>{t("radioButton")}</Button> */}
           {/* <Button onClick={() => console.log("test")}>{t("photo")}</Button> */}
@@ -204,7 +211,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
         <div ref={drop} className={clsx("drag-container", grid === "on" && "grid-view")}>
           <Form
             onSubmit={() => {}}
-            render={({ handleSubmit }) => (
+            render={({ handleSubmit, values }) => (
               <form onSubmit={handleSubmit}>
                 {formElements?.map((element) => (
                   <Fragment key={element.index}>
@@ -223,6 +230,9 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                         handleEdit={handleDialogOpen}
                         handleDelete={handleDeleteElement}
                         index={element.index}
+                        onSelectChange={(data: any) =>
+                          setSelectData((prev) => [...prev, { model: element.params.model, data }])
+                        }
                         {...element.params}
                       />
                     )}
@@ -259,6 +269,20 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                         handleEdit={handleDialogOpen}
                         handleDelete={handleDeleteElement}
                         index={element.index}
+                        {...element.params}
+                      />
+                    )}
+                    {element.element === "image" && (
+                      <ImageElement
+                        withDnd
+                        handleEdit={handleDialogOpen}
+                        handleDelete={handleDeleteElement}
+                        index={element.index}
+                        dependedFieldValue={
+                          element.params.dependedModelName && element.params.dependedModelField
+                            ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
+                            : undefined
+                        }
                         {...element.params}
                       />
                     )}
@@ -302,6 +326,12 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
       <ButtonDialog
         open={dialog.open.button}
         onClose={() => handleDialogClose("button")}
+        onSubmit={handleSubmit}
+        params={dialog.data?.params}
+      />
+      <ImageDialog
+        open={dialog.open.image}
+        onClose={() => handleDialogClose("image")}
         onSubmit={handleSubmit}
         params={dialog.data?.params}
       />

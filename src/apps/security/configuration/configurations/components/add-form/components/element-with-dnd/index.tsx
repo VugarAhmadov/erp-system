@@ -10,11 +10,12 @@ export interface IElementWithDnd {
   top: number;
   left: number;
   width?: string;
+  height?: string;
   type: string;
 }
 
 export const ElementWithDnd: FC<IElementWithDnd> = memo(
-  ({ children, handleEdit, handleDelete, index, top = 0, left = 0, width, type }) => {
+  ({ children, handleEdit, handleDelete, index, top = 0, left = 0, width, height, type }) => {
     const [{ isDragging }, drag] = useDrag(
       () => ({
         type: "box",
@@ -32,8 +33,8 @@ export const ElementWithDnd: FC<IElementWithDnd> = memo(
         style={{
           transform: `translate3d(${left}px, ${top}px, 0)`,
           width: width ? parseInt(width) : "auto",
+          height: isDragging ? 0 : height ? parseInt(height) : "auto",
           opacity: isDragging ? 0 : 1,
-          height: isDragging ? 0 : "",
         }}
       >
         {children}
