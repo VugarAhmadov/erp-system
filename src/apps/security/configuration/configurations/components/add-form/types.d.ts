@@ -21,6 +21,7 @@ export interface IDialogOpen {
   datepicker: boolean;
   button: boolean;
   image: boolean;
+  table: boolean;
 }
 
 export interface IDialogStateData {

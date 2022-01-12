@@ -9,3 +9,4 @@ export * from "./datepicker";
 export * from "./label";
 export * from "./button";
 export * from "./image";
+export * from "./table";

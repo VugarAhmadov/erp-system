@@ -32,6 +32,7 @@ import {
   ButtonDialog,
   ImageElement,
   ImageDialog,
+  TableDialog,
 } from "./components";
 import { Form } from "react-final-form";
 
@@ -47,6 +48,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
       datepicker: false,
       button: false,
       image: false,
+      table: false,
     },
     data: null,
   });
@@ -202,7 +204,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
           <Button onClick={() => handleDialogOpen("label", -1)}>{t("label")}</Button>
           <Button onClick={() => handleDialogOpen("button", -1)}>{t("button")}</Button>
           <Button onClick={() => handleDialogOpen("image", -1)}>{t("image")}</Button>
-          {/* <Button onClick={() => console.log("test")}>{t("timepicker")}</Button> */}
+          <Button onClick={() => handleDialogOpen("table", -1)}>{t("table")}</Button>
           {/* <Button onClick={() => handleDialogOpen("radio", -1)}>{t("radioButton")}</Button> */}
           {/* <Button onClick={() => console.log("test")}>{t("photo")}</Button> */}
           {/* <Button onClick={() => console.log("test")}>{t("file")}</Button> */}
@@ -332,6 +334,12 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
       <ImageDialog
         open={dialog.open.image}
         onClose={() => handleDialogClose("image")}
+        onSubmit={handleSubmit}
+        params={dialog.data?.params}
+      />
+      <TableDialog
+        open={dialog.open.table}
+        onClose={() => handleDialogClose("table")}
         onSubmit={handleSubmit}
         params={dialog.data?.params}
       />

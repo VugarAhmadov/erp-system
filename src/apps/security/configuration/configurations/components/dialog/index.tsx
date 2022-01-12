@@ -1,11 +1,11 @@
 import React, { FC, useState } from "react";
 import { Breakpoint, DialogContent } from "@mui/material";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import { IDialog } from "types";
 import { AddForm, AddPrivForm, AllViewForm } from "..";
 import { StyledDialog } from "./dialog.styled";
 import { IAddHtmlFormRequest, IAddViewFormRequest } from "apps/security/operation/store/types";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 
 interface IDialogProps {
   dialog: IDialog;
@@ -25,7 +25,7 @@ export const Dialog: FC<IDialogProps> = ({ dialog, onClose, onAddFormSubmit, onA
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       fullWidth={true}
-      maxWidth={dialogSize}
+      maxWidth={dialog.type === "add" ? dialogSize : "sm"}
       scroll="paper"
     >
       <DialogContent>
