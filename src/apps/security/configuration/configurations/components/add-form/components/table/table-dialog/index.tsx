@@ -1,14 +1,13 @@
-import React, { FC, useEffect } from "react";
-import { Button, Typography } from "@mui/material";
+import React, { FC } from "react";
+import { Button, Checkbox, Typography } from "@mui/material";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
 import { camelCase } from "lodash";
-import { useDispatch, useSelector } from "react-redux";
-import { Autocomplete, Select, Switches, TextField } from "components/shared";
+import { useSelector } from "react-redux";
+import { Autocomplete, TextField } from "components/shared";
 import { AppState } from "store";
 import { Dialog } from "../..";
 import { StyledForm } from "./table-dialog.styled";
-import { getDictionaryTypeList } from "apps/security/configuration/configurations/store/actions";
 
 interface ITableDialog {
   open: boolean;
@@ -19,17 +18,10 @@ interface ITableDialog {
 
 export const TableDialog: FC<ITableDialog> = ({ open, onClose, onSubmit, params }) => {
   const { t } = useTranslation("common");
-  const dispatch = useDispatch();
 
-  const tables = useSelector((state: AppState) => state.tables.tables);
+  const views = useSelector((state: AppState) => state.views?.views);
 
   const urlLists = useSelector((state: AppState) => state.auth.user.privilegeList);
-
-  const dicTypes = useSelector((state: AppState) => state.configurations.dictionaryTpyeList);
-
-  useEffect(() => {
-    dispatch(getDictionaryTypeList());
-  }, []);
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -42,80 +34,41 @@ export const TableDialog: FC<ITableDialog> = ({ open, onClose, onSubmit, params 
 
             <div>
               <Autocomplete
-                name="table"
-                id="table"
-                label={t("tables")}
-                options={tables?.map((table) => table.name)}
+                name="viewName"
+                id="view"
+                label={t("views")}
+                options={views.map((view) => view.name)}
+                className="views"
+                onChange={(e, v: any) => {
+                  form.change("seqColumns");
+                  form.resetFieldState("seqColumns");
+                }}
                 required
               />
-
               <Autocomplete
-                name="model"
-                id="model"
-                label={t("model")}
+                label={t("columns")}
+                name="seqColumns"
                 options={
-                  tables
-                    ?.find((table) => table.name === values?.table)
+                  views
+                    ?.filter((view) => view.name === values?.viewName)[0]
                     ?.columns?.map((column) => camelCase(column.name)) || []
                 }
-                disabled={!values?.table}
-                required
+                disabled={!values?.viewName}
+                renderOption={(props, option, { selected }) => (
+                  <li {...props}>
+                    <Checkbox style={{ marginRight: 8 }} checked={selected} />
+                    {option}
+                  </li>
+                )}
+                // required
+                multiple
+                freeSolo
+                disableCloseOnSelect
               />
 
-              <TextField name="label" label={t("label")} required className="field" />
+              <TextField name="title" label={t("title")} className="field" />
 
-              <Select
-                name="dataType"
-                data={[
-                  { label: t("dictionary"), value: "dic" },
-                  { label: t("restApi"), value: "rest" },
-                ]}
-                required
-                label={t("dataTypes")}
-                inputProps={{
-                  onChange: (e: any) => {
-                    if (e.target.value === "dic") {
-                      if (values?.dataUrl) {
-                        form.change("dataUrl");
-                        form.resetFieldState("dataUrl");
-                      }
-                      if (values?.dataName) {
-                        form.change("dataName");
-                        form.resetFieldState("dataName");
-                      }
-                    } else {
-                      if (values?.dicId) {
-                        form.change("dicId");
-                        form.resetFieldState("dicId");
-                      }
-                    }
-                  },
-                }}
-              />
-
-              {values?.dataType === "dic" && (
-                <>
-                  <Select
-                    name="dicId"
-                    data={dicTypes?.map((type) => ({
-                      label: type.name,
-                      value: type.id,
-                    }))}
-                    required
-                    label={t("dicId")}
-                  />
-                  <TextField name="parentDicId" label={t("parentDicId")} className="field" />
-                </>
-              )}
-
-              {values?.dataType === "rest" && (
-                <>
-                  <Autocomplete name="dataUrl" id="dataUrl" label={t("dataUrls")} options={urlLists} required />
-                  <TextField name="dataName" label={t("dataName")} required className="field" />
-                </>
-              )}
-
-              <Switches name="required" data={{ label: t("required"), value: "required" }} />
+              <Autocomplete name="getUrl" id="getUrl" label={t("getUrls")} options={urlLists} required />
             </div>
 
             <div className="styles">

@@ -33,6 +33,7 @@ import {
   ImageElement,
   ImageDialog,
   TableDialog,
+  TableElement,
 } from "./components";
 import { Form } from "react-final-form";
 
@@ -285,6 +286,15 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                             ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
                             : undefined
                         }
+                        {...element.params}
+                      />
+                    )}
+                    {element.element === "table" && (
+                      <TableElement
+                        withDnd
+                        handleEdit={handleDialogOpen}
+                        handleDelete={handleDeleteElement}
+                        index={element.index}
                         {...element.params}
                       />
                     )}

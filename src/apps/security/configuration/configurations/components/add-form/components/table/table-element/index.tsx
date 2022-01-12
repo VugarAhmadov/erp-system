@@ -1,20 +1,14 @@
 import React, { FC, useEffect, useState } from "react";
-import { Select } from "components/shared";
 import { ElementWithDnd, Element } from "../..";
-import { dictionaryApi, dynamicApi } from "api";
-import { ISelectData } from "types";
+import { dynamicApi } from "api";
+import { DataTable } from "components/shared";
+import { Column } from "@material-table/core";
 
 interface ITableElement {
   withDnd: boolean;
-  model: string;
-  label: string;
-  required?: string;
-  dataType: "dic" | "rest";
-  dicId?: string;
-  parentId?: string;
-  dataUrl?: string;
-  dataName?: string;
-  onSelectChange(data: any): void;
+  title?: string;
+  getUrl: string;
+  seqColumns: string;
   top: number;
   left: number;
   width?: string;
@@ -23,54 +17,66 @@ interface ITableElement {
   handleDelete?(index: number): void;
 }
 
-export const TableElement: FC<ITableElement> = ({
-  withDnd,
-  label,
-  model,
-  required,
-  dataType,
-  dicId,
-  parentId,
-  dataUrl,
-  dataName,
-  onSelectChange,
-  ...rest
-}) => {
-  const [selectData, setSelectData] = useState<any[]>([]);
+export const TableElement: FC<ITableElement> = ({ withDnd, title, seqColumns, getUrl, ...rest }) => {
+  const [tableData, setTableData] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (dataType === "dic") {
-      dictionaryApi
-        .getDictionariesListByCommon({ typeId: dicId!, parentId: parentId })
-        .then((res) => setSelectData(res.data.tbl[0].r));
-    } else if (dataType === "rest") {
-      dynamicApi.getAll(dataUrl!).then((res) => setSelectData(res.data.tbl[0].r));
-    }
+    setLoading(true);
+    dynamicApi.getAll(getUrl).then((res) => setTableData(res.data.tbl[0]));
+    setLoading(false);
   }, []);
 
-  const select = (
-    <Select
-      name={model}
-      data={selectData.map((row) => ({ value: row.id, label: dataType === "dic" ? row.name : row[dataName!] }))}
-      required={!!required}
-      label={label}
-      style={{ minWidth: "120px" }}
-      inputProps={{
-        onChange: (e: any) => {
-          onSelectChange(selectData.filter((data) => data.id === e.target.value));
-        },
+  const buildColumns = () => {
+    let columns: Column<object>[] = [
+      {
+        title: "№",
+        field: "index",
+        width: "100px",
+      },
+    ];
+
+    tableData?.c?.forEach((column: any) =>
+      columns.push({
+        title: column.n,
+        field: column.i,
+        hidden: !seqColumns.includes(column.i),
+      })
+    );
+
+    return columns;
+  };
+
+  const buildData = () => {
+    let data: any[] = [];
+
+    tableData?.r?.map((row: any, index: number) => {
+      data.push({ index: index + 1, ...row });
+    });
+
+    return data;
+  };
+
+  const table = (
+    <DataTable
+      title={title}
+      columns={buildColumns()}
+      data={buildData()}
+      style={{ width: "100%" }}
+      isLoading={loading}
+      options={{
+        showTitle: !!title,
       }}
-      fullWidth
     />
   );
 
   return withDnd ? (
-    <ElementWithDnd {...rest} type="select">
-      {select}
+    <ElementWithDnd {...rest} type="table">
+      {table}
     </ElementWithDnd>
   ) : (
     <Element top={rest.top} left={rest.left} width={rest.width}>
-      {select}
+      {table}
     </Element>
   );
 };

@@ -9,12 +9,15 @@ import { IAddOrEditApplicationRequest } from "../../store/types";
 import { StyledDialog } from "./add-or-edit.styled";
 import i18n from "translation";
 import { IName } from "apps/auth/store/types";
-import { InputElement } from "apps/security/configuration/configurations/components/add-form/components/input/input-element";
-import { SelectElement } from "apps/security/configuration/configurations/components/add-form/components/select/select-element";
-import { LabelElement } from "apps/security/configuration/configurations/components/add-form/components/label/label-element";
-import { DatepickerElement } from "apps/security/configuration/configurations/components/add-form/components/datepicker/datepicker-element";
-import { CheckboxElement } from "apps/security/configuration/configurations/components/add-form/components/checkbox/checkbox-element";
-import { ButtonElement } from "apps/security/configuration/configurations/components/add-form/components/button/button-element";
+import {
+  InputElement,
+  SelectElement,
+  LabelElement,
+  DatepickerElement,
+  CheckboxElement,
+  ButtonElement,
+  TableElement,
+} from "apps/security/configuration/configurations/components/add-form/components";
 
 interface IAddOrEdit {
   dialog: IDialog;
@@ -75,6 +78,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                     {element.element === "checkbox" && <CheckboxElement {...element.params} />}
                     {element.element === "datepicker" && <DatepickerElement {...element.params} />}
                     {element.element === "button" && <ButtonElement {...element.params} />}
+                    {element.element === "table" && <TableElement {...element.params} />}
                   </Fragment>
                 ))}
               </div>

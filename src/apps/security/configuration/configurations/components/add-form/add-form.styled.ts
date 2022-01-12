@@ -46,7 +46,7 @@ export const StyledAddForm = styled.div`
   }
 
   & .drag-container {
-    height: calc(100% - 290px);
+    height: calc(100% - 250px);
     position: relative;
     border: 1px solid ${({ theme }) => theme.palette.grey[300]};
     border-radius: 0.4rem;
