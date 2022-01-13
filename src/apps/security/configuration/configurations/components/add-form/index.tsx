@@ -290,13 +290,8 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                         dependedFieldData={
                           element.params.dependedComponent === "select" && element.params.dependedModelName
                             ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
-                            : null
+                            : undefined
                         }
-                        // dependedFieldValue={
-                        //   element.params.dependedModelName && element.params.dependedModelField
-                        //     ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
-                        //     : undefined
-                        // }
                         {...element.params}
                       />
                     )}
