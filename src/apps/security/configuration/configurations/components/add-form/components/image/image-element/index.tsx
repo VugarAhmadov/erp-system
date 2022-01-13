@@ -4,7 +4,7 @@ import { ElementWithDnd, Element } from "../..";
 
 interface IImageElement {
   withDnd?: boolean;
-  src: string;
+  src?: string;
   alt?: string;
   dependedModelName?: string;
   dependedModelField?: string;
@@ -27,24 +27,12 @@ export const ImageElement: FC<IImageElement> = ({
   dependedFieldData,
   ...rest
 }) => {
-  const [dependedSrc, setDependedSrc] = useState("");
+  const dependedSrc =
+    dependedModelField &&
+    dependedFieldData &&
+    `http://173.212.212.209:8182/api/get/file/${dependedFieldData[dependedModelField]}`;
 
-  useEffect(() => {
-    if (dependedModelName && dependedModelField) {
-      // setDependedSrc(`http://173.212.212.209:8182/api/get/file/${dependedFieldValue}`);
-    }
-  }, [dependedFieldData]);
-
-  console.log(dependedSrc);
-
-  const image = (
-    <Img
-      src={dependedModelName && dependedModelField && dependedFieldData ? dependedSrc : src}
-      alt={alt}
-      width="100%"
-      height="100%"
-    />
-  );
+  const image = <Img src={[src ?? dependedSrc, "/images/admin-avatar.svg"]} alt={alt} width="100%" height="100%" />;
 
   return withDnd ? (
     <ElementWithDnd {...rest} type="image">

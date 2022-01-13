@@ -233,9 +233,15 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                         handleEdit={handleDialogOpen}
                         handleDelete={handleDeleteElement}
                         index={element.index}
-                        onSelectChange={(data: any) =>
-                          setSelectData((prev) => [...prev, { model: element.params.model, data }])
-                        }
+                        onSelectChange={(data: any) => {
+                          setSelectData((prev) => {
+                            if (prev.find((p) => p.model === element.params.model)) {
+                              return prev.map((n) => (n.model === element.params.model ? { ...n, data } : n));
+                            } else {
+                              return [...prev, { model: element.params.model, data }];
+                            }
+                          });
+                        }}
                         {...element.params}
                       />
                     )}
@@ -281,11 +287,16 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                         handleEdit={handleDialogOpen}
                         handleDelete={handleDeleteElement}
                         index={element.index}
-                        dependedFieldValue={
-                          element.params.dependedModelName && element.params.dependedModelField
+                        dependedFieldData={
+                          element.params.dependedComponent === "select" && element.params.dependedModelName
                             ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
-                            : undefined
+                            : null
                         }
+                        // dependedFieldValue={
+                        //   element.params.dependedModelName && element.params.dependedModelField
+                        //     ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
+                        //     : undefined
+                        // }
                         {...element.params}
                       />
                     )}
