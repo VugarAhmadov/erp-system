@@ -114,7 +114,6 @@ export const addHtmlForm = createAsyncThunk(
       const { data } = await operationApi.addHtmlForm(request);
       if (data?.err?.length === 0) {
         dispatch(setDialog({ opened: false, type: "" }));
-        console.log("testtt");
         await dispatch(checkUser());
         return data;
       } else {

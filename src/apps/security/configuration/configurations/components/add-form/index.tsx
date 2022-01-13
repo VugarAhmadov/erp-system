@@ -116,6 +116,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
 
   const moveElement = useCallback(
     (index, left, top) => {
+      console.log(top);
       let newState = [...formElements];
       newState[index].params.top = top;
       newState[index].params.left = left;
@@ -131,6 +132,9 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
         const delta = monitor.getDifferenceFromInitialOffset();
         let left = Math.round(item.left + delta?.x);
         let top = Math.round(item.top + delta?.y);
+        // console.log(delta);
+        // console.log(left);
+        // console.log(top);
         // if (snapToGrid) {
         //     ;
         //     [left, top] = doSnapToGrid(left, top);

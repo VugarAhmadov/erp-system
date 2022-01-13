@@ -16,24 +16,25 @@ export interface IElementWithDnd {
 
 export const ElementWithDnd: FC<IElementWithDnd> = memo(
   ({ children, handleEdit, handleDelete, index, top = 0, left = 0, width, height, type }) => {
-    const [{ isDragging }, drag] = useDrag(
-      () => ({
+    const [{ isDragging }, drag] = useDrag(() => {
+      console.log(top);
+      return {
         type: "box",
         item: { index, left, top },
         collect: (monitor) => ({
           isDragging: monitor.isDragging(),
         }),
-      }),
-      [index, left, top]
-    );
+      };
+    }, [index, left, top]);
 
     return (
       <StyledElement
         ref={drag}
         style={{
           transform: `translate3d(${left}px, ${top}px, 0)`,
-          width: width ? parseInt(width) : "auto",
-          height: isDragging ? 0 : height ? parseInt(height) : "auto",
+          // width: width ? parseInt(width) : "auto",
+          // height: isDragging ? 0 : height ? parseInt(height) : "auto",
+          height: isDragging ? 0 : "",
           opacity: isDragging ? 0 : 1,
         }}
       >
