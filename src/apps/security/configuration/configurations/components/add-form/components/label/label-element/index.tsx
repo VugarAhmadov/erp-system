@@ -31,8 +31,6 @@ interface ILabelElement {
 export const LabelElement: FC<ILabelElement> = ({ withDnd, label, variant, ...rest }) => {
   const labelComp = <Typography variant={variant}>{label}</Typography>;
 
-  console.log(rest.top);
-
   return withDnd ? (
     <ElementWithDnd {...rest} type="label">
       {labelComp}
