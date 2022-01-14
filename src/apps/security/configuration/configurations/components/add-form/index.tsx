@@ -128,9 +128,9 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
     () => ({
       accept: "box",
       drop(item: any, monitor) {
-        const delta = monitor.getDifferenceFromInitialOffset();
-        let left = Math.round(parseInt(item.left) + delta?.x!);
-        let top = Math.round(parseInt(item.top) + delta?.y!);
+        const delta = monitor.getDifferenceFromInitialOffset()!;
+        let left = Math.round(parseInt(item.left) + delta.x);
+        let top = Math.round(parseInt(item.top) + delta.y);
         // if (snapToGrid) {
         //     ;
         //     [left, top] = doSnapToGrid(left, top);
