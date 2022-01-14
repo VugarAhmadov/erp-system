@@ -57,7 +57,7 @@ export const SelectElement: FC<ISelectElement> = ({
       style={{ minWidth: "120px" }}
       inputProps={{
         onChange: (e: any) => {
-          onSelectChange(selectData.filter((data) => data.id === e.target.value));
+          onSelectChange(selectData.find((data) => data.id === e.target.value));
         },
       }}
       fullWidth

@@ -31,10 +31,10 @@ export const ImageDialog: FC<IImageDialog> = ({ open, onClose, onSubmit, params 
               <TextField name="dependedModelName" label={t("dependedModelName")} className="field" />
               <TextField name="dependedModelField" label={t("dependedModelField")} className="field" />
               <Select
-                name="dependedComponentName"
+                name="dependedComponent"
                 data={[{ label: "select", value: "select" }]}
                 required
-                label={t("variants")}
+                label={t("dependedComponent")}
               />
             </div>
 

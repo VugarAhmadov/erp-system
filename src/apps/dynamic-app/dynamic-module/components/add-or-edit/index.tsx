@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from "react";
+import React, { FC, Fragment, useState } from "react";
 import { Button as MuiButton, DialogContent, Typography } from "@mui/material";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
@@ -17,6 +17,7 @@ import {
   CheckboxElement,
   ButtonElement,
   TableElement,
+  ImageElement,
 } from "apps/security/configuration/configurations/components/add-form/components";
 
 interface IAddOrEdit {
@@ -31,6 +32,8 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
   const module = useSelector((state: AppState) => state.module.module);
 
   const data = JSON.parse(module.operations.find((op) => op.code === "ADD")?.formHtml!);
+
+  const [selectData, setSelectData] = useState<any[]>([]);
 
   return (
     <StyledDialog
@@ -73,12 +76,35 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                 {data?.formElements?.map((element: any) => (
                   <Fragment key={element.index}>
                     {element.element === "input" && <InputElement {...element.params} />}
-                    {element.element === "select" && <SelectElement {...element.params} />}
+                    {element.element === "select" && (
+                      <SelectElement
+                        {...element.params}
+                        onSelectChange={(data: any) => {
+                          setSelectData((prev) => {
+                            if (prev.find((p) => p.model === element.params.model)) {
+                              return prev.map((n) => (n.model === element.params.model ? { ...n, data } : n));
+                            } else {
+                              return [...prev, { model: element.params.model, data }];
+                            }
+                          });
+                        }}
+                      />
+                    )}
                     {element.element === "label" && <LabelElement {...element.params} />}
                     {element.element === "checkbox" && <CheckboxElement {...element.params} />}
                     {element.element === "datepicker" && <DatepickerElement {...element.params} />}
                     {element.element === "button" && <ButtonElement {...element.params} />}
                     {element.element === "table" && <TableElement {...element.params} />}
+                    {element.element === "image" && (
+                      <ImageElement
+                        {...element.params}
+                        dependedFieldData={
+                          element.params.dependedComponent === "select" && element.params.dependedModelName
+                            ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
+                            : null
+                        }
+                      />
+                    )}
                   </Fragment>
                 ))}
               </div>
