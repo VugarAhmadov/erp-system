@@ -5,23 +5,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { add, edit, getAll, remove } from "./store/actions";
 import { AppState } from "store";
 import { Column } from "@material-table/core";
-import { setDialog, setSelectedOperation } from "./store";
+import { setDialog, setSelectedUser } from "./store";
 import { AddOrEdit } from "./components";
-import { IAddOrEditOperationRequest } from "./store/types";
+import { IAddOrEditUserRequest } from "./store/types";
 import { Icon, IconButton } from "@mui/material";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-import { StyledOperation } from "./operation.styled";
+import { StyledUser } from "./user.styled";
 import { snakeCase } from "lodash";
 
-export const Operation = () => {
+export const User = () => {
   const { t } = useTranslation("common");
   const dispatch = useDispatch();
-  const operations = useSelector((state: AppState) => state.operation.operations);
-  const loading = useSelector((state: AppState) => state.operation.loading);
-  const seqColumns = operations?.seqColumn?.split(",");
-  const dialog = useSelector((state: AppState) => state.operation.dialog);
-  const selectedOperation = useSelector((state: AppState) => state.operation.selectedOperation);
+  const users = useSelector((state: AppState) => state.user.users);
+  const loading = useSelector((state: AppState) => state.user.loading);
+  const seqColumns = users?.seqColumn?.split(",");
+  const dialog = useSelector((state: AppState) => state.user.dialog);
+  const selectedUser = useSelector((state: AppState) => state.user.selectedUser);
 
   useEffect(() => {
     dispatch(getAll());
@@ -36,7 +36,7 @@ export const Operation = () => {
       },
     ];
 
-    operations?.c?.forEach((column) => {
+    users?.c?.forEach((column) => {
       columns.push({
         title: column.n,
         field: column.i,
@@ -66,7 +66,7 @@ export const Operation = () => {
   const buildData = () => {
     let data: any[] = [];
 
-    operations?.r?.map((row, index) => {
+    users?.r?.map((row, index) => {
       data.push({ index: index + 1, ...row });
     });
 
@@ -77,12 +77,12 @@ export const Operation = () => {
     dispatch(setDialog({ opened: true, type: "add" }));
   };
 
-  const handleEditClick = (operationId: string) => {
-    dispatch(setSelectedOperation(operationId));
+  const handleEditClick = (userId: string) => {
+    dispatch(setSelectedUser(userId));
     dispatch(setDialog({ type: "edit", opened: true }));
   };
 
-  const handleRemove = (operationId: string) => {
+  const handleRemove = (userId: string) => {
     const MySwal = withReactContent(Swal);
     MySwal.fire({
       text: "Are you sure to remove?",
@@ -92,7 +92,7 @@ export const Operation = () => {
       cancelButtonText: "cancel",
     }).then((result) => {
       if (result.value) {
-        dispatch(remove(operationId));
+        dispatch(remove(userId));
       }
     });
   };
@@ -101,16 +101,16 @@ export const Operation = () => {
     dispatch(setDialog({ opened: false, type: "" }));
   };
 
-  const handleSubmit = (data: IAddOrEditOperationRequest) => {
-    dialog.type === "edit"
-      ? dispatch(edit({ ...data, id: selectedOperation }))
-      : dispatch(add({ ...data, viewName: data.operationName === "VIEW" ? snakeCase(data.entity) : undefined }));
+  const handleSubmit = (data: IAddOrEditUserRequest) => {
+    // dialog.type === "edit"
+    //   ? dispatch(edit({ ...data, id: selectedUser }))
+    //   : dispatch(add({ ...data, viewName: data.userName === "VIEW" ? snakeCase(data.entity) : undefined }));
   };
 
   return (
     <>
-      <StyledOperation>
-        <SectionHeader title="Operations" />
+      <StyledUser>
+        <SectionHeader title="Users" />
         <FilterBar
           addButton={{
             show: true,
@@ -127,7 +127,7 @@ export const Operation = () => {
             toolbar: false,
           }}
         />
-      </StyledOperation>
+      </StyledUser>
       <AddOrEdit dialog={dialog} onClose={handleDialogClose} onSubmit={handleSubmit} />
     </>
   );

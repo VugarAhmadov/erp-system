@@ -16,6 +16,7 @@ const Configuration = lazy(() =>
 const Application = lazy(() => import("apps/security/application").then((module) => ({ default: module.Application })));
 const Module = lazy(() => import("apps/security/module").then((module) => ({ default: module.Module })));
 const Operation = lazy(() => import("apps/security/operation").then((module) => ({ default: module.Operation })));
+const User = lazy(() => import("apps/security/user").then((module) => ({ default: module.User })));
 
 const DynamicModule = lazy(() =>
   import("apps/dynamic-app/dynamic-module").then((module) => ({ default: module.DynamicModule }))
@@ -35,6 +36,7 @@ export const AppRouting = () => {
               <Route path="application" element={<Application />} />
               <Route path="module" element={<Module />} />
               <Route path="operation" element={<Operation />} />
+              <Route path="user" element={<User />} />
               <Route path=":dynamicModule" element={<DynamicModule />} />
             </Route>
             <Route path=":dynamicApp" element={<RouterOutlet />}>
