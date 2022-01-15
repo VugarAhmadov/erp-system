@@ -64,6 +64,8 @@ const DatePickerWrapper = (props: DatePickerWrapperProps) => {
       onChange={onChange}
       value={(value as any) === "" ? null : value}
       {...lessrest}
+      inputFormat="dd.MM.yyyy"
+      mask="__.__.____"
       renderInput={(props) => (
         <TextField
           helperText={isError ? error || submitError : helperText}

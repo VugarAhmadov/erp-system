@@ -110,13 +110,13 @@ export const User = () => {
   return (
     <>
       <StyledUser>
-        <SectionHeader title="Users" />
         <FilterBar
           addButton={{
             show: true,
             title: t("addOperation"),
             onClick: handleAddClick,
           }}
+          title="Users"
         />
         <DataTable
           columns={buildColumns()}

@@ -17,8 +17,3 @@ export interface IDictionyType {
   updateDate: string;
   updateUserId: string;
 }
-
-export interface IGetDictionariesListByCommon {
-  typeId: string;
-  parentId?: string;
-}

@@ -3,13 +3,17 @@ import { Button, DialogContent, Typography } from "@mui/material";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Autocomplete, Select, TextField } from "components/shared";
+import { Autocomplete, DatePicker, Photo, Select, TextField } from "components/shared";
 import { AppState } from "store";
 import { IDialog } from "types";
 import { IAddOrEditUserRequest } from "../../store/types";
 import { StyledDialog } from "./add-or-edit.styled";
 import { getAll as getAllModules } from "apps/security/module/store/actions";
 import { camelCase, upperFirst } from "lodash";
+import { getGenders } from "store/dictionary/actions";
+import { getAll as getAllUserGroups } from "apps/security/user-group/store/actions";
+import { default as dayjs } from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 
 interface IAddOrEdit {
   dialog: IDialog;
@@ -18,32 +22,26 @@ interface IAddOrEdit {
 }
 
 export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
-  const { t } = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
   const dispatch = useDispatch();
   const users = useSelector((state: AppState) => state.user.users.r);
   const selectedUser = useSelector((state: AppState) => state.user.selectedUser);
-  // const modules = useSelector((state: AppState) => state.module.modules);
-  // const moduleLoadding = useSelector((state: AppState) => state.module.loading.getAll);
+  const genders = useSelector((state: AppState) => state.dictionary.genders);
+  const userGroups = useSelector((state: AppState) => state.userGroup.userGroups.r);
+  dayjs.extend(customParseFormat);
   // const views = useSelector((state: AppState) => state.views.views);
   // const tables = useSelector((state: AppState) => state.tables.tables);
 
   useEffect(() => {
-    dispatch(getAllModules());
-  }, []);
+    if (dialog.opened) {
+      dispatch(getGenders());
+      dispatch(getAllUserGroups());
+    }
+  }, [dialog.opened]);
 
-  const initialValues = users?.find((u) => u.id === selectedUser);
-  // const initialValues = operations
-  //   ?.filter((operation) => operation.id === selectedOperation)
-  //   ?.map((operation: any) => ({
-  //     nameAz: operation.nameAz,
-  //     nameEn: operation.nameEn,
-  //     nameRu: operation.nameRu,
-  //     url: operation.url,
-  //     code: operation.code,
-  //     viewName: operation.viewName,
-  //     applicationId: operation.applicationId,
-  //     moduleId: operation.moduleId,
-  //   }))[0];
+  const initialValues = users
+    ?.filter((u) => u.id === selectedUser)
+    ?.map((user) => ({ ...user, birthdate: dayjs(user.birthdate, "DD.MM.YYYY") }))[0];
 
   return (
     <StyledDialog
@@ -62,13 +60,42 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
           render={({ handleSubmit, invalid, values }) => (
             <form onSubmit={handleSubmit} className="form">
               <Typography variant="h6">Add User</Typography>
-              <TextField name="firstname" id="firstname" label={t("firstname")} required />
-              <TextField name="lastname" id="lastname" label={t("lastname")} required />
-              <TextField name="patronymic" id="patronymic" label={t("patronymic")} required />
-              <TextField name="pincode" id="pincode" label={t("pincode")} required />
-              <Select name="genderId" id="genderId" label={t("gender")} data={[]} />
+              <div className="photo-container">
+                <Photo
+                  photoId={dialog.type === "edit" && initialValues?.photoFileId}
+                  placeholderImageName="avatar.svg"
+                  width="10rem"
+                />
+              </div>
+              <div className="grid-container">
+                <TextField name="pincode" label={t("pincode")} required />
+                <TextField name="firstname" label={t("firstname")} required />
+                <TextField name="lastname" label={t("lastname")} required />
+                <TextField name="patronymic" label={t("patronymic")} required />
+                <DatePicker name="birthdate" label={t("birthdate")} required />
+                <Select
+                  name="genderId"
+                  label={t("gender")}
+                  data={genders.map((gender) => ({ value: gender.id, label: gender.name }))}
+                  required
+                />
+                <Autocomplete
+                  name="groupId"
+                  label={t("userGroup")}
+                  options={
+                    userGroups?.map((group) => ({
+                      label: group.name,
+                      value: group.id,
+                    })) || []
+                  }
+                  getOptionValue={(option) => option.value}
+                  getOptionLabel={(option) => option.label}
+                  required
+                />
+                <TextField name="password" id="password" label={t("password")} />
+                {dialog.type === "edit" && <TextField name="oldPassword" id="oldPassword" label={t("oldPassword")} />}
+              </div>
 
-              <TextField name="password" id="password" label={t("password")} />
               {/* <TextField name="url" id="url" label={t("url")} required />
               {dialog.type === "add" && (
                 <>

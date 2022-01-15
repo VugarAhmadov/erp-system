@@ -1,6 +1,5 @@
-import { IGetDictionariesListByCommon } from "apps/security/configuration/configurations/store/types";
 import { defaultRequest } from "helpers";
-import { IGetAllResponse } from "types";
+import { IGetAllResponse, IGetDictionariesListByCommon } from "types";
 
 const getDictionaryTypeList = async () => {
   return await defaultRequest.post<IGetAllResponse>("api/jwt/CodiumSystem/Dictionary/GetDictionaryTypeList");

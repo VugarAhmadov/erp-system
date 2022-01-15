@@ -16,8 +16,6 @@ const initialState: IUserState = {
     add: false,
     edit: false,
     remove: false,
-    getHtmlFormOrViewname: false,
-    addHtmlForm: false,
   },
   users: {} as IGetAllTable,
   dialog: {

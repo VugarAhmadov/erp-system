@@ -76,3 +76,9 @@ export interface ISelectData {
   value: string;
   label: string;
 }
+
+export interface IGetDictionariesListByCommon {
+  typeId: string;
+  parentId?: string;
+  lang?: string;
+}

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import { userApi } from "api";
 import { checkUser } from "apps/auth/store/actions";
-import { toast } from "react-toastify";
 import { IAddOrEditUserRequest } from "./types";
 
 export const getAll = createAsyncThunk("user/getAll", async (_, { rejectWithValue }) => {

@@ -174,6 +174,7 @@ function AutocompleteWrapper<
       value={defaultValue ? defaultValue : multiple ? [] : null}
       renderInput={(params) => (
         <MuiTextField
+          autoFocus={false}
           label={label}
           required={required}
           helperText={isError ? error || submitError : helperText}

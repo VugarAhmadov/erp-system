@@ -16,39 +16,31 @@ export const StyledDialog = styled(Dialog)`
     display: flex;
     flex-direction: column;
 
+    & .grid-container {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-rows: repeat(5, 0.7fr);
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    & .photo-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+      position: relative;
+      height: 137px;
+    }
+
     & .MuiTypography-h6 {
       margin-bottom: 1.5rem;
     }
 
-    & .row {
-      display: flex;
-
-      & .col-6:first-of-type {
-        margin-right: 0.5rem;
-      }
-
-      & .col-6:last-child {
-        margin-left: 0.5rem;
-      }
-    }
-
-    & .MuiTextField-root {
-      margin-bottom: 1.5rem;
-    }
-
     & .action-buttons {
-      display: flex;
-
-      & .MuiButton-root {
-        width: 100%;
-      }
-
-      & .back-btn {
-        margin-right: 0.5rem;
-      }
-      & .submit-btn {
-        margin-left: 0.5rem;
-      }
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 1rem;
     }
   }
 `;

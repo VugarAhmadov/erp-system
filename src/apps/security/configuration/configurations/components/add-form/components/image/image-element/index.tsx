@@ -30,7 +30,7 @@ export const ImageElement: FC<IImageElement> = ({
   const dependedSrc =
     dependedModelField &&
     dependedFieldData &&
-    `http://173.212.212.209:8182/api/get/file/${dependedFieldData[dependedModelField]}`;
+    `http://173.212.212.209:8182/DispatcherRest/api/get/file/${dependedFieldData[dependedModelField]}`;
 
   const image = <Img src={[src ?? dependedSrc, "/images/admin-avatar.svg"]} alt={alt} width="100%" height="100%" />;
 
