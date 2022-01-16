@@ -9,6 +9,10 @@ interface IInputElement {
   label: string;
   placeholder: string;
   required?: string;
+  disabled?: string;
+  dependedModelName?: string;
+  dependedModelField?: string;
+  dependedFieldData?: any;
   top: number;
   left: number;
   width?: string;
@@ -17,8 +21,32 @@ interface IInputElement {
   handleDelete?(index: number): void;
 }
 
-export const InputElement: FC<IInputElement> = ({ withDnd, variant, model, label, placeholder, required, ...rest }) => {
-  const input = <TextField name={model} type={variant} label={label} placeholder={placeholder} required={!!required} />;
+export const InputElement: FC<IInputElement> = ({
+  withDnd,
+  variant,
+  model,
+  label,
+  placeholder,
+  required,
+  disabled,
+  dependedModelName,
+  dependedModelField,
+  dependedFieldData,
+  ...rest
+}) => {
+  const inputValue = dependedModelField && dependedFieldData && dependedFieldData[dependedModelField];
+
+  const input = (
+    <TextField
+      name={model}
+      value={inputValue}
+      type={variant}
+      label={label}
+      placeholder={placeholder}
+      required={!!required}
+      disabled={!!disabled}
+    />
+  );
 
   return withDnd ? (
     <ElementWithDnd {...rest} type="input">

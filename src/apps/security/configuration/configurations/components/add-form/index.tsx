@@ -224,6 +224,11 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                         handleEdit={handleDialogOpen}
                         handleDelete={handleDeleteElement}
                         index={element.index}
+                        dependedFieldData={
+                          element.params.dependedComponent === "select" && element.params.dependedModelName
+                            ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
+                            : undefined
+                        }
                         {...element.params}
                       />
                     )}
