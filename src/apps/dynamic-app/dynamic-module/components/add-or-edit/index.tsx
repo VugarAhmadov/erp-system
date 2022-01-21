@@ -75,7 +75,16 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
               <div className="form-elements">
                 {data?.formElements?.map((element: any) => (
                   <Fragment key={element.index}>
-                    {element.element === "input" && <InputElement {...element.params} />}
+                    {element.element === "input" && (
+                      <InputElement
+                        {...element.params}
+                        dependedFieldData={
+                          element.params.dependedComponent === "select" && element.params.dependedModelName
+                            ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
+                            : null
+                        }
+                      />
+                    )}
                     {element.element === "select" && (
                       <SelectElement
                         {...element.params}
