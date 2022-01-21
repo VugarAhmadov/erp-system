@@ -67,6 +67,19 @@ export const InputDialog: FC<IInputDialog> = ({ open, onClose, onSubmit, params 
               />
 
               <Switches name="required" data={{ label: t("required"), value: "required" }} />
+              <Switches name="disabled" data={{ label: t("disabled"), value: "disabled" }} />
+            </div>
+
+            <div>
+              <Typography variant="h6">{t("Dependencies")}</Typography>
+              <Select
+                name="dependedComponent"
+                data={[{ label: "select", value: "select" }]}
+                required
+                label={t("dependedComponent")}
+              />
+              <TextField name="dependedModelName" label={t("dependedModelName")} className="field" />
+              <TextField name="dependedModelField" label={t("dependedModelField")} className="field" />
             </div>
 
             <div className="styles">
