@@ -18,22 +18,16 @@ import { AppState } from "store";
 import { operationApi } from "api";
 import { IAddForm, IDialogState } from "./types";
 import {
-  InputElement,
+  Elements,
   InputDialog,
-  SelectElement,
   SelectDialog,
-  CheckboxElement,
   CheckboxDialog,
-  LabelElement,
   LabelDialog,
-  DatepickerElement,
   DatepickerDialog,
-  ButtonElement,
   ButtonDialog,
-  ImageElement,
   ImageDialog,
   TableDialog,
-  TableElement,
+  TabDialog,
 } from "./components";
 import { Form } from "react-final-form";
 
@@ -50,13 +44,12 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
       button: false,
       image: false,
       table: false,
+      tab: false,
     },
     data: null,
   });
   const [formElements, setFormElements] = useState<any[]>([]);
   const [grid, setGrid] = useState("off");
-
-  const [selectData, setSelectData] = useState<any[]>([]);
 
   const selectedOperation = useSelector((state: AppState) => state.configurations.selectedOperation);
 
@@ -142,8 +135,6 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
     [moveElement]
   );
 
-  const handleDependedFieldValue = () => {};
-
   return (
     <>
       <StyledAddForm>
@@ -206,9 +197,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
           <Button onClick={() => handleDialogOpen("button", -1)}>{t("button")}</Button>
           <Button onClick={() => handleDialogOpen("image", -1)}>{t("image")}</Button>
           <Button onClick={() => handleDialogOpen("table", -1)}>{t("table")}</Button>
-          {/* <Button onClick={() => handleDialogOpen("radio", -1)}>{t("radioButton")}</Button> */}
-          {/* <Button onClick={() => console.log("test")}>{t("photo")}</Button> */}
-          {/* <Button onClick={() => console.log("test")}>{t("file")}</Button> */}
+          <Button onClick={() => handleDialogOpen("tab", -1)}>{t("tab")}</Button>
         </div>
 
         <div ref={drop} className={clsx("drag-container", grid === "on" && "grid-view")}>
@@ -217,99 +206,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
             render={({ handleSubmit, values }) => (
               <form onSubmit={handleSubmit}>
                 {formElements?.map((element) => (
-                  <Fragment key={element.index}>
-                    {element.element === "input" && (
-                      <InputElement
-                        withDnd
-                        handleEdit={handleDialogOpen}
-                        handleDelete={handleDeleteElement}
-                        index={element.index}
-                        dependedFieldData={
-                          element.params.dependedComponent === "select" && element.params.dependedModelName
-                            ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
-                            : undefined
-                        }
-                        {...element.params}
-                      />
-                    )}
-                    {element.element === "select" && (
-                      <SelectElement
-                        withDnd
-                        handleEdit={handleDialogOpen}
-                        handleDelete={handleDeleteElement}
-                        index={element.index}
-                        onSelectChange={(data: any) => {
-                          setSelectData((prev) => {
-                            if (prev.find((p) => p.model === element.params.model)) {
-                              return prev.map((n) => (n.model === element.params.model ? { ...n, data } : n));
-                            } else {
-                              return [...prev, { model: element.params.model, data }];
-                            }
-                          });
-                        }}
-                        {...element.params}
-                      />
-                    )}
-                    {element.element === "label" && (
-                      <LabelElement
-                        withDnd
-                        handleEdit={handleDialogOpen}
-                        handleDelete={handleDeleteElement}
-                        index={element.index}
-                        {...element.params}
-                      />
-                    )}
-                    {element.element === "checkbox" && (
-                      <CheckboxElement
-                        withDnd
-                        handleEdit={handleDialogOpen}
-                        handleDelete={handleDeleteElement}
-                        index={element.index}
-                        {...element.params}
-                      />
-                    )}
-                    {element.element === "datepicker" && (
-                      <DatepickerElement
-                        withDnd
-                        handleEdit={handleDialogOpen}
-                        handleDelete={handleDeleteElement}
-                        index={element.index}
-                        {...element.params}
-                      />
-                    )}
-                    {element.element === "button" && (
-                      <ButtonElement
-                        withDnd
-                        handleEdit={handleDialogOpen}
-                        handleDelete={handleDeleteElement}
-                        index={element.index}
-                        {...element.params}
-                      />
-                    )}
-                    {element.element === "image" && (
-                      <ImageElement
-                        withDnd
-                        handleEdit={handleDialogOpen}
-                        handleDelete={handleDeleteElement}
-                        index={element.index}
-                        dependedFieldData={
-                          element.params.dependedComponent === "select" && element.params.dependedModelName
-                            ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
-                            : undefined
-                        }
-                        {...element.params}
-                      />
-                    )}
-                    {element.element === "table" && (
-                      <TableElement
-                        withDnd
-                        handleEdit={handleDialogOpen}
-                        handleDelete={handleDeleteElement}
-                        index={element.index}
-                        {...element.params}
-                      />
-                    )}
-                  </Fragment>
+                  <Elements element={element} onEdit={handleDialogOpen} onDelete={handleDeleteElement} />
                 ))}
               </form>
             )}
@@ -361,6 +258,12 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
       <TableDialog
         open={dialog.open.table}
         onClose={() => handleDialogClose("table")}
+        onSubmit={handleSubmit}
+        params={dialog.data?.params}
+      />
+      <TabDialog
+        open={dialog.open.tab}
+        onClose={() => handleDialogClose("tab")}
         onSubmit={handleSubmit}
         params={dialog.data?.params}
       />

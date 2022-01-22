@@ -22,6 +22,7 @@ export interface IDialogOpen {
   button: boolean;
   image: boolean;
   table: boolean;
+  tab: boolean;
 }
 
 export interface IDialogStateData {

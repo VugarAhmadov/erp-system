@@ -4,8 +4,8 @@ import { useDrag } from "react-dnd";
 import { StyledElement } from "./element-with-dnd.styled";
 
 export interface IElementWithDnd {
-  handleEdit?(type: string, index: number): void;
-  handleDelete?(index: number): void;
+  onEdit?(type: string, index: number): void;
+  onDelete?(index: number): void;
   index: number;
   top: number;
   left: number;
@@ -15,7 +15,7 @@ export interface IElementWithDnd {
 }
 
 export const ElementWithDnd: FC<IElementWithDnd> = memo(
-  ({ children, handleEdit, handleDelete, index, top = 0, left = 0, width, height, type }) => {
+  ({ children, onEdit, onDelete, index, top = 0, left = 0, width, height, type }) => {
     const [{ isDragging }, drag] = useDrag(
       () => ({
         type: "box",
@@ -39,10 +39,10 @@ export const ElementWithDnd: FC<IElementWithDnd> = memo(
       >
         {children}
         <div className="action-btns">
-          <IconButton size="small" className="edit-btn" onClick={() => handleEdit!(type, index)}>
+          <IconButton size="small" className="edit-btn" onClick={() => onEdit!(type, index)}>
             <Icon>edit</Icon>
           </IconButton>
-          <IconButton className="delete-btn" onClick={() => handleDelete!(index)}>
+          <IconButton className="delete-btn" onClick={() => onDelete!(index)}>
             <Icon>delete</Icon>
           </IconButton>
         </div>

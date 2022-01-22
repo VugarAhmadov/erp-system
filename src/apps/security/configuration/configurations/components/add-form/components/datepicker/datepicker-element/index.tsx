@@ -13,8 +13,8 @@ interface IDatepickerElement {
   left: number;
   width?: string;
   index: number;
-  handleEdit?(type: string, index: number): void;
-  handleDelete?(index: number): void;
+  onEdit?(type: string, index: number): void;
+  onDelete?(index: number): void;
 }
 
 export const DatepickerElement: FC<IDatepickerElement> = ({ withDnd, label, model, required, variant, ...rest }) => {

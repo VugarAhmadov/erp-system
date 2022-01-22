@@ -1,4 +1,5 @@
 export { Dialog } from "./dialog";
+export { Elements } from "./elements";
 export * from "./element-with-dnd";
 export * from "./element";
 export * from "./input";
@@ -10,3 +11,4 @@ export * from "./label";
 export * from "./button";
 export * from "./image";
 export * from "./table";
+export * from "./tab";

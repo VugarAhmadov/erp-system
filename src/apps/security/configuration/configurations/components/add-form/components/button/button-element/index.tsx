@@ -15,8 +15,8 @@ interface IButtonElement {
   left: number;
   width?: string;
   index: number;
-  handleEdit?(type: string, index: number): void;
-  handleDelete?(index: number): void;
+  onEdit?(type: string, index: number): void;
+  onDelete?(index: number): void;
 }
 
 export const ButtonElement: FC<IButtonElement> = ({
