@@ -48,7 +48,7 @@ export const Profile = () => {
         <div className="profile-info">
           <Img
             src={[
-              `${process.env.REACT_APP_API_BASE_URL}/api/get/file/${user?.photoFilePath}`,
+              `${process.env.REACT_APP_API_BASE_URL}/DispatcherRest/api/get/file/${user?.photoFilePath}`,
               "/images/admin-avatar.svg",
             ]}
             className="profile-image"

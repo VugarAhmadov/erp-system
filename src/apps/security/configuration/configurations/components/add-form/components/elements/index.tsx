@@ -9,17 +9,18 @@ import {
   ImageElement,
   TableElement,
   TabElement,
+  RadioElement,
 } from "..";
 
 interface IElements {
   element: any;
   onDelete(index: number): void;
   onEdit(type: string, index: number): void;
+  selectData: any[];
+  onSelectChange(data: any): void;
 }
 
-export const Elements: FC<IElements> = memo(({ element, onEdit, onDelete }) => {
-  const [selectData, setSelectData] = useState<any[]>([]);
-
+export const Elements: FC<IElements> = memo(({ element, onEdit, onDelete, onSelectChange, selectData }) => {
   return (
     <Fragment key={element.index}>
       {element.element === "input" && (
@@ -42,15 +43,7 @@ export const Elements: FC<IElements> = memo(({ element, onEdit, onDelete }) => {
           onEdit={onEdit}
           onDelete={onDelete}
           index={element.index}
-          onSelectChange={(data: any) => {
-            setSelectData((prev) => {
-              if (prev.find((p) => p.model === element.params.model)) {
-                return prev.map((n) => (n.model === element.params.model ? { ...n, data } : n));
-              } else {
-                return [...prev, { model: element.params.model, data }];
-              }
-            });
-          }}
+          onSelectChange={(data: any) => onSelectChange(data)}
           {...element.params}
         />
       )}
@@ -85,6 +78,9 @@ export const Elements: FC<IElements> = memo(({ element, onEdit, onDelete }) => {
       )}
       {element.element === "tab" && (
         <TabElement withDnd onEdit={onEdit} onDelete={onDelete} index={element.index} {...element.params} />
+      )}
+      {element.element === "radio" && (
+        <RadioElement withDnd onEdit={onEdit} onDelete={onDelete} index={element.index} {...element.params} />
       )}
     </Fragment>
   );

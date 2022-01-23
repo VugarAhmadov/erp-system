@@ -124,7 +124,8 @@ export const Operation = () => {
           data={buildData()}
           isLoading={loading.getAll}
           options={{
-            toolbar: false,
+            toolbar: true,
+            showTitle: false,
           }}
         />
       </StyledOperation>

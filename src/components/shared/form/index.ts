@@ -4,3 +4,4 @@ export { Select } from "./select";
 export { Autocomplete } from "./autocomplete";
 export { Switches } from "./switches";
 export { DatePicker } from "./date-picker";
+export { Radios } from "./radios";

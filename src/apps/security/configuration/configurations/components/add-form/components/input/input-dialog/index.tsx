@@ -4,7 +4,7 @@ import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
 import { camelCase } from "lodash";
 import { useSelector } from "react-redux";
-import { Autocomplete, Select, Switches, TextField } from "components/shared";
+import { Autocomplete, Radios, Select, Switches, TextField } from "components/shared";
 import { AppState } from "store";
 import { Dialog } from "../..";
 import { StyledForm } from "./input-dialog.styled";
@@ -14,12 +14,14 @@ interface IInputDialog {
   onClose(): void;
   onSubmit(data: any): void;
   params: any;
+  dependableModelNames?: any;
 }
 
-export const InputDialog: FC<IInputDialog> = ({ open, onClose, onSubmit, params }) => {
+export const InputDialog: FC<IInputDialog> = ({ open, onClose, onSubmit, params, dependableModelNames }) => {
   const { t } = useTranslation("common");
 
   const tables = useSelector((state: AppState) => state.tables.tables);
+  const views = useSelector((state: AppState) => state.views.views);
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -31,42 +33,52 @@ export const InputDialog: FC<IInputDialog> = ({ open, onClose, onSubmit, params 
             <Typography variant="h6">{t("addInputComponent")}</Typography>
 
             <div>
-              <Autocomplete
-                name="table"
-                id="table"
-                label={t("tables")}
-                options={tables?.map((table) => table.name)}
-                required
+              <Radios
+                name="componentType"
+                data={[
+                  { value: "forInsert", label: t("forInsert") as string },
+                  { value: "forView", label: t("forView") as string },
+                ]}
+                radioGroupProps={{ row: true }}
               />
+              {values?.componentType === "forInsert" && (
+                <>
+                  <Autocomplete
+                    name="table"
+                    id="table"
+                    label={t("tables")}
+                    options={tables?.map((table) => table.name)}
+                    required
+                  />
 
-              <Autocomplete
-                name="model"
-                id="model"
-                label={t("model")}
-                options={
-                  tables
-                    ?.find((table) => table.name === values?.table)
-                    ?.columns?.map((column) => camelCase(column.name)) || []
-                }
-                disabled={!values?.table}
-                required
-              />
+                  <Autocomplete
+                    name="model"
+                    id="model"
+                    label={t("model")}
+                    options={
+                      tables
+                        ?.find((table) => table.name === values?.table)
+                        ?.columns?.map((column) => camelCase(column.name)) || []
+                    }
+                    disabled={!values?.table}
+                    required
+                  />
+                  <Switches name="required" data={{ label: t("required"), value: "required" }} />
+                  <Select
+                    name="variant"
+                    data={[
+                      { label: t("number"), value: "number" },
+                      { label: t("text"), value: "text" },
+                    ]}
+                    required
+                    label={t("variants")}
+                  />
+                  <TextField name="placeholder" label="placeholder" className="field" />
+                </>
+              )}
 
               <TextField name="label" label={t("label")} required className="field" />
 
-              <TextField name="placeholder" label="placeholder" className="field" />
-
-              <Select
-                name="variant"
-                data={[
-                  { label: t("number"), value: "number" },
-                  { label: t("text"), value: "text" },
-                ]}
-                required
-                label={t("variants")}
-              />
-
-              <Switches name="required" data={{ label: t("required"), value: "required" }} />
               <Switches name="disabled" data={{ label: t("disabled"), value: "disabled" }} />
             </div>
 
@@ -78,8 +90,24 @@ export const InputDialog: FC<IInputDialog> = ({ open, onClose, onSubmit, params 
                 required
                 label={t("dependedComponent")}
               />
-              <TextField name="dependedModelName" label={t("dependedModelName")} className="field" />
-              <TextField name="dependedModelField" label={t("dependedModelField")} className="field" />
+              <Autocomplete
+                name="dependedModelName"
+                label={t("dependedModelName")}
+                options={dependableModelNames || []}
+                required
+              />
+              <Autocomplete name="views" label={t("views")} options={views.map((view) => view.name)} required />
+              <Autocomplete
+                name="dependedModelField"
+                label={t("dependedModelField")}
+                options={
+                  views
+                    ?.find((view) => view.name === values?.views)
+                    ?.columns?.map((column) => camelCase(column.name)) || []
+                }
+                freeSolo
+                required
+              />
             </div>
 
             <div className="styles">

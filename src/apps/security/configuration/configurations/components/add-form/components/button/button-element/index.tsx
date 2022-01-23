@@ -1,6 +1,6 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Icon, IconButton, Button as MuiButton } from "@mui/material";
-import { ElementWithDnd, Element } from "../..";
+import { ElementWithDnd, Element, Modal } from "../..";
 
 interface IButtonElement {
   withDnd?: boolean;
@@ -15,6 +15,7 @@ interface IButtonElement {
   left: number;
   width?: string;
   index: number;
+  linkedOperationId?: string;
   onEdit?(type: string, index: number): void;
   onDelete?(index: number): void;
 }
@@ -28,26 +29,43 @@ export const ButtonElement: FC<IButtonElement> = ({
   color,
   sort,
   linkUrl,
+  linkedOperationId,
   ...rest
 }) => {
+  const [modalOpened, setModalOpened] = useState<boolean>(false);
+
   const button =
     sort === "icon" ? (
       <IconButton size={size} color={color}>
         <Icon>{iconName}</Icon>
       </IconButton>
     ) : (
-      <MuiButton variant={variant} href={sort === "link" ? linkUrl : undefined} size={size} color={color} fullWidth>
+      <MuiButton
+        variant={variant}
+        href={sort === "link" && linkUrl ? linkUrl : undefined}
+        size={size}
+        color={color}
+        fullWidth
+        onClick={() => (linkedOperationId ? setModalOpened(true) : undefined)}
+      >
         {label}
       </MuiButton>
     );
 
   return withDnd ? (
-    <ElementWithDnd {...rest} type="button">
-      {button}
-    </ElementWithDnd>
+    <>
+      <ElementWithDnd {...rest} type="button">
+        {button}
+      </ElementWithDnd>
+      {linkedOperationId && (
+        <Modal open={modalOpened} onClose={() => setModalOpened(false)} linkedOperationId={linkedOperationId} />
+      )}
+    </>
   ) : (
-    <Element top={rest.top} left={rest.left} width={rest.width}>
-      {button}
-    </Element>
+    <>
+      <Element top={rest.top} left={rest.left} width={rest.width}>
+        {button}
+      </Element>
+    </>
   );
 };

@@ -1,10 +1,13 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { Button, Typography } from "@mui/material";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
-import { Select, TextField } from "components/shared";
+import { Select, TextField, Autocomplete } from "components/shared";
 import { Dialog } from "../..";
 import { StyledForm } from "./button-dialog.styled";
+import { useDispatch, useSelector } from "react-redux";
+import { getAll as getAllOperations } from "apps/security/operation/store/actions";
+import { AppState } from "store";
 
 interface IButtonDialog {
   open: boolean;
@@ -15,6 +18,13 @@ interface IButtonDialog {
 
 export const ButtonDialog: FC<IButtonDialog> = ({ open, onClose, onSubmit, params }) => {
   const { t } = useTranslation("common");
+  const dispatch = useDispatch();
+
+  const operations = useSelector((state: AppState) => state.operation.operations.r);
+
+  useEffect(() => {
+    dispatch(getAllOperations());
+  }, []);
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -56,7 +66,7 @@ export const ButtonDialog: FC<IButtonDialog> = ({ open, onClose, onSubmit, param
                 <TextField name="iconName" label={t("iconName")} required className="field" />
               )}
 
-              {values?.sort === "link" && <TextField name="linkUrl" label={t("linkUrl")} required className="field" />}
+              {values?.sort === "link" && <TextField name="linkUrl" label={t("linkUrl")} className="field" />}
 
               <Select
                 name="color"
@@ -82,6 +92,13 @@ export const ButtonDialog: FC<IButtonDialog> = ({ open, onClose, onSubmit, param
                 ]}
                 required
                 label={t("sizes")}
+              />
+              <Autocomplete
+                name="linkedOperationId"
+                label={t("linkedOperation")}
+                options={operations}
+                getOptionValue={(option) => option.id}
+                getOptionLabel={(option) => option.url}
               />
             </div>
 

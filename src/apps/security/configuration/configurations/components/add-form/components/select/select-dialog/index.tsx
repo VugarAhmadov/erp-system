@@ -9,7 +9,6 @@ import { AppState } from "store";
 import { Dialog } from "../..";
 import { StyledForm } from "./select-dialog.styled";
 import { getDictionaryTypeList } from "apps/security/configuration/configurations/store/actions";
-
 interface ISelectDialog {
   open: boolean;
   onClose(): void;
@@ -22,6 +21,7 @@ export const SelectDialog: FC<ISelectDialog> = ({ open, onClose, onSubmit, param
   const dispatch = useDispatch();
 
   const tables = useSelector((state: AppState) => state.tables.tables);
+  const views = useSelector((state: AppState) => state.views.views);
 
   const urlLists = useSelector((state: AppState) => state.auth.user.privilegeList);
 
@@ -110,8 +110,19 @@ export const SelectDialog: FC<ISelectDialog> = ({ open, onClose, onSubmit, param
 
               {values?.dataType === "rest" && (
                 <>
-                  <Autocomplete name="dataUrl" id="dataUrl" label={t("dataUrls")} options={urlLists} required />
-                  <TextField name="dataName" label={t("dataName")} required className="field" />
+                  <Autocomplete name="dataUrl" label={t("dataUrls")} options={urlLists} required />
+                  <Autocomplete name="views" label={t("views")} options={views.map((view) => view.name)} required />
+                  <Autocomplete
+                    name="dataName"
+                    label={t("dataName")}
+                    options={
+                      views
+                        ?.find((view) => view.name === values?.views)
+                        ?.columns?.map((column) => camelCase(column.name)) || []
+                    }
+                    freeSolo
+                    required
+                  />
                 </>
               )}
 

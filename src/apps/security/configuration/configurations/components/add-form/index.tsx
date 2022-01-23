@@ -28,11 +28,15 @@ import {
   ImageDialog,
   TableDialog,
   TabDialog,
+  RadioDialog,
 } from "./components";
 import { Form } from "react-final-form";
 
 export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
   const { t, i18n } = useTranslation("common");
+
+  const [selectData, setSelectData] = useState<any[]>([]);
+
   const [dialog, setDialog] = useState<IDialogState>({
     open: {
       input: false,
@@ -198,6 +202,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
           <Button onClick={() => handleDialogOpen("image", -1)}>{t("image")}</Button>
           <Button onClick={() => handleDialogOpen("table", -1)}>{t("table")}</Button>
           <Button onClick={() => handleDialogOpen("tab", -1)}>{t("tab")}</Button>
+          <Button onClick={() => handleDialogOpen("radio", -1)}>{t("radio")}</Button>
         </div>
 
         <div ref={drop} className={clsx("drag-container", grid === "on" && "grid-view")}>
@@ -206,7 +211,21 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
             render={({ handleSubmit, values }) => (
               <form onSubmit={handleSubmit}>
                 {formElements?.map((element) => (
-                  <Elements element={element} onEdit={handleDialogOpen} onDelete={handleDeleteElement} />
+                  <Elements
+                    element={element}
+                    onEdit={handleDialogOpen}
+                    onDelete={handleDeleteElement}
+                    selectData={selectData}
+                    onSelectChange={(data: any) =>
+                      setSelectData((prev) => {
+                        if (prev.find((p) => p.model === element.params.model)) {
+                          return prev.map((n) => (n.model === element.params.model ? { ...n, data } : n));
+                        } else {
+                          return [...prev, { model: element.params.model, data }];
+                        }
+                      })
+                    }
+                  />
                 ))}
               </form>
             )}
@@ -218,6 +237,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
         onClose={() => handleDialogClose("input")}
         onSubmit={handleSubmit}
         params={dialog.data?.params}
+        dependableModelNames={formElements?.filter((e) => e.element === "select").map((e) => e.params.model)}
       />
       <SelectDialog
         open={dialog.open.select}
@@ -264,6 +284,12 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
       <TabDialog
         open={dialog.open.tab}
         onClose={() => handleDialogClose("tab")}
+        onSubmit={handleSubmit}
+        params={dialog.data?.params}
+      />
+      <RadioDialog
+        open={dialog.open.radio}
+        onClose={() => handleDialogClose("radio")}
         onSubmit={handleSubmit}
         params={dialog.data?.params}
       />

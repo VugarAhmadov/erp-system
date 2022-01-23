@@ -1,5 +1,6 @@
 export { Dialog } from "./dialog";
 export { Elements } from "./elements";
+export { Modal } from "./modal";
 export * from "./element-with-dnd";
 export * from "./element";
 export * from "./input";

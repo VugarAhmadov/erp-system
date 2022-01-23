@@ -1,14 +1,9 @@
-import React, { FC, Fragment, useState } from "react";
-import { Button as MuiButton, DialogContent, Typography } from "@mui/material";
-import { Form } from "react-final-form";
+import React, { FC, Fragment, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
-import { AppState } from "store";
-import { IDialog } from "types";
-import { IAddOrEditApplicationRequest } from "../../store/types";
-import { StyledDialog } from "./add-or-edit.styled";
-import i18n from "translation";
-import { IName } from "apps/auth/store/types";
+import { Button, DialogActions, DialogContent } from "@mui/material";
+import { Form } from "react-final-form";
+import { ModalTitle } from "./modal-title";
+import { StyledModal } from "./modal.styled";
 import {
   InputElement,
   SelectElement,
@@ -21,59 +16,59 @@ import {
   RadioElement,
   TabElement,
 } from "apps/security/configuration/configurations/components/add-form/components";
+import { useDispatch, useSelector } from "react-redux";
+import { getAll as getAllOperations } from "apps/security/operation/store/actions";
+import { AppState } from "store";
 
-interface IAddOrEdit {
-  dialog: IDialog;
+interface IModal {
+  linkedOperationId: string;
+  open: boolean;
   onClose(): void;
-  onSubmit(data: IAddOrEditApplicationRequest): void;
 }
 
-export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
+export const Modal: FC<IModal> = ({ open, onClose, linkedOperationId }) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation("common");
-
-  const module = useSelector((state: AppState) => state.module.module);
-
-  const data = JSON.parse(module.operations.find((op) => op.code === "ADD")?.formHtml!);
-
   const [selectData, setSelectData] = useState<any[]>([]);
 
+  useEffect(() => {
+    dispatch(getAllOperations());
+  }, []);
+
+  const operationHtml = useSelector(
+    (state: AppState) => state.operation.operations.r?.find((r) => r.id === linkedOperationId)?.operationHtml
+  );
+  const data = JSON.parse(operationHtml);
+
   return (
-    <StyledDialog
-      open={dialog.opened}
+    <StyledModal
       onClose={onClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
+      aria-labelledby="customized-dialog-title"
+      open={open}
+      maxWidth={data?.dialogSize || "md"}
       fullWidth={true}
-      maxWidth={data?.dialogSize || "sm"}
-      scroll="paper"
     >
-      <DialogContent>
+      <ModalTitle id="customized-dialog-title" onClose={onClose}>
+        Add
+        {/* <div className="form-header">
+          {dialog.type === "add" && (
+            <Typography variant="h5">
+              {module.operations.find((op) => op.code === "ADD")?.name[i18n.language as keyof IName]}
+            </Typography>
+          )}
+          {dialog.type === "edit" && (
+            <Typography variant="h5">
+              {module.operations.find((op) => op.code === "EDIT")?.name[i18n.language as keyof IName]}
+            </Typography>
+          )}
+        </div> */}
+      </ModalTitle>
+
+      <DialogContent dividers>
         <Form
-          onSubmit={onSubmit}
+          onSubmit={() => console.log("test")}
           render={({ handleSubmit, invalid }) => (
             <form onSubmit={handleSubmit} className="form">
-              <div className="form-header">
-                {dialog.type === "add" && (
-                  <Typography variant="h5">
-                    {module.operations.find((op) => op.code === "ADD")?.name[i18n.language as keyof IName]}
-                  </Typography>
-                )}
-                {dialog.type === "edit" && (
-                  <Typography variant="h5">
-                    {module.operations.find((op) => op.code === "EDIT")?.name[i18n.language as keyof IName]}
-                  </Typography>
-                )}
-
-                <div className="action-buttons">
-                  <MuiButton type="submit" className="submit-btn">
-                    {t("submit")}
-                  </MuiButton>
-                  <MuiButton onClick={onClose} variant="outlined">
-                    {t("close")}
-                  </MuiButton>
-                </div>
-              </div>
-
               <div className="form-elements">
                 {data?.formElements?.map((element: any) => (
                   <Fragment key={element.index}>
@@ -125,6 +120,12 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
           )}
         />
       </DialogContent>
-    </StyledDialog>
+      <DialogActions>
+        <Button type="submit">{t("submit")}</Button>
+        <Button onClick={onClose} variant="outlined">
+          {t("close")}
+        </Button>
+      </DialogActions>
+    </StyledModal>
   );
 };
