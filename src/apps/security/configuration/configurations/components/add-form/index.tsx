@@ -1,12 +1,16 @@
-import React, { FC, Fragment, useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import {
   Breakpoint,
   Button,
   FormControl,
+  Grid,
+  Icon,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
@@ -32,7 +36,7 @@ import {
 } from "./components";
 import { Form } from "react-final-form";
 
-export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
+export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, dialogSize, setDialogSize }) => {
   const { t, i18n } = useTranslation("common");
 
   const [selectData, setSelectData] = useState<any[]>([]);
@@ -53,8 +57,8 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
     data: null,
   });
   const [formElements, setFormElements] = useState<any[]>([]);
-  const [grid, setGrid] = useState("off");
-
+  const [gridView, setGridView] = useState("off");
+  const [gridRows, setGridRows] = useState<any[]>([]);
   const selectedOperation = useSelector((state: AppState) => state.configurations.selectedOperation);
 
   useEffect(() => {
@@ -62,7 +66,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
       if (data.err.length === 0) {
         const operHtml = JSON.parse(data.tbl[0].r[0].operationHtml);
         setFormElements(operHtml.formElements);
-        setSize(operHtml.dialogSize);
+        setDialogSize(operHtml.dialogSize);
       }
     });
   }, [selectedOperation]);
@@ -75,9 +79,9 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
     }));
   };
 
-  const handleDialogClose = (type: string) => {
+  const handleDialogClose = useCallback((type: string) => {
     setDialog((state) => ({ open: { ...state.open, [type]: false }, data: null }));
-  };
+  }, []);
 
   const handleDeleteElement = (index: number) => {
     let elementsCopy = [...formElements];
@@ -104,11 +108,11 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
   };
 
   const handleSizeChange = (e: SelectChangeEvent) => {
-    setSize(e.target.value as Breakpoint);
+    setDialogSize(e.target.value as Breakpoint);
   };
 
   const handleGridChange = (e: SelectChangeEvent) => {
-    setGrid(e.target.value as string);
+    setGridView(e.target.value as string);
   };
 
   const moveElement = useCallback(
@@ -139,6 +143,10 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
     [moveElement]
   );
 
+  const handleAddGridRow = () => {
+    setGridRows((prev) => [...prev, { index: prev.length, items: [] }]);
+  };
+
   return (
     <>
       <StyledAddForm>
@@ -148,7 +156,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
             <Button
               onClick={() =>
                 onSubmit({
-                  operationHtml: JSON.stringify({ formElements, dialogSize: size }),
+                  operationHtml: JSON.stringify({ formElements, dialogSize: dialogSize }),
                   operationId: selectedOperation.id,
                 })
               }
@@ -167,7 +175,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
             <Select
               labelId="dialog-size-select-label"
               id="dialog-size-select"
-              value={size}
+              value={dialogSize}
               label={t("dialogSize")}
               onChange={handleSizeChange}
             >
@@ -183,7 +191,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
             <Select
               labelId="grid-view-select-label"
               id="grid-view-select"
-              value={grid}
+              value={gridView}
               label={t("gridView")}
               onChange={handleGridChange}
             >
@@ -191,6 +199,9 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
               <MenuItem value="off">Off</MenuItem>
             </Select>
           </FormControl>
+          <Button sx={{ marginLeft: "1rem" }} size="small" onClick={handleAddGridRow}>
+            Add Grid Row
+          </Button>
         </div>
         <div className="component-buttons">
           <Button onClick={() => handleDialogOpen("input", -1)}>{t("input")}</Button>
@@ -205,12 +216,27 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
           <Button onClick={() => handleDialogOpen("radio", -1)}>{t("radio")}</Button>
         </div>
 
-        <div ref={drop} className={clsx("drag-container", grid === "on" && "grid-view")}>
+        <div ref={drop} className={clsx("drag-container", gridView === "on" && "grid-view")}>
           <Form
             onSubmit={() => {}}
             render={({ handleSubmit, values }) => (
               <form onSubmit={handleSubmit}>
-                {formElements?.map((element) => (
+                {gridRows?.map((grid: any) => (
+                  <Grid container sx={{ border: "1px dashed #000", minHeight: "120px", position: "relative" }}>
+                    <div style={{ position: "absolute", top: "-1.25rem", left: "-1.25rem", zIndex: "2" }}>
+                      <Tooltip title={t("addGridColumn")!}>
+                        <IconButton color="info">
+                          <Icon>add</Icon>
+                        </IconButton>
+                      </Tooltip>
+                    </div>
+                    {grid?.items?.map((item: any) => (
+                      <Grid item xs={5} sx={{ border: "1px dashed #eee", minHeight: "100px" }}></Grid>
+                    ))}
+                  </Grid>
+                ))}
+
+                {/* {formElements?.map((element) => (
                   <Elements
                     element={element}
                     onEdit={handleDialogOpen}
@@ -226,7 +252,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
                       })
                     }
                   />
-                ))}
+                ))} */}
               </form>
             )}
           />
