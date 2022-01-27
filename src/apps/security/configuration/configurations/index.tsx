@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   Accordion,
   AccordionDetails,
@@ -34,9 +34,9 @@ export const Configurations = () => {
     dispatch(setDialog({ type, opened: true }));
   };
 
-  const handleDialogClose = () => {
+  const handleDialogClose = useCallback(() => {
     dispatch(setDialog({ type: "", opened: false }));
-  };
+  }, []);
 
   const handleAddFormSubmit = (data: IAddHtmlFormRequest) => {
     dispatch(addHtmlForm(data));

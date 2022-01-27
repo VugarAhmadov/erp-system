@@ -1,5 +1,5 @@
+import React, { FC, memo } from "react";
 import { DialogContent } from "@mui/material";
-import { FC } from "react";
 import { StyledDialog } from "./dialog.styled";
 
 interface IDialog {
@@ -7,7 +7,7 @@ interface IDialog {
   onClose(): void;
 }
 
-export const Dialog: FC<IDialog> = ({ children, open, onClose }) => {
+export const Dialog: FC<IDialog> = memo(({ children, open, onClose }) => {
   return (
     <StyledDialog
       open={open}
@@ -21,4 +21,4 @@ export const Dialog: FC<IDialog> = ({ children, open, onClose }) => {
       <DialogContent>{children}</DialogContent>
     </StyledDialog>
   );
-};
+});

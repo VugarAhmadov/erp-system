@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 
 export const StyledSidebar = styled.div`
+  min-width: 270px;
   width: 270px;
   height: 100%;
   background-color: #2c3e50;

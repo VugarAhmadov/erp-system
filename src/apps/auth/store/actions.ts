@@ -14,6 +14,7 @@ export const checkUser = createAsyncThunk("auth/checkUser", async (_, { rejectWi
       return data.data;
       // TODO: burani duzelt
     } else if (status === 401 || data?.code === "UNAUTHORIZED") {
+      localStorage.removeItem("codeum_jwt_token");
       dispatch(push("/auth/login"));
     } else {
       dispatch(push("/auth/login"));
