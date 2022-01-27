@@ -36,9 +36,9 @@ export const Modal: FC<IModal> = ({ open, onClose, linkedOperationId }) => {
   }, []);
 
   const operationHtml = useSelector(
-    (state: AppState) => state.operation.operations.r?.find((r) => r.id === linkedOperationId)?.operationHtml
+    (state: AppState) => state.operation?.operations.r?.find((r) => r.id === linkedOperationId)?.operationHtml
   );
-  const data = JSON.parse(operationHtml);
+  const data = operationHtml ? JSON.parse(operationHtml) : null;
 
   return (
     <StyledModal

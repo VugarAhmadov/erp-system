@@ -61,8 +61,9 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, size, setSize }) => {
     operationApi.getHtmlFormOrViewname({ lang: i18n.language, operationId: selectedOperation.id }).then(({ data }) => {
       if (data.err.length === 0) {
         const operHtml = JSON.parse(data.tbl[0].r[0].operationHtml);
-        setFormElements(operHtml.formElements);
-        setSize(operHtml.dialogSize);
+        // console.log(operHtml);
+        setFormElements(operHtml?.formElements);
+        setSize(operHtml?.dialogSize);
       }
     });
   }, [selectedOperation]);
