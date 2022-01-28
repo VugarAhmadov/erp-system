@@ -1,18 +1,5 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
-import {
-  Breakpoint,
-  Button,
-  FormControl,
-  Grid,
-  Icon,
-  IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Breakpoint, Button, Grid, Icon, IconButton, SelectChangeEvent, Tooltip, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import clsx from "clsx";
@@ -36,7 +23,7 @@ import {
 } from "./components";
 import { Form } from "react-final-form";
 
-export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, dialogSize, setDialogSize }) => {
+export const AddForm: FC<IAddForm> = ({ onClose, onSubmit }) => {
   const { t, i18n } = useTranslation("common");
 
   const [selectData, setSelectData] = useState<any[]>([]);
@@ -66,7 +53,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, dialogSize, setDialog
       if (data.err.length === 0) {
         const operHtml = JSON.parse(data.tbl[0].r[0].operationHtml);
         setFormElements(operHtml.formElements);
-        setDialogSize(operHtml.dialogSize);
+        // setDialogSize(operHtml.dialogSize);
       }
     });
   }, [selectedOperation]);
@@ -105,14 +92,6 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, dialogSize, setDialog
     }
     setFormElements(elementsCopy);
     handleDialogClose(dialog.data?.type!);
-  };
-
-  const handleSizeChange = (e: SelectChangeEvent) => {
-    setDialogSize(e.target.value as Breakpoint);
-  };
-
-  const handleGridChange = (e: SelectChangeEvent) => {
-    setGridView(e.target.value as string);
   };
 
   const moveElement = useCallback(
@@ -154,12 +133,12 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, dialogSize, setDialog
           <Typography variant="h5">{t("addForm")}</Typography>
           <div className="action-buttons">
             <Button
-              onClick={() =>
-                onSubmit({
-                  operationHtml: JSON.stringify({ formElements, dialogSize: dialogSize }),
-                  operationId: selectedOperation.id,
-                })
-              }
+              // onClick={() =>
+              //   onSubmit({
+              //     operationHtml: JSON.stringify({ formElements, dialogSize: dialogSize }),
+              //     operationId: selectedOperation.id,
+              //   })
+              // }
               className="submit-btn"
             >
               {t("submit")}
@@ -169,40 +148,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, dialogSize, setDialog
             </Button>
           </div>
         </div>
-        <div className="grid-control">
-          <FormControl className="dialog-size">
-            <InputLabel id="dialog-size-select-label">{t("dialogSize")}</InputLabel>
-            <Select
-              labelId="dialog-size-select-label"
-              id="dialog-size-select"
-              value={dialogSize}
-              label={t("dialogSize")}
-              onChange={handleSizeChange}
-            >
-              <MenuItem value="xs">Extra small</MenuItem>
-              <MenuItem value="sm">Small</MenuItem>
-              <MenuItem value="md">Medium</MenuItem>
-              <MenuItem value="lg">Large</MenuItem>
-              <MenuItem value="xl">Extra Large</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl className="grid-view">
-            <InputLabel id="grid-view-select-label">{t("gridView")}</InputLabel>
-            <Select
-              labelId="grid-view-select-label"
-              id="grid-view-select"
-              value={gridView}
-              label={t("gridView")}
-              onChange={handleGridChange}
-            >
-              <MenuItem value="on">On</MenuItem>
-              <MenuItem value="off">Off</MenuItem>
-            </Select>
-          </FormControl>
-          <Button sx={{ marginLeft: "1rem" }} size="small" onClick={handleAddGridRow}>
-            Add Grid Row
-          </Button>
-        </div>
+
         <div className="component-buttons">
           <Button onClick={() => handleDialogOpen("input", -1)}>{t("input")}</Button>
           <Button onClick={() => handleDialogOpen("select", -1)}>{t("select")}</Button>
@@ -224,7 +170,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, dialogSize, setDialog
                 {gridRows?.map((grid: any) => (
                   <Grid container sx={{ border: "1px dashed #000", minHeight: "120px", position: "relative" }}>
                     <div style={{ position: "absolute", top: "-1.25rem", left: "-1.25rem", zIndex: "2" }}>
-                      <Tooltip title={t("addGridColumn")!}>
+                      <Tooltip title={t("addGridColumn") as string}>
                         <IconButton color="info">
                           <Icon>add</Icon>
                         </IconButton>
@@ -236,7 +182,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, dialogSize, setDialog
                   </Grid>
                 ))}
 
-                {formElements?.map((element) => (
+                {/* {formElements?.map((element) => (
                   <Elements
                     element={element}
                     onEdit={handleDialogOpen}
@@ -252,7 +198,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, dialogSize, setDialog
                       })
                     }
                   />
-                ))}
+                ))} */}
               </form>
             )}
           />
