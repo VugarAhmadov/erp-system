@@ -3,8 +3,6 @@ import { Breakpoint } from "@mui/material";
 export interface IAddForm {
   onClose(): void;
   onSubmit(data: any): void;
-  dialogSize: Breakpoint;
-  setDialogSize(dialogSize: Breakpoint): void;
 }
 
 export interface IDialogState {
