@@ -3,9 +3,10 @@ import { Breakpoint, DialogContent, Paper } from "@mui/material";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { IDialog } from "types";
-import { AddForm, AddPrivForm, AllViewForm } from "..";
+import { AddForm, AddPrivForm, AllViewForm, DialogConfig } from "..";
 import { StyledDialog } from "./dialog.styled";
 import { IAddHtmlFormRequest, IAddViewFormRequest } from "apps/security/operation/store/types";
+import { AddFormNew } from "../add-form-new";
 
 interface IDialogProps {
   dialog: IDialog;
@@ -17,39 +18,42 @@ interface IDialogProps {
 
 export const Dialog: FC<IDialogProps> = memo(({ dialog, onClose, onAddFormSubmit, onAllViewFormSubmit }) => {
   const [dialogSize, setDialogSize] = useState<Breakpoint>("sm");
+  const [gridView, setGridView] = useState<"on" | "off">("off");
 
-  console.log(dialogSize);
+  const handleDialogSizeChange = (size: Breakpoint) => setDialogSize(size);
+  const handleGridViewChange = (gridView: "on" | "off") => setGridView(gridView);
 
   return (
-    <StyledDialog
-      open={dialog.opened}
-      onClose={onClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-      fullWidth={true}
-      maxWidth={dialog.type === "add" ? dialogSize : "sm"}
-      scroll="paper"
-      // PaperComponent={({ children, ...rest }) => (
-      //   <>
-      //     <Paper {...rest}>{children}</Paper>
-      //     <div style={{ width: "200px", height: "100%", backgroundColor: "#ccc" }}>test</div>
-      //   </>
-      // )}
-    >
-      <DialogContent>
-        {dialog.type === "add" && (
-          <DndProvider backend={HTML5Backend}>
-            <AddForm
-              onClose={onClose}
-              onSubmit={onAddFormSubmit}
-              dialogSize={dialogSize}
-              setDialogSize={setDialogSize}
-            />
-          </DndProvider>
+    <DndProvider backend={HTML5Backend}>
+      <StyledDialog
+        open={dialog.opened}
+        onClose={onClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        fullWidth={true}
+        maxWidth={dialog.type === "add" ? dialogSize : "sm"}
+        scroll="paper"
+        PaperComponent={({ children, ...rest }) => (
+          <>
+            <Paper {...rest}>{children}</Paper>
+            {dialog.type === "add" && (
+              <DialogConfig
+                dialogSize={dialogSize}
+                gridView={gridView}
+                onDialogSizeChange={handleDialogSizeChange}
+                onGridViewChange={handleGridViewChange}
+              />
+            )}
+          </>
         )}
-        {dialog.type === "all-view" && <AllViewForm onClose={onClose} onSubmit={onAllViewFormSubmit} />}
-        {dialog.type === "add-priv" && <AddPrivForm />}
-      </DialogContent>
-    </StyledDialog>
+      >
+        <DialogContent>
+          {dialog.type === "add" && <AddFormNew onClose={onClose} gridView={gridView} />}
+          {dialog.type === "all-view" && <AllViewForm onClose={onClose} onSubmit={onAllViewFormSubmit} />}
+          {dialog.type === "add-priv" && <AddPrivForm />}
+          {/* <AddForm onClose={onClose} onSubmit={onAddFormSubmit} /> */}
+        </DialogContent>
+      </StyledDialog>
+    </DndProvider>
   );
 });
