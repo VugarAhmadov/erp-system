@@ -18,6 +18,8 @@ interface IDialogProps {
 export const Dialog: FC<IDialogProps> = memo(({ dialog, onClose, onAddFormSubmit, onAllViewFormSubmit }) => {
   const [dialogSize, setDialogSize] = useState<Breakpoint>("sm");
 
+  console.log(dialogSize);
+
   return (
     <StyledDialog
       open={dialog.opened}
@@ -27,12 +29,12 @@ export const Dialog: FC<IDialogProps> = memo(({ dialog, onClose, onAddFormSubmit
       fullWidth={true}
       maxWidth={dialog.type === "add" ? dialogSize : "sm"}
       scroll="paper"
-      PaperComponent={({ children, ...rest }) => (
-        <>
-          <Paper {...rest}>{children}</Paper>
-          <div style={{ width: "200px", height: "100%", backgroundColor: "#ccc" }}>test</div>
-        </>
-      )}
+      // PaperComponent={({ children, ...rest }) => (
+      //   <>
+      //     <Paper {...rest}>{children}</Paper>
+      //     <div style={{ width: "200px", height: "100%", backgroundColor: "#ccc" }}>test</div>
+      //   </>
+      // )}
     >
       <DialogContent>
         {dialog.type === "add" && (

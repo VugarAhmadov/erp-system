@@ -236,7 +236,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, dialogSize, setDialog
                   </Grid>
                 ))}
 
-                {/* {formElements?.map((element) => (
+                {formElements?.map((element) => (
                   <Elements
                     element={element}
                     onEdit={handleDialogOpen}
@@ -252,7 +252,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, dialogSize, setDialog
                       })
                     }
                   />
-                ))} */}
+                ))}
               </form>
             )}
           />
