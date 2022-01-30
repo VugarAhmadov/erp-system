@@ -8,8 +8,6 @@ export const checkUser = createAsyncThunk("auth/checkUser", async (_, { rejectWi
   try {
     const { data, status } = await authApi.checkUser();
 
-    console.log(status);
-
     if (data.code === "OK") {
       const url = getUrl(data.data as IUser);
       dispatch(push(`/${url}`));
@@ -24,6 +22,7 @@ export const checkUser = createAsyncThunk("auth/checkUser", async (_, { rejectWi
       return rejectWithValue(data.code);
     }
   } catch (error) {
+    localStorage.removeItem("codeum_jwt_token");
     dispatch(push("/auth/login"));
     console.error(error);
     throw error;

@@ -12,6 +12,7 @@ export const StyledDialogConfig = styled.div`
 
   & .controls {
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    margin-bottom: 1rem;
 
     & .MuiFormControl-root {
       width: 100%;
@@ -41,6 +42,36 @@ export const StyledDialogConfig = styled.div`
       & .Mui-focused {
         & .MuiOutlinedInput-notchedOutline {
           border-color: rgb(144, 202, 249);
+        }
+      }
+    }
+  }
+
+  & .layout-components {
+    margin-bottom: 1rem;
+
+    & .heading {
+      color: #fff;
+      margin-bottom: 0.25rem;
+    }
+
+    & .MuiList-root {
+      padding: 0;
+
+      & .MuiListItemButton-root {
+        padding: 0.25rem 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 0.25rem;
+        margin-bottom: 0.5rem;
+        cursor: move;
+
+        & .MuiListItemIcon-root {
+          color: #fff;
+        }
+
+        & .MuiListItemText-root {
+          color: #fff;
+          margin: 0;
         }
       }
     }

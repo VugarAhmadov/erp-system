@@ -11,6 +11,7 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  Typography,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { StyledDialogConfig } from "./dialog-config.styled";
@@ -26,7 +27,16 @@ interface IDialogConfig {
 
 export const DialogConfig: FC<IDialogConfig> = ({ dialogSize, gridView, onDialogSizeChange, onGridViewChange }) => {
   const { t } = useTranslation("common");
-  const [, drag] = useDrag(() => ({ type: Components.GRID, item: {} }));
+  const [, dragGridRow] = useDrag(() => ({ type: Components.GRID, item: {} }));
+  const [, dragGridColumn] = useDrag(() => ({ type: Components.COLUMN, item: {} }));
+  const [, dragInput] = useDrag(() => ({
+    type: Components.ELEMENT,
+    item: { type: "input", params: {}, move: false },
+  }));
+  const [, dragButton] = useDrag(() => ({
+    type: Components.ELEMENT,
+    item: { type: "button", params: {}, move: false },
+  }));
 
   return (
     <StyledDialogConfig>
@@ -61,13 +71,41 @@ export const DialogConfig: FC<IDialogConfig> = ({ dialogSize, gridView, onDialog
           </Select>
         </FormControl>
       </div>
-      <div className="components">
-        <List component="nav" aria-label="main mailbox folders">
-          <ListItemButton ref={drag}>
+      <div className="layout-components">
+        <Typography variant="subtitle1" className="heading">
+          {t("layoutComponents")}
+        </Typography>
+        <List component="nav">
+          <ListItemButton ref={dragGridRow}>
             <ListItemIcon>
               <Icon>inbox</Icon>
             </ListItemIcon>
-            <ListItemText primary="Inbox" />
+            <ListItemText primary={t("grid")} />
+          </ListItemButton>
+          <ListItemButton ref={dragGridColumn}>
+            <ListItemIcon>
+              <Icon>inbox</Icon>
+            </ListItemIcon>
+            <ListItemText primary={t("column")} />
+          </ListItemButton>
+        </List>
+      </div>
+      <div className="components layout-components">
+        <Typography variant="subtitle1" className="heading">
+          {t("Components")}
+        </Typography>
+        <List component="nav">
+          <ListItemButton ref={dragInput}>
+            <ListItemIcon>
+              <Icon>inbox</Icon>
+            </ListItemIcon>
+            <ListItemText primary={t("input")} />
+          </ListItemButton>
+          <ListItemButton ref={dragButton}>
+            <ListItemIcon>
+              <Icon>inbox</Icon>
+            </ListItemIcon>
+            <ListItemText primary={t("button")} />
           </ListItemButton>
         </List>
       </div>

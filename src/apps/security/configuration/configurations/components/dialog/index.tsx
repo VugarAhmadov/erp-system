@@ -33,25 +33,32 @@ export const Dialog: FC<IDialogProps> = memo(({ dialog, onClose, onAddFormSubmit
         fullWidth={true}
         maxWidth={dialog.type === "add" ? dialogSize : "sm"}
         scroll="paper"
-        PaperComponent={({ children, ...rest }) => (
-          <>
-            <Paper {...rest}>{children}</Paper>
-            {dialog.type === "add" && (
-              <DialogConfig
-                dialogSize={dialogSize}
-                gridView={gridView}
-                onDialogSizeChange={handleDialogSizeChange}
-                onGridViewChange={handleGridViewChange}
-              />
-            )}
-          </>
-        )}
+        // PaperComponent={({ children, ...rest }) => (
+        //   <>
+        //     <Paper {...rest}>{children}</Paper>
+        //     {dialog.type === "add" && (
+        //       <DialogConfig
+        //         dialogSize={dialogSize}
+        //         gridView={gridView}
+        //         onDialogSizeChange={handleDialogSizeChange}
+        //         onGridViewChange={handleGridViewChange}
+        //       />
+        //     )}
+        //   </>
+        // )}
       >
         <DialogContent>
-          {dialog.type === "add" && <AddFormNew onClose={onClose} gridView={gridView} />}
+          {/* {dialog.type === "add" && <AddFormNew onClose={onClose} gridView={gridView} />} */}
+          {dialog.type === "add" && (
+            <AddForm
+              onClose={onClose}
+              onSubmit={onAddFormSubmit}
+              dialogSize={dialogSize}
+              setDialogSize={setDialogSize}
+            />
+          )}
           {dialog.type === "all-view" && <AllViewForm onClose={onClose} onSubmit={onAllViewFormSubmit} />}
           {dialog.type === "add-priv" && <AddPrivForm />}
-          {/* <AddForm onClose={onClose} onSubmit={onAddFormSubmit} /> */}
         </DialogContent>
       </StyledDialog>
     </DndProvider>
