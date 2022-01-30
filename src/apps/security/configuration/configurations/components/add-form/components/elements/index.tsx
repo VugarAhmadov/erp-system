@@ -10,6 +10,7 @@ import {
   TableElement,
   TabElement,
   RadioElement,
+  FileUploadElement,
 } from "..";
 
 interface IElements {
@@ -81,6 +82,9 @@ export const Elements: FC<IElements> = memo(({ element, onEdit, onDelete, onSele
       )}
       {element.element === "radio" && (
         <RadioElement withDnd onEdit={onEdit} onDelete={onDelete} index={element.index} {...element.params} />
+      )}
+      {element.element === "fileUpload" && (
+        <FileUploadElement withDnd onEdit={onEdit} onDelete={onDelete} index={element.index} {...element.params} />
       )}
     </Fragment>
   );

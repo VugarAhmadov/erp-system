@@ -13,3 +13,4 @@ export * from "./button";
 export * from "./image";
 export * from "./table";
 export * from "./tab";
+export * from "./file-upload";

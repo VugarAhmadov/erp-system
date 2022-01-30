@@ -33,6 +33,7 @@ import {
   TableDialog,
   TabDialog,
   RadioDialog,
+  FileUploadDialog,
 } from "./components";
 import { Form } from "react-final-form";
 
@@ -53,6 +54,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, dialogSize, setDialog
       image: false,
       table: false,
       tab: false,
+      fileUpload: false,
     },
     data: null,
   });
@@ -206,6 +208,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, dialogSize, setDialog
           <Button onClick={() => handleDialogOpen("table", -1)}>{t("table")}</Button>
           <Button onClick={() => handleDialogOpen("tab", -1)}>{t("tab")}</Button>
           <Button onClick={() => handleDialogOpen("radio", -1)}>{t("radio")}</Button>
+          <Button onClick={() => handleDialogOpen("fileUpload", -1)}>{t("fileUpload")}</Button>
         </div>
 
         <div ref={drop} className={clsx("drag-container", gridView === "on" && "grid-view")}>
@@ -293,6 +296,12 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, dialogSize, setDialog
       <RadioDialog
         open={dialog.open.radio}
         onClose={() => handleDialogClose("radio")}
+        onSubmit={handleSubmit}
+        params={dialog.data?.params}
+      />
+      <FileUploadDialog
+        open={dialog.open.fileUpload}
+        onClose={() => handleDialogClose("fileUpload")}
         onSubmit={handleSubmit}
         params={dialog.data?.params}
       />

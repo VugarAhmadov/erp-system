@@ -5,3 +5,4 @@ export { Autocomplete } from "./autocomplete";
 export { Switches } from "./switches";
 export { DatePicker } from "./date-picker";
 export { Radios } from "./radios";
+export { FilePond } from "./file-pond";
