@@ -42,7 +42,7 @@ export const FileUploadElement: FC<IFileUploadElement> = ({ withDnd, label, vari
   );
 
   return withDnd ? (
-    <ElementWithDnd {...rest} type="label">
+    <ElementWithDnd {...rest} type="fileUpload">
       {fileComp}
     </ElementWithDnd>
   ) : (

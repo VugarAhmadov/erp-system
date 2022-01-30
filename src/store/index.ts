@@ -8,6 +8,7 @@ import { configurationsSlice } from "apps/security/configuration/configurations/
 import { applicationSlice } from "apps/security/application/store";
 import { moduleSlice } from "apps/security/module/store";
 import { operationSlice } from "apps/security/operation/store";
+import { commonOperationSlice } from "apps/security/common-operation/store";
 import { userSlice } from "apps/security/user/store";
 import { dynamicSlice } from "apps/dynamic-app/dynamic-module/store";
 import { dictionarySlice } from "./dictionary";
@@ -28,6 +29,7 @@ const store = configureStore({
     [applicationSlice.name]: applicationSlice.reducer,
     [moduleSlice.name]: moduleSlice.reducer,
     [operationSlice.name]: operationSlice.reducer,
+    [commonOperationSlice.name]: commonOperationSlice.reducer,
     [userSlice.name]: userSlice.reducer,
     [userGroupSlice.name]: userGroupSlice.reducer,
     [dynamicSlice.name]: dynamicSlice.reducer,
