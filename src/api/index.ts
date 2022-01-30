@@ -7,4 +7,5 @@ export { operationApi } from "./operation";
 export { userApi } from "./user";
 export { userGroupApi } from "./user-group";
 export { dictionaryApi } from "./dictionary";
+export { commonOperationApi } from "./common-operation";
 export { dynamicApi } from "./dynamic";

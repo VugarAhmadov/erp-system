@@ -87,16 +87,14 @@ export const InputDialog: FC<IInputDialog> = ({ open, onClose, onSubmit, params,
               <Select
                 name="dependedComponent"
                 data={[{ label: "select", value: "select" }]}
-                required
                 label={t("dependedComponent")}
               />
               <Autocomplete
                 name="dependedModelName"
                 label={t("dependedModelName")}
                 options={dependableModelNames || []}
-                required
               />
-              <Autocomplete name="views" label={t("views")} options={views.map((view) => view.name)} required />
+              <Autocomplete name="views" label={t("views")} options={views.map((view) => view.name)} />
               <Autocomplete
                 name="dependedModelField"
                 label={t("dependedModelField")}
@@ -106,7 +104,6 @@ export const InputDialog: FC<IInputDialog> = ({ open, onClose, onSubmit, params,
                     ?.columns?.map((column) => camelCase(column.name)) || []
                 }
                 freeSolo
-                required
               />
             </div>
 
