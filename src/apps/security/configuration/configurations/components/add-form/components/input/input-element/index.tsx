@@ -39,7 +39,7 @@ export const InputElement: FC<IInputElement> = ({
   const input = (
     <TextField
       name={model}
-      value={inputValue ?? ""}
+      value={inputValue}
       type={variant}
       label={label}
       placeholder={placeholder}
