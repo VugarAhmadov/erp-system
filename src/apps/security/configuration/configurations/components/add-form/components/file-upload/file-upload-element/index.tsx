@@ -34,7 +34,72 @@ export const FileUploadElement: FC<IFileUploadElement> = ({ withDnd, label, vari
         onupdatefiles={setFiles}
         allowMultiple={!!multiple}
         maxFiles={3}
-        server="/api"
+        server={{
+          process: (fieldName, file, metadata, load, error, progress, abort) => {
+            const formData = new FormData();
+            formData.append("image", file);
+
+            const request = new XMLHttpRequest();
+            request.open("POST", `${process.env.REACT_APP_API_BASE_URL}/DispatcherRest/api/jwt/uploadFile`);
+            request.setRequestHeader("Auth", `Codium ${localStorage.getItem("codeum_jwt_token")}`);
+
+            request.upload.onprogress = (e) => {
+              progress(e.lengthComputable, e.loaded, e.total);
+            };
+
+            request.onload = function () {
+              if (request.status >= 200 && request.status < 300) {
+                load(JSON.parse(request.response).data);
+              } else {
+                error("oh no");
+              }
+            };
+
+            request.send(formData);
+
+            return {
+              abort: () => {
+                request.abort();
+                abort();
+              },
+            };
+          },
+          fetch: (url, load, error, progress, abort, headers) => {
+            // Should get a file object from the URL here
+            // ...
+
+            // Can call the error method if something is wrong, should exit after
+            error("oh my goodness");
+
+            // Can call the header method to supply FilePond with early response header string
+            // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/getAllResponseHeaders
+            // headers(headersString);
+
+            // Should call the progress method to update the progress to 100% before calling load
+            // (computable, loadedSize, totalSize)
+            progress(true, 0, 1024);
+
+            // Should call the load method with a file object when done
+            // load(file);
+
+            // Should expose an abort method so the request can be cancelled
+            return {
+              abort: () => {
+                // User tapped abort, cancel our ongoing actions here
+
+                // Let FilePond know the request has been cancelled
+                abort();
+              },
+            };
+          },
+          load: `${process.env.REACT_APP_API_BASE_URL}/DispatcherRest/api/get/file/`,
+          // process: {
+          //   url: "/api/auth/uploadFile",
+          //   headers: {
+          //     "Auth": `Codium ${localStorage.getItem("codeum_jwt_token")}`,
+          //   },
+          // },
+        }}
         name="files"
         labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
       />

@@ -73,7 +73,7 @@ export const AddForm: FC<IAddForm> = ({ onClose, onSubmit, dialogSize, setDialog
   }, [selectedOperation]);
 
   const handleDialogOpen = (type: string, index: number) => {
-    const params = formElements.find((element) => element.index === index)?.params || null;
+    const params = formElements?.find((element) => element.index === index)?.params || null;
     setDialog((state) => ({
       open: { ...state.open, [type]: true },
       data: { type, index, params, operationId: selectedOperation.id },
