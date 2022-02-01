@@ -1,10 +1,12 @@
 import { Button, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { StyledAddForm } from "./add-form.styled";
 
 export const AddFormNew2 = () => {
   const { t } = useTranslation("common");
+
+  useEffect(() => {}, []);
 
   return (
     <>
