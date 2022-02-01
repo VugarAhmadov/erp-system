@@ -1,5 +1,8 @@
 import axios from "axios";
 
+const axiosCancelTokenSource = axios.CancelToken.source();
+const axiosIsCancel = axios.isCancel;
+
 const defaultRequest = axios.create({
   baseURL: `${process.env.REACT_APP_API_BASE_URL}/DispatcherRest/`,
 });
@@ -21,4 +24,4 @@ defaultRequest.interceptors.request.use(
   }
 );
 
-export { defaultRequest };
+export { defaultRequest, axiosCancelTokenSource, axiosIsCancel };

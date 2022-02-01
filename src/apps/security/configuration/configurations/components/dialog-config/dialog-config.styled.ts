@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const StyledDialogConfig = styled.div`
-  width: 250px;
+  width: 270px;
   min-width: 200px;
   background-color: rgb(0, 30, 60, 0.92);
   height: 100%;
@@ -65,8 +65,30 @@ export const StyledDialogConfig = styled.div`
         margin-bottom: 0.5rem;
         cursor: move;
 
+        & .column-size {
+          & .MuiOutlinedInput {
+            &-root {
+              color: #fff;
+
+              & .MuiSvgIcon-root {
+                color: #fff;
+              }
+            }
+
+            &-notchedOutline {
+              border-color: rgba(255, 255, 255, 0.5);
+            }
+
+            &-input {
+              padding: 0.25rem 2rem 0.25rem 0.5rem;
+            }
+          }
+        }
+
         & .MuiListItemIcon-root {
           color: #fff;
+          min-width: auto;
+          margin-right: 1rem;
         }
 
         & .MuiListItemText-root {

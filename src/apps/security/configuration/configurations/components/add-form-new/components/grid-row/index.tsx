@@ -28,6 +28,7 @@ export const GridRow: FC<IGridRow> = ({
     () => ({
       accept: Components.COLUMN,
       drop(item: any, monitor) {
+        console.log(item);
         onColumnAdd(grid.index);
         return undefined;
       },

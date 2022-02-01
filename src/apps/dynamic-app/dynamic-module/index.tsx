@@ -38,7 +38,6 @@ export const DynamicModule = () => {
 
     seqColumns?.forEach((c) => {
       let column = datas.c.find((column) => column.i === c);
-
       columns.push({
         title: column!.n,
         field: column!.i,

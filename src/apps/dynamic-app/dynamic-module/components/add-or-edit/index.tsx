@@ -20,6 +20,7 @@ import {
   ImageElement,
   RadioElement,
   TabElement,
+  FileUploadElement,
 } from "apps/security/configuration/configurations/components/add-form/components";
 
 interface IAddOrEdit {
@@ -118,6 +119,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                         }
                       />
                     )}
+                    {element.element === "fileUpload" && <FileUploadElement {...element.params} />}
                   </Fragment>
                 ))}
               </div>
