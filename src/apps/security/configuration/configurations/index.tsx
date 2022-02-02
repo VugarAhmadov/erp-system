@@ -30,7 +30,7 @@ export const Configurations = () => {
 
   const handleDialogOpen = (type: "" | "add" | "edit" | "all-view" | "add-priv", operation: IOperation) => {
     dispatch(setSelectedOperation(operation));
-    dispatch(getConfigurationHtmlFormOrViewname());
+    // dispatch(getConfigurationHtmlFormOrViewname());
     dispatch(setDialog({ type, opened: true }));
   };
 
