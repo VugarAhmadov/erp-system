@@ -1,5 +1,6 @@
 export interface ILoading {
   getDictionaryTypeList: boolean;
+  getHtmlFormOrViewname: boolean;
 }
 
 export interface IDictionyType {
@@ -16,4 +17,9 @@ export interface IDictionyType {
   showUserType: string;
   updateDate: string;
   updateUserId: string;
+}
+
+export interface IGetHtmlFormOrViewnameRequest {
+  lang: string;
+  operationId: string;
 }

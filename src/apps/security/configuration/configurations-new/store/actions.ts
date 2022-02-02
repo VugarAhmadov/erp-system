@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { dictionaryApi, operationApi } from "api";
-import { IGetHtmlFormOrViewnameRequest } from "apps/security/operation/store/types";
+import { configurationApi, dictionaryApi } from "api";
+import { IGetHtmlFormOrViewnameRequest } from "./types";
 
 export const getDictionaryTypeList = createAsyncThunk(
   "dictionary/getDictionaryTypeList",
@@ -20,10 +20,10 @@ export const getDictionaryTypeList = createAsyncThunk(
 );
 
 export const getHtmlFormOrViewname = createAsyncThunk(
-  "operation/getHtmlFormOrViewname",
+  "configuration/getHtmlFormOrViewname",
   async (request: IGetHtmlFormOrViewnameRequest, { rejectWithValue, dispatch }) => {
     try {
-      const { data } = await operationApi.getHtmlFormOrViewname(request);
+      const { data } = await configurationApi.getHtmlFormOrViewname(request);
       if (data?.err?.length === 0) {
         return data.tbl[0].r[0];
       } else {

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getAll, add, edit, remove, getHtmlFormOrViewname, addHtmlForm } from "./actions";
+import { getAll, add, edit, remove, addHtmlForm } from "./actions";
 import { IDialog, IGetAllTable } from "types";
 import { ILoading } from "./types";
 
@@ -8,7 +8,6 @@ export interface IOperationState {
   operations: IGetAllTable;
   dialog: IDialog;
   selectedOperation: string;
-  htmlFormOrViewname: any;
 }
 
 const initialState: IOperationState = {
@@ -21,7 +20,6 @@ const initialState: IOperationState = {
     addHtmlForm: false,
   },
   operations: {} as IGetAllTable,
-  htmlFormOrViewname: {},
   dialog: {
     opened: false,
     type: "",
@@ -91,18 +89,6 @@ export const operationSlice = createSlice({
       state.loading.remove = false;
     },
     //* REMOVE END
-    //* GET_HTML_FORM_OR_VIEWNAME
-    [getHtmlFormOrViewname.pending.type]: (state) => {
-      state.loading.getHtmlFormOrViewname = true;
-    },
-    [getHtmlFormOrViewname.rejected.type]: (state) => {
-      state.loading.getHtmlFormOrViewname = false;
-    },
-    [getHtmlFormOrViewname.fulfilled.type]: (state, action: PayloadAction) => {
-      state.loading.getHtmlFormOrViewname = false;
-      state.htmlFormOrViewname = action.payload;
-    },
-    //* GET_HTML_FORM_OR_VIEWNAME END
     //* ADD_HTML_FORM
     [addHtmlForm.pending.type]: (state) => {
       state.loading.addHtmlForm = true;

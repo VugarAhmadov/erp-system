@@ -5,6 +5,7 @@ import { authSlice } from "apps/auth/store";
 import { tablesSlice } from "apps/security/configuration/tables/store";
 import { viewsSlice } from "apps/security/configuration/views/store";
 import { configurationsSlice } from "apps/security/configuration/configurations/store";
+import { configurationsNewSlice } from "apps/security/configuration/configurations-new/store";
 import { applicationSlice } from "apps/security/application/store";
 import { moduleSlice } from "apps/security/module/store";
 import { operationSlice } from "apps/security/operation/store";
@@ -26,6 +27,7 @@ const store = configureStore({
     [tablesSlice.name]: tablesSlice.reducer,
     [viewsSlice.name]: viewsSlice.reducer,
     [configurationsSlice.name]: configurationsSlice.reducer,
+    [configurationsNewSlice.name]: configurationsNewSlice.reducer,
     [applicationSlice.name]: applicationSlice.reducer,
     [moduleSlice.name]: moduleSlice.reducer,
     [operationSlice.name]: operationSlice.reducer,
