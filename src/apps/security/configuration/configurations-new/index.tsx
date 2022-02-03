@@ -18,6 +18,8 @@ import { useTranslation } from "react-i18next";
 import { getHtmlFormOrViewname } from "./store/actions";
 import { AddFormDialog } from "./components";
 import { Button } from "components/shared";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 export const Configurations = () => {
   const dispatch = useDispatch();
@@ -92,7 +94,9 @@ export const Configurations = () => {
           </Accordion>
         ))}
       </StyledConfigurations>
-      <AddFormDialog />
+      <DndProvider backend={HTML5Backend}>
+        <AddFormDialog />
+      </DndProvider>
     </>
   );
 };

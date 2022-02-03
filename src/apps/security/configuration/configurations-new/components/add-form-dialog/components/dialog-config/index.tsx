@@ -97,7 +97,9 @@ export const DialogConfig: FC<IDialogConfig> = memo(
               <FormControl className="column-size">
                 <Select value={columnSize} onChange={(e: SelectChangeEvent) => setColumnSize(e.target.value)}>
                   {["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"].map((size) => (
-                    <MenuItem value={size}>{size}</MenuItem>
+                    <MenuItem value={size} key={size}>
+                      {size}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>

@@ -1,13 +1,12 @@
 import { Breakpoint } from "@mui/material";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IOperation } from "apps/auth/store/types";
-import { IDialog } from "types";
 import { getDictionaryTypeList, getHtmlFormOrViewname } from "./actions";
 import { IDictionyType, IGetHtmlFormOrViewnameResponse, ILoading } from "./types";
 
 export interface IConfigurationsState {
   loading: ILoading;
-  dialog: IDialog;
+  dialogOpened: boolean;
   selectedOperation: IGetHtmlFormOrViewnameResponse;
   // dictionaryTpyeList: IDictionyType[];
 }
@@ -17,10 +16,7 @@ const initialState: IConfigurationsState = {
     getDictionaryTypeList: false,
     getHtmlFormOrViewname: false,
   },
-  dialog: {
-    type: "",
-    opened: false,
-  },
+  dialogOpened: false,
   selectedOperation: {} as IGetHtmlFormOrViewnameResponse,
   // dictionaryTpyeList: [],
 };
@@ -30,12 +26,14 @@ export const configurationsNewSlice = createSlice({
   initialState: initialState,
   reducers: {
     closeDialog: (state) => {
-      state.dialog.type = "";
-      state.dialog.opened = false;
+      state.dialogOpened = false;
       state.selectedOperation = {} as IGetHtmlFormOrViewnameResponse;
     },
     setDialogSize: (state, action: PayloadAction<Breakpoint>) => {
       state.selectedOperation.dialogSize = action.payload;
+    },
+    setFormContent: (state, action: PayloadAction<any>) => {
+      state.selectedOperation.formContent = action.payload;
     },
     // setSelectedOperation: (state, action: PayloadAction<IOperation>) => {
     //   state.selectedOperation = action.payload;
@@ -61,14 +59,12 @@ export const configurationsNewSlice = createSlice({
     },
     [getHtmlFormOrViewname.rejected.type]: (state) => {
       state.loading.getHtmlFormOrViewname = false;
-      state.dialog.type = "";
-      state.dialog.opened = false;
+      state.dialogOpened = false;
       // state.dictionaryTpyeList = [];
     },
     [getHtmlFormOrViewname.fulfilled.type]: (state, action: PayloadAction<IGetHtmlFormOrViewnameResponse>) => {
       state.loading.getHtmlFormOrViewname = false;
-      state.dialog.type = "add";
-      state.dialog.opened = true;
+      state.dialogOpened = true;
       state.selectedOperation = action.payload;
       // state.dictionaryTpyeList = action.payload;
     },
@@ -76,4 +72,4 @@ export const configurationsNewSlice = createSlice({
   },
 });
 
-export const { closeDialog, setDialogSize } = configurationsNewSlice.actions;
+export const { closeDialog, setDialogSize, setFormContent } = configurationsNewSlice.actions;

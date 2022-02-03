@@ -55,7 +55,7 @@ export interface IOperation {
 }
 
 export interface IOperationHtml {
-  formContent: any;
+  formContent: any[];
   dialogSize: Breakpoint;
 }
 
@@ -64,6 +64,6 @@ export interface IGetHtmlFormOrViewnameResponse {
   code: string;
   url: string;
   viewName: string;
-  formContent?: any;
+  formContent: any[];
   dialogSize: Breakpoint;
 }

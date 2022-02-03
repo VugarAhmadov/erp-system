@@ -34,7 +34,7 @@ export const getHtmlFormOrViewname = createAsyncThunk(
           code,
           url,
           viewName,
-          formContent: _operationHtml ? _operationHtml.formContent : ({} as any),
+          formContent: _operationHtml ? _operationHtml.formContent : [],
           dialogSize: _operationHtml ? _operationHtml.dialogSize : "sm",
         };
 
