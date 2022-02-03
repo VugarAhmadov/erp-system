@@ -4,7 +4,6 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Button,
   Icon,
   Table,
   TableBody,
@@ -18,11 +17,12 @@ import { StyledConfigurations } from "./configurations.styled";
 import { useTranslation } from "react-i18next";
 import { getHtmlFormOrViewname } from "./store/actions";
 import { AddFormDialog } from "./components";
+import { Button } from "components/shared";
 
 export const Configurations = () => {
   const dispatch = useDispatch();
   const apps = useSelector((state: AppState) => state.auth.user.applications);
-
+  const loading = useSelector((state: AppState) => state.configurationsNew.loading);
   const { t, i18n } = useTranslation("common");
 
   const handleDialogOpen = (id: string) => {
@@ -61,7 +61,10 @@ export const Configurations = () => {
                             <TableCell>{operation.name.az}</TableCell>
                             <TableCell>
                               {operation.code === "ADD" && (
-                                <Button variant="contained" onClick={() => handleDialogOpen(operation.id)}>
+                                <Button
+                                  onClick={() => handleDialogOpen(operation.id)}
+                                  loading={loading.getHtmlFormOrViewname}
+                                >
                                   {t("openAddDialog")}
                                 </Button>
                               )}

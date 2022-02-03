@@ -5,7 +5,7 @@ import { ILoading } from "./types";
 
 export interface IOperationState {
   loading: ILoading;
-  operations: IGetAllTable;
+  operations: IGetAllTable<any>;
   dialog: IDialog;
   selectedOperation: string;
 }
@@ -19,7 +19,7 @@ const initialState: IOperationState = {
     getHtmlFormOrViewname: false,
     addHtmlForm: false,
   },
-  operations: {} as IGetAllTable,
+  operations: {} as IGetAllTable<any>,
   dialog: {
     opened: false,
     type: "",
@@ -45,9 +45,9 @@ export const operationSlice = createSlice({
     },
     [getAll.rejected.type]: (state, { payload }) => {
       state.loading.getAll = false;
-      state.operations = {} as IGetAllTable;
+      state.operations = {} as IGetAllTable<any>;
     },
-    [getAll.fulfilled.type]: (state, action: PayloadAction<IGetAllTable>) => {
+    [getAll.fulfilled.type]: (state, action: PayloadAction<IGetAllTable<any>>) => {
       state.loading.getAll = false;
       state.operations = action.payload;
     },

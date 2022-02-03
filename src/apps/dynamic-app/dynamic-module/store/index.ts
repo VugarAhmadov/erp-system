@@ -5,7 +5,7 @@ import { ILoading } from "./types";
 
 export interface IDynamicState {
   loading: ILoading;
-  datas: IGetAllTable;
+  datas: IGetAllTable<any>;
   dialog: IDialog;
   selectedData: string;
 }
@@ -17,7 +17,7 @@ const initialState: IDynamicState = {
     edit: false,
     remove: false,
   },
-  datas: {} as IGetAllTable,
+  datas: {} as IGetAllTable<any>,
   dialog: {
     opened: false,
     type: "",
@@ -43,9 +43,9 @@ export const dynamicSlice = createSlice({
     },
     [getAll.rejected.type]: (state, { payload }) => {
       state.loading.getAll = false;
-      state.datas = {} as IGetAllTable;
+      state.datas = {} as IGetAllTable<any>;
     },
-    [getAll.fulfilled.type]: (state, action: PayloadAction<IGetAllTable>) => {
+    [getAll.fulfilled.type]: (state, action: PayloadAction<IGetAllTable<any>>) => {
       state.loading.getAll = false;
       state.datas = action.payload;
     },

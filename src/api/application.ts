@@ -3,23 +3,23 @@ import { IGetAllResponse } from "types";
 import { IAddOrEditApplicationRequest } from "apps/security/application/store/types";
 
 const getAll = async () => {
-  return await defaultRequest.post<IGetAllResponse>("api/jwt/CodiumSystem/Application/AllView");
+  return await defaultRequest.post<IGetAllResponse<any>>("api/jwt/CodiumSystem/Application/AllView");
 };
 
 const add = async (requestData: IAddOrEditApplicationRequest) => {
-  return await defaultRequest.post<IGetAllResponse>(`api/jwt/CodiumSystem/Application/Add`, {
+  return await defaultRequest.post<IGetAllResponse<any>>(`api/jwt/CodiumSystem/Application/Add`, {
     kv: requestData,
   });
 };
 
 const edit = async (requestData: IAddOrEditApplicationRequest) => {
-  return await defaultRequest.post<IGetAllResponse>(`api/jwt/CodiumSystem/Application/Edit`, {
+  return await defaultRequest.post<IGetAllResponse<any>>(`api/jwt/CodiumSystem/Application/Edit`, {
     kv: requestData,
   });
 };
 
 const remove = async (id: string) => {
-  return await defaultRequest.post<IGetAllResponse>(`api/jwt/CodiumSystem/Application/Delete`, { kv: { id } });
+  return await defaultRequest.post<IGetAllResponse<any>>(`api/jwt/CodiumSystem/Application/Delete`, { kv: { id } });
 };
 
 export const applicationApi = {

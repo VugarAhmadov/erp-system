@@ -1,13 +1,14 @@
+import { Breakpoint } from "@mui/material";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IOperation } from "apps/auth/store/types";
 import { IDialog } from "types";
 import { getDictionaryTypeList, getHtmlFormOrViewname } from "./actions";
-import { IDictionyType, ILoading } from "./types";
+import { IDictionyType, IGetHtmlFormOrViewnameResponse, ILoading } from "./types";
 
 export interface IConfigurationsState {
   loading: ILoading;
   dialog: IDialog;
-  // selectedOperation: IOperation;
+  selectedOperation: IGetHtmlFormOrViewnameResponse;
   // dictionaryTpyeList: IDictionyType[];
 }
 
@@ -20,7 +21,7 @@ const initialState: IConfigurationsState = {
     type: "",
     opened: false,
   },
-  // selectedOperation: {} as IOperation,
+  selectedOperation: {} as IGetHtmlFormOrViewnameResponse,
   // dictionaryTpyeList: [],
 };
 
@@ -28,8 +29,13 @@ export const configurationsNewSlice = createSlice({
   name: "configurationsNew",
   initialState: initialState,
   reducers: {
-    setDialog: (state, action: PayloadAction<IDialog>) => {
-      state.dialog = action.payload;
+    closeDialog: (state) => {
+      state.dialog.type = "";
+      state.dialog.opened = false;
+      state.selectedOperation = {} as IGetHtmlFormOrViewnameResponse;
+    },
+    setDialogSize: (state, action: PayloadAction<Breakpoint>) => {
+      state.selectedOperation.dialogSize = action.payload;
     },
     // setSelectedOperation: (state, action: PayloadAction<IOperation>) => {
     //   state.selectedOperation = action.payload;
@@ -59,14 +65,15 @@ export const configurationsNewSlice = createSlice({
       state.dialog.opened = false;
       // state.dictionaryTpyeList = [];
     },
-    [getHtmlFormOrViewname.fulfilled.type]: (state, action: PayloadAction) => {
+    [getHtmlFormOrViewname.fulfilled.type]: (state, action: PayloadAction<IGetHtmlFormOrViewnameResponse>) => {
       state.loading.getHtmlFormOrViewname = false;
       state.dialog.type = "add";
       state.dialog.opened = true;
+      state.selectedOperation = action.payload;
       // state.dictionaryTpyeList = action.payload;
     },
     //* GET HTML FORM OR VIEWNAME END
   },
 });
 
-export const { setDialog } = configurationsNewSlice.actions;
+export const { closeDialog, setDialogSize } = configurationsNewSlice.actions;
