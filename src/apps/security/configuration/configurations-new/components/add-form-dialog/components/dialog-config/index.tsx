@@ -33,7 +33,10 @@ export const DialogConfig: FC<IDialogConfig> = memo(
 
     const [, dragGridRow] = useDrag(() => ({ type: Components.GRID, item: {} }));
 
-    const [, dragGridColumn] = useDrag(() => ({ type: Components.COLUMN, item: { columnSize } }), [columnSize]);
+    const [, dragGridColumn] = useDrag(
+      () => ({ type: Components.COLUMN, item: { columnSize: Number(columnSize) } }),
+      [columnSize]
+    );
 
     const [, dragInput] = useDrag(() => ({
       type: Components.ELEMENT,
@@ -43,6 +46,16 @@ export const DialogConfig: FC<IDialogConfig> = memo(
     const [, dragButton] = useDrag(() => ({
       type: Components.ELEMENT,
       item: { type: "button", params: {}, move: false },
+    }));
+
+    const [, dragDatepicker] = useDrag(() => ({
+      type: Components.ELEMENT,
+      item: { type: "datepicker", params: {}, move: false },
+    }));
+
+    const [, dragSelect] = useDrag(() => ({
+      type: Components.ELEMENT,
+      item: { type: "select", params: {}, move: false },
     }));
 
     return (
@@ -122,6 +135,18 @@ export const DialogConfig: FC<IDialogConfig> = memo(
                 <Icon>inbox</Icon>
               </ListItemIcon>
               <ListItemText primary={t("button")} />
+            </ListItemButton>
+            <ListItemButton ref={dragDatepicker}>
+              <ListItemIcon>
+                <Icon>inbox</Icon>
+              </ListItemIcon>
+              <ListItemText primary={t("datepicker")} />
+            </ListItemButton>
+            <ListItemButton ref={dragSelect}>
+              <ListItemIcon>
+                <Icon>inbox</Icon>
+              </ListItemIcon>
+              <ListItemText primary={t("select")} />
             </ListItemButton>
           </List>
         </div>

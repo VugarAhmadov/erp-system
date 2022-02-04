@@ -173,13 +173,7 @@ export const AddFormNew: FC<IAddForm> = ({ onClose, gridView }) => {
         onSubmit={handleDialogSubmit}
         params={dialog.data?.params}
       />
-      {/* <InputDialog
-        open={dialog.open.input}
-        onClose={() => handleDialogClose("input")}
-        onSubmit={handleSubmit}
-        params={dialog.data?.params}
-        dependableModelNames={formElements?.filter((e) => e.element === "select").map((e) => e.params.model)}
-      />
+      {/* 
       <SelectDialog
         open={dialog.open.select}
         onClose={() => handleDialogClose("select")}

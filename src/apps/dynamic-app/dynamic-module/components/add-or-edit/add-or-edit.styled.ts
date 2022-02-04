@@ -32,15 +32,10 @@ export const StyledDialog = styled(Dialog)`
       }
     }
 
-    /*
-     &-elements {
-      position: relative;
-      height: 100%;
-      overflow-y: auto; 
-    */
-
-    &-content {
-      position: relative;
+    &-body {
+      & .MuiGrid-container {
+        margin-bottom: 1.5rem;
+      }
     }
   }
 `;

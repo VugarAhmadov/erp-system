@@ -1,5 +1,5 @@
 import React, { FC, Fragment, useState } from "react";
-import { Button as MuiButton, DialogContent, Typography } from "@mui/material";
+import { Button as MuiButton, DialogContent, Grid, Typography } from "@mui/material";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -12,16 +12,16 @@ import { IName } from "apps/auth/store/types";
 import {
   InputElement,
   SelectElement,
-  LabelElement,
+  // LabelElement,
   DatepickerElement,
-  CheckboxElement,
+  // CheckboxElement,
   ButtonElement,
-  TableElement,
-  ImageElement,
-  RadioElement,
-  TabElement,
-  FileUploadElement,
-} from "apps/security/configuration/configurations/components/add-form/components";
+  // TableElement,
+  // ImageElement,
+  // RadioElement,
+  // TabElement,
+  // FileUploadElement,
+} from "apps/security/configuration/configurations-new/components/add-form-dialog/components/elements-with-dnd/components";
 
 interface IAddOrEdit {
   dialog: IDialog;
@@ -35,7 +35,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
   const module = useSelector((state: AppState) => state.module.module);
 
   const data = JSON.parse(module.operations.find((op) => op.code === "ADD")?.formHtml!);
-
+  console.log(data);
   const [selectData, setSelectData] = useState<any[]>([]);
 
   return (
@@ -75,52 +75,74 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                 </div>
               </div>
 
-              <div className="form-elements">
-                {data?.formElements?.map((element: any) => (
-                  <Fragment key={element.index}>
-                    {element.element === "input" && (
-                      <InputElement
-                        {...element.params}
-                        dependedFieldData={
-                          element.params.dependedComponent === "select" && element.params.dependedModelName
-                            ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
-                            : null
-                        }
-                      />
-                    )}
-                    {element.element === "select" && (
-                      <SelectElement
-                        {...element.params}
-                        onSelectChange={(data: any) => {
-                          setSelectData((prev) => {
-                            if (prev.find((p) => p.model === element.params.model)) {
-                              return prev.map((n) => (n.model === element.params.model ? { ...n, data } : n));
-                            } else {
-                              return [...prev, { model: element.params.model, data }];
-                            }
-                          });
-                        }}
-                      />
-                    )}
-                    {element.element === "label" && <LabelElement {...element.params} />}
-                    {element.element === "checkbox" && <CheckboxElement {...element.params} />}
-                    {element.element === "datepicker" && <DatepickerElement {...element.params} />}
-                    {element.element === "button" && <ButtonElement {...element.params} />}
-                    {element.element === "table" && <TableElement {...element.params} />}
-                    {element.element === "radio" && <RadioElement {...element.params} />}
-                    {element.element === "tab" && <TabElement {...element.params} />}
-                    {element.element === "image" && (
-                      <ImageElement
-                        {...element.params}
-                        dependedFieldData={
-                          element.params.dependedComponent === "select" && element.params.dependedModelName
-                            ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
-                            : null
-                        }
-                      />
-                    )}
-                    {element.element === "fileUpload" && <FileUploadElement {...element.params} />}
-                  </Fragment>
+              <div className="form-body">
+                {data?.formContent?.map((row: any) => (
+                  <Grid container key={row.index} spacing={3}>
+                    {row?.columns?.map((column: any) => (
+                      <Grid item xs={column.gridColumnSize}>
+                        {column.element.type === "input" && (
+                          <InputElement
+                            params={column.element.params}
+                            gridColumnIndex={column.index}
+                            gridRowIndex={column.gridRowIndex}
+                            // dependedFieldData={
+                            //   element.params.dependedComponent === "select" && element.params.dependedModelName
+                            //     ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
+                            //     : null
+                            // }
+                          />
+                        )}
+                        {column.element.type === "select" && (
+                          <SelectElement
+                            params={column.element.params}
+                            gridColumnIndex={column.index}
+                            gridRowIndex={column.gridRowIndex}
+                            // onSelectChange={(data: any) => {
+                            //   setSelectData((prev) => {
+                            //     if (prev.find((p) => p.model === element.params.model)) {
+                            //       return prev.map((n) => (n.model === element.params.model ? { ...n, data } : n));
+                            //     } else {
+                            //       return [...prev, { model: element.params.model, data }];
+                            //     }
+                            //   });
+                            // }}
+                          />
+                        )}
+                        {column.element.type === "datepicker" && (
+                          <DatepickerElement
+                            params={column.element.params}
+                            gridColumnIndex={column.index}
+                            gridRowIndex={column.gridRowIndex}
+                          />
+                        )}
+                        {column.element.type === "button" && (
+                          <ButtonElement
+                            params={column.element.params}
+                            gridColumnIndex={column.index}
+                            gridRowIndex={column.gridRowIndex}
+                          />
+                        )}
+                      </Grid>
+                    ))}
+                  </Grid>
+
+                  //   {element.element === "label" && <LabelElement {...element.params} />}
+                  //   {element.element === "checkbox" && <CheckboxElement {...element.params} />}
+                  //   {element.element === "table" && <TableElement {...element.params} />}
+                  //   {element.element === "radio" && <RadioElement {...element.params} />}
+                  //   {element.element === "tab" && <TabElement {...element.params} />}
+                  //   {element.element === "image" && (
+                  //     <ImageElement
+                  //       {...element.params}
+                  //       dependedFieldData={
+                  //         element.params.dependedComponent === "select" && element.params.dependedModelName
+                  //           ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
+                  //           : null
+                  //       }
+                  //     />
+                  //   )}
+                  //   {element.element === "fileUpload" && <FileUploadElement {...element.params} />}
+                  // </Fragment>
                 ))}
               </div>
             </form>

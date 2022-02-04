@@ -67,3 +67,29 @@ export interface IGetHtmlFormOrViewnameResponse {
   formContent: any[];
   dialogSize: Breakpoint;
 }
+
+export interface IAddColumnPayload {
+  gridRowIndex: number;
+  gridColumnSize: number;
+}
+
+export interface IDeleteColumnPayload {
+  gridRowIndex: number;
+  gridColumnIndex: number;
+}
+
+export interface IAddElementPayload {
+  element: any;
+  gridRowIndex: number;
+  gridColumnIndex: number;
+}
+
+export interface IDeleteElementPayload {
+  gridRowIndex: number;
+  gridColumnIndex: number;
+}
+export interface IEditElementPayload {
+  gridRowIndex: number;
+  gridColumnIndex: number;
+  params: any;
+}

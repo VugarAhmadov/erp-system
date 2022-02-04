@@ -1,30 +1,11 @@
 import styled from "@emotion/styled";
+import { DialogContent } from "@mui/material";
 
-export const StyledAddForm = styled.div`
-  height: 100%;
-
-  & .form-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid ${({ theme }) => theme.palette.grey[300]};
-    padding-bottom: 0.5rem;
-    margin-bottom: 0.5rem;
-
-    & .action-buttons {
-      display: flex;
-
-      & .submit-btn {
-        margin-right: 0.5rem;
-        box-shadow: none;
-      }
-    }
-  }
-
+export const StyledDialogContent = styled(DialogContent)`
   & .form-body {
     border: 1px solid ${({ theme }) => theme.palette.grey[300]};
     border-radius: 0.25rem;
-    height: calc(100vh - 104px);
+    height: calc(100vh - 121px);
     overflow-x: hidden;
     overflow-y: auto;
     padding: 0.5rem;
