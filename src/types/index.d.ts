@@ -1,3 +1,5 @@
+import { Breakpoint } from "@mui/material";
+
 export interface IDispatcherResponse<T> {
   code: ResponseStatus;
   data?: T;
@@ -46,19 +48,19 @@ export interface IDialog {
   opened: boolean;
 }
 
-export interface IGetAllResponse {
+export interface IGetAllResponse<R> {
   err: any[];
   errMessage: any[];
   kv: any;
-  tbl: IGetAllTable[];
+  tbl: IGetAllTable<R>[];
 }
 
-export interface IGetAllTable {
+export interface IGetAllTable<R> {
   allRowCount: number;
   c: IGetAllTableColumn[];
   endLimit: number;
   hiddenColumn: string;
-  r: any[];
+  r: R[];
   rowCount: number;
   seqColumn: string;
   startLimit: number;

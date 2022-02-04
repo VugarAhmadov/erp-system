@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { camelCase } from "lodash";
 import { AppState } from "store";
 import { StyledConfigurations } from "./configurations.styled";
 import { Dialog } from "./components";
@@ -25,12 +24,13 @@ import { IOperation } from "apps/auth/store/types";
 
 export const Configurations = () => {
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation("common");
+  const { t } = useTranslation("common");
   const apps = useSelector((state: AppState) => state.auth.user.applications);
   const dialog = useSelector((state: AppState) => state.configurations.dialog);
 
   const handleDialogOpen = (type: "" | "add" | "edit" | "all-view" | "add-priv", operation: IOperation) => {
     dispatch(setSelectedOperation(operation));
+    // dispatch(getConfigurationHtmlFormOrViewname());
     dispatch(setDialog({ type, opened: true }));
   };
 

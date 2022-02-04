@@ -5,7 +5,7 @@ import { ILoading } from "./types";
 
 export interface ICommonOperationState {
   loading: ILoading;
-  commonOperations: IGetAllTable;
+  commonOperations: IGetAllTable<any>;
   dialog: IDialog;
   selectedOperation: string;
   htmlFormOrViewname: any;
@@ -18,7 +18,7 @@ const initialState: ICommonOperationState = {
     edit: false,
     remove: false,
   },
-  commonOperations: {} as IGetAllTable,
+  commonOperations: {} as IGetAllTable<any>,
   htmlFormOrViewname: {},
   dialog: {
     opened: false,
@@ -45,9 +45,9 @@ export const commonOperationSlice = createSlice({
     },
     [getAll.rejected.type]: (state, { payload }) => {
       state.loading.getAll = false;
-      state.commonOperations = {} as IGetAllTable;
+      state.commonOperations = {} as IGetAllTable<any>;
     },
-    [getAll.fulfilled.type]: (state, action: PayloadAction<IGetAllTable>) => {
+    [getAll.fulfilled.type]: (state, action: PayloadAction<IGetAllTable<any>>) => {
       state.loading.getAll = false;
       state.commonOperations = action.payload;
     },

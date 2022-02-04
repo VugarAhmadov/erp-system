@@ -5,7 +5,7 @@ import { ILoading } from "./types";
 
 export interface IUserGroupState {
   loading: ILoading;
-  userGroups: IGetAllTable;
+  userGroups: IGetAllTable<any>;
   // dialog: IDialog;
   // selectedUser: string;
 }
@@ -17,7 +17,7 @@ const initialState: IUserGroupState = {
     edit: false,
     remove: false,
   },
-  userGroups: {} as IGetAllTable,
+  userGroups: {} as IGetAllTable<any>,
   // dialog: {
   //   opened: false,
   //   type: "",
@@ -43,9 +43,9 @@ export const userGroupSlice = createSlice({
     },
     [getAll.rejected.type]: (state, { payload }) => {
       state.loading.getAll = false;
-      state.userGroups = {} as IGetAllTable;
+      state.userGroups = {} as IGetAllTable<any>;
     },
-    [getAll.fulfilled.type]: (state, action: PayloadAction<IGetAllTable>) => {
+    [getAll.fulfilled.type]: (state, action: PayloadAction<IGetAllTable<any>>) => {
       state.loading.getAll = false;
       state.userGroups = action.payload;
     },

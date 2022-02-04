@@ -1,14 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getAll, add, edit, remove, getHtmlFormOrViewname, addHtmlForm } from "./actions";
+import { getAll, add, edit, remove, addHtmlForm } from "./actions";
 import { IDialog, IGetAllTable } from "types";
 import { ILoading } from "./types";
 
 export interface IOperationState {
   loading: ILoading;
-  operations: IGetAllTable;
+  operations: IGetAllTable<any>;
   dialog: IDialog;
   selectedOperation: string;
-  htmlFormOrViewname: any;
 }
 
 const initialState: IOperationState = {
@@ -20,8 +19,7 @@ const initialState: IOperationState = {
     getHtmlFormOrViewname: false,
     addHtmlForm: false,
   },
-  operations: {} as IGetAllTable,
-  htmlFormOrViewname: {},
+  operations: {} as IGetAllTable<any>,
   dialog: {
     opened: false,
     type: "",
@@ -47,9 +45,9 @@ export const operationSlice = createSlice({
     },
     [getAll.rejected.type]: (state, { payload }) => {
       state.loading.getAll = false;
-      state.operations = {} as IGetAllTable;
+      state.operations = {} as IGetAllTable<any>;
     },
-    [getAll.fulfilled.type]: (state, action: PayloadAction<IGetAllTable>) => {
+    [getAll.fulfilled.type]: (state, action: PayloadAction<IGetAllTable<any>>) => {
       state.loading.getAll = false;
       state.operations = action.payload;
     },
@@ -91,18 +89,6 @@ export const operationSlice = createSlice({
       state.loading.remove = false;
     },
     //* REMOVE END
-    //* GET_HTML_FORM_OR_VIEWNAME
-    [getHtmlFormOrViewname.pending.type]: (state) => {
-      state.loading.getHtmlFormOrViewname = true;
-    },
-    [getHtmlFormOrViewname.rejected.type]: (state) => {
-      state.loading.getHtmlFormOrViewname = false;
-    },
-    [getHtmlFormOrViewname.fulfilled.type]: (state, action: PayloadAction) => {
-      state.loading.getHtmlFormOrViewname = false;
-      state.htmlFormOrViewname = action.payload;
-    },
-    //* GET_HTML_FORM_OR_VIEWNAME END
     //* ADD_HTML_FORM
     [addHtmlForm.pending.type]: (state) => {
       state.loading.addHtmlForm = true;

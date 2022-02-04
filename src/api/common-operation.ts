@@ -3,7 +3,7 @@ import { IGetAllResponse } from "types";
 import { IAddOrEditCommonOperationRequest } from "apps/security/common-operation/store/types";
 
 const getAll = async () => {
-  return await defaultRequest.post<IGetAllResponse>("api/jwt/CodiumSystem/Operation/GetCommonPrivilegiya", {
+  return await defaultRequest.post<IGetAllResponse<any>>("api/jwt/CodiumSystem/Operation/GetCommonPrivilegiya", {
     kv: {
       seqColumn: "url",
     },
@@ -11,19 +11,19 @@ const getAll = async () => {
 };
 
 const add = async (requestData: IAddOrEditCommonOperationRequest) => {
-  return await defaultRequest.post<IGetAllResponse>(`api/jwt/CodiumSystem/Operation/AddCommonPrivilegiya`, {
+  return await defaultRequest.post<IGetAllResponse<any>>(`api/jwt/CodiumSystem/Operation/AddCommonPrivilegiya`, {
     kv: requestData,
   });
 };
 
 // const edit = async (requestData: IAddOrEditOperationRequest) => {
-//   return await defaultRequest.post<IGetAllResponse>(`api/jwt/CodiumSystem/Operation/Edit`, {
+//   return await defaultRequest.post<IGetAllResponse<any>>(`api/jwt/CodiumSystem/Operation/Edit`, {
 //     kv: requestData,
 //   });
 // };
 
 // const remove = async (id: string) => {
-//   return await defaultRequest.post<IGetAllResponse>(`api/jwt/CodiumSystem/Operation/Delete`, { kv: { id } });
+//   return await defaultRequest.post<IGetAllResponse<any>>(`api/jwt/CodiumSystem/Operation/Delete`, { kv: { id } });
 // };
 
 export const commonOperationApi = {

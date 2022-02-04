@@ -6,7 +6,7 @@ import { IModule } from "apps/auth/store/types";
 
 export interface IModuleState {
   loading: ILoading;
-  modules: IGetAllTable;
+  modules: IGetAllTable<any>;
   dialog: IDialog;
   selectedModule: string;
   module: IModule;
@@ -19,7 +19,7 @@ const initialState: IModuleState = {
     edit: false,
     remove: false,
   },
-  modules: {} as IGetAllTable,
+  modules: {} as IGetAllTable<any>,
   module: {} as IModule,
   dialog: {
     opened: false,
@@ -49,9 +49,9 @@ export const moduleSlice = createSlice({
     },
     [getAll.rejected.type]: (state, { payload }) => {
       state.loading.getAll = false;
-      state.modules = {} as IGetAllTable;
+      state.modules = {} as IGetAllTable<any>;
     },
-    [getAll.fulfilled.type]: (state, action: PayloadAction<IGetAllTable>) => {
+    [getAll.fulfilled.type]: (state, action: PayloadAction<IGetAllTable<any>>) => {
       state.loading.getAll = false;
       state.modules = action.payload;
     },

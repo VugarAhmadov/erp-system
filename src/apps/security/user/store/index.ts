@@ -5,7 +5,7 @@ import { ILoading } from "./types";
 
 export interface IUserState {
   loading: ILoading;
-  users: IGetAllTable;
+  users: IGetAllTable<any>;
   dialog: IDialog;
   selectedUser: string;
 }
@@ -17,7 +17,7 @@ const initialState: IUserState = {
     edit: false,
     remove: false,
   },
-  users: {} as IGetAllTable,
+  users: {} as IGetAllTable<any>,
   dialog: {
     opened: false,
     type: "",
@@ -43,9 +43,9 @@ export const userSlice = createSlice({
     },
     [getAll.rejected.type]: (state, { payload }) => {
       state.loading.getAll = false;
-      state.users = {} as IGetAllTable;
+      state.users = {} as IGetAllTable<any>;
     },
-    [getAll.fulfilled.type]: (state, action: PayloadAction<IGetAllTable>) => {
+    [getAll.fulfilled.type]: (state, action: PayloadAction<IGetAllTable<any>>) => {
       state.loading.getAll = false;
       state.users = action.payload;
     },

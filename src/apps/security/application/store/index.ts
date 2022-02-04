@@ -5,7 +5,7 @@ import { ILoading } from "./types";
 
 export interface IApplicationState {
   loading: ILoading;
-  applications: IGetAllTable;
+  applications: IGetAllTable<any>;
   dialog: IDialog;
   selectedApp: string;
 }
@@ -17,7 +17,7 @@ const initialState: IApplicationState = {
     edit: false,
     remove: false,
   },
-  applications: {} as IGetAllTable,
+  applications: {} as IGetAllTable<any>,
   dialog: {
     opened: false,
     type: "",
@@ -43,9 +43,9 @@ export const applicationSlice = createSlice({
     },
     [getAll.rejected.type]: (state, { payload }) => {
       state.loading.getAll = false;
-      state.applications = {} as IGetAllTable;
+      state.applications = {} as IGetAllTable<any>;
     },
-    [getAll.fulfilled.type]: (state, action: PayloadAction<IGetAllTable>) => {
+    [getAll.fulfilled.type]: (state, action: PayloadAction<IGetAllTable<any>>) => {
       state.loading.getAll = false;
       state.applications = action.payload;
     },

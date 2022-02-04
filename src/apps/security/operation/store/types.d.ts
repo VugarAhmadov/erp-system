@@ -19,11 +19,6 @@ export interface IAddOrEditOperationRequest {
   id?: string;
 }
 
-export interface IGetHtmlFormOrViewnameRequest {
-  lang: string;
-  operationId: string;
-}
-
 export interface IAddHtmlFormRequest {
   operationHtml: string;
   operationId: string;
