@@ -1,7 +1,7 @@
 import { Breakpoint } from "@mui/material";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IOperation } from "apps/auth/store/types";
-import { getDictionaryTypeList, getHtmlFormOrViewname } from "./actions";
+import { getViewForm, getDictionaryTypeList, getHtmlForm } from "./actions";
 import {
   IAddColumnPayload,
   IAddElementPayload,
@@ -9,24 +9,30 @@ import {
   IDeleteElementPayload,
   IDictionyType,
   IEditElementPayload,
-  IGetHtmlFormOrViewnameResponse,
+  IGetHtmlFormResponse,
+  IGetViewFormResponse,
   ILoading,
 } from "./types";
 
 export interface IConfigurationsState {
   loading: ILoading;
-  dialogOpened: boolean;
-  selectedOperation: IGetHtmlFormOrViewnameResponse;
+  htmlFormDialogOpened: boolean;
+  viewFormDialogOpened: boolean;
+  selectedOperationHtmlForm: IGetHtmlFormResponse;
+  selectedOperationViewForm: IGetViewFormResponse;
   // dictionaryTpyeList: IDictionyType[];
 }
 
 const initialState: IConfigurationsState = {
   loading: {
     getDictionaryTypeList: false,
-    getHtmlFormOrViewname: false,
+    getHtmlForm: false,
+    getViewForm: false,
   },
-  dialogOpened: false,
-  selectedOperation: {} as IGetHtmlFormOrViewnameResponse,
+  htmlFormDialogOpened: false,
+  viewFormDialogOpened: false,
+  selectedOperationHtmlForm: {} as IGetHtmlFormResponse,
+  selectedOperationViewForm: {} as IGetViewFormResponse,
   // dictionaryTpyeList: [],
 };
 
@@ -35,32 +41,34 @@ export const configurationsNewSlice = createSlice({
   initialState: initialState,
   reducers: {
     closeDialog: (state) => {
-      state.dialogOpened = false;
-      state.selectedOperation = {} as IGetHtmlFormOrViewnameResponse;
+      state.htmlFormDialogOpened = false;
+      state.viewFormDialogOpened = false;
+      state.selectedOperationHtmlForm = {} as IGetHtmlFormResponse;
+      state.selectedOperationViewForm = {} as IGetViewFormResponse;
     },
     setDialogSize: (state, action: PayloadAction<Breakpoint>) => {
-      state.selectedOperation.dialogSize = action.payload;
+      state.selectedOperationHtmlForm.dialogSize = action.payload;
     },
     addGridRow: (state) => {
-      let copy = [...state.selectedOperation.formContent];
+      let copy = [...state.selectedOperationHtmlForm.formContent];
       copy.push({
         index: copy.length,
         type: "grid-row",
         columns: [],
       });
-      state.selectedOperation.formContent = copy;
+      state.selectedOperationHtmlForm.formContent = copy;
     },
     deleteGridRow: (state, action: PayloadAction<number>) => {
-      let copy = [...state.selectedOperation.formContent];
+      let copy = [...state.selectedOperationHtmlForm.formContent];
       copy.splice(action.payload, 1);
       copy.forEach((el, i) => {
         el.index = i;
       });
-      state.selectedOperation.formContent = copy;
+      state.selectedOperationHtmlForm.formContent = copy;
     },
     addGridColumn: (state, action: PayloadAction<IAddColumnPayload>) => {
       const { gridRowIndex, gridColumnSize } = action.payload;
-      let copy = [...state.selectedOperation.formContent];
+      let copy = [...state.selectedOperationHtmlForm.formContent];
       copy[gridRowIndex].columns?.push({
         index: copy[gridRowIndex].columns.length,
         type: "grid-column",
@@ -68,42 +76,42 @@ export const configurationsNewSlice = createSlice({
         gridRowIndex,
         gridColumnSize,
       });
-      state.selectedOperation.formContent = copy;
+      state.selectedOperationHtmlForm.formContent = copy;
     },
     deleteGridColumn: (state, action: PayloadAction<IDeleteColumnPayload>) => {
       const { gridRowIndex, gridColumnIndex } = action.payload;
 
-      let copy = [...state.selectedOperation.formContent];
+      let copy = [...state.selectedOperationHtmlForm.formContent];
       copy[gridRowIndex].columns.splice(gridColumnIndex, 1);
       // copy[gridRowIndex].columns.map((c: any, i: number) => ({ ...c, index: i }));
       copy[gridRowIndex].columns.forEach((c: any, i: number) => {
         c.index = i;
       });
-      state.selectedOperation.formContent = copy;
+      state.selectedOperationHtmlForm.formContent = copy;
     },
     addElement: (state, action: PayloadAction<IAddElementPayload>) => {
       const { gridRowIndex, gridColumnIndex, element } = action.payload;
-      let copy = [...state.selectedOperation.formContent];
+      let copy = [...state.selectedOperationHtmlForm.formContent];
       if (element.move) {
         copy[element.gridRowIndex].columns[element.gridColumnIndex].element = {};
       }
 
       copy[gridRowIndex].columns[gridColumnIndex].element = { ...element, gridRowIndex, gridColumnIndex };
-      state.selectedOperation.formContent = copy;
+      state.selectedOperationHtmlForm.formContent = copy;
     },
     deleteElement: (state, action: PayloadAction<IDeleteElementPayload>) => {
       const { gridRowIndex, gridColumnIndex } = action.payload;
 
-      let copy = [...state.selectedOperation.formContent];
+      let copy = [...state.selectedOperationHtmlForm.formContent];
       copy[gridRowIndex].columns[gridColumnIndex].element = {};
-      state.selectedOperation.formContent = copy;
+      state.selectedOperationHtmlForm.formContent = copy;
     },
     editElement: (state, action: PayloadAction<IEditElementPayload>) => {
       const { gridRowIndex, gridColumnIndex, params } = action.payload;
 
-      let copy = [...state.selectedOperation.formContent];
+      let copy = [...state.selectedOperationHtmlForm.formContent];
       copy[gridRowIndex].columns[gridColumnIndex].element.params = params;
-      state.selectedOperation.formContent = copy;
+      state.selectedOperationHtmlForm.formContent = copy;
     },
   },
   extraReducers: {
@@ -120,22 +128,38 @@ export const configurationsNewSlice = createSlice({
     //   state.dictionaryTpyeList = action.payload;
     // },
     //* GET_DICTIONARY_TYPE_LIST END
-    //* GET HTML FORM OR VIEWNAME
-    [getHtmlFormOrViewname.pending.type]: (state) => {
-      state.loading.getHtmlFormOrViewname = true;
+    //* GET HTML FORM
+    [getHtmlForm.pending.type]: (state) => {
+      state.loading.getHtmlForm = true;
     },
-    [getHtmlFormOrViewname.rejected.type]: (state) => {
-      state.loading.getHtmlFormOrViewname = false;
-      state.dialogOpened = false;
+    [getHtmlForm.rejected.type]: (state) => {
+      state.loading.getHtmlForm = false;
+      state.htmlFormDialogOpened = false;
       // state.dictionaryTpyeList = [];
     },
-    [getHtmlFormOrViewname.fulfilled.type]: (state, action: PayloadAction<IGetHtmlFormOrViewnameResponse>) => {
-      state.loading.getHtmlFormOrViewname = false;
-      state.dialogOpened = true;
-      state.selectedOperation = action.payload;
+    [getHtmlForm.fulfilled.type]: (state, action: PayloadAction<IGetHtmlFormResponse>) => {
+      state.loading.getHtmlForm = false;
+      state.htmlFormDialogOpened = true;
+      state.selectedOperationHtmlForm = action.payload;
       // state.dictionaryTpyeList = action.payload;
     },
-    //* GET HTML FORM OR VIEWNAME END
+    //* GET HTML FORM END
+    //* GET VIEW FORM
+    [getViewForm.pending.type]: (state) => {
+      state.loading.getViewForm = true;
+    },
+    [getViewForm.rejected.type]: (state) => {
+      state.loading.getViewForm = false;
+      state.viewFormDialogOpened = false;
+      // state.dictionaryTpyeList = [];
+    },
+    [getViewForm.fulfilled.type]: (state, action: PayloadAction<IGetViewFormResponse>) => {
+      state.loading.getViewForm = false;
+      state.viewFormDialogOpened = true;
+      state.selectedOperationViewForm = action.payload;
+      // state.dictionaryTpyeList = action.payload;
+    },
+    //* GET VIEW FORM END
   },
 });
 

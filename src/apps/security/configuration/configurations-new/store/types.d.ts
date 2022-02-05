@@ -2,7 +2,8 @@ import { Breakpoint } from "@mui/material";
 
 export interface ILoading {
   getDictionaryTypeList: boolean;
-  getHtmlFormOrViewname: boolean;
+  getHtmlForm: boolean;
+  getViewForm: boolean;
 }
 
 export interface IDictionyType {
@@ -59,13 +60,21 @@ export interface IOperationHtml {
   dialogSize: Breakpoint;
 }
 
-export interface IGetHtmlFormOrViewnameResponse {
+export interface IGetHtmlFormResponse {
   id: string;
   code: string;
   url: string;
   viewName: string;
   formContent: any[];
   dialogSize: Breakpoint;
+}
+
+export interface IGetViewFormResponse {
+  id: string;
+  code: string;
+  url: string;
+  viewName: string;
+  seqColumn: string[];
 }
 
 export interface IAddColumnPayload {

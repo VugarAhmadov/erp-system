@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useState } from "react";
+import React, { FC, memo, useState } from "react";
 import { Button as MuiButton, DialogContent, Grid, Typography } from "@mui/material";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
@@ -21,7 +21,7 @@ import {
   // RadioElement,
   // TabElement,
   // FileUploadElement,
-} from "apps/security/configuration/configurations-new/components/add-form-dialog/components/elements-with-dnd/components";
+} from "apps/security/configuration/configurations-new/components/html-form-dialog/components/elements-with-dnd/components";
 
 interface IAddOrEdit {
   dialog: IDialog;
@@ -29,14 +29,16 @@ interface IAddOrEdit {
   onSubmit(data: IAddOrEditApplicationRequest): void;
 }
 
-export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
+export const AddOrEdit: FC<IAddOrEdit> = memo(({ dialog, onClose, onSubmit }) => {
   const { t } = useTranslation("common");
 
   const module = useSelector((state: AppState) => state.module.module);
 
   const data = JSON.parse(module.operations.find((op) => op.code === "ADD")?.formHtml!);
-  console.log(data);
+
   const [selectData, setSelectData] = useState<any[]>([]);
+
+  console.log(data);
 
   return (
     <StyledDialog
@@ -79,7 +81,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                 {data?.formContent?.map((row: any) => (
                   <Grid container key={row.index} spacing={3}>
                     {row?.columns?.map((column: any) => (
-                      <Grid item xs={column.gridColumnSize}>
+                      <Grid item key={column.index} xs={column.gridColumnSize}>
                         {column.element.type === "input" && (
                           <InputElement
                             params={column.element.params}
@@ -151,4 +153,4 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
       </DialogContent>
     </StyledDialog>
   );
-};
+});

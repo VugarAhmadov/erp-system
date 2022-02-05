@@ -6,7 +6,6 @@ import { IDialog } from "types";
 import { AddForm, AddPrivForm, AllViewForm, DialogConfig } from "..";
 import { StyledDialog } from "./dialog.styled";
 import { IAddHtmlFormRequest, IAddViewFormRequest } from "apps/security/operation/store/types";
-import { AddFormNew } from "../add-form-new";
 
 interface IDialogProps {
   dialog: IDialog;
@@ -48,15 +47,14 @@ export const Dialog: FC<IDialogProps> = memo(({ dialog, onClose, onAddFormSubmit
         )}
       >
         <DialogContent>
-          {dialog.type === "add" && <AddFormNew onClose={onClose} gridView={gridView} />}
-          {/* {dialog.type === "add" && (
+          {dialog.type === "add" && (
             <AddForm
               onClose={onClose}
               onSubmit={onAddFormSubmit}
               dialogSize={dialogSize}
               setDialogSize={setDialogSize}
             />
-          )} */}
+          )}
           {dialog.type === "all-view" && <AllViewForm onClose={onClose} onSubmit={onAllViewFormSubmit} />}
           {dialog.type === "add-priv" && <AddPrivForm />}
         </DialogContent>

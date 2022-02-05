@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { checkUserAccess } from "helpers";
 import { AppState } from "store";
@@ -81,16 +81,15 @@ export const DynamicModule = () => {
     dispatch(setDialog({ opened: true, type: "add" }));
   };
 
-  const handleDialogClose = () => {
+  const handleDialogClose = useCallback(() => {
     dispatch(setDialog({ opened: false, type: "" }));
-  };
+  }, []);
 
-  const handleSubmit = (data: any) => {
+  const handleSubmit = useCallback((data: any) => {
     if (checkUserAccess(module, "ADD")) {
       dispatch(add(data));
     }
-  };
-  // onSubmit({ operationHtml: JSON.stringify(formElements), operationId: selectedOperation.id })
+  }, []);
 
   return (
     <>

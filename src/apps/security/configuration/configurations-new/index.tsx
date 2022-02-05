@@ -15,8 +15,8 @@ import {
 import { AppState } from "store";
 import { StyledConfigurations } from "./configurations.styled";
 import { useTranslation } from "react-i18next";
-import { getHtmlFormOrViewname } from "./store/actions";
-import { AddFormDialog } from "./components";
+import { getViewForm, getHtmlForm } from "./store/actions";
+import { HtmlFormDialog, ViewFormDialog } from "./components";
 import { Button } from "components/shared";
 
 export const Configurations = () => {
@@ -25,8 +25,12 @@ export const Configurations = () => {
   const loading = useSelector((state: AppState) => state.configurationsNew.loading);
   const { t, i18n } = useTranslation("common");
 
-  const handleDialogOpen = (id: string) => {
-    dispatch(getHtmlFormOrViewname({ lang: i18n.language, operationId: id }));
+  const handleHtmlFormClick = (id: string) => {
+    dispatch(getHtmlForm({ lang: i18n.language, operationId: id }));
+  };
+
+  const handleAllViewFormClick = (id: string) => {
+    dispatch(getViewForm({ lang: i18n.language, operationId: id }));
   };
 
   return (
@@ -61,22 +65,22 @@ export const Configurations = () => {
                             <TableCell>{operation.name.az}</TableCell>
                             <TableCell>
                               {operation.code === "ADD" && (
-                                <Button
-                                  onClick={() => handleDialogOpen(operation.id)}
-                                  loading={loading.getHtmlFormOrViewname}
-                                >
+                                <Button onClick={() => handleHtmlFormClick(operation.id)} loading={loading.getHtmlForm}>
                                   {t("openAddDialog")}
                                 </Button>
                               )}
                               {operation.code === "ADD_PRIV" && (
-                                // onClick={() => handleDialogOpen("add-priv", operation)}
-                                <Button variant="contained" color="success">
+                                <Button variant="contained" color="success" onClick={() => {}}>
                                   {t("openAddPrivDialog")}
                                 </Button>
                               )}
                               {operation.code === "ALL_VIEW" && (
-                                // onClick={() => handleDialogOpen("all-view", operation)}
-                                <Button variant="contained" color="secondary">
+                                <Button
+                                  variant="contained"
+                                  color="secondary"
+                                  onClick={() => handleAllViewFormClick(operation.id)}
+                                  loading={loading.getViewForm}
+                                >
                                   {t("openAllViewDialog")}
                                 </Button>
                               )}
@@ -92,7 +96,8 @@ export const Configurations = () => {
           </Accordion>
         ))}
       </StyledConfigurations>
-      <AddFormDialog />
+      <HtmlFormDialog />
+      <ViewFormDialog />
     </>
   );
 };
