@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { operationApi } from "api";
 import { checkUser } from "apps/auth/store/actions";
+import { closeDialog } from "apps/security/configuration/configurations-new/store";
 import { setDialog } from "apps/security/configuration/configurations/store";
 import { toast } from "react-toastify";
 import { IAddOrEditOperationRequest, IAddHtmlFormRequest, IAddViewFormRequest } from "./types";
@@ -91,7 +92,7 @@ export const addHtmlForm = createAsyncThunk(
     try {
       const { data } = await operationApi.addHtmlForm(request);
       if (data?.err?.length === 0) {
-        dispatch(setDialog({ opened: false, type: "" }));
+        dispatch(closeDialog());
         await dispatch(checkUser());
         return data;
       } else {
@@ -110,7 +111,7 @@ export const addViewForm = createAsyncThunk(
     try {
       const { data } = await operationApi.addViewForm(request);
       if (data?.err?.length === 0) {
-        dispatch(setDialog({ opened: false, type: "" }));
+        dispatch(closeDialog());
         await dispatch(checkUser());
         return data;
       } else {

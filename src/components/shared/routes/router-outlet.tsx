@@ -12,6 +12,8 @@ export const RouterOutlet = () => {
 
   if (selectedApp) {
     return <Navigate to={`${selectedApp.url}${selectedApp.modules[0].url}`} />;
+  } else if (location.pathname === "/") {
+    return <Navigate to={`${apps[0].url}${apps[0].modules[0].url}`} />;
   } else {
     const selectedModule = apps
       .find((app) => app.url === `/${location.pathname.split("/")[1]}`)

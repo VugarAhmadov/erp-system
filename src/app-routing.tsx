@@ -34,6 +34,7 @@ export const AppRouting = () => {
             <Route path="login" element={<Login />} />
           </Route>
           <Route path="/" element={<MainLayout />}>
+            <Route index element={<RouterOutlet />} />
             <Route path="security" element={<RouterOutlet />}>
               <Route path="configuration" element={<Configuration />} />
               <Route path="application" element={<Application />} />

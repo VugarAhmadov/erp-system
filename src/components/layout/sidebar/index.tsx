@@ -10,7 +10,8 @@ import { checkUserAccess } from "helpers";
 export const Sidebar: FC = () => {
   const location = useLocation();
   const apps = useSelector((state: AppState) => state.auth.user.applications);
-  const selectedApp = apps.filter((app) => app.url === `/${location.pathname.split("/")[1]}`)[0];
+  const selectedApp =
+    location.pathname === "/" ? apps[0] : apps.filter((app) => app.url === `/${location.pathname.split("/")[1]}`)[0];
   const { i18n } = useTranslation();
 
   return (

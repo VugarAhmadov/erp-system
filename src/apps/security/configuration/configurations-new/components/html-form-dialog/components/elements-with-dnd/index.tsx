@@ -4,18 +4,39 @@ import { useDispatch } from "react-redux";
 import {
   ButtonDialog,
   ButtonElement,
+  CheckboxDialog,
+  CheckboxElement,
   DatepickerDialog,
   DatepickerElement,
+  FileUploadDialog,
+  FileUploadElement,
+  ImageDialog,
+  ImageElement,
   InputDialog,
   InputElement,
+  LabelDialog,
+  LabelElement,
+  RadioDialog,
+  RadioElement,
   SelectDialog,
   SelectElement,
+  TabDialog,
+  TabElement,
+  TableDialog,
+  TableElement,
 } from "./components";
 import { IButtonParams } from "./components/button/button-element";
 import { IInputParams } from "./components/input/input-element";
 import { IDatepickerParams } from "./components/datepicker/datepicker-element";
 import { IDialogState } from "./components/dialog/types";
 import { ISelectParams } from "./components/select/select-element";
+import { ILabelParams } from "./components/label/label-element";
+import { ICheckboxParams } from "./components/checkbox/checkbox-element";
+import { IRadioParams } from "./components/radio/radio-element";
+import { ITableParams } from "./components/table/table-element";
+import { ITabParams } from "./components/tab/tab-element";
+import { IImageParams } from "./components/image/image-element";
+import { IFileUploadParams } from "./components/file-upload/file-upload-element";
 
 interface IElementsWithDnd {
   element: any;
@@ -38,6 +59,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
       image: false,
       table: false,
       tab: false,
+      fileUpload: false,
     },
   });
 
@@ -58,7 +80,18 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
   const handleElementEdit = (
     gridRowIndex: number,
     gridColumnIndex: number,
-    data: IButtonParams | IInputParams | IDatepickerParams
+    data:
+      | IButtonParams
+      | IInputParams
+      | IDatepickerParams
+      | ISelectParams
+      | ILabelParams
+      | ICheckboxParams
+      | IRadioParams
+      | ITableParams
+      | ITabParams
+      | IImageParams
+      | IFileUploadParams
   ) => {
     dispatch(editElement({ gridRowIndex, gridColumnIndex, params: data }));
   };
@@ -146,39 +179,140 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
           />
         </>
       )}
-      {/* {element.element === "label" && (
-        <LabelElement withDnd onEdit={onEdit} onDelete={onDelete} index={element.index} {...element.params} />
+      {element.type === "label" && (
+        <>
+          <LabelElement
+            withDnd
+            onEdit={handleDialogEdit}
+            onDelete={handleElementDelete}
+            gridRowIndex={element.gridRowIndex}
+            gridColumnIndex={element.gridColumnIndex}
+            params={element.params}
+          />
+          <LabelDialog
+            open={dialog.open.label}
+            onClose={() => handleDialogClose("label")}
+            onSubmit={(data: ILabelParams) => handleElementEdit(element.gridRowIndex, element.gridColumnIndex, data)}
+            params={element.params}
+          />
+        </>
       )}
-      {element.element === "checkbox" && (
-        <CheckboxElement withDnd onEdit={onEdit} onDelete={onDelete} index={element.index} {...element.params} />
+      {element.type === "checkbox" && (
+        <>
+          <CheckboxElement
+            withDnd
+            onEdit={handleDialogEdit}
+            onDelete={handleElementDelete}
+            gridRowIndex={element.gridRowIndex}
+            gridColumnIndex={element.gridColumnIndex}
+            params={element.params}
+          />
+          <CheckboxDialog
+            open={dialog.open.checkbox}
+            onClose={() => handleDialogClose("checkbox")}
+            onSubmit={(data: ICheckboxParams) => handleElementEdit(element.gridRowIndex, element.gridColumnIndex, data)}
+            params={element.params}
+          />
+        </>
       )}
-      {element.element === "datepicker" && (
-        <DatepickerElement withDnd onEdit={onEdit} onDelete={onDelete} index={element.index} {...element.params} />
+
+      {element.type === "radio" && (
+        <>
+          <RadioElement
+            withDnd
+            onEdit={handleDialogEdit}
+            onDelete={handleElementDelete}
+            gridRowIndex={element.gridRowIndex}
+            gridColumnIndex={element.gridColumnIndex}
+            params={element.params}
+          />
+          <RadioDialog
+            open={dialog.open.radio}
+            onClose={() => handleDialogClose("radio")}
+            onSubmit={(data: IRadioParams) => handleElementEdit(element.gridRowIndex, element.gridColumnIndex, data)}
+            params={element.params}
+          />
+        </>
       )}
-      
-      {element.element === "image" && (
-        <ImageElement
-          withDnd
-          onEdit={onEdit}
-          onDelete={onDelete}
-          index={element.index}
-          dependedFieldData={
-            element.params.dependedComponent === "select" && element.params.dependedModelName
-              ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
-              : undefined
-          }
-          {...element.params}
-        />
+      {element.type === "table" && (
+        <>
+          <TableElement
+            withDnd
+            onEdit={handleDialogEdit}
+            onDelete={handleElementDelete}
+            gridRowIndex={element.gridRowIndex}
+            gridColumnIndex={element.gridColumnIndex}
+            params={element.params}
+          />
+          <TableDialog
+            open={dialog.open.table}
+            onClose={() => handleDialogClose("table")}
+            onSubmit={(data: ITableParams) => handleElementEdit(element.gridRowIndex, element.gridColumnIndex, data)}
+            params={element.params}
+          />
+        </>
       )}
-      {element.element === "table" && (
-        <TableElement withDnd onEdit={onEdit} onDelete={onDelete} index={element.index} {...element.params} />
+      {element.type === "tab" && (
+        <>
+          <TabElement
+            withDnd
+            onEdit={handleDialogEdit}
+            onDelete={handleElementDelete}
+            gridRowIndex={element.gridRowIndex}
+            gridColumnIndex={element.gridColumnIndex}
+            params={element.params}
+          />
+          <TabDialog
+            open={dialog.open.tab}
+            onClose={() => handleDialogClose("tab")}
+            onSubmit={(data: ITabParams) => handleElementEdit(element.gridRowIndex, element.gridColumnIndex, data)}
+            params={element.params}
+          />
+        </>
       )}
-      {element.element === "tab" && (
-        <TabElement withDnd onEdit={onEdit} onDelete={onDelete} index={element.index} {...element.params} />
+      {element.type === "image" && (
+        <>
+          <ImageElement
+            withDnd
+            onEdit={handleDialogEdit}
+            onDelete={handleElementDelete}
+            gridRowIndex={element.gridRowIndex}
+            gridColumnIndex={element.gridColumnIndex}
+            params={element.params}
+            // dependedFieldData={
+            //   element.params.dependedComponent === "select" && element.params.dependedModelName
+            //     ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
+            //     : undefined
+            // }
+          />
+          <ImageDialog
+            open={dialog.open.image}
+            onClose={() => handleDialogClose("image")}
+            onSubmit={(data: IImageParams) => handleElementEdit(element.gridRowIndex, element.gridColumnIndex, data)}
+            params={element.params}
+          />
+        </>
       )}
-      {element.element === "radio" && (
-        <RadioElement withDnd onEdit={onEdit} onDelete={onDelete} index={element.index} {...element.params} />
-      )} */}
+      {element.type === "file-upload" && (
+        <>
+          <FileUploadElement
+            withDnd
+            onEdit={handleDialogEdit}
+            onDelete={handleElementDelete}
+            gridRowIndex={element.gridRowIndex}
+            gridColumnIndex={element.gridColumnIndex}
+            params={element.params}
+          />
+          <FileUploadDialog
+            open={dialog.open.fileUpload}
+            onClose={() => handleDialogClose("fileUpload")}
+            onSubmit={(data: IFileUploadParams) =>
+              handleElementEdit(element.gridRowIndex, element.gridColumnIndex, data)
+            }
+            params={element.params}
+          />
+        </>
+      )}
     </Fragment>
   );
 });

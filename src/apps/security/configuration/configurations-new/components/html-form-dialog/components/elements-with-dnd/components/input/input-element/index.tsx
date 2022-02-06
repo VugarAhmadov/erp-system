@@ -49,6 +49,7 @@ export const InputElement: FC<IInputElement> = ({ withDnd, params, dependedField
       placeholder={placeholder}
       required={!!required}
       disabled={!!disabled}
+      fullWidth
     />
   );
 

@@ -9,8 +9,8 @@ export const checkUser = createAsyncThunk("auth/checkUser", async (_, { rejectWi
     const { data, status } = await authApi.checkUser();
 
     if (data.code === "OK") {
-      const url = getUrl(data.data as IUser);
-      dispatch(push(`/${url}`));
+      // const url = getUrl(data.data as IUser);
+      // dispatch(push(`/${url}`));
 
       return data.data;
       // TODO: burani duzelt

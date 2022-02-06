@@ -34,7 +34,7 @@ export const DialogContent: FC<IDialogContent> = ({ onSubmit, onClose, gridView 
     }),
     []
   );
-  console.log(selectedOperation.formContent);
+
   return (
     <StyledDialogContent>
       <div className="form-header">

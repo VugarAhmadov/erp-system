@@ -9,6 +9,7 @@ export interface IDialogOpen {
   image: boolean;
   table: boolean;
   tab: boolean;
+  fileUpload: boolean;
 }
 
 export interface IDialogState {

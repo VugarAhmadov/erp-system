@@ -63,6 +63,41 @@ export const DialogConfig: FC<IDialogConfig> = memo(
       item: { type: "select", params: {}, move: false },
     }));
 
+    const [, dragLabel] = useDrag(() => ({
+      type: Components.ELEMENT,
+      item: { type: "label", params: {}, move: false },
+    }));
+
+    const [, dragCheckbox] = useDrag(() => ({
+      type: Components.ELEMENT,
+      item: { type: "checkbox", params: {}, move: false },
+    }));
+
+    const [, dragRadio] = useDrag(() => ({
+      type: Components.ELEMENT,
+      item: { type: "radio", params: {}, move: false },
+    }));
+
+    const [, dragTable] = useDrag(() => ({
+      type: Components.ELEMENT,
+      item: { type: "table", params: {}, move: false },
+    }));
+
+    const [, dragFileUpload] = useDrag(() => ({
+      type: Components.ELEMENT,
+      item: { type: "file-upload", params: {}, move: false },
+    }));
+
+    const [, dragTab] = useDrag(() => ({
+      type: Components.ELEMENT,
+      item: { type: "tab", params: {}, move: false },
+    }));
+
+    const [, dragImage] = useDrag(() => ({
+      type: Components.ELEMENT,
+      item: { type: "image", params: {}, move: false },
+    }));
+
     return (
       <StyledDialogConfig>
         <div className="controls">
@@ -71,7 +106,7 @@ export const DialogConfig: FC<IDialogConfig> = memo(
             <Select
               labelId="dialog-size-select-label"
               id="dialog-size-select"
-              value={dialogSize}
+              value={dialogSize ?? "sm"}
               label={t("dialogSize")}
               onChange={(e: SelectChangeEvent) => onDialogSizeChange(e.target.value as Breakpoint)}
             >
@@ -152,6 +187,48 @@ export const DialogConfig: FC<IDialogConfig> = memo(
                 <Icon>inbox</Icon>
               </ListItemIcon>
               <ListItemText primary={t("select")} />
+            </ListItemButton>
+            <ListItemButton ref={dragLabel}>
+              <ListItemIcon>
+                <Icon>inbox</Icon>
+              </ListItemIcon>
+              <ListItemText primary={t("label")} />
+            </ListItemButton>
+            <ListItemButton ref={dragCheckbox}>
+              <ListItemIcon>
+                <Icon>inbox</Icon>
+              </ListItemIcon>
+              <ListItemText primary={t("checkbox")} />
+            </ListItemButton>
+            <ListItemButton ref={dragRadio}>
+              <ListItemIcon>
+                <Icon>inbox</Icon>
+              </ListItemIcon>
+              <ListItemText primary={t("radio")} />
+            </ListItemButton>
+            <ListItemButton ref={dragTable}>
+              <ListItemIcon>
+                <Icon>inbox</Icon>
+              </ListItemIcon>
+              <ListItemText primary={t("table")} />
+            </ListItemButton>
+            <ListItemButton ref={dragFileUpload}>
+              <ListItemIcon>
+                <Icon>inbox</Icon>
+              </ListItemIcon>
+              <ListItemText primary={t("file-upload")} />
+            </ListItemButton>
+            <ListItemButton ref={dragTab}>
+              <ListItemIcon>
+                <Icon>inbox</Icon>
+              </ListItemIcon>
+              <ListItemText primary={t("tab")} />
+            </ListItemButton>
+            <ListItemButton ref={dragImage}>
+              <ListItemIcon>
+                <Icon>inbox</Icon>
+              </ListItemIcon>
+              <ListItemText primary={t("image")} />
             </ListItemButton>
           </List>
         </div>
