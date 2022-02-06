@@ -1,2 +1,2 @@
-export { SelectElement } from "./select-element";
+export * from "./select-element";
 export { SelectDialog } from "./select-dialog";

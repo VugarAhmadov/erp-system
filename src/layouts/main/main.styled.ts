@@ -14,7 +14,7 @@ export const StyledMainLayout = styled.div`
       flex: 1;
       background-color: #fff;
       position: relative;
-      padding: 1rem 5rem;
+      padding: 1rem;
       overflow-y: auto;
       /* border: 1px solid #000; */
       /* margin: 1rem; */

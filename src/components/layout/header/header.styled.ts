@@ -8,6 +8,7 @@ export const StyledHeader = styled.header`
   display: flex;
   justify-content: flex-end;
   padding: 5px 1.5rem;
+  border-bottom: 1px solid #c4b87b;
 
   & .apps-container {
   }

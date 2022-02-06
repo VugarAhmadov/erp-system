@@ -1,2 +1,2 @@
-export { ImageElement } from "./image-element";
+export * from "./image-element";
 export { ImageDialog } from "./image-dialog";

@@ -1,2 +1,2 @@
-export { TableElement } from "./table-element";
+export * from "./table-element";
 export { TableDialog } from "./table-dialog";

@@ -3,28 +3,43 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkUserAccess } from "helpers";
 import { AppState } from "store";
 import { add, getAll } from "./store/actions";
-import { DataTable, FilterBar, SectionHeader } from "components/shared";
+import { DataTable, FilterBar } from "components/shared";
 import { useTranslation } from "react-i18next";
 import { Column } from "@material-table/core";
-import { Icon, IconButton } from "@mui/material";
 import { StyledDynamicModule } from "./dynamic-module.styled";
-import { IName } from "apps/auth/store/types";
+import { IModule, IName } from "apps/auth/store/types";
 import { AddOrEdit } from "./components";
 import { setDialog } from "./store";
+import { useLocation } from "react-router-dom";
+import { setModule } from "apps/security/module/store";
 
 export const DynamicModule = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation("common");
-  const module = useSelector((state: AppState) => state.module.module);
+  const location = useLocation();
+
+  const apps = useSelector((state: AppState) => state.auth.user.applications);
+  const module = apps
+    .find((app) => app.url === `/${location.pathname.split("/")[1]}`)!
+    .modules.find((module) => module.url === `/${location.pathname.split("/")[2]}`)!;
+
   const loading = useSelector((state: AppState) => state.dynamic.loading);
   const datas = useSelector((state: AppState) => state.dynamic.datas);
   const seqColumns = datas?.seqColumn?.split(",");
   const dialog = useSelector((state: AppState) => state.dynamic.dialog);
 
   useEffect(() => {
-    if (checkUserAccess(module, "ALL_VIEW")) {
-      dispatch(getAll());
+    if (module) {
+      dispatch(setModule(module));
+
+      if (checkUserAccess(module, "ALL_VIEW")) {
+        dispatch(getAll());
+      }
     }
+
+    return () => {
+      setModule({} as IModule);
+    };
   }, [module]);
 
   const buildColumns = () => {
@@ -91,13 +106,13 @@ export const DynamicModule = () => {
     }
   }, []);
 
-  return (
+  return module ? (
     <>
       <StyledDynamicModule>
         <FilterBar
           addButton={{
             show: true,
-            title: t("addApplication"),
+            title: t("add"),
             onClick: handleAddClick,
           }}
           title={module.name[i18n.language as keyof IName]}
@@ -109,10 +124,13 @@ export const DynamicModule = () => {
           isLoading={loading.getAll}
           options={{
             toolbar: false,
+            pageSize: 20,
           }}
         />
       </StyledDynamicModule>
       <AddOrEdit dialog={dialog} onClose={handleDialogClose} onSubmit={handleSubmit} />
     </>
+  ) : (
+    <></>
   );
 };

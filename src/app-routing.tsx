@@ -36,6 +36,7 @@ export const AppRouting = () => {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<RouterOutlet />} />
             <Route path="security" element={<RouterOutlet />}>
+              <Route index element={<Security />} />
               <Route path="configuration" element={<Configuration />} />
               <Route path="application" element={<Application />} />
               <Route path="module" element={<Module />} />
@@ -45,6 +46,7 @@ export const AppRouting = () => {
               <Route path=":dynamicModule" element={<DynamicModule />} />
             </Route>
             <Route path=":dynamicApp" element={<RouterOutlet />}>
+              <Route index element={<DynamicApp />} />
               <Route path=":dynamicModule" element={<DynamicModule />} />
             </Route>
           </Route>

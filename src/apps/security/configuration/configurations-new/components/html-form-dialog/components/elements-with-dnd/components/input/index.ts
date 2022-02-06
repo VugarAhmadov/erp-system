@@ -1,2 +1,2 @@
 export { InputDialog } from "./input-dialog";
-export { InputElement } from "./input-element";
+export * from "./input-element";

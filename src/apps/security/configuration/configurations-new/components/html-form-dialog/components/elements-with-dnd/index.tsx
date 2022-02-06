@@ -1,42 +1,18 @@
 import React, { FC, Fragment, memo, useCallback, useState } from "react";
 import { deleteElement, editElement } from "apps/security/configuration/configurations-new/store";
 import { useDispatch } from "react-redux";
-import {
-  ButtonDialog,
-  ButtonElement,
-  CheckboxDialog,
-  CheckboxElement,
-  DatepickerDialog,
-  DatepickerElement,
-  FileUploadDialog,
-  FileUploadElement,
-  ImageDialog,
-  ImageElement,
-  InputDialog,
-  InputElement,
-  LabelDialog,
-  LabelElement,
-  RadioDialog,
-  RadioElement,
-  SelectDialog,
-  SelectElement,
-  TabDialog,
-  TabElement,
-  TableDialog,
-  TableElement,
-} from "./components";
-import { IButtonParams } from "./components/button/button-element";
-import { IInputParams } from "./components/input/input-element";
-import { IDatepickerParams } from "./components/datepicker/datepicker-element";
+import { ButtonDialog, ButtonElement, IButtonParams } from "./components/button";
+import { CheckboxDialog, CheckboxElement, ICheckboxParams } from "./components/checkbox";
+import { DatepickerDialog, DatepickerElement, IDatepickerParams } from "./components/datepicker";
+import { FileUploadDialog, FileUploadElement, IFileUploadParams } from "./components/file-upload";
+import { ImageDialog, ImageElement, IImageParams } from "./components/image";
+import { InputDialog, InputElement, IInputParams } from "./components/input";
+import { LabelDialog, LabelElement, ILabelParams } from "./components/label";
+import { RadioDialog, RadioElement, IRadioParams } from "./components/radio";
+import { SelectDialog, SelectElement, ISelectParams } from "./components/select";
+import { TabDialog, TabElement, ITabParams } from "./components/tab";
+import { TableDialog, TableElement, ITableParams } from "./components/table";
 import { IDialogState } from "./components/dialog/types";
-import { ISelectParams } from "./components/select/select-element";
-import { ILabelParams } from "./components/label/label-element";
-import { ICheckboxParams } from "./components/checkbox/checkbox-element";
-import { IRadioParams } from "./components/radio/radio-element";
-import { ITableParams } from "./components/table/table-element";
-import { ITabParams } from "./components/tab/tab-element";
-import { IImageParams } from "./components/image/image-element";
-import { IFileUploadParams } from "./components/file-upload/file-upload-element";
 
 interface IElementsWithDnd {
   element: any;

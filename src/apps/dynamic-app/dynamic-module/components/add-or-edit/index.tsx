@@ -22,6 +22,7 @@ import {
   // TabElement,
   // FileUploadElement,
 } from "apps/security/configuration/configurations-new/components/html-form-dialog/components/elements-with-dnd/components";
+import { useLocation } from "react-router-dom";
 
 interface IAddOrEdit {
   dialog: IDialog;
@@ -31,14 +32,18 @@ interface IAddOrEdit {
 
 export const AddOrEdit: FC<IAddOrEdit> = memo(({ dialog, onClose, onSubmit }) => {
   const { t } = useTranslation("common");
+  const location = useLocation();
 
-  const module = useSelector((state: AppState) => state.module.module);
+  const apps = useSelector((state: AppState) => state.auth.user.applications);
+  const module = apps
+    .find((app) => app.url === `/${location.pathname.split("/")[1]}`)!
+    .modules.find((module) => module.url === `/${location.pathname.split("/")[2]}`)!;
+
+  // const module = useSelector((state: AppState) => state.module.module);
 
   const data = JSON.parse(module.operations.find((op) => op.code === "ADD")?.formHtml!);
 
   const [selectData, setSelectData] = useState<any[]>([]);
-
-  console.log(data);
 
   return (
     <StyledDialog
