@@ -12,7 +12,7 @@ export interface ITableParams {
 }
 
 interface ITableElement {
-  withDnd: boolean;
+  withDnd?: boolean;
   params: ITableParams;
   gridRowIndex: number;
   gridColumnIndex: number;

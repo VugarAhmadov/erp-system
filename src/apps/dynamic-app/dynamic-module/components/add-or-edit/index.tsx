@@ -16,6 +16,13 @@ import {
   DatepickerElement,
   // CheckboxElement,
   ButtonElement,
+  LabelElement,
+  CheckboxElement,
+  TableElement,
+  RadioElement,
+  TabElement,
+  ImageElement,
+  FileUploadElement,
   // TableElement,
   // ImageElement,
   // RadioElement,
@@ -129,27 +136,63 @@ export const AddOrEdit: FC<IAddOrEdit> = memo(({ dialog, onClose, onSubmit }) =>
                             gridRowIndex={column.gridRowIndex}
                           />
                         )}
+                        {column.element.type === "label" && (
+                          <LabelElement
+                            params={column.element.params}
+                            gridColumnIndex={column.index}
+                            gridRowIndex={column.gridRowIndex}
+                          />
+                        )}
+                        {column.element.type === "checkbox" && (
+                          <CheckboxElement
+                            params={column.element.params}
+                            gridColumnIndex={column.index}
+                            gridRowIndex={column.gridRowIndex}
+                          />
+                        )}
+                        {column.element.type === "table" && (
+                          <TableElement
+                            params={column.element.params}
+                            gridColumnIndex={column.index}
+                            gridRowIndex={column.gridRowIndex}
+                          />
+                        )}
+                        {column.element.type === "radio" && (
+                          <RadioElement
+                            params={column.element.params}
+                            gridColumnIndex={column.index}
+                            gridRowIndex={column.gridRowIndex}
+                          />
+                        )}
+                        {column.element.type === "tab" && (
+                          <TabElement
+                            params={column.element.params}
+                            gridColumnIndex={column.index}
+                            gridRowIndex={column.gridRowIndex}
+                          />
+                        )}
+                        {column.element.type === "image" && (
+                          <ImageElement
+                            params={column.element.params}
+                            gridColumnIndex={column.index}
+                            gridRowIndex={column.gridRowIndex}
+                            // dependedFieldData={
+                            //   element.params.dependedComponent === "select" && element.params.dependedModelName
+                            //     ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
+                            //     : null
+                            // }
+                          />
+                        )}
+                        {column.element.type === "fileUpload" && (
+                          <FileUploadElement
+                            params={column.element.params}
+                            gridColumnIndex={column.index}
+                            gridRowIndex={column.gridRowIndex}
+                          />
+                        )}
                       </Grid>
                     ))}
                   </Grid>
-
-                  //   {element.element === "label" && <LabelElement {...element.params} />}
-                  //   {element.element === "checkbox" && <CheckboxElement {...element.params} />}
-                  //   {element.element === "table" && <TableElement {...element.params} />}
-                  //   {element.element === "radio" && <RadioElement {...element.params} />}
-                  //   {element.element === "tab" && <TabElement {...element.params} />}
-                  //   {element.element === "image" && (
-                  //     <ImageElement
-                  //       {...element.params}
-                  //       dependedFieldData={
-                  //         element.params.dependedComponent === "select" && element.params.dependedModelName
-                  //           ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
-                  //           : null
-                  //       }
-                  //     />
-                  //   )}
-                  //   {element.element === "fileUpload" && <FileUploadElement {...element.params} />}
-                  // </Fragment>
                 ))}
               </div>
             </form>
