@@ -13,6 +13,7 @@ import { commonOperationSlice } from "apps/security/common-operation/store";
 import { userSlice } from "apps/security/user/store";
 import { dynamicSlice } from "apps/dynamic-app/dynamic-module/store";
 import { dictionarySlice } from "./dictionary";
+import { commonSlice } from "./common";
 import { userGroupSlice } from "apps/security/user-group/store";
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
@@ -24,6 +25,7 @@ const store = configureStore({
     router: routerReducer,
     [authSlice.name]: authSlice.reducer,
     [dictionarySlice.name]: dictionarySlice.reducer,
+    [commonSlice.name]: commonSlice.reducer,
     [tablesSlice.name]: tablesSlice.reducer,
     [viewsSlice.name]: viewsSlice.reducer,
     [configurationsSlice.name]: configurationsSlice.reducer,

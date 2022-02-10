@@ -11,17 +11,14 @@ import { IModule, IName } from "apps/auth/store/types";
 import { AddOrEdit } from "./components";
 import { setDialog } from "./store";
 import { useLocation } from "react-router-dom";
-import { setModule } from "apps/security/module/store";
+import { setSelectedModule } from "store/common";
 
 export const DynamicModule = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation("common");
   const location = useLocation();
 
-  const apps = useSelector((state: AppState) => state.auth.user.applications);
-  const module = apps
-    .find((app) => app.url === `/${location.pathname.split("/")[1]}`)!
-    .modules.find((module) => module.url === `/${location.pathname.split("/")[2]}`)!;
+  const module = useSelector((state: AppState) => state.common.selectedModule);
 
   const loading = useSelector((state: AppState) => state.dynamic.loading);
   const datas = useSelector((state: AppState) => state.dynamic.datas);
@@ -29,16 +26,12 @@ export const DynamicModule = () => {
   const dialog = useSelector((state: AppState) => state.dynamic.dialog);
 
   useEffect(() => {
-    if (module) {
-      dispatch(setModule(module));
-
-      if (checkUserAccess(module, "ALL_VIEW")) {
-        dispatch(getAll());
-      }
+    if (checkUserAccess(module!, "ALL_VIEW")) {
+      dispatch(getAll());
     }
 
     return () => {
-      setModule({} as IModule);
+      dispatch(setSelectedModule(null));
     };
   }, [module]);
 
@@ -101,12 +94,12 @@ export const DynamicModule = () => {
   }, []);
 
   const handleSubmit = useCallback((data: any) => {
-    if (checkUserAccess(module, "ADD")) {
+    if (checkUserAccess(module!, "ADD")) {
       dispatch(add(data));
     }
   }, []);
 
-  return module ? (
+  return module && datas ? (
     <>
       <StyledDynamicModule>
         <FilterBar

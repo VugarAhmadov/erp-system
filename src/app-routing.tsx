@@ -5,7 +5,7 @@ import { AuthLayout, MainLayout } from "layouts";
 import { Spinner } from "components/shared";
 import { history } from "store";
 import { Security, DynamicApp } from "apps";
-import { RouterOutlet } from "components/shared/routes";
+import { RouterOutlet } from "components/shared";
 
 const Login = lazy(() => import("apps/auth").then((module) => ({ default: module.Login })));
 
