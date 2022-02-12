@@ -7,19 +7,19 @@ const getAll = async () => {
 };
 
 const add = async (requestData: IAddOrEditApplicationRequest) => {
-  return await defaultRequest.post<IGetAllResponse<any>>(`api/jwt/CodiumSystem/Application/Add`, {
+  return await defaultRequest.post<IGetAllResponse<any>>("api/jwt/CodiumSystem/Application/Add", {
     kv: requestData,
   });
 };
 
 const edit = async (requestData: IAddOrEditApplicationRequest) => {
-  return await defaultRequest.post<IGetAllResponse<any>>(`api/jwt/CodiumSystem/Application/Edit`, {
+  return await defaultRequest.post<IGetAllResponse<any>>("api/jwt/CodiumSystem/Application/Edit", {
     kv: requestData,
   });
 };
 
 const remove = async (id: string) => {
-  return await defaultRequest.post<IGetAllResponse<any>>(`api/jwt/CodiumSystem/Application/Delete`, { kv: { id } });
+  return await defaultRequest.post<IGetAllResponse<any>>("api/jwt/CodiumSystem/Application/Delete", { kv: { id } });
 };
 
 export const applicationApi = {

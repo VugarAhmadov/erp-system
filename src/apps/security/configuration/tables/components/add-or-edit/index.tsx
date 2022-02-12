@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Button, DialogContent } from "@mui/material";
+import { Button, DialogContent, Typography } from "@mui/material";
 import { StyledDialog } from "./add-or-edit.styled";
 import { Form } from "react-final-form";
 import { Checkboxes, Select, TextField } from "components/shared";
@@ -35,34 +35,16 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit, selectedT
         <Form
           onSubmit={onSubmit}
           initialValues={dialog.type === "edit" ? { name: selectedTable } : {}}
-          render={({ handleSubmit, invalid, values }) => (
+          render={({ handleSubmit, invalid }) => (
             <form onSubmit={handleSubmit}>
-              <TextField name="name" id="name" label={t("tablename")} />
-              {dialog.type === "add" && (
-                <>
-                  <Checkboxes
-                    name="createViewChecked"
-                    data={{ label: t("createDefaultView") as string, value: "test" }}
-                  />
-                  <Checkboxes
-                    name="createDefaultOperation"
-                    data={{ label: t("createDefaultModelOperation") as string, value: "test1" }}
-                  />
-                  {(values.createViewChecked || values.createDefaultOperation) && (
-                    <Select
-                      name="applicationId"
-                      id="applicationId"
-                      label={t("applicationId")}
-                      variant="outlined"
-                      data={applications?.map((app) => ({ label: app.name.az, value: app.id }))}
-                      validate={required}
-                      required
-                    />
-                  )}
-                </>
-              )}
+              <Typography variant="h6">{t(dialog.type === "edit" ? "editTable" : "addTable")}</Typography>
+
+              <TextField name="name" label={t("tablename")} required />
+
               <div className="action-buttons">
-                <Button onClick={onClose}>{t("back")}</Button>
+                <Button onClick={onClose} variant="outlined">
+                  {t("back")}
+                </Button>
                 <Button type="submit" disabled={invalid}>
                   {t(dialog.type === "edit" ? "edit" : "add")}
                 </Button>

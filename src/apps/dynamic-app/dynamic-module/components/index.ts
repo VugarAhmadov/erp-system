@@ -1,1 +1,1 @@
-export { AddOrEdit } from "./add-or-edit";
+export { AddOrEditDialog } from "./add-or-edit-dialog";

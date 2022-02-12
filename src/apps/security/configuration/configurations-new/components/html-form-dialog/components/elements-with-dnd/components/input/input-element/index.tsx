@@ -38,12 +38,12 @@ export const InputElement: FC<IInputElement> = ({ withDnd, params, dependedField
     dependedModelField,
   } = params;
 
-  const inputValue = dependedModelField && dependedFieldData && dependedFieldData[dependedModelField];
+  // const inputValue = dependedModelField && dependedFieldData && dependedFieldData[dependedModelField];
 
   const input = (
     <TextField
       name={model || `model-${rest.gridRowIndex}-${rest.gridColumnIndex}`}
-      value={inputValue ?? undefined}
+      // value={inputValue ?? undefined}
       type={variant}
       label={label}
       placeholder={placeholder}

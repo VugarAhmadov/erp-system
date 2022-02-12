@@ -16,6 +16,7 @@ export interface IMessage {
 
 export interface IMainLoading {
   getAll: boolean;
+  get?: boolean;
   add: boolean;
   edit: boolean;
   remove: boolean;
@@ -44,8 +45,9 @@ export interface IOperations {
 }
 
 export interface IDialog {
-  type: "edit" | "add" | "all-view" | "add-priv" | "";
+  type: "edit" | "add" | "all-view" | "add-priv" | "confirm" | "";
   opened: boolean;
+  selectedDataId?: string | null;
 }
 
 export interface IGetAllResponse<R> {

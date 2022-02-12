@@ -2,38 +2,47 @@ import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { checkUserAccess } from "helpers";
 import { AppState } from "store";
-import { add, getAll } from "./store/actions";
-import { DataTable, FilterBar } from "components/shared";
+import { add, edit, get, getAll, remove } from "./store/actions";
+import { ConfirmDialog, DataTable, FilterBar } from "components/shared";
 import { useTranslation } from "react-i18next";
 import { Column } from "@material-table/core";
 import { StyledDynamicModule } from "./dynamic-module.styled";
 import { IModule, IName } from "apps/auth/store/types";
-import { AddOrEdit } from "./components";
+import { AddOrEditDialog } from "./components";
 import { setDialog } from "./store";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { setSelectedModule } from "store/common";
+import { Icon, IconButton } from "@mui/material";
 
 export const DynamicModule = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { t, i18n } = useTranslation("common");
-  const location = useLocation();
 
   const module = useSelector((state: AppState) => state.common.selectedModule);
-
   const loading = useSelector((state: AppState) => state.dynamic.loading);
   const datas = useSelector((state: AppState) => state.dynamic.datas);
-  const seqColumns = datas?.seqColumn?.split(",");
   const dialog = useSelector((state: AppState) => state.dynamic.dialog);
 
   useEffect(() => {
-    if (checkUserAccess(module!, "ALL_VIEW")) {
+    if (module && checkUserAccess(module, "ALL_VIEW")) {
       dispatch(getAll());
+    } else {
+      navigate(-1);
     }
 
     return () => {
       dispatch(setSelectedModule(null));
     };
   }, [module]);
+
+  const handleEditClick = (id: string) => {
+    dispatch(get({ url: module!.operations.find((operation) => operation.code === "ALL_VIEW")!.url, id }));
+  };
+
+  const handleDeleteClick = (id: string) => {
+    dispatch(setDialog({ type: "confirm", opened: true, selectedDataId: id }));
+  };
 
   const buildColumns = () => {
     let columns: Column<object>[] = [
@@ -44,33 +53,42 @@ export const DynamicModule = () => {
       },
     ];
 
-    seqColumns?.forEach((c) => {
+    datas?.seqColumn?.split(",").forEach((c) => {
       let column = datas.c.find((column) => column.i === c);
-      columns.push({
-        title: column!.n,
-        field: column!.i,
-        type: column!.i.includes("Date") ? "datetime" : undefined,
-        dateSetting: {
-          locale: "tr-TR",
-        },
-      });
+
+      if (column) {
+        columns.push({
+          title: column.n,
+          field: column.i,
+          type: column.i.includes("Date") ? "datetime" : undefined,
+          dateSetting: {
+            locale: "tr-TR",
+          },
+        });
+      }
     });
 
-    columns.push({
-      title: "",
-      field: "action",
-      editable: "never",
-      render: (rowData: any) => (
-        <div className="action-button">
-          {/* <IconButton onClick={() => handleEditClick(rowData.id)} className="edit-btn">
-            <Icon>edit</Icon>
-          </IconButton>
-          <IconButton onClick={() => handleRemove(rowData.id)} className="remove-btn">
-            <Icon>delete</Icon>
-          </IconButton> */}
-        </div>
-      ),
-    });
+    if (module) {
+      columns.push({
+        title: "",
+        field: "action",
+        editable: "never",
+        render: (rowData: any) => (
+          <div className="action-buttons">
+            {checkUserAccess(module, "EDIT") && (
+              <IconButton onClick={() => handleEditClick(rowData.id)} className="edit-btn" size="small">
+                <Icon>edit</Icon>
+              </IconButton>
+            )}
+            {checkUserAccess(module, "DELETE") && (
+              <IconButton onClick={() => handleDeleteClick(rowData.id)} className="remove-btn" size="small">
+                <Icon>delete</Icon>
+              </IconButton>
+            )}
+          </div>
+        ),
+      });
+    }
 
     return columns;
   };
@@ -86,17 +104,31 @@ export const DynamicModule = () => {
   };
 
   const handleAddClick = () => {
-    dispatch(setDialog({ opened: true, type: "add" }));
+    dispatch(setDialog({ opened: true, type: "add", selectedDataId: null }));
   };
 
   const handleDialogClose = useCallback(() => {
     dispatch(setDialog({ opened: false, type: "" }));
   }, []);
 
-  const handleSubmit = useCallback((data: any) => {
-    if (checkUserAccess(module!, "ADD")) {
-      dispatch(add(data));
-    }
+  const handleSubmit = useCallback(
+    (data: any) => {
+      if (dialog.type === "edit") {
+        dispatch(edit({ url: module!.operations.find((operation) => operation.code === "EDIT")!.url, data }));
+      } else {
+        dispatch(add({ url: module!.operations.find((operation) => operation.code === "ADD")!.url, data }));
+      }
+    },
+    [dialog.type]
+  );
+
+  const handleDeleteConfirm = useCallback(() => {
+    dispatch(
+      remove({
+        url: module!.operations.find((operation) => operation.code === "DELETE")!.url,
+        id: dialog.selectedDataId!,
+      })
+    );
   }, []);
 
   return module && datas ? (
@@ -104,7 +136,7 @@ export const DynamicModule = () => {
       <StyledDynamicModule>
         <FilterBar
           addButton={{
-            show: true,
+            show: checkUserAccess(module!, "ADD"),
             title: t("add"),
             onClick: handleAddClick,
           }}
@@ -121,7 +153,15 @@ export const DynamicModule = () => {
           }}
         />
       </StyledDynamicModule>
-      <AddOrEdit dialog={dialog} onClose={handleDialogClose} onSubmit={handleSubmit} />
+      <AddOrEditDialog dialog={dialog} onClose={handleDialogClose} onSubmit={handleSubmit} />
+      <ConfirmDialog
+        open={dialog.type === "confirm" && dialog.opened}
+        onClose={handleDialogClose}
+        onConfirm={handleDeleteConfirm}
+        confirmLoading={loading.remove}
+        content="Are you sure to delete?"
+        title="Delete"
+      />
     </>
   ) : (
     <></>

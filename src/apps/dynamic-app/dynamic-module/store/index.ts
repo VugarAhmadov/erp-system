@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getAll } from "./actions";
+import { add, edit, get, getAll, remove } from "./actions";
 import { IDialog, IGetAllTable } from "types";
 import { ILoading } from "./types";
 
@@ -7,22 +7,23 @@ export interface IDynamicState {
   loading: ILoading;
   datas: IGetAllTable<any>;
   dialog: IDialog;
-  selectedData: string;
+  data: any;
 }
 
 const initialState: IDynamicState = {
   loading: {
     getAll: false,
+    get: false,
     add: false,
     edit: false,
     remove: false,
   },
   datas: {} as IGetAllTable<any>,
+  data: {},
   dialog: {
     opened: false,
     type: "",
   },
-  selectedData: "",
 };
 
 export const dynamicSlice = createSlice({
@@ -31,9 +32,7 @@ export const dynamicSlice = createSlice({
   reducers: {
     setDialog: (state, action: PayloadAction<IDialog>) => {
       state.dialog = action.payload;
-    },
-    setSelectedData: (state, action: PayloadAction<string>) => {
-      state.selectedData = action.payload;
+      state.data = {};
     },
   },
   extraReducers: {
@@ -50,44 +49,65 @@ export const dynamicSlice = createSlice({
       state.datas = action.payload;
     },
     //* GET ALL END
+    //* GET
+    [get.pending.type]: (state) => {
+      state.loading.get = true;
+    },
+    [get.rejected.type]: (state, { payload }) => {
+      state.loading.get = false;
+      state.data = null;
+    },
+    [get.fulfilled.type]: (state, action: PayloadAction<any>) => {
+      state.loading.get = false;
+      state.data = action.payload;
+      state.dialog.opened = true;
+      state.dialog.type = "edit";
+      state.dialog.selectedDataId = action.payload.id;
+    },
+    //* GET END
     //* ADD
-    // [add.pending.type]: (state) => {
-    //   state.loading.add = true;
-    // },
-    // [add.rejected.type]: (state) => {
-    //   state.loading.add = false;
-    // },
-    // [add.fulfilled.type]: (state) => {
-    //   state.loading.add = false;
-    //   state.dialog.opened = false;
-    //   state.dialog.type = "";
-    // },
+    [add.pending.type]: (state) => {
+      state.loading.add = true;
+    },
+    [add.rejected.type]: (state) => {
+      state.loading.add = false;
+    },
+    [add.fulfilled.type]: (state) => {
+      state.loading.add = false;
+      state.dialog.opened = false;
+      state.dialog.type = "";
+      state.dialog.selectedDataId = null;
+    },
     // //* ADD END
     // //* EDIT
-    // [edit.pending.type]: (state) => {
-    //   state.loading.edit = true;
-    // },
-    // [edit.rejected.type]: (state) => {
-    //   state.loading.edit = false;
-    // },
-    // [edit.fulfilled.type]: (state) => {
-    //   state.loading.edit = false;
-    //   state.dialog.opened = false;
-    //   state.dialog.type = "";
-    // },
+    [edit.pending.type]: (state) => {
+      state.loading.edit = true;
+    },
+    [edit.rejected.type]: (state) => {
+      state.loading.edit = false;
+    },
+    [edit.fulfilled.type]: (state) => {
+      state.loading.edit = false;
+      state.dialog.opened = false;
+      state.dialog.type = "";
+      state.dialog.selectedDataId = null;
+    },
     // //* EDIT END
-    // //* REMOVE
-    // [remove.pending.type]: (state) => {
-    //   state.loading.remove = true;
-    // },
-    // [remove.rejected.type]: (state) => {
-    //   state.loading.remove = false;
-    // },
-    // [remove.fulfilled.type]: (state) => {
-    //   state.loading.remove = false;
-    // },
+    //* REMOVE
+    [remove.pending.type]: (state) => {
+      state.loading.remove = true;
+    },
+    [remove.rejected.type]: (state) => {
+      state.loading.remove = false;
+    },
+    [remove.fulfilled.type]: (state) => {
+      state.loading.remove = false;
+      state.dialog.opened = false;
+      state.dialog.type = "";
+      state.dialog.selectedDataId = null;
+    },
     //* REMOVE END
   },
 });
 
-export const { setDialog, setSelectedData } = dynamicSlice.actions;
+export const { setDialog } = dynamicSlice.actions;

@@ -14,3 +14,23 @@ export interface IAddOrEditApplicationRequest {
   parentId: string;
   id?: string;
 }
+
+export interface IGetRequest {
+  url: string;
+  id: string;
+}
+
+export interface IAddRequest {
+  url: string;
+  data: any;
+}
+
+export interface IEditRequest {
+  url: string;
+  data: any;
+}
+
+export interface IRemoveRequest {
+  url: string;
+  id: string;
+}

@@ -10,3 +10,4 @@ export { Photo } from "./photo";
 export { Button } from "./button";
 export { NotFound } from "./not-found";
 export { RouterOutlet } from "./router-outlet";
+export { ConfirmDialog } from "./confirm-dialog";
