@@ -2,16 +2,19 @@ import React, { FC, memo } from "react";
 import { Icon, IconButton } from "@mui/material";
 import { StyledGridColumn } from "./grid-column.styled";
 import { useDispatch } from "react-redux";
-import { addElement, deleteGridColumn } from "apps/security/configuration/configurations-new/store";
+import { addElement, addItem, deleteGridColumn } from "apps/security/configuration/configurations-new/store";
 import { ElementsWithDnd } from "../elements-with-dnd";
 import { useDrop } from "react-dnd";
 import { Components } from "../dialog-config/constants";
+import { ICloumn, IRow } from "../types";
+import { uniqueId } from "lodash";
+import { GridRow } from "..";
 
 interface IGridColumn {
-  gridColumn: any;
+  column: ICloumn;
 }
 
-export const GridColumn: FC<IGridColumn> = memo(({ gridColumn }) => {
+export const GridColumn: FC<IGridColumn> = memo(({ column }) => {
   const dispatch = useDispatch();
 
   const [{ isOverGridElement, canDropGridElement }, dropElement] = useDrop(
@@ -19,20 +22,29 @@ export const GridColumn: FC<IGridColumn> = memo(({ gridColumn }) => {
       accept: [Components.ELEMENT, Components.GRID],
       drop(item: any, monitor) {
         dispatch(
-          addElement({
-            element:
-              item.type === "grid-row"
-                ? {
-                    type: "grid-row",
-                    rows: [],
-                    gridRowIndex: gridColumn.gridRowIndex,
-                    gridColumnIndex: gridColumn.index,
-                  }
-                : item,
-            gridRowIndex: gridColumn.gridRowIndex,
-            gridColumnIndex: gridColumn.index,
+          addItem({
+            id: uniqueId(),
+            parentId: column.id,
+            type: "row",
+            index: null,
+            children: [],
           })
         );
+        // dispatch(
+        //   addElement({
+        //     element:
+        //       item.type === "grid-row"
+        //         ? {
+        //             type: "grid-row",
+        //             rows: [],
+        //             gridRowIndex: gridColumn.gridRowIndex,
+        //             gridColumnIndex: gridColumn.index,
+        //           }
+        //         : item,
+        //     gridRowIndex: gridColumn.gridRowIndex,
+        //     gridColumnIndex: gridColumn.index,
+        //   })
+        // );
         return undefined;
       },
       collect: (monitor) => ({
@@ -40,7 +52,7 @@ export const GridColumn: FC<IGridColumn> = memo(({ gridColumn }) => {
         canDropGridElement: monitor.canDrop(),
       }),
     }),
-    [gridColumn]
+    [column]
   );
 
   const isActiveGridElement = isOverGridElement && canDropGridElement;
@@ -52,8 +64,8 @@ export const GridColumn: FC<IGridColumn> = memo(({ gridColumn }) => {
   }
 
   return (
-    <StyledGridColumn item xs={gridColumn.gridColumnSize} ref={dropElement} style={{ backgroundColor }}>
-      <IconButton
+    <StyledGridColumn item xs={column.params.columnSize} ref={dropElement} style={{ backgroundColor }}>
+      {/* <IconButton
         size="small"
         className="column-delete-btn"
         onClick={() =>
@@ -61,8 +73,15 @@ export const GridColumn: FC<IGridColumn> = memo(({ gridColumn }) => {
         }
       >
         <Icon fontSize="small">delete</Icon>
-      </IconButton>
-      {gridColumn?.element.type !== "grid-row" && (
+      </IconButton> */}
+
+      {column.children.length > 0 && column.children[0].type === "row" ? (
+        column.children.map((row) => <GridRow row={row as IRow} key={row.id} />)
+      ) : (
+        <></>
+      )}
+
+      {/* {gridColumn?.element.type !== "grid-row" && (
         <ElementsWithDnd
           element={gridColumn.element}
           // selectData={selectData}
@@ -76,9 +95,6 @@ export const GridColumn: FC<IGridColumn> = memo(({ gridColumn }) => {
           //   })
           // }
         />
-      )}
-      {/* {gridColumn?.element.type === "grid-row" && (
-        
       )} */}
     </StyledGridColumn>
   );

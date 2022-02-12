@@ -20,6 +20,7 @@ export interface IConfigurationsState {
   viewFormDialogOpened: boolean;
   selectedOperationHtmlForm: IGetHtmlFormResponse;
   selectedOperationViewForm: IGetViewFormResponse;
+  content: Array<any>;
   // dictionaryTpyeList: IDictionyType[];
 }
 
@@ -33,6 +34,7 @@ const initialState: IConfigurationsState = {
   viewFormDialogOpened: false,
   selectedOperationHtmlForm: {} as IGetHtmlFormResponse,
   selectedOperationViewForm: {} as IGetViewFormResponse,
+  content: [],
   // dictionaryTpyeList: [],
 };
 
@@ -113,6 +115,12 @@ export const configurationsNewSlice = createSlice({
       copy[gridRowIndex].columns[gridColumnIndex].element.params = params;
       state.selectedOperationHtmlForm.formContent = copy;
     },
+    addItem: (state, action: PayloadAction<any>) => {
+      let copy = [...state.content];
+
+      copy.push(action.payload);
+      state.content = copy;
+    },
   },
   extraReducers: {
     //* GET_DICTIONARY_TYPE_LIST
@@ -173,4 +181,5 @@ export const {
   addElement,
   deleteElement,
   editElement,
+  addItem,
 } = configurationsNewSlice.actions;

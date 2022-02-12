@@ -9,8 +9,11 @@ import { Button } from "components/shared";
 import { Components } from "../dialog-config/constants";
 import { StyledDialogContent } from "./dialog-content.styled";
 import { AppState } from "store";
-import { addGridRow } from "apps/security/configuration/configurations-new/store";
+import { addGridRow, addItem } from "apps/security/configuration/configurations-new/store";
 import { GridRow } from "..";
+import { uniqueId } from "lodash";
+import { createTree } from "helpers";
+import { IRow } from "../types";
 
 interface IDialogContent {
   onSubmit(): void;
@@ -24,13 +27,41 @@ export const DialogContent: FC<IDialogContent> = ({ onSubmit, onClose, gridView 
 
   const selectedOperation = useSelector((state: AppState) => state.configurationsNew.selectedOperationHtmlForm);
 
-  const [, dropRow] = useDrop(
+  const content = useSelector((state: AppState) => state.configurationsNew.content);
+
+  const _content = createTree(content);
+
+  // console.log(content);
+  // console.log("------------------------");
+  // console.log(!content);
+
+  const [{ isOverCurrent }, dropRow] = useDrop(
     () => ({
       accept: Components.GRID,
       drop(item: any, monitor) {
-        dispatch(addGridRow());
+        const didDrop = monitor.didDrop();
+
+        if (didDrop) {
+          return;
+        }
+
+        dispatch(
+          addItem({
+            id: uniqueId(),
+            parentId: null,
+            type: "row",
+            index: null,
+            children: [],
+          })
+        );
+
+        // dispatch(addGridRow());
         return undefined;
       },
+      collect: (monitor) => ({
+        isOver: monitor.isOver(),
+        isOverCurrent: monitor.isOver({ shallow: true }),
+      }),
     }),
     []
   );
@@ -53,8 +84,8 @@ export const DialogContent: FC<IDialogContent> = ({ onSubmit, onClose, gridView 
           onSubmit={() => {}}
           render={({ handleSubmit, values }) => (
             <form onSubmit={handleSubmit}>
-              {selectedOperation.formContent?.map((row) => (
-                <GridRow gridRow={row} key={row.index} />
+              {_content.map((row: IRow) => (
+                <GridRow row={row} key={row.id} />
               ))}
             </form>
           )}
