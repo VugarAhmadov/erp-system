@@ -9,7 +9,7 @@ import { Button } from "components/shared";
 import { Components } from "../dialog-config/constants";
 import { StyledDialogContent } from "./dialog-content.styled";
 import { AppState } from "store";
-import { addGridRow, addItem } from "apps/security/configuration/configurations-new/store";
+import { addItem } from "apps/security/configuration/configurations-new/store";
 import { GridRow } from "..";
 import { uniqueId } from "lodash";
 import { createTree } from "helpers";
@@ -31,11 +31,7 @@ export const DialogContent: FC<IDialogContent> = ({ onSubmit, onClose, gridView 
 
   const _content = createTree(content);
 
-  // console.log(content);
-  // console.log("------------------------");
-  // console.log(!content);
-
-  const [{ isOverCurrent }, dropRow] = useDrop(
+  const [, dropRow] = useDrop(
     () => ({
       accept: Components.GRID,
       drop(item: any, monitor) {
@@ -50,20 +46,15 @@ export const DialogContent: FC<IDialogContent> = ({ onSubmit, onClose, gridView 
             id: uniqueId(),
             parentId: null,
             type: "row",
-            index: null,
+            index: _content.length,
             children: [],
           })
         );
 
-        // dispatch(addGridRow());
         return undefined;
       },
-      collect: (monitor) => ({
-        isOver: monitor.isOver(),
-        isOverCurrent: monitor.isOver({ shallow: true }),
-      }),
     }),
-    []
+    [_content]
   );
 
   return (

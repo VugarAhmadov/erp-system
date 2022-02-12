@@ -3,7 +3,7 @@ export interface IRow {
   parentId: number;
   index: number;
   type: "row";
-  params: any;
+  params?: any;
   children: ICloumn[];
 }
 
@@ -12,7 +12,7 @@ export interface ICloumn {
   parentId: number;
   index: number;
   type: "column";
-  params: any;
+  params?: any;
   children: IRow[] | [IComponent];
 }
 
@@ -20,5 +20,5 @@ export interface IComponent {
   id: number;
   parentId: number;
   type: "input";
-  params: any;
+  params?: any;
 }

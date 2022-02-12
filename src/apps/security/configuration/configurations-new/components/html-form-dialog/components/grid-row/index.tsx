@@ -17,21 +17,21 @@ export const GridRow: FC<IGridRow> = memo(({ row }) => {
   const dispatch = useDispatch();
 
   const getColumnIsAllowed = (columnSize: number = 0) => {
-    // if (gridRow.columns.length > 0) {
-    //   const sumOfColumnSizes =
-    //     gridRow.columns.map((c: any) => c.gridColumnSize).reduce((prev: number, curr: number) => prev + curr, 0) +
-    //     columnSize;
+    if (row.children.length > 0) {
+      const sumOfColumnSizes =
+        row.children.map((c: any) => c.gridColumnSize).reduce((prev: number, curr: number) => prev + curr, 0) +
+        columnSize;
 
-    //   if (sumOfColumnSizes <= 12) {
-    //     return true;
-    //   } else {
-    //     return false;
-    //   }
-    // }
+      if (sumOfColumnSizes <= 12) {
+        return true;
+      } else {
+        return false;
+      }
+    }
     return true;
   };
 
-  const [{ isOverGridColumn, canDropGridColumn }, dropColumn] = useDrop(
+  const [{ isOverColumn, canDropColumn }, dropColumn] = useDrop(
     () => ({
       accept: Components.COLUMN,
       drop(item: { columnSize: number }, monitor) {
@@ -53,22 +53,22 @@ export const GridRow: FC<IGridRow> = memo(({ row }) => {
             children: [],
           })
         );
-        // dispatch(addGridColumn({ gridRowIndex: gridRow.index, gridColumnSize: item.columnSize }));
+
         return undefined;
       },
       collect: (monitor) => ({
-        isOverGridColumn: monitor.isOver() && getColumnIsAllowed(),
-        canDropGridColumn: monitor.canDrop() && getColumnIsAllowed(),
+        isOverColumn: monitor.isOver() && getColumnIsAllowed(),
+        canDropColumn: monitor.canDrop() && getColumnIsAllowed(),
       }),
     }),
     [row]
   );
 
-  const isActiveGridRow = isOverGridColumn && canDropGridColumn;
+  const isActiveRow = isOverColumn && canDropColumn;
   let backgroundColor = "rgb(204, 204, 204, 0.2)";
-  if (isActiveGridRow) {
+  if (isActiveRow) {
     backgroundColor = "darkgreen";
-  } else if (canDropGridColumn) {
+  } else if (canDropColumn) {
     backgroundColor = "darkkhaki";
   }
 
