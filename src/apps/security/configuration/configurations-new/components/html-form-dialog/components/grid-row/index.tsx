@@ -4,7 +4,12 @@ import { useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
 import { Components } from "../dialog-config/constants";
 import { StyledGridRow } from "./grid-row.styled";
-import { addGridColumn, addItem, deleteGridRow } from "apps/security/configuration/configurations-new/store";
+import {
+  addGridColumn,
+  addItem,
+  deleteGridRow,
+  deleteItem,
+} from "apps/security/configuration/configurations-new/store";
 import { GridColumn } from "..";
 import { ICloumn, IRow } from "../types";
 import { uniqueId } from "lodash";
@@ -16,21 +21,6 @@ interface IGridRow {
 export const GridRow: FC<IGridRow> = memo(({ row }) => {
   const dispatch = useDispatch();
 
-  const getColumnIsAllowed = (columnSize: number = 0) => {
-    if (row.children.length > 0) {
-      const sumOfColumnSizes =
-        row.children.map((c: any) => c.gridColumnSize).reduce((prev: number, curr: number) => prev + curr, 0) +
-        columnSize;
-
-      if (sumOfColumnSizes <= 12) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-    return true;
-  };
-
   const [{ isOverColumn, canDropColumn }, dropColumn] = useDrop(
     () => ({
       accept: Components.COLUMN,
@@ -39,13 +29,10 @@ export const GridRow: FC<IGridRow> = memo(({ row }) => {
 
         if (didDrop) return;
 
-        if (!getColumnIsAllowed(item.columnSize)) return;
-
         dispatch(
           addItem({
             id: uniqueId(),
             parentId: row.id,
-            index: null,
             type: "column",
             params: {
               columnSize: item.columnSize,
@@ -57,8 +44,8 @@ export const GridRow: FC<IGridRow> = memo(({ row }) => {
         return undefined;
       },
       collect: (monitor) => ({
-        isOverColumn: monitor.isOver() && getColumnIsAllowed(),
-        canDropColumn: monitor.canDrop() && getColumnIsAllowed(),
+        isOverColumn: monitor.isOver(),
+        canDropColumn: monitor.canDrop(),
       }),
     }),
     [row]
@@ -74,9 +61,9 @@ export const GridRow: FC<IGridRow> = memo(({ row }) => {
 
   return (
     <StyledGridRow container ref={dropColumn} style={{ backgroundColor }}>
-      {/* <IconButton size="small" className="row-delete-btn" onClick={() => dispatch(deleteGridRow(gridRow.index))}>
+      <IconButton size="small" className="row-delete-btn" onClick={() => dispatch(deleteItem(row.id))}>
         <Icon fontSize="small">delete</Icon>
-      </IconButton> */}
+      </IconButton>
       {row.children.map((column: ICloumn) => (
         <GridColumn key={column.id} column={column} />
       ))}

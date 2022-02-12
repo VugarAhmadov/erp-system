@@ -37,16 +37,13 @@ export const DialogContent: FC<IDialogContent> = ({ onSubmit, onClose, gridView 
       drop(item: any, monitor) {
         const didDrop = monitor.didDrop();
 
-        if (didDrop) {
-          return;
-        }
+        if (didDrop) return;
 
         dispatch(
           addItem({
             id: uniqueId(),
             parentId: null,
             type: "row",
-            index: _content.length,
             children: [],
           })
         );

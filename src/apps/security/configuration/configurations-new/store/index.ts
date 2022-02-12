@@ -1,6 +1,7 @@
 import { Breakpoint } from "@mui/material";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IOperation } from "apps/auth/store/types";
+import { deleteTreeNode } from "helpers";
 import { getViewForm, getDictionaryTypeList, getHtmlForm } from "./actions";
 import {
   IAddColumnPayload,
@@ -121,6 +122,11 @@ export const configurationsNewSlice = createSlice({
       copy.push(action.payload);
       state.content = copy;
     },
+    deleteItem: (state, action: PayloadAction<any>) => {
+      let copy = [...state.content];
+
+      state.content = deleteTreeNode(copy, action.payload);
+    },
   },
   extraReducers: {
     //* GET_DICTIONARY_TYPE_LIST
@@ -182,4 +188,5 @@ export const {
   deleteElement,
   editElement,
   addItem,
+  deleteItem,
 } = configurationsNewSlice.actions;
