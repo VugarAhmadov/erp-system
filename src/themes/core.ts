@@ -54,5 +54,26 @@ export const coreTheme = {
         size: "small",
       },
     },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          fontSize: "0.875rem",
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        input: {
+          padding: "0.375rem 0.875rem",
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          fontSize: "0.875rem",
+        },
+      },
+    },
   },
 } as ThemeOptions;
