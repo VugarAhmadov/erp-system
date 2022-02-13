@@ -21,10 +21,9 @@ interface ISelectElement {
   withDnd?: boolean;
   params: ISelectParams;
   // onSelectChange(data: any): void;
-  gridRowIndex: number;
-  gridColumnIndex: number;
-  onEdit?(type: string, gridRowIndex: number, gridColumnIndex: number): void;
-  onDelete?(gridRowIndex: number, gridColumnIndex: number): void;
+  id: number;
+  onEdit?(type: string, id: number): void;
+  onDelete?(id: number): void;
 }
 
 export const SelectElement: FC<ISelectElement> = ({ withDnd, params, ...rest }) => {
@@ -44,7 +43,7 @@ export const SelectElement: FC<ISelectElement> = ({ withDnd, params, ...rest }) 
 
   const select = (
     <Select
-      name={model || `model-${rest.gridRowIndex}-${rest.gridColumnIndex}`}
+      name={model || `model-${rest.id}`}
       data={selectData.map((row) => ({ value: row.id, label: dataType === "dic" ? row.name : row[dataName!] }))}
       required={!!required}
       label={label}

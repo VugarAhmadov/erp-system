@@ -15,10 +15,9 @@ export interface IRadioParams {
 interface IRadioElement {
   withDnd?: boolean;
   params: IRadioParams;
-  gridRowIndex: number;
-  gridColumnIndex: number;
-  onEdit?(type: string, gridRowIndex: number, gridColumnIndex: number): void;
-  onDelete?(gridRowIndex: number, gridColumnIndex: number): void;
+  id: number;
+  onEdit?(type: string, id: number): void;
+  onDelete?(id: number): void;
 }
 
 export const RadioElement: FC<IRadioElement> = ({ withDnd, params, ...rest }) => {
@@ -26,7 +25,7 @@ export const RadioElement: FC<IRadioElement> = ({ withDnd, params, ...rest }) =>
 
   const radio = (
     <Radios
-      name={model || `model-${rest.gridRowIndex}-${rest.gridColumnIndex}`}
+      name={model || `model-${rest.id}`}
       label={label}
       data={radioData || []}
       required={!!required}

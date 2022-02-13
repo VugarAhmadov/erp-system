@@ -15,10 +15,9 @@ interface IImageElement {
   withDnd?: boolean;
   params: IImageParams;
   dependedFieldData?: any;
-  gridRowIndex: number;
-  gridColumnIndex: number;
-  onEdit?(type: string, gridRowIndex: number, gridColumnIndex: number): void;
-  onDelete?(gridRowIndex: number, gridColumnIndex: number): void;
+  id: number;
+  onEdit?(type: string, id: number): void;
+  onDelete?(id: number): void;
 }
 
 export const ImageElement: FC<IImageElement> = ({ withDnd, params, dependedFieldData, ...rest }) => {

@@ -5,45 +5,42 @@ import { StyledElement } from "./element-with-dnd.styled";
 import { Components } from "../../../dialog-config/constants";
 
 export interface IElementWithDnd {
-  onEdit?(type: string, gridRowIndex: number, gridColumnIndex: number): void;
-  onDelete?(gridRowIndex: number, gridColumnIndex: number): void;
+  onEdit?(type: string, id: number): void;
+  onDelete?(id: number): void;
   type: string;
-  gridRowIndex: number;
-  gridColumnIndex: number;
+  id: number;
   params: any;
 }
 
-export const ElementWithDnd: FC<IElementWithDnd> = memo(
-  ({ children, onEdit, onDelete, type, gridRowIndex, gridColumnIndex, params }) => {
-    const [{ isDragging }, drag] = useDrag(
-      () => ({
-        type: Components.ELEMENT,
-        item: { type, move: true, gridRowIndex, gridColumnIndex, params },
-        collect: (monitor) => ({
-          isDragging: monitor.isDragging(),
-        }),
+export const ElementWithDnd: FC<IElementWithDnd> = memo(({ children, onEdit, onDelete, type, id, params }) => {
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      type: Components.ELEMENT,
+      item: { type, move: true, id, params },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
       }),
-      [gridRowIndex, gridColumnIndex]
-    );
+    }),
+    [id]
+  );
 
-    return (
-      <StyledElement
-        ref={drag}
-        style={{
-          height: isDragging ? 0 : "auto",
-          opacity: isDragging ? 0 : 1,
-        }}
-      >
-        {children}
-        <div className="action-btns">
-          <IconButton size="small" className="edit-btn" onClick={() => onEdit!(type, gridRowIndex, gridColumnIndex)}>
-            <Icon>edit</Icon>
-          </IconButton>
-          <IconButton className="delete-btn" onClick={() => onDelete!(gridRowIndex, gridColumnIndex)}>
-            <Icon>delete</Icon>
-          </IconButton>
-        </div>
-      </StyledElement>
-    );
-  }
-);
+  return (
+    <StyledElement
+      ref={drag}
+      style={{
+        height: isDragging ? 0 : "auto",
+        opacity: isDragging ? 0 : 1,
+      }}
+    >
+      {children}
+      <div className="action-btns">
+        <IconButton size="small" className="edit-btn" onClick={() => onEdit!(type, id)}>
+          <Icon>edit</Icon>
+        </IconButton>
+        <IconButton className="delete-btn" onClick={() => onDelete!(id)}>
+          <Icon>delete</Icon>
+        </IconButton>
+      </div>
+    </StyledElement>
+  );
+});

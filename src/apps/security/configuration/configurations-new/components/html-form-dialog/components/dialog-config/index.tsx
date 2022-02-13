@@ -34,12 +34,12 @@ export const DialogConfig: FC<IDialogConfig> = memo(
     const [, dragGridRow] = useDrag(() => ({
       type: Components.GRID,
       item: {
-        type: "grid-row",
+        type: "row",
       },
     }));
 
     const [, dragGridColumn] = useDrag(
-      () => ({ type: Components.COLUMN, item: { type: "grid-column", columnSize: Number(columnSize) } }),
+      () => ({ type: Components.COLUMN, item: { type: "column", columnSize: Number(columnSize) } }),
       [columnSize]
     );
 

@@ -1,18 +1,9 @@
 import { Breakpoint } from "@mui/material";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IOperation } from "apps/auth/store/types";
+import { deleteTreeNode } from "helpers";
 import { getViewForm, getDictionaryTypeList, getHtmlForm } from "./actions";
-import {
-  IAddColumnPayload,
-  IAddElementPayload,
-  IDeleteColumnPayload,
-  IDeleteElementPayload,
-  IDictionyType,
-  IEditElementPayload,
-  IGetHtmlFormResponse,
-  IGetViewFormResponse,
-  ILoading,
-} from "./types";
+import { IDictionyType, IEditElementPayload, IGetHtmlFormResponse, IGetViewFormResponse, ILoading } from "./types";
 
 export interface IConfigurationsState {
   loading: ILoading;
@@ -49,69 +40,24 @@ export const configurationsNewSlice = createSlice({
     setDialogSize: (state, action: PayloadAction<Breakpoint>) => {
       state.selectedOperationHtmlForm.dialogSize = action.payload;
     },
-    addGridRow: (state) => {
+    addItem: (state, action: PayloadAction<any>) => {
       let copy = [...state.selectedOperationHtmlForm.formContent];
-      copy.push({
-        index: copy.length,
-        type: "grid-row",
-        columns: [],
-      });
-      state.selectedOperationHtmlForm.formContent = copy;
-    },
-    deleteGridRow: (state, action: PayloadAction<number>) => {
-      let copy = [...state.selectedOperationHtmlForm.formContent];
-      copy.splice(action.payload, 1);
-      copy.forEach((el, i) => {
-        el.index = i;
-      });
-      state.selectedOperationHtmlForm.formContent = copy;
-    },
-    addGridColumn: (state, action: PayloadAction<IAddColumnPayload>) => {
-      const { gridRowIndex, gridColumnSize } = action.payload;
-      let copy = [...state.selectedOperationHtmlForm.formContent];
-      copy[gridRowIndex].columns?.push({
-        index: copy[gridRowIndex].columns.length,
-        type: "grid-column",
-        element: {},
-        gridRowIndex,
-        gridColumnSize,
-      });
-      state.selectedOperationHtmlForm.formContent = copy;
-    },
-    deleteGridColumn: (state, action: PayloadAction<IDeleteColumnPayload>) => {
-      const { gridRowIndex, gridColumnIndex } = action.payload;
 
-      let copy = [...state.selectedOperationHtmlForm.formContent];
-      copy[gridRowIndex].columns.splice(gridColumnIndex, 1);
-      // copy[gridRowIndex].columns.map((c: any, i: number) => ({ ...c, index: i }));
-      copy[gridRowIndex].columns.forEach((c: any, i: number) => {
-        c.index = i;
-      });
+      copy.push(action.payload);
       state.selectedOperationHtmlForm.formContent = copy;
     },
-    addElement: (state, action: PayloadAction<IAddElementPayload>) => {
-      const { gridRowIndex, gridColumnIndex, element } = action.payload;
+    editItem: (state, action: PayloadAction<any>) => {
+      const { id, params } = action.payload;
       let copy = [...state.selectedOperationHtmlForm.formContent];
-      if (element.move) {
-        copy[element.gridRowIndex].columns[element.gridColumnIndex].element = {};
-      }
 
-      copy[gridRowIndex].columns[gridColumnIndex].element = { ...element, gridRowIndex, gridColumnIndex };
+      copy.find((c) => c.id === id).params = params;
+
       state.selectedOperationHtmlForm.formContent = copy;
     },
-    deleteElement: (state, action: PayloadAction<IDeleteElementPayload>) => {
-      const { gridRowIndex, gridColumnIndex } = action.payload;
-
+    deleteItem: (state, action: PayloadAction<number>) => {
       let copy = [...state.selectedOperationHtmlForm.formContent];
-      copy[gridRowIndex].columns[gridColumnIndex].element = {};
-      state.selectedOperationHtmlForm.formContent = copy;
-    },
-    editElement: (state, action: PayloadAction<IEditElementPayload>) => {
-      const { gridRowIndex, gridColumnIndex, params } = action.payload;
 
-      let copy = [...state.selectedOperationHtmlForm.formContent];
-      copy[gridRowIndex].columns[gridColumnIndex].element.params = params;
-      state.selectedOperationHtmlForm.formContent = copy;
+      state.selectedOperationHtmlForm.formContent = deleteTreeNode(copy, action.payload);
     },
   },
   extraReducers: {
@@ -163,14 +109,4 @@ export const configurationsNewSlice = createSlice({
   },
 });
 
-export const {
-  closeDialog,
-  setDialogSize,
-  addGridRow,
-  deleteGridRow,
-  addGridColumn,
-  deleteGridColumn,
-  addElement,
-  deleteElement,
-  editElement,
-} = configurationsNewSlice.actions;
+export const { closeDialog, setDialogSize, addItem, editItem, deleteItem } = configurationsNewSlice.actions;

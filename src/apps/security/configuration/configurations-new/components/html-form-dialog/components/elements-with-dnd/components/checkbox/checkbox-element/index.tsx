@@ -12,10 +12,9 @@ export interface ICheckboxParams {
 interface ICheckboxElement {
   withDnd?: boolean;
   params: ICheckboxParams;
-  gridRowIndex: number;
-  gridColumnIndex: number;
-  onEdit?(type: string, gridRowIndex: number, gridColumnIndex: number): void;
-  onDelete?(gridRowIndex: number, gridColumnIndex: number): void;
+  id: number;
+  onEdit?(type: string, id: number): void;
+  onDelete?(id: number): void;
 }
 
 export const CheckboxElement: FC<ICheckboxElement> = ({ withDnd, params, ...rest }) => {
@@ -23,7 +22,7 @@ export const CheckboxElement: FC<ICheckboxElement> = ({ withDnd, params, ...rest
 
   const checkbox = (
     <Checkboxes
-      name={model || `model-${rest.gridRowIndex}-${rest.gridColumnIndex}`}
+      name={model || `model-${rest.id}`}
       data={{
         label: label || "",
         value: "0",

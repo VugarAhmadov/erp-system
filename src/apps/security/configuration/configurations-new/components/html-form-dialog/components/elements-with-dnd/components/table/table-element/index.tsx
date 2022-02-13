@@ -14,10 +14,9 @@ export interface ITableParams {
 interface ITableElement {
   withDnd?: boolean;
   params: ITableParams;
-  gridRowIndex: number;
-  gridColumnIndex: number;
-  onEdit?(type: string, gridRowIndex: number, gridColumnIndex: number): void;
-  onDelete?(gridRowIndex: number, gridColumnIndex: number): void;
+  id: number;
+  onEdit?(type: string, id: number): void;
+  onDelete?(id: number): void;
 }
 
 export const TableElement: FC<ITableElement> = ({ withDnd, params, ...rest }) => {
