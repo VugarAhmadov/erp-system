@@ -4,12 +4,7 @@ import { useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
 import { Components } from "../dialog-config/constants";
 import { StyledGridRow } from "./grid-row.styled";
-import {
-  addGridColumn,
-  addItem,
-  deleteGridRow,
-  deleteItem,
-} from "apps/security/configuration/configurations-new/store";
+import { addItem, deleteItem } from "apps/security/configuration/configurations-new/store";
 import { GridColumn } from "..";
 import { ICloumn, IRow } from "../types";
 import { uniqueId } from "lodash";

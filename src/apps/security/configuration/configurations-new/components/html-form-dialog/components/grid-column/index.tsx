@@ -2,12 +2,7 @@ import React, { FC, memo } from "react";
 import { Icon, IconButton } from "@mui/material";
 import { StyledGridColumn } from "./grid-column.styled";
 import { useDispatch } from "react-redux";
-import {
-  addElement,
-  addItem,
-  deleteGridColumn,
-  deleteItem,
-} from "apps/security/configuration/configurations-new/store";
+import { addItem, deleteItem } from "apps/security/configuration/configurations-new/store";
 import { ElementsWithDnd } from "../elements-with-dnd";
 import { useDrop } from "react-dnd";
 import { Components } from "../dialog-config/constants";

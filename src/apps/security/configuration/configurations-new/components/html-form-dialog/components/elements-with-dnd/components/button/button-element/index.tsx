@@ -15,11 +15,10 @@ export interface IButtonParams {
 
 interface IButtonElement {
   withDnd?: boolean;
-  gridRowIndex: number;
-  gridColumnIndex: number;
+  id: number;
   params: IButtonParams;
-  onEdit?(type: string, gridRowIndex: number, gridColumnIndex: number): void;
-  onDelete?(gridRowIndex: number, gridColumnIndex: number): void;
+  onEdit?(type: string, id: number): void;
+  onDelete?(id: number): void;
 }
 
 export const ButtonElement: FC<IButtonElement> = ({ withDnd, params, ...rest }) => {

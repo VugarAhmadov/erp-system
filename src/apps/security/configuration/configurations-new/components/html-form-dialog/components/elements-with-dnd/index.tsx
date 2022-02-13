@@ -1,5 +1,5 @@
 import React, { FC, Fragment, memo, useCallback, useState } from "react";
-import { deleteElement, editElement } from "apps/security/configuration/configurations-new/store";
+import { deleteItem, editItem } from "apps/security/configuration/configurations-new/store";
 import { useDispatch } from "react-redux";
 import { ButtonDialog, ButtonElement, IButtonParams } from "./components/button";
 import { CheckboxDialog, CheckboxElement, ICheckboxParams } from "./components/checkbox";
@@ -39,23 +39,22 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
     },
   });
 
-  const handleDialogEdit = (type: string, rowIndex: number, columnIndex: number) => {
+  const handleDialogEdit = (type: string, id: number) => {
     setDialog((state) => ({
       open: { ...state.open, [type]: true },
     }));
   };
 
   const handleDialogClose = useCallback((type: string) => {
-    setDialog((state) => ({ open: { ...state.open, [type]: false }, data: null }));
+    setDialog((state) => ({ open: { ...state.open, [type]: false } }));
   }, []);
 
-  const handleElementDelete = (gridRowIndex: number, gridColumnIndex: number) => {
-    dispatch(deleteElement({ gridRowIndex, gridColumnIndex }));
+  const handleElementDelete = (id: number) => {
+    dispatch(deleteItem(id));
   };
 
   const handleElementEdit = (
-    gridRowIndex: number,
-    gridColumnIndex: number,
+    id: number,
     data:
       | IButtonParams
       | IInputParams
@@ -69,7 +68,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
       | IImageParams
       | IFileUploadParams
   ) => {
-    dispatch(editElement({ gridRowIndex, gridColumnIndex, params: data }));
+    dispatch(editItem({ id, params: data }));
   };
 
   return (
@@ -80,14 +79,13 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
-            gridRowIndex={element.gridRowIndex}
-            gridColumnIndex={element.gridColumnIndex}
+            id={element.id}
             params={element.params}
           />
           <ButtonDialog
             open={dialog.open.button}
             onClose={() => handleDialogClose("button")}
-            onSubmit={(data: IButtonParams) => handleElementEdit(element.gridRowIndex, element.gridColumnIndex, data)}
+            onSubmit={(data: IButtonParams) => handleElementEdit(element.id, data)}
             params={element.params}
           />
         </>
@@ -98,8 +96,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
-            gridRowIndex={element.gridRowIndex}
-            gridColumnIndex={element.gridColumnIndex}
+            id={element.id}
             params={element.params}
             dependedFieldData={
               element.params?.dependedComponent === "select" && element.params.dependedModelName
@@ -110,7 +107,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
           <InputDialog
             open={dialog.open.input}
             onClose={() => handleDialogClose("input")}
-            onSubmit={(data: IInputParams) => handleElementEdit(element.gridRowIndex, element.gridColumnIndex, data)}
+            onSubmit={(data: IInputParams) => handleElementEdit(element.id, data)}
             params={element.params}
             // dependableModelNames={formElements?.filter((e) => e.element === "select").map((e) => e.params.model)}
           />
@@ -122,16 +119,13 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
-            gridRowIndex={element.gridRowIndex}
-            gridColumnIndex={element.gridColumnIndex}
+            id={element.id}
             params={element.params}
           />
           <DatepickerDialog
             open={dialog.open.datepicker}
             onClose={() => handleDialogClose("datepicker")}
-            onSubmit={(data: IDatepickerParams) =>
-              handleElementEdit(element.gridRowIndex, element.gridColumnIndex, data)
-            }
+            onSubmit={(data: IDatepickerParams) => handleElementEdit(element.id, data)}
             params={element.params}
           />
         </>
@@ -142,15 +136,14 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
-            gridRowIndex={element.gridRowIndex}
-            gridColumnIndex={element.gridColumnIndex}
+            id={element.id}
             params={element.params}
             // onSelectChange={(data: any) => onSelectChange(data)}
           />
           <SelectDialog
             open={dialog.open.select}
             onClose={() => handleDialogClose("select")}
-            onSubmit={(data: ISelectParams) => handleElementEdit(element.gridRowIndex, element.gridColumnIndex, data)}
+            onSubmit={(data: ISelectParams) => handleElementEdit(element.id, data)}
             params={element.params}
           />
         </>
@@ -161,14 +154,13 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
-            gridRowIndex={element.gridRowIndex}
-            gridColumnIndex={element.gridColumnIndex}
+            id={element.id}
             params={element.params}
           />
           <LabelDialog
             open={dialog.open.label}
             onClose={() => handleDialogClose("label")}
-            onSubmit={(data: ILabelParams) => handleElementEdit(element.gridRowIndex, element.gridColumnIndex, data)}
+            onSubmit={(data: ILabelParams) => handleElementEdit(element.id, data)}
             params={element.params}
           />
         </>
@@ -179,14 +171,13 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
-            gridRowIndex={element.gridRowIndex}
-            gridColumnIndex={element.gridColumnIndex}
+            id={element.id}
             params={element.params}
           />
           <CheckboxDialog
             open={dialog.open.checkbox}
             onClose={() => handleDialogClose("checkbox")}
-            onSubmit={(data: ICheckboxParams) => handleElementEdit(element.gridRowIndex, element.gridColumnIndex, data)}
+            onSubmit={(data: ICheckboxParams) => handleElementEdit(element.id, data)}
             params={element.params}
           />
         </>
@@ -198,14 +189,13 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
-            gridRowIndex={element.gridRowIndex}
-            gridColumnIndex={element.gridColumnIndex}
+            id={element.id}
             params={element.params}
           />
           <RadioDialog
             open={dialog.open.radio}
             onClose={() => handleDialogClose("radio")}
-            onSubmit={(data: IRadioParams) => handleElementEdit(element.gridRowIndex, element.gridColumnIndex, data)}
+            onSubmit={(data: IRadioParams) => handleElementEdit(element.id, data)}
             params={element.params}
           />
         </>
@@ -216,14 +206,13 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
-            gridRowIndex={element.gridRowIndex}
-            gridColumnIndex={element.gridColumnIndex}
+            id={element.id}
             params={element.params}
           />
           <TableDialog
             open={dialog.open.table}
             onClose={() => handleDialogClose("table")}
-            onSubmit={(data: ITableParams) => handleElementEdit(element.gridRowIndex, element.gridColumnIndex, data)}
+            onSubmit={(data: ITableParams) => handleElementEdit(element.id, data)}
             params={element.params}
           />
         </>
@@ -234,14 +223,13 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
-            gridRowIndex={element.gridRowIndex}
-            gridColumnIndex={element.gridColumnIndex}
+            id={element.id}
             params={element.params}
           />
           <TabDialog
             open={dialog.open.tab}
             onClose={() => handleDialogClose("tab")}
-            onSubmit={(data: ITabParams) => handleElementEdit(element.gridRowIndex, element.gridColumnIndex, data)}
+            onSubmit={(data: ITabParams) => handleElementEdit(element.id, data)}
             params={element.params}
           />
         </>
@@ -252,8 +240,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
-            gridRowIndex={element.gridRowIndex}
-            gridColumnIndex={element.gridColumnIndex}
+            id={element.id}
             params={element.params}
             // dependedFieldData={
             //   element.params.dependedComponent === "select" && element.params.dependedModelName
@@ -264,7 +251,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
           <ImageDialog
             open={dialog.open.image}
             onClose={() => handleDialogClose("image")}
-            onSubmit={(data: IImageParams) => handleElementEdit(element.gridRowIndex, element.gridColumnIndex, data)}
+            onSubmit={(data: IImageParams) => handleElementEdit(element.id, data)}
             params={element.params}
           />
         </>
@@ -275,16 +262,13 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
-            gridRowIndex={element.gridRowIndex}
-            gridColumnIndex={element.gridColumnIndex}
+            id={element.id}
             params={element.params}
           />
           <FileUploadDialog
             open={dialog.open.fileUpload}
             onClose={() => handleDialogClose("fileUpload")}
-            onSubmit={(data: IFileUploadParams) =>
-              handleElementEdit(element.gridRowIndex, element.gridColumnIndex, data)
-            }
+            onSubmit={(data: IFileUploadParams) => handleElementEdit(element.id, data)}
             params={element.params}
           />
         </>

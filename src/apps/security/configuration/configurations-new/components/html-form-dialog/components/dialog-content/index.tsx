@@ -27,9 +27,9 @@ export const DialogContent: FC<IDialogContent> = ({ onSubmit, onClose, gridView 
 
   const selectedOperation = useSelector((state: AppState) => state.configurationsNew.selectedOperationHtmlForm);
 
-  const content = useSelector((state: AppState) => state.configurationsNew.content);
+  const formContent = useSelector((state: AppState) => state.configurationsNew.selectedOperationHtmlForm.formContent);
 
-  const _content = createTree(content);
+  const _content = formContent ? createTree(formContent) : [];
 
   const [, dropRow] = useDrop(
     () => ({

@@ -15,10 +15,9 @@ export interface IDatepickerParams {
 interface IDatepickerElement {
   withDnd?: boolean;
   params: IDatepickerParams;
-  gridRowIndex: number;
-  gridColumnIndex: number;
-  onEdit?(type: string, gridRowIndex: number, gridColumnIndex: number): void;
-  onDelete?(gridRowIndex: number, gridColumnIndex: number): void;
+  id: number;
+  onEdit?(type: string, id: number): void;
+  onDelete?(id: number): void;
 }
 
 export const DatepickerElement: FC<IDatepickerElement> = ({ withDnd, params, ...rest }) => {
@@ -26,7 +25,7 @@ export const DatepickerElement: FC<IDatepickerElement> = ({ withDnd, params, ...
 
   const datepicker = (
     <DatePicker
-      name={model || `model-${rest.gridRowIndex}-${rest.gridColumnIndex}`}
+      name={model || `model-${rest.id}`}
       label={label}
       required={!!required}
       views={variant?.split("/") as DatePickerView[]}

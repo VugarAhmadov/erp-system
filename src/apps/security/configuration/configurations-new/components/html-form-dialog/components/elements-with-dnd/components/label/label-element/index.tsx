@@ -24,10 +24,9 @@ export interface ILabelParams {
 interface ILabelElement {
   withDnd?: boolean;
   params: ILabelParams;
-  gridRowIndex: number;
-  gridColumnIndex: number;
-  onEdit?(type: string, gridRowIndex: number, gridColumnIndex: number): void;
-  onDelete?(gridRowIndex: number, gridColumnIndex: number): void;
+  id: number;
+  onEdit?(type: string, id: number): void;
+  onDelete?(id: number): void;
 }
 
 export const LabelElement: FC<ILabelElement> = ({ withDnd, params, ...rest }) => {

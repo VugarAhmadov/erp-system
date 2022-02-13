@@ -23,6 +23,9 @@ import {
   FileUploadElement,
 } from "apps/security/configuration/configurations-new/components/html-form-dialog/components/elements-with-dnd/components";
 import { Button, HiddenInput } from "components/shared";
+import { createTree } from "helpers";
+import { IRow } from "apps/security/configuration/configurations-new/components/html-form-dialog/components/types";
+import { GridRow } from "./grid-row";
 
 interface IAddOrEditDialog {
   dialog: IDialog;
@@ -36,7 +39,10 @@ export const AddOrEditDialog: FC<IAddOrEditDialog> = memo(({ dialog, onClose, on
   const module = useSelector((state: AppState) => state.common.selectedModule);
   const loading = useSelector((state: AppState) => state.dynamic.loading);
   const initialData = useSelector((state: AppState) => state.dynamic.data);
+
   const formHtml = module && JSON.parse(module.operations.find((op) => op.code === "ADD")?.formHtml!);
+
+  const _content = formHtml ? createTree(formHtml.formContent) : [];
 
   return (
     <StyledDialog
@@ -78,109 +84,8 @@ export const AddOrEditDialog: FC<IAddOrEditDialog> = memo(({ dialog, onClose, on
 
               <div className="form-body">
                 {dialog.type === "edit" && <HiddenInput name="id" />}
-                {formHtml?.formContent?.map((row: any) => (
-                  <Grid container key={row.index} spacing={3}>
-                    {row?.columns?.map((column: any) => (
-                      <Grid item key={column.index} xs={column.gridColumnSize}>
-                        {column.element.type === "input" && (
-                          <InputElement
-                            params={column.element.params}
-                            gridColumnIndex={column.index}
-                            gridRowIndex={column.gridRowIndex}
-                            // dependedFieldData={
-                            //   element.params.dependedComponent === "select" && element.params.dependedModelName
-                            //     ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
-                            //     : null
-                            // }
-                          />
-                        )}
-                        {column.element.type === "select" && (
-                          <SelectElement
-                            params={column.element.params}
-                            gridColumnIndex={column.index}
-                            gridRowIndex={column.gridRowIndex}
-                            // onSelectChange={(data: any) => {
-                            //   setSelectData((prev) => {
-                            //     if (prev.find((p) => p.model === element.params.model)) {
-                            //       return prev.map((n) => (n.model === element.params.model ? { ...n, data } : n));
-                            //     } else {
-                            //       return [...prev, { model: element.params.model, data }];
-                            //     }
-                            //   });
-                            // }}
-                          />
-                        )}
-                        {column.element.type === "datepicker" && (
-                          <DatepickerElement
-                            params={column.element.params}
-                            gridColumnIndex={column.index}
-                            gridRowIndex={column.gridRowIndex}
-                          />
-                        )}
-                        {column.element.type === "button" && (
-                          <ButtonElement
-                            params={column.element.params}
-                            gridColumnIndex={column.index}
-                            gridRowIndex={column.gridRowIndex}
-                          />
-                        )}
-                        {column.element.type === "label" && (
-                          <LabelElement
-                            params={column.element.params}
-                            gridColumnIndex={column.index}
-                            gridRowIndex={column.gridRowIndex}
-                          />
-                        )}
-                        {column.element.type === "checkbox" && (
-                          <CheckboxElement
-                            params={column.element.params}
-                            gridColumnIndex={column.index}
-                            gridRowIndex={column.gridRowIndex}
-                          />
-                        )}
-                        {column.element.type === "table" && (
-                          <TableElement
-                            params={column.element.params}
-                            gridColumnIndex={column.index}
-                            gridRowIndex={column.gridRowIndex}
-                          />
-                        )}
-                        {column.element.type === "radio" && (
-                          <RadioElement
-                            params={column.element.params}
-                            gridColumnIndex={column.index}
-                            gridRowIndex={column.gridRowIndex}
-                          />
-                        )}
-                        {column.element.type === "tab" && (
-                          <TabElement
-                            params={column.element.params}
-                            gridColumnIndex={column.index}
-                            gridRowIndex={column.gridRowIndex}
-                          />
-                        )}
-                        {column.element.type === "image" && (
-                          <ImageElement
-                            params={column.element.params}
-                            gridColumnIndex={column.index}
-                            gridRowIndex={column.gridRowIndex}
-                            // dependedFieldData={
-                            //   element.params.dependedComponent === "select" && element.params.dependedModelName
-                            //     ? selectData.find((d) => d.model === element.params.dependedModelName)?.data
-                            //     : null
-                            // }
-                          />
-                        )}
-                        {column.element.type === "fileUpload" && (
-                          <FileUploadElement
-                            params={column.element.params}
-                            gridColumnIndex={column.index}
-                            gridRowIndex={column.gridRowIndex}
-                          />
-                        )}
-                      </Grid>
-                    ))}
-                  </Grid>
+                {_content?.map((row: IRow) => (
+                  <GridRow row={row} key={row.id} />
                 ))}
               </div>
             </form>
