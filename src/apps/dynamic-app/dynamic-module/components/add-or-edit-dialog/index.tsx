@@ -63,7 +63,7 @@ export const AddOrEditDialog: FC<IAddOrEditDialog> = memo(({ dialog, onClose, on
       <DialogContent>
         <Form
           onSubmit={onSubmit}
-          initialValues={_initialData}
+          initialValues={{ ..._initialData, id: initialData.id }}
           render={({ handleSubmit, invalid }) => (
             <form onSubmit={handleSubmit} className="form">
               <div className="form-header">

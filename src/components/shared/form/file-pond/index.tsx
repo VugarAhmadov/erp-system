@@ -61,7 +61,7 @@ const FilePondWrapper: FC<FieldWrapper> = ({
       <FilePondRoot
         className={clsx("filepond", rest.clasaName)}
         // files={(file) => console.log(file)}
-        // files={value ? [{ source: value, options: { type: "input" } }] : undefined}
+        files={value ? [{ source: value, options: { type: "limbo" } }] : undefined}
         allowReorder
         server={{
           process: (fieldName, file, metadata, load, error, progress, abort) => {
@@ -77,7 +77,7 @@ const FilePondWrapper: FC<FieldWrapper> = ({
               })
               .then(({ status, data }) => {
                 if (status >= 200 && status < 300 && data.code === "OK") {
-                  load(data.data);
+                  // load(data.data);
                   onChange(data.data);
                 } else {
                   error(data.message);
@@ -110,38 +110,7 @@ const FilePondWrapper: FC<FieldWrapper> = ({
               })
               .catch((e) => error(e));
           },
-          // fetch: `${process.env.REACT_APP_API_BASE_URL}/DispatcherRest/api/get/file/${value}`,
-          // load: (load: any, error: any) => {
-          //   defaultRequest
-          //     .get(`/api/get/file/${value}`)
-          //     .then(({ data }) => data.blob())
-          //     .then(load)
-          //     .catch(error);
-          // },
-          load: (source, load, error, progress, abort, headers) => {
-            // Should request a file object from the server here
-            // ...
-            defaultRequest.get(`/api/get/file/${value}`).then(({ data }) => load(data.blob()));
-            // Can call the error method if something is wrong, should exit after
-            error("oh my goodness");
-
-            // Should call the progress method to update the progress to 100% before calling load
-            // (endlessMode, loadedSize, totalSize)
-            progress(true, 0, 1024);
-
-            // Should call the load method with a file object or blob when done
-            // load(file);
-
-            // Should expose an abort method so the request can be cancelled
-            return {
-              abort: () => {
-                // User tapped cancel, abort our ongoing actions here
-
-                // Let FilePond know the request has been cancelled
-                abort();
-              },
-            };
-          },
+          restore: `${process.env.REACT_APP_API_BASE_URL}/DispatcherRest/api/get/file/`,
         }}
         labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
         {...rest}
