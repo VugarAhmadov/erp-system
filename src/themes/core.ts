@@ -65,6 +65,7 @@ export const coreTheme = {
       styleOverrides: {
         input: {
           padding: "0.375rem 0.875rem",
+          borderRadius: "3px",
         },
       },
     },
@@ -72,6 +73,7 @@ export const coreTheme = {
       styleOverrides: {
         root: {
           fontSize: "0.875rem",
+          lineHeight: "1em",
         },
       },
     },
