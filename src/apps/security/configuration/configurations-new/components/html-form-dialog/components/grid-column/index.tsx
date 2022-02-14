@@ -32,7 +32,6 @@ export const GridColumn: FC<IGridColumn> = memo(({ column }) => {
             id: uniqueId(),
             parentId: column.id,
             ...item,
-            children: item.type === "row" ? [] : undefined,
           })
         );
 

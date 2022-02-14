@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 
 export const StyledElement = styled.div`
-  position: absolute;
   margin-bottom: 1rem;
   display: flex;
   cursor: move;

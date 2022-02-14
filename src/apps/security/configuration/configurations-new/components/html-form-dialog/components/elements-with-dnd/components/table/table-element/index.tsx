@@ -41,13 +41,13 @@ export const TableElement: FC<ITableElement> = ({ withDnd, params, ...rest }) =>
         width: "100px",
       },
     ];
-
+    console.log(tableData);
     if (seqColumns) {
       tableData?.c?.forEach((column: any) =>
         columns.push({
           title: column.n,
           field: column.i,
-          hidden: seqColumns.includes(column.i),
+          hidden: !seqColumns.includes(column.i),
         })
       );
     }

@@ -32,7 +32,6 @@ export const GridRow: FC<IGridRow> = memo(({ row }) => {
             params: {
               columnSize: item.columnSize,
             },
-            children: [],
           })
         );
 

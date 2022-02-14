@@ -44,7 +44,6 @@ export const DialogContent: FC<IDialogContent> = ({ onSubmit, onClose, gridView 
             id: uniqueId(),
             parentId: null,
             type: "row",
-            children: [],
           })
         );
 

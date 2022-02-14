@@ -61,7 +61,7 @@ const FilePondWrapper: FC<FieldWrapper> = ({
       <FilePondRoot
         className={clsx("filepond", rest.clasaName)}
         // files={(file) => console.log(file)}
-        files={value ? [{ source: value, options: { type: "limbo" } }] : undefined}
+        files={value ? [{ source: value, options: { type: "local" } }] : undefined}
         allowReorder
         server={{
           process: (fieldName, file, metadata, load, error, progress, abort) => {
@@ -110,7 +110,10 @@ const FilePondWrapper: FC<FieldWrapper> = ({
               })
               .catch((e) => error(e));
           },
-          restore: `${process.env.REACT_APP_API_BASE_URL}/DispatcherRest/api/get/file/`,
+          fetch: () => {
+            console.log("tedst");
+          },
+          load: `${process.env.REACT_APP_API_BASE_URL}/DispatcherRest/api/get/file/`,
         }}
         labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
         {...rest}
