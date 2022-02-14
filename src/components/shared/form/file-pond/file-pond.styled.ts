@@ -1,55 +1,50 @@
 import styled from "@emotion/styled";
 
-// import { makeStyles } from "@material-ui/core/styles";
-export const StyledFilePond = styled.div``;
-// export const useStyles = makeStyles((theme) => {
-//   return {
-//     root: {
-//       display: "block !important",
-//       width: "100%",
-//       // height: 40,
-//       "& .filepond--credits": {
-//         display: "none"
-//       },
-//       "& .filepond--hopper": {
-//         margin: 0
-//       },
-//       "& .filepond--drop-label": {
-//         height: "auto",
-//         minHeight: "auto"
-//       },
-//       "& .filepond--panel-root": {
-//         border: `1px dashed ${theme.palette.color.darkGray}`,
-//         borderRadius: 8,
-//       },
-//       "& .filepond--file-status": {
-//         alignItems: "flex-start",
-//         flexShrink: "unset !important",
-//         textAlign: "left",
-//         paddingLeft: 8,
+export const StyledFilePond = styled.div`
+  display: block;
+  width: 100%;
 
-//         "& .filepond--file-status-sub": {
-//           opacity: .7,
-//           fontSize: 11,
-//           lineHeight: 1.2,
-//           marginTop: 2,
-//           whiteSpace: "break-spaces",
-//         }
-//       }
-//     },
-//     error: {
-//       "& .filepond--panel-root": {
-//         border: "1px solid red",
-//       }
-//     },
-//     errorText: {
-//       color: "red",
-//       fontSize: "0.75rem"
-//     },
-//     [theme.breakpoints.down("xl")]: {},
-//     [theme.breakpoints.down("lg")]: {},
-//     [theme.breakpoints.down("md")]: {},
-//     [theme.breakpoints.down("sm")]: {},
-//     [theme.breakpoints.down("xs")]: {},
-//   };
-// });
+  & .filepond--credits {
+    display: none;
+  }
+
+  & .filepond--hopper {
+    margin: 0;
+  }
+
+  & .filepond--drop-label: {
+    height: auto;
+    min-height: auto;
+  }
+
+  & .filepond--panel-root {
+    border: 1px dashed ${({ theme }) => theme.palette.grey[800]};
+    border-radius: 8px;
+  }
+
+  & .filepond--file-status {
+    align-items: flex-start;
+    flex-shrink: unset !important;
+    text-align: left;
+    padding-left: 8;
+
+    & .filepond--file-status-sub {
+      opacity: .7,
+      font-size: 11px,
+      line-height: 1.2,
+      margin-top: 2rem,
+      white-space: break-spaces,
+    }
+  }
+
+  & .error {
+    & .filepond--panel-root {
+      border: 1px solid red;
+    }
+  }
+
+  & .error-text {
+    color: red;
+    font-size: 0.75rem;
+  },
+`;

@@ -2,22 +2,22 @@ import React, { FC } from "react";
 import { Button, Typography } from "@mui/material";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
-import { Autocomplete, Select, Switches, TextField } from "components/shared";
+import { Autocomplete, TextField } from "components/shared";
 import { Dialog } from "../..";
-import { StyledForm } from "./label-dialog.styled";
-import { IFileUploadParams } from "../file-upload-element";
+import { StyledForm } from "./profile-image-dialog.styled";
+import { IProfileImageParams } from "../profile-image-element";
 import { useSelector } from "react-redux";
 import { AppState } from "store";
 import { camelCase } from "lodash";
 
-interface IFileUploadDialog {
+interface IProfileImageDialog {
   open: boolean;
   onClose(): void;
-  onSubmit(data: IFileUploadParams): void;
-  params: IFileUploadParams;
+  onSubmit(data: IProfileImageParams): void;
+  params: IProfileImageParams;
 }
 
-export const FileUploadDialog: FC<IFileUploadDialog> = ({ open, onClose, onSubmit, params }) => {
+export const ProfileImageDialog: FC<IProfileImageDialog> = ({ open, onClose, onSubmit, params }) => {
   const { t } = useTranslation("common");
 
   const tables = useSelector((state: AppState) => state.tables.tables);
@@ -30,9 +30,11 @@ export const FileUploadDialog: FC<IFileUploadDialog> = ({ open, onClose, onSubmi
         initialValues={params}
         render={({ handleSubmit, invalid, values }) => (
           <StyledForm onSubmit={handleSubmit}>
-            <Typography variant="h6">{t("addFileUploadComponent")}</Typography>
+            <Typography variant="h6">{t("addProfileImageComponent")}</Typography>
 
             <div>
+              <TextField name="label" label={t("label")} required className="field" />
+
               <Autocomplete
                 name="table"
                 id="table"
@@ -53,20 +55,6 @@ export const FileUploadDialog: FC<IFileUploadDialog> = ({ open, onClose, onSubmi
                 disabled={!values?.table}
                 required
               />
-
-              <TextField name="label" label={t("label")} required className="field" />
-
-              <Select
-                name="variant"
-                data={[
-                  { label: "image", value: "image" },
-                  { label: "file", value: "file" },
-                ]}
-                required
-                label={t("variants")}
-              />
-
-              <Switches name="multiple" data={{ label: t("multiple"), value: "multiple" }} />
             </div>
 
             <div className="styles">

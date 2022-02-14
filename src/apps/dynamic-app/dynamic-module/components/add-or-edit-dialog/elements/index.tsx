@@ -65,7 +65,7 @@ export const Elements: FC<IElements> = ({ element }) => {
           // }
         />
       )}
-      {element.type === "fileUpload" && <FileUploadElement params={element.params} id={element.id} />}
+      {element.type === "file-upload" && <FileUploadElement params={element.params} id={element.id} />}
     </>
   );
 };

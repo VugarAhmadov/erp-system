@@ -1,18 +1,19 @@
+import React, { FC } from "react";
+import { FieldValidator } from "final-form";
+import { FilePond as FilePondRoot, FilePondProps, registerPlugin } from "react-filepond";
+import { Field, FieldRenderProps } from "react-final-form";
+import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
-import "filepond/dist/filepond.min.css";
-import { FieldValidator } from "final-form";
-// import { replace, useTranslator } from "localization";
-import { ShowErrorFunc, showErrorOnChange } from "helpers";
-import React, { FC } from "react";
-import { FilePond as FilePondRoot, FilePondProps, registerPlugin } from "react-filepond";
 import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import { Field, FieldRenderProps } from "react-final-form";
+import FilePondPluginImageCrop from "filepond-plugin-image-crop";
+import "filepond/dist/filepond.min.css";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+import { axiosCancelTokenSource, axiosIsCancel, defaultRequest, ShowErrorFunc, showErrorOnChange } from "helpers";
 import { getValidator } from "helpers";
-import { useTranslation } from "react-i18next";
+import { StyledFilePond } from "./file-pond.styled";
 
 export interface IFilePond extends Partial<FilePondProps> {
   name: string;
@@ -24,7 +25,8 @@ registerPlugin(
   FilePondPluginImageExifOrientation,
   FilePondPluginImagePreview,
   FilePondPluginFileValidateSize,
-  FilePondPluginFileValidateType
+  FilePondPluginFileValidateType,
+  FilePondPluginImageCrop
 );
 
 export const FilePond: FC<IFilePond> = ({ name, validate, ...rest }) => {
@@ -32,7 +34,7 @@ export const FilePond: FC<IFilePond> = ({ name, validate, ...rest }) => {
     <Field
       name={name}
       validate={getValidator(validate)}
-      render={(fieldRenderProps) => <FilePondWrapper {...fieldRenderProps} {...rest} />}
+      render={(fieldRenderProps) => <FilePondWrapper {...fieldRenderProps} name={name} {...rest} />}
     />
   );
 };
@@ -52,36 +54,100 @@ const FilePondWrapper: FC<FieldWrapper> = ({
   const isError = showError({ meta });
   const { t } = useTranslation("forms");
 
-  const serverConfig = {
-    load: (imgUrl: any, load: any, error: any) => {
-      fetch(imgUrl)
-        .then((res) => res.blob())
-        .then(load)
-        .catch(error);
-    },
-  };
+  console.log(value);
 
   return (
-    // <div className={clsx(classes.root, isError && classes.error, rest.className)}>
-    <div>
+    <StyledFilePond>
       <FilePondRoot
-        files={value ? [{ source: value, options: { type: "local" } }] : undefined}
-        onupdatefiles={(files) => {
-          if (rest.allowMultiple === true) {
-            onChange(files.map((f) => f?.file));
-          } else {
-            onChange(files[0]?.file);
-          }
+        className={clsx("filepond", rest.clasaName)}
+        // files={(file) => console.log(file)}
+        // files={value ? [{ source: value, options: { type: "input" } }] : undefined}
+        allowReorder
+        server={{
+          process: (fieldName, file, metadata, load, error, progress, abort) => {
+            const formData = new FormData();
+            formData.append("image", file);
+
+            defaultRequest
+              .post("/api/jwt/uploadFile", formData, {
+                cancelToken: axiosCancelTokenSource.token,
+                onUploadProgress: (e: ProgressEvent) => {
+                  progress(e.lengthComputable, e.loaded, e.total);
+                },
+              })
+              .then(({ status, data }) => {
+                if (status >= 200 && status < 300 && data.code === "OK") {
+                  load(data.data);
+                  onChange(data.data);
+                } else {
+                  error(data.message);
+                }
+              })
+              .catch((e) => {
+                if (axiosIsCancel(e)) {
+                  console.log("Request canceled", e.message);
+                }
+                error(e); // handle error
+              });
+
+            return {
+              abort: () => {
+                axiosCancelTokenSource.cancel("Operation canceled by the user.");
+                abort();
+              },
+            };
+          },
+          revert: (uniqueFileId, load, error) => {
+            defaultRequest
+              .post(`/api/jwt/file/${uniqueFileId}/remove`)
+              .then(({ data }) => {
+                if (data.code === "OK") {
+                  load();
+                  onChange("");
+                } else {
+                  error(data.message);
+                }
+              })
+              .catch((e) => error(e));
+          },
+          // fetch: `${process.env.REACT_APP_API_BASE_URL}/DispatcherRest/api/get/file/${value}`,
+          // load: (load: any, error: any) => {
+          //   defaultRequest
+          //     .get(`/api/get/file/${value}`)
+          //     .then(({ data }) => data.blob())
+          //     .then(load)
+          //     .catch(error);
+          // },
+          load: (source, load, error, progress, abort, headers) => {
+            // Should request a file object from the server here
+            // ...
+            defaultRequest.get(`/api/get/file/${value}`).then(({ data }) => load(data.blob()));
+            // Can call the error method if something is wrong, should exit after
+            error("oh my goodness");
+
+            // Should call the progress method to update the progress to 100% before calling load
+            // (endlessMode, loadedSize, totalSize)
+            progress(true, 0, 1024);
+
+            // Should call the load method with a file object or blob when done
+            // load(file);
+
+            // Should expose an abort method so the request can be cancelled
+            return {
+              abort: () => {
+                // User tapped cancel, abort our ongoing actions here
+
+                // Let FilePond know the request has been cancelled
+                abort();
+              },
+            };
+          },
         }}
-        // className={classes.pond}
-        // labelMaxFileSize={replace(lang.fileLargeThan, ["{filesize}"])}
-        // labelMaxFileSizeExceeded={lang.fileIsTooLarge}
-        // labelFileTypeNotAllowed={lang.fileTypeNotAllowed}
-        // fileValidateTypeLabelExpectedTypes={replace(lang.fileCanBeOnlyThisTypes, "{allButLastType}, {lastType}")}
-        server={serverConfig}
+        labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
         {...rest}
+        // `${process.env.REACT_APP_API_BASE_URL}/DispatcherRest/api/get/file/${value}`
       />
       {isError && <small className="errorText">{error}</small>}
-    </div>
+    </StyledFilePond>
   );
 };
