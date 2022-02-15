@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import { Button, DialogContent, Typography } from "@mui/material";
+import { Button, DialogContent, InputAdornment, Typography } from "@mui/material";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,10 +10,11 @@ import { IAddOrEditOperationRequest } from "../../store/types";
 import { StyledDialog } from "./add-or-edit.styled";
 import { getAll as getAllModules } from "apps/security/module/store/actions";
 import { camelCase, upperFirst } from "lodash";
+import { useValidators } from "hooks";
 
 interface IAddOrEdit {
   dialog: IDialog;
-  onClose(): void;
+  onClose(event: {}, reason: "backdropClick" | "escapeKeyDown" | "closeButtonClick"): void;
   onSubmit(data: IAddOrEditOperationRequest): void;
 }
 
@@ -26,6 +27,8 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
   const moduleLoadding = useSelector((state: AppState) => state.module.loading.getAll);
   const views = useSelector((state: AppState) => state.views.views);
   const tables = useSelector((state: AppState) => state.tables.tables);
+
+  // const { validUrl } = useValidators();
 
   useEffect(() => {
     dispatch(getAllModules());
@@ -66,7 +69,16 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
               <TextField name="nameRu" id="nameRu" label={t("nameRu")} required />
               <TextField name="code" id="code" label={t("code")} required />
               <TextField name="icon" id="icon" label={t("icon")} />
-              <TextField name="url" id="url" label={t("url")} required />
+              <TextField
+                name="url"
+                id="url"
+                label={t("url")}
+                required
+                className="url-input"
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">/jwt/CodiumSystem/</InputAdornment>,
+                }}
+              />
               {dialog.type === "add" && (
                 <>
                   <Autocomplete
@@ -113,8 +125,13 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
                 getOptionLabel={(option) => option.label}
               /> */}
               <div className="action-buttons">
-                <Button onClick={onClose} className="back-btn" variant="outlined" color="info">
-                  {t("back")}
+                <Button
+                  onClick={() => onClose({}, "closeButtonClick")}
+                  className="back-btn"
+                  variant="outlined"
+                  color="info"
+                >
+                  {t("close")}
                 </Button>
                 <Button type="submit" disabled={invalid} className="submit-btn">
                   {t(dialog.type === "edit" ? "edit" : "add")}

@@ -36,6 +36,16 @@ export const StyledDialog = styled(Dialog)`
       margin-bottom: 1.5rem;
     }
 
+    & .url-input {
+      & .MuiInputAdornment-root p {
+        color: #000;
+      }
+
+      & .MuiOutlinedInput-input {
+        padding-left: 0;
+      }
+    }
+
     & .action-buttons {
       display: flex;
 

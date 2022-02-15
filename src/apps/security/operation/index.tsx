@@ -97,7 +97,8 @@ export const Operation = () => {
     });
   };
 
-  const handleDialogClose = () => {
+  const handleDialogClose = (event: any, reason: "backdropClick" | "escapeKeyDown" | "closeButtonClick") => {
+    if (reason && (reason === "backdropClick" || reason === "escapeKeyDown")) return;
     dispatch(setDialog({ opened: false, type: "" }));
   };
 
@@ -110,13 +111,13 @@ export const Operation = () => {
   return (
     <>
       <StyledOperation>
-        <SectionHeader title="Operations" />
         <FilterBar
           addButton={{
             show: true,
             title: t("addOperation"),
             onClick: handleAddClick,
           }}
+          title="Operations"
         />
         <DataTable
           columns={buildColumns()}

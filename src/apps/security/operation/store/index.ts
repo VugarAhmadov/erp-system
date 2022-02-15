@@ -61,8 +61,6 @@ export const operationSlice = createSlice({
     },
     [add.fulfilled.type]: (state) => {
       state.loading.add = false;
-      state.dialog.opened = false;
-      state.dialog.type = "";
     },
     //* ADD END
     //* EDIT
@@ -74,8 +72,6 @@ export const operationSlice = createSlice({
     },
     [edit.fulfilled.type]: (state) => {
       state.loading.edit = false;
-      state.dialog.opened = false;
-      state.dialog.type = "";
     },
     //* EDIT END
     //* REMOVE
