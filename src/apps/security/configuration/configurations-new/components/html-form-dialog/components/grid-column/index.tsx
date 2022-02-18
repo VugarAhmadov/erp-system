@@ -25,9 +25,10 @@ export const GridColumn: FC<IGridColumn> = memo(({ column }) => {
 
         if (didDrop) return;
 
-        // if ((column.children.length > 0 && column.children[0].type === "row") || column.children.length === 0 )
-
-        if (item.type === "row" || !item.move) {
+        if (
+          (column.children.length === 0 && item.type === "row") ||
+          (column.children.length > 0 && column.children[0].type === "row" && item.type === "row")
+        ) {
           dispatch(
             addItem({
               id: uniqueId(),
@@ -35,7 +36,15 @@ export const GridColumn: FC<IGridColumn> = memo(({ column }) => {
               ...item,
             })
           );
-        } else {
+        } else if (column.children.length === 0 && item.type !== "row" && !item.move) {
+          dispatch(
+            addItem({
+              id: uniqueId(),
+              parentId: column.id,
+              ...item,
+            })
+          );
+        } else if (column.children.length === 0 && item.type !== "row" && item.move) {
           dispatch(moveItem({ id: item.id, movedColumnId: column.id }));
         }
 
