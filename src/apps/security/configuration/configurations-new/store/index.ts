@@ -59,6 +59,14 @@ export const configurationsNewSlice = createSlice({
 
       state.selectedOperationHtmlForm.formContent = deleteTreeNode(copy, action.payload);
     },
+    moveItem: (state, action: PayloadAction<any>) => {
+      const { id, movedColumnId } = action.payload;
+      let copy = [...state.selectedOperationHtmlForm.formContent];
+
+      copy.find((c) => c.id === id).parentId = movedColumnId;
+
+      state.selectedOperationHtmlForm.formContent = copy;
+    },
   },
   extraReducers: {
     //* GET_DICTIONARY_TYPE_LIST
@@ -109,4 +117,4 @@ export const configurationsNewSlice = createSlice({
   },
 });
 
-export const { closeDialog, setDialogSize, addItem, editItem, deleteItem } = configurationsNewSlice.actions;
+export const { closeDialog, setDialogSize, addItem, editItem, deleteItem, moveItem } = configurationsNewSlice.actions;

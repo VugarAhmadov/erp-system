@@ -2,7 +2,7 @@ import React, { FC, memo } from "react";
 import { Icon, IconButton } from "@mui/material";
 import { StyledGridColumn } from "./grid-column.styled";
 import { useDispatch } from "react-redux";
-import { addItem, deleteItem } from "apps/security/configuration/configurations-new/store";
+import { addItem, deleteItem, moveItem } from "apps/security/configuration/configurations-new/store";
 import { ElementsWithDnd } from "../elements-with-dnd";
 import { useDrop } from "react-dnd";
 import { Components } from "../dialog-config/constants";
@@ -27,13 +27,17 @@ export const GridColumn: FC<IGridColumn> = memo(({ column }) => {
 
         // if ((column.children.length > 0 && column.children[0].type === "row") || column.children.length === 0 )
 
-        dispatch(
-          addItem({
-            id: uniqueId(),
-            parentId: column.id,
-            ...item,
-          })
-        );
+        if (item.type === "row" || !item.move) {
+          dispatch(
+            addItem({
+              id: uniqueId(),
+              parentId: column.id,
+              ...item,
+            })
+          );
+        } else {
+          dispatch(moveItem({ id: item.id, movedColumnId: column.id }));
+        }
 
         return undefined;
       },
