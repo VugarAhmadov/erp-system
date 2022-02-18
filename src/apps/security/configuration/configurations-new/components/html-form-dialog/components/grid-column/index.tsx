@@ -7,8 +7,8 @@ import { ElementsWithDnd } from "../elements-with-dnd";
 import { useDrop } from "react-dnd";
 import { Components } from "../dialog-config/constants";
 import { ICloumn, IRow } from "../types";
-import { uniqueId } from "lodash";
 import { GridRow } from "..";
+import { generate } from "short-uuid";
 
 interface IGridColumn {
   column: ICloumn;
@@ -31,7 +31,7 @@ export const GridColumn: FC<IGridColumn> = memo(({ column }) => {
         ) {
           dispatch(
             addItem({
-              id: uniqueId(),
+              id: generate(),
               parentId: column.id,
               ...item,
             })
@@ -39,7 +39,7 @@ export const GridColumn: FC<IGridColumn> = memo(({ column }) => {
         } else if (column.children.length === 0 && item.type !== "row" && !item.move) {
           dispatch(
             addItem({
-              id: uniqueId(),
+              id: generate(),
               parentId: column.id,
               ...item,
             })

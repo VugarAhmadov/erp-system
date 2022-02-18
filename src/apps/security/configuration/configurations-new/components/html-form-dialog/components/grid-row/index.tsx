@@ -7,7 +7,7 @@ import { StyledGridRow } from "./grid-row.styled";
 import { addItem, deleteItem } from "apps/security/configuration/configurations-new/store";
 import { GridColumn } from "..";
 import { ICloumn, IRow } from "../types";
-import { uniqueId } from "lodash";
+import { generate } from "short-uuid";
 
 interface IGridRow {
   row: IRow;
@@ -26,7 +26,7 @@ export const GridRow: FC<IGridRow> = memo(({ row }) => {
 
         dispatch(
           addItem({
-            id: uniqueId(),
+            id: generate(),
             parentId: row.id,
             type: "column",
             params: {

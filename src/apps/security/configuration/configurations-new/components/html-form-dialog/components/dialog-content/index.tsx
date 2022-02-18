@@ -11,9 +11,9 @@ import { StyledDialogContent } from "./dialog-content.styled";
 import { AppState } from "store";
 import { addItem } from "apps/security/configuration/configurations-new/store";
 import { GridRow } from "..";
-import { uniqueId } from "lodash";
 import { createTree } from "helpers";
 import { IRow } from "../types";
+import { generate } from "short-uuid";
 
 interface IDialogContent {
   onSubmit(): void;
@@ -29,6 +29,8 @@ export const DialogContent: FC<IDialogContent> = ({ onSubmit, onClose, gridView 
 
   const formContent = useSelector((state: AppState) => state.configurationsNew.selectedOperationHtmlForm.formContent);
 
+  console.log(JSON.stringify(formContent, null, 4));
+
   const _content = formContent ? createTree(formContent) : [];
 
   const [, dropRow] = useDrop(
@@ -41,7 +43,7 @@ export const DialogContent: FC<IDialogContent> = ({ onSubmit, onClose, gridView 
 
         dispatch(
           addItem({
-            id: uniqueId(),
+            id: generate(),
             parentId: null,
             type: "row",
           })
