@@ -5,6 +5,7 @@ export const StyledDialogConfig = styled.div`
   min-width: 200px;
   background-color: rgb(0, 30, 60, 0.92);
   height: 100%;
+  overflow-y: auto;
   max-height: 98%;
   margin-right: 0.4rem;
   border-radius: 4px;
