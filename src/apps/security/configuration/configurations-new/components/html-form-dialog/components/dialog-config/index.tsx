@@ -85,7 +85,7 @@ export const DialogConfig: FC<IDialogConfig> = memo(
 
     const [, dragFileUpload] = useDrag(() => ({
       type: Components.ELEMENT,
-      item: { type: "file-upload", params: {}, move: false },
+      item: { type: "fileUpload", params: {}, move: false },
     }));
 
     const [, dragTab] = useDrag(() => ({
@@ -96,6 +96,11 @@ export const DialogConfig: FC<IDialogConfig> = memo(
     const [, dragImage] = useDrag(() => ({
       type: Components.ELEMENT,
       item: { type: "image", params: {}, move: false },
+    }));
+
+    const [, dragProfileImage] = useDrag(() => ({
+      type: Components.ELEMENT,
+      item: { type: "profileImage", params: {}, move: false },
     }));
 
     return (
@@ -170,12 +175,6 @@ export const DialogConfig: FC<IDialogConfig> = memo(
               </ListItemIcon>
               <ListItemText primary={t("input")} />
             </ListItemButton>
-            <ListItemButton ref={dragButton}>
-              <ListItemIcon>
-                <Icon>inbox</Icon>
-              </ListItemIcon>
-              <ListItemText primary={t("button")} />
-            </ListItemButton>
             <ListItemButton ref={dragDatepicker}>
               <ListItemIcon>
                 <Icon>inbox</Icon>
@@ -206,6 +205,12 @@ export const DialogConfig: FC<IDialogConfig> = memo(
               </ListItemIcon>
               <ListItemText primary={t("radio")} />
             </ListItemButton>
+            <ListItemButton ref={dragButton}>
+              <ListItemIcon>
+                <Icon>inbox</Icon>
+              </ListItemIcon>
+              <ListItemText primary={t("button")} />
+            </ListItemButton>
             <ListItemButton ref={dragTable}>
               <ListItemIcon>
                 <Icon>inbox</Icon>
@@ -217,6 +222,12 @@ export const DialogConfig: FC<IDialogConfig> = memo(
                 <Icon>inbox</Icon>
               </ListItemIcon>
               <ListItemText primary={t("file-upload")} />
+            </ListItemButton>
+            <ListItemButton ref={dragProfileImage}>
+              <ListItemIcon>
+                <Icon>inbox</Icon>
+              </ListItemIcon>
+              <ListItemText primary={t("profile-image")} />
             </ListItemButton>
             <ListItemButton ref={dragTab}>
               <ListItemIcon>

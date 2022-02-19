@@ -7,3 +7,4 @@ export { DatePicker } from "./date-picker";
 export { Radios } from "./radios";
 export { FilePond } from "./file-pond";
 export { HiddenInput } from "./hidden-input";
+export { ProfileImage } from "./profile-image";

@@ -3,7 +3,7 @@ import { Button, DialogContent, Typography } from "@mui/material";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Autocomplete, DatePicker, Photo, Select, TextField } from "components/shared";
+import { Autocomplete, DatePicker, Photo, ProfileImage, Select, TextField } from "components/shared";
 import { AppState } from "store";
 import { IDialog } from "types";
 import { IAddOrEditUserRequest } from "../../store/types";
@@ -61,11 +61,12 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
             <form onSubmit={handleSubmit} className="form">
               <Typography variant="h6">Add User</Typography>
               <div className="photo-container">
-                <Photo
+                <ProfileImage />
+                {/* <Photo
                   photoId={dialog.type === "edit" && initialValues?.photoFileId}
                   placeholderImageName="avatar.svg"
                   width="10rem"
-                />
+                /> */}
               </div>
               <div className="grid-container">
                 <TextField name="pincode" label={t("pincode")} required />

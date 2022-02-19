@@ -22,73 +22,10 @@ interface IProfileImageElement {
 export const ProfileImageElement: FC<IProfileImageElement> = ({ withDnd, params, ...rest }) => {
   // const { label, variant, multiple } = params;
 
-  const [files, setFiles] = useState([]);
-
-  const fileComp = (
-    <StyledFilePond>
-      {/* <FilePond
-        files={files}
-        className="filepond"
-        //@ts-ignore
-        onupdatefiles={setFiles}
-        allowMultiple={!!multiple}
-        allowReorder
-        maxFiles={3}
-        server={{
-          process: (fieldName, file, metadata, load, error, progress, abort) => {
-            const formData = new FormData();
-            formData.append("image", file);
-
-            defaultRequest
-              .post("/api/jwt/uploadFile", formData, {
-                cancelToken: axiosCancelTokenSource.token,
-                onUploadProgress: (e: ProgressEvent) => {
-                  progress(e.lengthComputable, e.loaded, e.total);
-                },
-              })
-              .then(({ status, data }) => {
-                if (status >= 200 && status < 300 && data.code === "OK") {
-                  load(data.data);
-                } else {
-                  error(data.message);
-                }
-              })
-              .catch((e) => {
-                if (axiosIsCancel(e)) {
-                  console.log("Request canceled", e.message);
-                }
-                error(e); // handle error
-              });
-
-            return {
-              abort: () => {
-                axiosCancelTokenSource.cancel("Operation canceled by the user.");
-                abort();
-              },
-            };
-          },
-          revert: (uniqueFileId, load, error) => {
-            defaultRequest
-              .post(`/api/jwt/file/${uniqueFileId}/remove`)
-              .then(({ data }) => {
-                if (data.code === "OK") {
-                  load();
-                } else {
-                  error(data.message);
-                }
-              })
-              .catch((e) => error(e));
-          },
-          load: `${process.env.REACT_APP_API_BASE_URL}/DispatcherRest/api/get/file/`,
-        }}
-        name="files"
-        labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
-      /> */}
-    </StyledFilePond>
-  );
+  const fileComp = <div></div>;
 
   return withDnd ? (
-    <ElementWithDnd {...rest} type="fileUpload" params={params}>
+    <ElementWithDnd {...rest} type="profileImage" params={params}>
       {fileComp}
     </ElementWithDnd>
   ) : (

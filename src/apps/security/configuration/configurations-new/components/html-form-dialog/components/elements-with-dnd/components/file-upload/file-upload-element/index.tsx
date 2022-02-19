@@ -25,7 +25,7 @@ export const FileUploadElement: FC<IFileUploadElement> = ({ withDnd, params, ...
 
   const fileComp = (
     <StyledFilePond>
-      <FilePond name={model!} allowMultiple={!!multiple} maxFiles={3} />
+      <FilePond name={model || `model-${rest.id}`} allowMultiple={!!multiple} maxFiles={3} />
     </StyledFilePond>
   );
 
