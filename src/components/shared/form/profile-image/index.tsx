@@ -26,10 +26,12 @@ export const ProfileImage = (props: IProfileImage) => {
 
 const Img = (props: any) => {
   const { src } = useImage({
-    srcList:
+    srcList: [
       props.value && props.value !== "0"
         ? `http://173.212.212.209:8182/DispatcherRest/api/get/file/${props.value}`
         : "/images/avatar.svg",
+      "/images/avatar.svg",
+    ],
     useSuspense: true,
     // imgPromise:
   });
@@ -53,19 +55,19 @@ export const ProfileImageWrapper = (props: FieldProps<any, any>) => {
   // const { error, submitError } = meta;
   // const isError = showError({ meta });
 
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       for (let i = 0; i < e.target.files.length; i++) {
-        // setLoading(true);
+        setLoading(true);
         await commonApi.uploadFile(e.target.files[i]).then((res) => {
           if (res.data && res.data.code === "OK" && res.data.data) {
             onChange(res.data.data);
           }
         });
       }
-      // setLoading(false);
+      setLoading(false);
       e.target.value = "";
     }
   };
@@ -75,6 +77,7 @@ export const ProfileImageWrapper = (props: FieldProps<any, any>) => {
       if (data.code === "OK") {
         onChange("0");
       } else {
+        onChange("0"); // TODO helelik yazmisa daha yaxsi yolunu tapmaq lazimdi
         // error(data.message);
       }
     });
@@ -104,6 +107,8 @@ export const ProfileImageWrapper = (props: FieldProps<any, any>) => {
           </IconButton>
         </label>
       )}
+
+      {loading && <Spinner />}
 
       <input name={name} value={value} type="hidden" {...restInput} />
     </StyledProfileImage>
