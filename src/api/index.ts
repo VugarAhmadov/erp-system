@@ -10,3 +10,4 @@ export { dictionaryApi } from "./dictionary";
 export { commonOperationApi } from "./common-operation";
 export { configurationApi } from "./configuration";
 export { dynamicApi } from "./dynamic";
+export { commonApi } from "./common";

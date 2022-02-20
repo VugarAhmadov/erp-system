@@ -12,6 +12,7 @@ import {
   TabElement,
   ImageElement,
   FileUploadElement,
+  ProfileImageElement,
 } from "apps/security/configuration/configurations-new/components/html-form-dialog/components/elements-with-dnd/components";
 
 interface IElements {
@@ -65,7 +66,8 @@ export const Elements: FC<IElements> = ({ element }) => {
           // }
         />
       )}
-      {element.type === "file-upload" && <FileUploadElement params={element.params} id={element.id} />}
+      {element.type === "fileUpload" && <FileUploadElement params={element.params} id={element.id} />}
+      {element.type === "profileImage" && <ProfileImageElement params={element.params} id={element.id} />}
     </>
   );
 };

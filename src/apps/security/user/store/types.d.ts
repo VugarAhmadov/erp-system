@@ -13,5 +13,6 @@ export interface IAddOrEditUserRequest {
   moduleId: string;
   viewName?: string;
   entity: string;
+  photoFileId: string;
   id?: string;
 }

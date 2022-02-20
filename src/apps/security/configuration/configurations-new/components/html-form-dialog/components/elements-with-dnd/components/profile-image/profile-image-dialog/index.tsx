@@ -33,7 +33,7 @@ export const ProfileImageDialog: FC<IProfileImageDialog> = ({ open, onClose, onS
             <Typography variant="h6">{t("addProfileImageComponent")}</Typography>
 
             <div>
-              <TextField name="label" label={t("label")} required className="field" />
+              {/* <TextField name="label" label={t("label")} required className="field" /> */}
 
               <Autocomplete
                 name="table"

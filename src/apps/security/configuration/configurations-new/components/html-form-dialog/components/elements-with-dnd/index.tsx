@@ -13,6 +13,7 @@ import { SelectDialog, SelectElement, ISelectParams } from "./components/select"
 import { TabDialog, TabElement, ITabParams } from "./components/tab";
 import { TableDialog, TableElement, ITableParams } from "./components/table";
 import { IDialogState } from "./components/dialog/types";
+import { IProfileImageParams, ProfileImageDialog, ProfileImageElement } from "./components";
 
 interface IElementsWithDnd {
   element: any;
@@ -36,6 +37,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
       table: false,
       tab: false,
       fileUpload: false,
+      profileImage: false,
     },
   });
 
@@ -269,6 +271,23 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             open={dialog.open.fileUpload}
             onClose={() => handleDialogClose("fileUpload")}
             onSubmit={(data: IFileUploadParams) => handleElementEdit(element.id, data)}
+            params={element.params}
+          />
+        </>
+      )}
+      {element.type === "profileImage" && (
+        <>
+          <ProfileImageElement
+            withDnd
+            onEdit={handleDialogEdit}
+            onDelete={handleElementDelete}
+            id={element.id}
+            params={element.params}
+          />
+          <ProfileImageDialog
+            open={dialog.open.profileImage}
+            onClose={() => handleDialogClose("profileImage")}
+            onSubmit={(data: IProfileImageParams) => handleElementEdit(element.id, data)}
             params={element.params}
           />
         </>

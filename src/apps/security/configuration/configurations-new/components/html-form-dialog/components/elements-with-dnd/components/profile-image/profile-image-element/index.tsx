@@ -4,11 +4,12 @@ import { ElementWithDnd, Element } from "../..";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { StyledFilePond } from "./profile-image-element.styled";
 import { axiosCancelTokenSource, axiosIsCancel, defaultRequest } from "helpers";
+import { ProfileImage } from "components/shared";
 
 export interface IProfileImageParams {
   table?: string;
   views?: string;
-  label?: string;
+  model?: string;
 }
 
 interface IProfileImageElement {
@@ -20,15 +21,15 @@ interface IProfileImageElement {
 }
 
 export const ProfileImageElement: FC<IProfileImageElement> = ({ withDnd, params, ...rest }) => {
-  // const { label, variant, multiple } = params;
+  const { model } = params;
 
-  const fileComp = <div></div>;
+  const profileImageComp = <ProfileImage name={model || `model-${rest.id}`} />;
 
   return withDnd ? (
     <ElementWithDnd {...rest} type="profileImage" params={params}>
-      {fileComp}
+      {profileImageComp}
     </ElementWithDnd>
   ) : (
-    <Element>{fileComp}</Element>
+    <Element>{profileImageComp}</Element>
   );
 };

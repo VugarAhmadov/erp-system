@@ -13,3 +13,4 @@ export * from "./table";
 export * from "./file-upload";
 export * from "./tab";
 export * from "./image";
+export * from "./profile-image";

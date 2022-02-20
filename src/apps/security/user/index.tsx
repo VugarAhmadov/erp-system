@@ -102,6 +102,7 @@ export const User = () => {
   };
 
   const handleSubmit = (data: IAddOrEditUserRequest) => {
+    console.log(data);
     // dialog.type === "edit"
     //   ? dispatch(edit({ ...data, id: selectedUser }))
     //   : dispatch(add({ ...data, viewName: data.userName === "VIEW" ? snakeCase(data.entity) : undefined }));
