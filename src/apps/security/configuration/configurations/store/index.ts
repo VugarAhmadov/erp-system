@@ -1,37 +1,71 @@
+import { Breakpoint } from "@mui/material";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IOperation } from "apps/auth/store/types";
-import { IDialog } from "types";
-import { getDictionaryTypeList } from "./actions";
-import { IDictionyType, ILoading } from "./types";
+import { deleteTreeNode } from "helpers";
+import { getViewForm, getDictionaryTypeList, getHtmlForm } from "./actions";
+import { IDictionyType, IEditElementPayload, IGetHtmlFormResponse, IGetViewFormResponse, ILoading } from "./types";
 
 export interface IConfigurationsState {
   loading: ILoading;
-  dialog: IDialog;
-  selectedOperation: IOperation;
+  htmlFormDialogOpened: boolean;
+  viewFormDialogOpened: boolean;
+  selectedOperationHtmlForm: IGetHtmlFormResponse;
+  selectedOperationViewForm: IGetViewFormResponse;
   dictionaryTpyeList: IDictionyType[];
 }
 
 const initialState: IConfigurationsState = {
   loading: {
     getDictionaryTypeList: false,
+    getHtmlForm: false,
+    getViewForm: false,
   },
-  selectedOperation: {} as IOperation,
+  htmlFormDialogOpened: false,
+  viewFormDialogOpened: false,
+  selectedOperationHtmlForm: {} as IGetHtmlFormResponse,
+  selectedOperationViewForm: {} as IGetViewFormResponse,
   dictionaryTpyeList: [],
-  dialog: {
-    type: "",
-    opened: false,
-  },
 };
 
 export const configurationsSlice = createSlice({
   name: "configurations",
   initialState: initialState,
   reducers: {
-    setDialog: (state, action: PayloadAction<IDialog>) => {
-      state.dialog = action.payload;
+    closeDialog: (state) => {
+      state.htmlFormDialogOpened = false;
+      state.viewFormDialogOpened = false;
+      state.selectedOperationHtmlForm = {} as IGetHtmlFormResponse;
+      state.selectedOperationViewForm = {} as IGetViewFormResponse;
     },
-    setSelectedOperation: (state, action: PayloadAction<IOperation>) => {
-      state.selectedOperation = action.payload;
+    setDialogSize: (state, action: PayloadAction<Breakpoint>) => {
+      state.selectedOperationHtmlForm.dialogSize = action.payload;
+    },
+    addItem: (state, action: PayloadAction<any>) => {
+      let copy = [...state.selectedOperationHtmlForm.formContent];
+
+      copy.push(action.payload);
+      state.selectedOperationHtmlForm.formContent = copy;
+    },
+    editItem: (state, action: PayloadAction<any>) => {
+      const { id, params } = action.payload;
+      let copy = [...state.selectedOperationHtmlForm.formContent];
+
+      copy.find((c) => c.id === id).params = params;
+
+      state.selectedOperationHtmlForm.formContent = copy;
+    },
+    deleteItem: (state, action: PayloadAction<number>) => {
+      let copy = [...state.selectedOperationHtmlForm.formContent];
+
+      state.selectedOperationHtmlForm.formContent = deleteTreeNode(copy, action.payload);
+    },
+    moveItem: (state, action: PayloadAction<any>) => {
+      const { id, movedColumnId } = action.payload;
+      let copy = [...state.selectedOperationHtmlForm.formContent];
+
+      copy.find((c) => c.id === id).parentId = movedColumnId;
+
+      state.selectedOperationHtmlForm.formContent = copy;
     },
   },
   extraReducers: {
@@ -48,7 +82,39 @@ export const configurationsSlice = createSlice({
       state.dictionaryTpyeList = action.payload;
     },
     //* GET_DICTIONARY_TYPE_LIST END
+    //* GET HTML FORM
+    [getHtmlForm.pending.type]: (state) => {
+      state.loading.getHtmlForm = true;
+    },
+    [getHtmlForm.rejected.type]: (state) => {
+      state.loading.getHtmlForm = false;
+      state.htmlFormDialogOpened = false;
+      // state.dictionaryTpyeList = [];
+    },
+    [getHtmlForm.fulfilled.type]: (state, action: PayloadAction<IGetHtmlFormResponse>) => {
+      state.loading.getHtmlForm = false;
+      state.htmlFormDialogOpened = true;
+      state.selectedOperationHtmlForm = action.payload;
+      // state.dictionaryTpyeList = action.payload;
+    },
+    //* GET HTML FORM END
+    //* GET VIEW FORM
+    [getViewForm.pending.type]: (state) => {
+      state.loading.getViewForm = true;
+    },
+    [getViewForm.rejected.type]: (state) => {
+      state.loading.getViewForm = false;
+      state.viewFormDialogOpened = false;
+      // state.dictionaryTpyeList = [];
+    },
+    [getViewForm.fulfilled.type]: (state, action: PayloadAction<IGetViewFormResponse>) => {
+      state.loading.getViewForm = false;
+      state.viewFormDialogOpened = true;
+      state.selectedOperationViewForm = action.payload;
+      // state.dictionaryTpyeList = action.payload;
+    },
+    //* GET VIEW FORM END
   },
 });
 
-export const { setDialog, setSelectedOperation } = configurationsSlice.actions;
+export const { closeDialog, setDialogSize, addItem, editItem, deleteItem, moveItem } = configurationsSlice.actions;

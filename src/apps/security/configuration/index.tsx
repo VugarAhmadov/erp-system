@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { a11yProps } from "helpers";
 import { StyledConfiguration } from "./configuration.styled";
 import { TabPanel } from "components/shared";
-import { Configurations } from "./configurations-new";
+import { Configurations } from "./configurations";
 // import { Configurations } from "./configurations";
 import { Tables } from "./tables";
 import { Views } from "./views";

@@ -1,9 +1,9 @@
-import React, { useCallback } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Button,
   Icon,
   Table,
   TableBody,
@@ -12,38 +12,25 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { useTranslation } from "react-i18next";
 import { AppState } from "store";
 import { StyledConfigurations } from "./configurations.styled";
-import { Dialog } from "./components";
-import { setDialog, setSelectedOperation } from "./store";
-import { IAddHtmlFormRequest, IAddViewFormRequest } from "apps/security/operation/store/types";
-import { addHtmlForm, addViewForm } from "apps/security/operation/store/actions";
-import { IOperation } from "apps/auth/store/types";
+import { useTranslation } from "react-i18next";
+import { getViewForm, getHtmlForm } from "./store/actions";
+import { HtmlFormDialog, ViewFormDialog } from "./components";
+import { Button } from "components/shared";
 
 export const Configurations = () => {
   const dispatch = useDispatch();
-  const { t } = useTranslation("common");
   const apps = useSelector((state: AppState) => state.auth.user.applications);
-  const dialog = useSelector((state: AppState) => state.configurations.dialog);
+  const loading = useSelector((state: AppState) => state.configurations.loading);
+  const { t, i18n } = useTranslation("common");
 
-  const handleDialogOpen = (type: "" | "add" | "edit" | "all-view" | "add-priv", operation: IOperation) => {
-    dispatch(setSelectedOperation(operation));
-    // dispatch(getConfigurationHtmlFormOrViewname());
-    dispatch(setDialog({ type, opened: true }));
+  const handleHtmlFormClick = (id: string) => {
+    dispatch(getHtmlForm({ lang: i18n.language, operationId: id }));
   };
 
-  const handleDialogClose = useCallback(() => {
-    dispatch(setDialog({ type: "", opened: false }));
-  }, []);
-
-  const handleAddFormSubmit = (data: IAddHtmlFormRequest) => {
-    dispatch(addHtmlForm(data));
-  };
-
-  const handleAllViewFormSubmit = (data: IAddViewFormRequest) => {
-    dispatch(addViewForm(data));
+  const handleAllViewFormClick = (id: string) => {
+    dispatch(getViewForm({ lang: i18n.language, operationId: id }));
   };
 
   return (
@@ -78,16 +65,12 @@ export const Configurations = () => {
                             <TableCell>{operation.name.az}</TableCell>
                             <TableCell>
                               {operation.code === "ADD" && (
-                                <Button variant="contained" onClick={() => handleDialogOpen("add", operation)}>
+                                <Button onClick={() => handleHtmlFormClick(operation.id)} loading={loading.getHtmlForm}>
                                   {t("openAddDialog")}
                                 </Button>
                               )}
                               {operation.code === "ADD_PRIV" && (
-                                <Button
-                                  variant="contained"
-                                  color="success"
-                                  onClick={() => handleDialogOpen("add-priv", operation)}
-                                >
+                                <Button variant="contained" color="success" onClick={() => {}}>
                                   {t("openAddPrivDialog")}
                                 </Button>
                               )}
@@ -95,7 +78,8 @@ export const Configurations = () => {
                                 <Button
                                   variant="contained"
                                   color="secondary"
-                                  onClick={() => handleDialogOpen("all-view", operation)}
+                                  onClick={() => handleAllViewFormClick(operation.id)}
+                                  loading={loading.getViewForm}
                                 >
                                   {t("openAllViewDialog")}
                                 </Button>
@@ -112,12 +96,8 @@ export const Configurations = () => {
           </Accordion>
         ))}
       </StyledConfigurations>
-      <Dialog
-        dialog={dialog}
-        onClose={handleDialogClose}
-        onAddFormSubmit={handleAddFormSubmit}
-        onAllViewFormSubmit={handleAllViewFormSubmit}
-      />
+      <HtmlFormDialog />
+      <ViewFormDialog />
     </>
   );
 };

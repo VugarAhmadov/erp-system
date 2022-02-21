@@ -1,8 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { operationApi } from "api";
 import { checkUser } from "apps/auth/store/actions";
-import { closeDialog } from "apps/security/configuration/configurations-new/store";
-import { setDialog } from "apps/security/configuration/configurations/store";
+import { closeDialog } from "apps/security/configuration/configurations/store";
 import { toast } from "react-toastify";
 import { IAddOrEditOperationRequest, IAddHtmlFormRequest, IAddViewFormRequest } from "./types";
 

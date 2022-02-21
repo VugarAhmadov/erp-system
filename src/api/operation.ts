@@ -5,7 +5,7 @@ import {
   IAddOrEditOperationRequest,
   IAddViewFormRequest,
 } from "apps/security/operation/store/types";
-import { IGetHtmlFormOrViewnameRequest } from "apps/security/configuration/configurations-new/store/types";
+import { IGetHtmlFormOrViewnameRequest } from "apps/security/configuration/configurations/store/types";
 
 const getAll = async () => {
   return await defaultRequest.post<IGetAllResponse<any>>("api/jwt/CodiumSystem/Operation/AllView");

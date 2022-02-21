@@ -21,10 +21,10 @@ import {
   TabElement,
   ImageElement,
   FileUploadElement,
-} from "apps/security/configuration/configurations-new/components/html-form-dialog/components/elements-with-dnd/components";
+} from "apps/security/configuration/configurations/components/html-form-dialog/components/elements-with-dnd/components";
 import { Button, HiddenInput } from "components/shared";
 import { createTree } from "helpers";
-import { IRow } from "apps/security/configuration/configurations-new/components/html-form-dialog/components/types";
+import { IRow } from "apps/security/configuration/configurations/components/html-form-dialog/components/types";
 import { GridRow } from "./grid-row";
 
 interface IAddOrEditDialog {

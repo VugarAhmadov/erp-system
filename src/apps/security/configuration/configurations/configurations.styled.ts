@@ -29,7 +29,7 @@ export const StyledConfigurations = styled.div`
     }
 
     & .module .MuiAccordionSummary-root {
-      background-color: #ffd740;
+      background-color: #fded9f;
     }
 
     & .MuiAccordionSummary-root.Mui-expanded {

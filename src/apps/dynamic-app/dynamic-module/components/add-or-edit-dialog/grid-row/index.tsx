@@ -1,9 +1,6 @@
 import React, { FC, memo } from "react";
 import { Grid } from "@mui/material";
-import {
-  ICloumn,
-  IRow,
-} from "apps/security/configuration/configurations-new/components/html-form-dialog/components/types";
+import { ICloumn, IRow } from "apps/security/configuration/configurations/components/html-form-dialog/components/types";
 import { GridColumn } from "../grid-column";
 
 interface IGridRow {

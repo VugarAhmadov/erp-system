@@ -13,7 +13,7 @@ import {
   ImageElement,
   FileUploadElement,
   ProfileImageElement,
-} from "apps/security/configuration/configurations-new/components/html-form-dialog/components/elements-with-dnd/components";
+} from "apps/security/configuration/configurations/components/html-form-dialog/components/elements-with-dnd/components";
 
 interface IElements {
   element: any;
