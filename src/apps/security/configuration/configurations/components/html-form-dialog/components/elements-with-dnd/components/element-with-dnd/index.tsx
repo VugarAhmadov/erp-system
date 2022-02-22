@@ -2,7 +2,7 @@ import React, { FC, memo } from "react";
 import { Icon, IconButton } from "@mui/material";
 import { useDrag } from "react-dnd";
 import { StyledElement } from "./element-with-dnd.styled";
-import { Components } from "../../../dialog-config/constants";
+import { Components } from "components/shared/form-content";
 
 export interface IElementWithDnd {
   onEdit?(type: string, id: number): void;

@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "components/shared";
-import { Components } from "../dialog-config/constants";
+import { Components, MainContent } from "components/shared/form-content";
 import { StyledDialogContent } from "./dialog-content.styled";
 import { AppState } from "store";
 import { addItem } from "apps/security/configuration/configurations/store";
@@ -23,35 +23,12 @@ interface IDialogContent {
 
 export const DialogContent: FC<IDialogContent> = ({ onSubmit, onClose, gridView }) => {
   const { t } = useTranslation("common");
-  const dispatch = useDispatch();
 
   const selectedOperation = useSelector((state: AppState) => state.configurations.selectedOperationHtmlForm);
 
   const formContent = useSelector((state: AppState) => state.configurations.selectedOperationHtmlForm.formContent);
 
   const _content = formContent ? createTree(formContent) : [];
-
-  const [, dropRow] = useDrop(
-    () => ({
-      accept: Components.GRID,
-      drop(item: any, monitor) {
-        const didDrop = monitor.didDrop();
-
-        if (didDrop) return;
-
-        dispatch(
-          addItem({
-            id: generate(),
-            parentId: null,
-            type: "row",
-          })
-        );
-
-        return undefined;
-      },
-    }),
-    [_content]
-  );
 
   return (
     <StyledDialogContent>
@@ -66,10 +43,11 @@ export const DialogContent: FC<IDialogContent> = ({ onSubmit, onClose, gridView 
           </Button>
         </div>
       </div>
-      <div ref={dropRow} className={clsx("form-body", gridView === "on" && "grid-view")}>
+      <MainContent className={gridView === "on" ? "grid-view" : ""}>
         <Form
           onSubmit={() => {}}
-          render={({ handleSubmit, values }) => (
+          subscription={{ submitting: true }}
+          render={({ handleSubmit }) => (
             <form onSubmit={handleSubmit}>
               {_content.map((row: IRow) => (
                 <GridRow row={row} key={row.id} />
@@ -77,7 +55,7 @@ export const DialogContent: FC<IDialogContent> = ({ onSubmit, onClose, gridView 
             </form>
           )}
         />
-      </div>
+      </MainContent>
     </StyledDialogContent>
   );
 };

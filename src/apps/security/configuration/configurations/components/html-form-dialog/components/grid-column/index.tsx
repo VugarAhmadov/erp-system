@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { addItem, deleteItem, moveItem } from "apps/security/configuration/configurations/store";
 import { ElementsWithDnd } from "../elements-with-dnd";
 import { useDrop } from "react-dnd";
-import { Components } from "../dialog-config/constants";
+import { Components } from "components/shared/form-content";
 import { ICloumn, IRow } from "../types";
 import { GridRow } from "..";
 import { generate } from "short-uuid";

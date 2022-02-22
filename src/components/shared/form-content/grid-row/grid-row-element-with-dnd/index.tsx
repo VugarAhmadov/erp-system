@@ -1,19 +1,18 @@
 import React, { FC, memo } from "react";
-import { Icon, IconButton } from "@mui/material";
 import { useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
-import { Components } from "components/shared/form-content";
-import { StyledGridRow } from "./grid-row.styled";
+import { Components } from "../..";
+import { StyledGridRowElementWithDnd } from "./grid-row-element-with-dnd.styled";
 import { addItem, deleteItem } from "apps/security/configuration/configurations/store";
-import { GridColumn } from "..";
-import { ICloumn, IRow } from "../types";
 import { generate } from "short-uuid";
+import { ActionPanel } from "../../action-panel";
+import { IRow } from "../../types";
 
 interface IGridRow {
   row: IRow;
 }
 
-export const GridRow: FC<IGridRow> = memo(({ row }) => {
+export const GridRowElementWithDnd: FC<IGridRow> = memo(({ row, children }) => {
   const dispatch = useDispatch();
 
   const [{ isOverColumn, canDropColumn }, dropColumn] = useDrop(
@@ -42,7 +41,7 @@ export const GridRow: FC<IGridRow> = memo(({ row }) => {
         canDropColumn: monitor.canDrop(),
       }),
     }),
-    []
+    [row]
   );
 
   const isActiveRow = isOverColumn && canDropColumn;
@@ -54,13 +53,9 @@ export const GridRow: FC<IGridRow> = memo(({ row }) => {
   }
 
   return (
-    <StyledGridRow container ref={dropColumn} style={{ backgroundColor }}>
-      <IconButton size="small" className="row-delete-btn" onClick={() => dispatch(deleteItem(row.id))}>
-        <Icon fontSize="small">delete</Icon>
-      </IconButton>
-      {row.children.map((column: ICloumn) => (
-        <GridColumn key={column.id} column={column} />
-      ))}
-    </StyledGridRow>
+    <StyledGridRowElementWithDnd container ref={dropColumn} style={{ backgroundColor }}>
+      <ActionPanel onDeleteClick={() => dispatch(deleteItem(row.id))} />
+      {children}
+    </StyledGridRowElementWithDnd>
   );
 });

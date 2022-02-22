@@ -16,7 +16,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { StyledDialogConfig } from "./dialog-config.styled";
 import { useDrag } from "react-dnd";
-import { Components } from "./constants";
+import { Components } from "components/shared/form-content";
 
 interface IDialogConfig {
   dialogSize: Breakpoint;
