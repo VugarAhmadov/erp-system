@@ -58,7 +58,14 @@ export const GridRowElementWithDnd: FC<IGridRow> = memo(({ row }) => {
 
   return (
     <>
-      <StyledGridRowElementWithDnd container ref={dropColumn} style={{ backgroundColor }} {...row.params}>
+      <StyledGridRowElementWithDnd
+        container
+        ref={dropColumn}
+        style={{ backgroundColor }}
+        direction={row?.params?.direction}
+        justifyContent={row?.params?.justifyContent}
+        alignItems={row?.params?.alignItems}
+      >
         <ActionPanel onDeleteClick={() => dispatch(deleteItem(row.id))} onEditClick={() => setDialogOpened(true)} />
         {row.children.map((column: ICloumn) => (
           <GridColumnElementWithDnd key={column.id} column={column} />
@@ -68,7 +75,7 @@ export const GridRowElementWithDnd: FC<IGridRow> = memo(({ row }) => {
         open={dialogOpened}
         onClose={() => setDialogOpened(false)}
         onSubmit={(data: IGridRowParams) => dispatch(editItem({ id: row.id, params: data }))}
-        params={row.params}
+        params={row?.params}
       />
     </>
   );

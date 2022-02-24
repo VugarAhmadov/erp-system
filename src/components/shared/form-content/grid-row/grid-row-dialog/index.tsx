@@ -27,7 +27,6 @@ export const GridRowDialog: FC<IGridRowDialog> = ({ open, onClose, onSubmit, par
             <Typography variant="h6">{t("addGridRowComponent")}</Typography>
 
             <div>
-              <TextField name="rowSpacing" label={t("rowSpacing")} className="field" type="number" />
               <TextField name="columnSpacing" label={t("columnSpacing")} className="field" type="number" />
 
               <Select

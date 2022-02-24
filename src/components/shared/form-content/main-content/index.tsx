@@ -10,11 +10,12 @@ import { IRow } from "../types";
 import { GridRowElementWithDnd } from "../grid-row";
 
 interface IMainContent {
-  className?: string;
   content: any[];
+  className?: string;
+  isMain?: boolean;
 }
 
-export const MainContent: FC<IMainContent> = ({ content, className }) => {
+export const MainContent: FC<IMainContent> = ({ content, className, isMain = false }) => {
   const dispatch = useDispatch();
 
   const [, dropRow] = useDrop(
@@ -31,7 +32,6 @@ export const MainContent: FC<IMainContent> = ({ content, className }) => {
             parentId: null,
             type: "row",
             params: {
-              rowSpacing: 3,
               columnSpacing: 3,
               direction: "row",
               justifyContent: "flex-start",
@@ -46,11 +46,13 @@ export const MainContent: FC<IMainContent> = ({ content, className }) => {
     [content]
   );
 
-  return (
+  const _content = content.map((row: IRow) => <GridRowElementWithDnd row={row} key={row.id} />);
+
+  return isMain ? (
     <StyledMainContent ref={dropRow} className={clsx(className)}>
-      {content.map((row: IRow) => (
-        <GridRowElementWithDnd row={row} key={row.id} />
-      ))}
+      {_content}
     </StyledMainContent>
+  ) : (
+    <>{_content}</>
   );
 };

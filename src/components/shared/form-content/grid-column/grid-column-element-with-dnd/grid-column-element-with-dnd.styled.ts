@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Grid } from "@mui/material";
 
 export const StyledGridColumnElementWithDnd = styled(Grid)`
-  min-height: 59px;
+  min-height: 40px;
   border-radius: 0.25em;
   position: relative;
   border: 1px dashed #3498db;

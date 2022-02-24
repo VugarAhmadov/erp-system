@@ -13,10 +13,10 @@ export const StyledMenu = styled(Menu)`
   }
 `;
 
-export const StyledIconButton = styled(IconButton)`
+export const StyledIconButton = styled(IconButton)<{ align: "left" | "right" }>`
   position: absolute;
   top: -0.8rem;
-  right: -0.5rem;
+  ${({ align }) => `${align}: -0.5rem`};
   background-color: ${({ theme }) => theme.palette.grey[100]};
   border: 1px solid ${({ theme }) => theme.palette.grey[300]};
   z-index: 5;

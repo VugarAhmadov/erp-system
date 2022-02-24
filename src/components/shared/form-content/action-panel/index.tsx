@@ -3,12 +3,13 @@ import React, { FC, useState } from "react";
 import { StyledIconButton, StyledMenu } from "./action-panel.styled";
 
 interface IActionPanel {
+  align?: "left" | "right";
   onEditClick?(): void;
   onDeleteClick(): void;
   onCopyClick?(): void;
 }
 
-export const ActionPanel: FC<IActionPanel> = ({ onEditClick, onDeleteClick, onCopyClick }) => {
+export const ActionPanel: FC<IActionPanel> = ({ align = "right", onEditClick, onDeleteClick, onCopyClick }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -22,7 +23,7 @@ export const ActionPanel: FC<IActionPanel> = ({ onEditClick, onDeleteClick, onCo
 
   return (
     <>
-      <StyledIconButton onClick={handleClick} size="small">
+      <StyledIconButton onClick={handleClick} size="small" align={align}>
         <Icon fontSize="small">more_vert</Icon>
       </StyledIconButton>
       <StyledMenu

@@ -9,7 +9,7 @@ interface IGridRow {
 
 export const GridRow: FC<IGridRow> = memo(({ row }) => {
   return (
-    <Grid container spacing={3}>
+    <Grid container columnSpacing={5}>
       {row.children.map((column: ICloumn) => (
         <GridColumn key={column.id} column={column} />
       ))}
