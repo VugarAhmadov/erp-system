@@ -43,19 +43,15 @@ export const DialogContent: FC<IDialogContent> = ({ onSubmit, onClose, gridView 
           </Button>
         </div>
       </div>
-      <MainContent className={gridView === "on" ? "grid-view" : ""}>
-        <Form
-          onSubmit={() => {}}
-          subscription={{ submitting: true }}
-          render={({ handleSubmit }) => (
-            <form onSubmit={handleSubmit}>
-              {_content.map((row: IRow) => (
-                <GridRow row={row} key={row.id} />
-              ))}
-            </form>
-          )}
-        />
-      </MainContent>
+      <Form
+        onSubmit={() => {}}
+        subscription={{ submitting: true }}
+        render={({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <MainContent content={_content} className={gridView === "on" ? "grid-view" : ""} />
+          </form>
+        )}
+      />
     </StyledDialogContent>
   );
 };

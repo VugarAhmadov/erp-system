@@ -153,7 +153,9 @@ export const DynamicModule = () => {
           }}
         />
       </StyledDynamicModule>
-      <AddOrEditDialog dialog={dialog} onClose={handleDialogClose} onSubmit={handleSubmit} />
+      {checkUserAccess(module!, "ADD") && (
+        <AddOrEditDialog dialog={dialog} onClose={handleDialogClose} onSubmit={handleSubmit} />
+      )}
       <ConfirmDialog
         open={dialog.type === "confirm" && dialog.opened}
         onClose={handleDialogClose}

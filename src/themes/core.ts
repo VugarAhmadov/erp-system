@@ -22,6 +22,12 @@ export const coreTheme = {
           // padding: "0.6rem 1rem",
           textTransform: "initial",
         },
+        contained: {
+          boxShadow: "none",
+          "&:hover": {
+            boxShadow: "none",
+          },
+        },
       },
       defaultProps: {
         variant: "contained",

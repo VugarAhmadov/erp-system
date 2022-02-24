@@ -1,19 +1,23 @@
-import React, { FC, memo } from "react";
+import React, { FC, memo, useState } from "react";
 import { useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
+import { generate } from "short-uuid";
+import { addItem, deleteItem, editItem } from "apps/security/configuration/configurations/store";
 import { Components } from "../..";
 import { StyledGridRowElementWithDnd } from "./grid-row-element-with-dnd.styled";
-import { addItem, deleteItem } from "apps/security/configuration/configurations/store";
-import { generate } from "short-uuid";
 import { ActionPanel } from "../../action-panel";
-import { IRow } from "../../types";
+import { ICloumn, IGridRowParams, IRow } from "../../types";
+import { GridColumnElementWithDnd } from "../../grid-column";
+import { GridRowDialog } from "..";
 
 interface IGridRow {
   row: IRow;
 }
 
-export const GridRowElementWithDnd: FC<IGridRow> = memo(({ row, children }) => {
+export const GridRowElementWithDnd: FC<IGridRow> = memo(({ row }) => {
   const dispatch = useDispatch();
+
+  const [dialogOpened, setDialogOpened] = useState(false);
 
   const [{ isOverColumn, canDropColumn }, dropColumn] = useDrop(
     () => ({
@@ -53,9 +57,19 @@ export const GridRowElementWithDnd: FC<IGridRow> = memo(({ row, children }) => {
   }
 
   return (
-    <StyledGridRowElementWithDnd container ref={dropColumn} style={{ backgroundColor }}>
-      <ActionPanel onDeleteClick={() => dispatch(deleteItem(row.id))} />
-      {children}
-    </StyledGridRowElementWithDnd>
+    <>
+      <StyledGridRowElementWithDnd container ref={dropColumn} style={{ backgroundColor }} {...row.params}>
+        <ActionPanel onDeleteClick={() => dispatch(deleteItem(row.id))} onEditClick={() => setDialogOpened(true)} />
+        {row.children.map((column: ICloumn) => (
+          <GridColumnElementWithDnd key={column.id} column={column} />
+        ))}
+      </StyledGridRowElementWithDnd>
+      <GridRowDialog
+        open={dialogOpened}
+        onClose={() => setDialogOpened(false)}
+        onSubmit={(data: IGridRowParams) => dispatch(editItem({ id: row.id, params: data }))}
+        params={row.params}
+      />
+    </>
   );
 });

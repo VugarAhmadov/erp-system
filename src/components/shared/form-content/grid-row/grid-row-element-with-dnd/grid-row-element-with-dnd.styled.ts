@@ -5,21 +5,7 @@ export const StyledGridRowElementWithDnd = styled(Grid)`
   border: 1px dashed #000;
   min-height: 77px;
   border-radius: 0.25rem;
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
   padding: 0.5rem;
   position: relative;
-
-  & .row-delete-btn {
-    position: absolute;
-    top: -0.8rem;
-    right: -0.5rem;
-    color: red;
-    background-color: ${({ theme }) => theme.palette.grey[100]};
-    border: 1px solid ${({ theme }) => theme.palette.grey[300]};
-    z-index: 1;
-
-    &:hover {
-      background-color: ${({ theme }) => theme.palette.grey[100]};
-    }
-  }
 `;

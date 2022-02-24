@@ -1,5 +1,6 @@
 import { Icon, IconButton, Menu, MenuItem } from "@mui/material";
 import React, { FC, useState } from "react";
+import { StyledIconButton, StyledMenu } from "./action-panel.styled";
 
 interface IActionPanel {
   onEditClick?(): void;
@@ -21,10 +22,10 @@ export const ActionPanel: FC<IActionPanel> = ({ onEditClick, onDeleteClick, onCo
 
   return (
     <>
-      <IconButton onClick={handleClick} size="small">
+      <StyledIconButton onClick={handleClick} size="small">
         <Icon fontSize="small">more_vert</Icon>
-      </IconButton>
-      <Menu
+      </StyledIconButton>
+      <StyledMenu
         anchorEl={anchorEl}
         id="account-menu"
         open={open}
@@ -42,7 +43,7 @@ export const ActionPanel: FC<IActionPanel> = ({ onEditClick, onDeleteClick, onCo
         <MenuItem onClick={onCopyClick}>
           <Icon>content_copy</Icon> Copy
         </MenuItem>
-      </Menu>
+      </StyledMenu>
     </>
   );
 };

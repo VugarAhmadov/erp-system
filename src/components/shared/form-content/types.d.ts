@@ -2,6 +2,7 @@ export interface IRow {
   id: number;
   parentId: number;
   type: "row";
+  params: IGridRowParams;
   children: ICloumn[];
 }
 

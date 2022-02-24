@@ -42,11 +42,11 @@ export const AddOrEditDialog: FC<IAddOrEditDialog> = memo(({ dialog, onClose, on
 
   const formHtml = module && JSON.parse(module.operations.find((op) => op.code === "ADD")?.formHtml!);
 
-  const formInputs = formHtml.formContent
-    .filter((c: any) => c.type !== "column" && c.type !== "row" && c.type !== "label")
-    .map((a: any) => a.params.model);
+  const formInputs = formHtml?.formContent
+    ?.filter((c: any) => c.type !== "column" && c.type !== "row" && c.type !== "label")
+    ?.map((a: any) => a.params.model);
 
-  const _initialData = Object.fromEntries(formInputs.map((c: any) => [c, initialData[c]]));
+  const _initialData = formInputs ? Object.fromEntries(formInputs.map((c: any) => [c, initialData[c]])) : {};
 
   const _content = formHtml ? createTree(formHtml.formContent) : [];
 
