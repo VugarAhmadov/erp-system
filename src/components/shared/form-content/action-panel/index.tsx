@@ -24,7 +24,7 @@ export const ActionPanel: FC<IActionPanel> = ({ align = "right", onEditClick, on
   return (
     <>
       <StyledIconButton onClick={handleClick} size="small" align={align}>
-        <Icon fontSize="small">more_vert</Icon>
+        <Icon>more_vert</Icon>
       </StyledIconButton>
       <StyledMenu
         anchorEl={anchorEl}

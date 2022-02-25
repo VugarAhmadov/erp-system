@@ -24,4 +24,8 @@ export const StyledIconButton = styled(IconButton)<{ align: "left" | "right" }>`
   &:hover {
     background-color: ${({ theme }) => theme.palette.grey[100]};
   }
+
+  & .MuiIcon-root {
+    font-size: 1rem;
+  }
 `;

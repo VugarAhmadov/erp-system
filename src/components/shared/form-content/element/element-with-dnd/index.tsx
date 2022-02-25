@@ -2,7 +2,7 @@ import React, { FC, memo } from "react";
 import { Icon, IconButton } from "@mui/material";
 import { useDrag } from "react-dnd";
 import { StyledElement } from "./element-with-dnd.styled";
-import { Components } from "components/shared/form-content";
+import { ActionPanel, Components } from "components/shared/form-content";
 
 export interface IElementWithDnd {
   onEdit?(type: string, id: number): void;
@@ -33,14 +33,7 @@ export const ElementWithDnd: FC<IElementWithDnd> = memo(({ children, onEdit, onD
       }}
     >
       {children}
-      <div className="action-btns">
-        <IconButton size="small" className="edit-btn" onClick={() => onEdit!(type, id)}>
-          <Icon>edit</Icon>
-        </IconButton>
-        <IconButton className="delete-btn" onClick={() => onDelete!(id)}>
-          <Icon>delete</Icon>
-        </IconButton>
-      </div>
+      <ActionPanel onDeleteClick={() => onDelete!(id)} onEditClick={() => onEdit!(type, id)} />
     </StyledElement>
   );
 });

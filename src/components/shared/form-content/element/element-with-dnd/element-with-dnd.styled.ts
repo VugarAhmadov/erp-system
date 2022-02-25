@@ -5,6 +5,7 @@ export const StyledElement = styled.div`
   display: flex;
   cursor: move;
   width: 100%;
+  position: relative;
 
   & .MuiOutlinedInput-input {
     cursor: move;
