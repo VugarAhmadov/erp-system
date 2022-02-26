@@ -9,19 +9,19 @@ import { IAddOrEditApplicationRequest } from "../../store/types";
 import { StyledDialog } from "./add-or-edit-dialog.styled";
 import i18n from "translation";
 import { IName } from "apps/auth/store/types";
-import {
-  InputElement,
-  SelectElement,
-  DatepickerElement,
-  ButtonElement,
-  LabelElement,
-  CheckboxElement,
-  TableElement,
-  RadioElement,
-  TabElement,
-  ImageElement,
-  FileUploadElement,
-} from "apps/security/configuration/configurations/components/html-form-dialog/components/elements-with-dnd/components";
+// import {
+//   InputElement,
+//   SelectElement,
+//   DatepickerElement,
+//   ButtonElement,
+//   LabelElement,
+//   CheckboxElement,
+//   TableElement,
+//   RadioElement,
+//   TabElement,
+//   ImageElement,
+//   FileUploadElement,
+// } from "apps/security/configuration/configurations/components/html-form-dialog/components/elements-with-dnd/components";
 import { Button, HiddenInput } from "components/shared";
 import { createTree } from "helpers";
 import { IRow } from "apps/security/configuration/configurations/components/html-form-dialog/components/types";

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const StyledElement = styled.div`
+export const StyledTabElementWithDnd = styled.div`
   margin-bottom: 1rem;
   display: flex;
   cursor: move;

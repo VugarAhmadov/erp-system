@@ -21,7 +21,7 @@ export const ElementWithDnd: FC<IElementWithDnd> = memo(({ children, onEdit, onD
         isDragging: monitor.isDragging(),
       }),
     }),
-    [id]
+    []
   );
 
   return (

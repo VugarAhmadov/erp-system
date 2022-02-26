@@ -1,19 +1,13 @@
 import React, { FC } from "react";
 import { Typography } from "@mui/material";
-import { useDrop } from "react-dnd";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
-import clsx from "clsx";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Button } from "components/shared";
-import { Components, MainContent } from "components/shared/form-content";
+import { Content } from "components/shared/form-content";
 import { StyledDialogContent } from "./dialog-content.styled";
 import { AppState } from "store";
-import { addItem } from "apps/security/configuration/configurations/store";
-import { GridRow } from "..";
 import { createTree } from "helpers";
-import { IRow } from "../types";
-import { generate } from "short-uuid";
 
 interface IDialogContent {
   onSubmit(): void;
@@ -48,7 +42,7 @@ export const DialogContent: FC<IDialogContent> = ({ onSubmit, onClose, gridView 
         subscription={{ submitting: true }}
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
-            <MainContent content={_content} className={gridView === "on" ? "grid-view" : ""} isMain />
+            <Content content={_content} className={gridView === "on" ? "grid-view" : ""} type="main" />
           </form>
         )}
       />

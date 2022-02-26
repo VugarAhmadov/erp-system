@@ -1,19 +1,29 @@
 import React, { FC, Fragment, memo, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteItem, editItem } from "apps/security/configuration/configurations/store";
-import { ButtonDialog, ButtonElement, IButtonParams } from "../../components";
-import { CheckboxDialog, CheckboxElement, ICheckboxParams } from "../../components";
-import { DatepickerDialog, DatepickerElement, IDatepickerParams } from "../../components";
+import {
+  ButtonDialog,
+  ButtonElement,
+  IButtonParams,
+  TabElementWithDnd,
+  CheckboxDialog,
+  CheckboxElement,
+  ICheckboxParams,
+  DatepickerDialog,
+  DatepickerElement,
+  IDatepickerParams,
+} from "../../components";
+
 import { FileUploadDialog, FileUploadElement, IFileUploadParams } from "../../components";
 import { ImageDialog, ImageElement, IImageParams } from "../../components";
 import { InputDialog, InputElement, IInputParams } from "../../components";
 import { LabelDialog, LabelElement, ILabelParams } from "../../components";
 import { RadioDialog, RadioElement, IRadioParams } from "../../components";
 import { SelectDialog, SelectElement, ISelectParams } from "../../components";
-import { TabDialog, TabElement, ITabParams } from "../../components";
+import { TabDialog } from "../../components";
 import { TableDialog, TableElement, ITableParams } from "../../components";
 import { ProfileImageDialog, ProfileImageElement, IProfileImageParams } from "../../components";
-import { IDialogState } from "../../types";
+import { IDialogState, ITabParams } from "../../types";
 
 interface IElementsWithDnd {
   element: any;
@@ -66,11 +76,19 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
       | ICheckboxParams
       | IRadioParams
       | ITableParams
-      | ITabParams
+      // | ITabParams
       | IImageParams
       | IFileUploadParams
   ) => {
     dispatch(editItem({ id, params: data }));
+  };
+
+  const handleTabEdit = (tab: any, data: ITabParams) => {
+    const prevArr = tab.params.tabs;
+    const newArr = data.tabs;
+
+    // find deleted tabs
+    console.log(prevArr.filter((p: any) => newArr?.find((n) => n.id === p.id)));
   };
 
   return (
@@ -220,17 +238,11 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
       )}
       {element.type === "tab" && (
         <>
-          <TabElement
-            withDnd
-            onEdit={handleDialogEdit}
-            onDelete={handleElementDelete}
-            id={element.id}
-            params={element.params}
-          />
+          <TabElementWithDnd tab={element} onEdit={handleDialogEdit} onDelete={handleElementDelete} />
           <TabDialog
             open={dialog.open.tab}
             onClose={() => handleDialogClose("tab")}
-            onSubmit={(data: ITabParams) => handleElementEdit(element.id, data)}
+            onSubmit={(data: ITabParams) => handleTabEdit(element, data)} //handleElementEdit(element.id, data)}
             params={element.params}
           />
         </>

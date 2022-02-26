@@ -1,59 +1,63 @@
-import React, { FC, memo } from "react";
-import { useDrop } from "react-dnd";
-import { useDispatch } from "react-redux";
-import { generate } from "short-uuid";
-import clsx from "clsx";
-import { addItem } from "apps/security/configuration/configurations/store";
-// import { StyledTabElementWithDnd } from "./main-content.styled";
-import { Components } from "../../..";
-import { IRow } from "../../../types";
-import { GridRowElementWithDnd } from "../../../grid-row";
+import React, { FC, memo, useState } from "react";
+import { useDrag } from "react-dnd";
+import { Tab, Tabs } from "@mui/material";
+import { ActionPanel, Components, Content } from "../../..";
+import { StyledTabElementWithDnd } from "./tab-element-with-dnd.styled";
+import { TabPanel } from "components/shared";
 
 interface ITabElementWithDnd {
-  content: any[];
-  className?: string;
-  isMain?: boolean;
+  tab: any;
+  onEdit(type: string, id: number): void;
+  onDelete(id: number): void;
 }
 
-export const TabElementWithDnd: FC<ITabElementWithDnd> = memo(({ content, className, isMain = false }) => {
-  const dispatch = useDispatch();
+export const TabElementWithDnd: FC<ITabElementWithDnd> = memo(({ tab, onEdit, onDelete }) => {
+  const { params, id, children } = tab;
 
-  const [, dropRow] = useDrop(
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const [{ isDragging }, drag] = useDrag(
     () => ({
-      accept: Components.GRID,
-      drop(item: any, monitor) {
-        const didDrop = monitor.didDrop();
-
-        if (didDrop) return;
-
-        dispatch(
-          addItem({
-            id: generate(),
-            parentId: null,
-            type: "row",
-            params: {
-              columnSpacing: 3,
-              direction: "row",
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
-            },
-          })
-        );
-
-        return undefined;
-      },
+      type: Components.ELEMENT,
+      item: { type: "tab", move: true, id, params },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
     }),
-    []
+    [id]
   );
 
-  const _content = content.map((row: IRow) => <GridRowElementWithDnd row={row} key={row.id} />);
+  const a11yProps = (index: number) => ({
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  });
 
-  return <></>;
-  // return isMain ? (
-  //   <StyledTabElementWithDnd ref={dropRow} className={clsx(className)}>
-  //     {_content}
-  //   </StyledTabElementWithDnd>
-  // ) : (
-  //   <>{_content}</>
-  // );
+  return (
+    <StyledTabElementWithDnd
+      ref={drag}
+      style={{
+        height: isDragging ? 0 : "auto",
+        opacity: isDragging ? 0 : 1,
+      }}
+    >
+      <div style={{ width: "100%" }}>
+        <Tabs
+          value={selectedTab}
+          onChange={(event, newValue) => setSelectedTab(newValue)}
+          aria-label="basic tabs example"
+        >
+          {tab.params.tabs.map((tab: any, index: number) => (
+            <Tab label={tab.label} {...a11yProps(index)} key={index} />
+          ))}
+        </Tabs>
+        {children?.map((content: any, index: number) => (
+          <TabPanel value={selectedTab} index={index} key={index}>
+            <Content content={content.children} id={content.id} type="tab" />
+          </TabPanel>
+        ))}
+      </div>
+
+      <ActionPanel onDeleteClick={() => onDelete!(id)} onEditClick={() => onEdit!("tab", id)} />
+    </StyledTabElementWithDnd>
+  );
 });

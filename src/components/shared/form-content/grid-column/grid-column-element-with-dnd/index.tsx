@@ -5,7 +5,7 @@ import { generate } from "short-uuid";
 import { StyledGridColumnElementWithDnd } from "./grid-column-element-with-dnd.styled";
 import { addItem, deleteItem, editItem, moveItem } from "apps/security/configuration/configurations/store";
 import { ICloumn, IGridColumnParams } from "../../types";
-import { ActionPanel, ElementsWithDnd, Components, MainContent, GridColumnDialog } from "../..";
+import { ActionPanel, ElementsWithDnd, Components, Content, GridColumnDialog } from "../..";
 
 interface IGridColumnElementWithDnd {
   column: ICloumn;
@@ -25,23 +25,37 @@ export const GridColumnElementWithDnd: FC<IGridColumnElementWithDnd> = memo(({ c
 
         if (
           (column.children.length === 0 && item.type === "row") ||
-          (column.children.length > 0 && column.children[0].type === "row" && item.type === "row")
+          (column.children.length > 0 && column.children[0].type === "row" && item.type === "row") ||
+          (column.children.length === 0 && item.type !== "row" && !item.move)
         ) {
+          const id = generate();
+
           dispatch(
             addItem({
-              id: generate(),
+              id,
               parentId: column.id,
               ...item,
             })
           );
-        } else if (column.children.length === 0 && item.type !== "row" && !item.move) {
-          dispatch(
-            addItem({
-              id: generate(),
-              parentId: column.id,
-              ...item,
-            })
-          );
+
+          if (item.type === "tab") {
+            dispatch(
+              addItem({
+                id: item.params.tabs[0].id,
+                parentId: id,
+                type: "tabContent",
+                params: {},
+              })
+            );
+            dispatch(
+              addItem({
+                id: item.params.tabs[1].id,
+                parentId: id,
+                type: "tabContent",
+                params: {},
+              })
+            );
+          }
         } else if (column.children.length === 0 && item.type !== "row" && item.move) {
           dispatch(moveItem({ id: item.id, movedColumnId: column.id }));
         }
@@ -53,7 +67,7 @@ export const GridColumnElementWithDnd: FC<IGridColumnElementWithDnd> = memo(({ c
         canDropGridElement: monitor.canDrop(),
       }),
     }),
-    [column]
+    []
   );
 
   const isActiveGridElement = isOverGridElement && canDropGridElement;
@@ -73,7 +87,7 @@ export const GridColumnElementWithDnd: FC<IGridColumnElementWithDnd> = memo(({ c
           align="left"
         />
 
-        {column.children.length > 0 && column.children[0].type === "row" && <MainContent content={column.children} />}
+        {column.children.length > 0 && column.children[0].type === "row" && <Content content={column.children} />}
 
         {column.children.length === 1 && column.children[0].type !== "row" && (
           <ElementsWithDnd

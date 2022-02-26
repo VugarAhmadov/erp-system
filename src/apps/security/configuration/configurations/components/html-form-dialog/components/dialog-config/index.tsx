@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import { StyledDialogConfig } from "./dialog-config.styled";
 import { useDrag } from "react-dnd";
 import { Components } from "components/shared/form-content";
+import { generate } from "short-uuid";
 
 interface IDialogConfig {
   dialogSize: Breakpoint;
@@ -39,7 +40,7 @@ export const DialogConfig: FC<IDialogConfig> = memo(
     }));
 
     const [, dragGridColumn] = useDrag(
-      () => ({ type: Components.COLUMN, item: { type: "column", columnSize: Number(columnSize) } }),
+      () => ({ type: Components.COLUMN, item: { type: "column", params: { columnSize: Number(columnSize) } } }),
       [columnSize]
     );
 
@@ -90,7 +91,16 @@ export const DialogConfig: FC<IDialogConfig> = memo(
 
     const [, dragTab] = useDrag(() => ({
       type: Components.ELEMENT,
-      item: { type: "tab", params: {}, move: false },
+      item: {
+        type: "tab",
+        params: {
+          tabs: [
+            { id: generate(), label: "tab1" },
+            { id: generate(), label: "tab2" },
+          ],
+        },
+        move: false,
+      },
     }));
 
     const [, dragImage] = useDrag(() => ({

@@ -4,18 +4,19 @@ import { Button, DialogActions, DialogContent } from "@mui/material";
 import { Form } from "react-final-form";
 import { ModalTitle } from "./modal-title";
 import { StyledModal } from "./modal.styled";
-import {
-  InputElement,
-  SelectElement,
-  LabelElement,
-  DatepickerElement,
-  CheckboxElement,
-  ButtonElement,
-  TableElement,
-  ImageElement,
-  RadioElement,
-  TabElement,
-} from "apps/security/configuration/configurations/components/html-form-dialog/components/elements-with-dnd/components";
+// import {
+//   InputElement,
+//   SelectElement,
+//   LabelElement,
+//   DatepickerElement,
+//   CheckboxElement,
+//   ButtonElement,
+//   TableElement,
+//   ImageElement,
+//   RadioElement,
+//   TabElement,
+// } from "apps/security/configuration/configurations/components/html-form-dialog/components/elements-with-dnd/components";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getAll as getAllOperations } from "apps/security/operation/store/actions";
 import { AppState } from "store";
@@ -72,7 +73,7 @@ export const Modal: FC<IModal> = ({ open, onClose, linkedOperationId }) => {
               <div className="form-elements">
                 {data?.formElements?.map((element: any) => (
                   <Fragment key={element.index}>
-                    {element.element === "input" && (
+                    {/* {element.element === "input" && (
                       <InputElement
                         {...element.params}
                         dependedFieldData={
@@ -112,7 +113,7 @@ export const Modal: FC<IModal> = ({ open, onClose, linkedOperationId }) => {
                             : null
                         }
                       />
-                    )}
+                    )} */}
                   </Fragment>
                 ))}
               </div>

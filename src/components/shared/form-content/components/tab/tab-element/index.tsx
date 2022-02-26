@@ -2,11 +2,12 @@ import React, { FC, useState } from "react";
 import { Tab, Tabs, Typography } from "@mui/material";
 import { ElementWithDnd, Element } from "../../..";
 import { TabPanel } from "components/shared";
+import { ITabParams } from "../../../types";
 
-export interface ITabParams {
-  tabs?: ITabs[];
-  label?: string;
-}
+// export interface ITabParams {
+//   tabs?: ITabs[];
+//   label?: string;
+// }
 
 interface ITabs {
   index: number;

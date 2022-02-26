@@ -50,3 +50,8 @@ export interface IDialogOpen {
 export interface IDialogState {
   open: IDialogOpen;
 }
+
+export interface ITabParams {
+  tabs?: ITabs[];
+  label?: string;
+}

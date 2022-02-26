@@ -7,7 +7,8 @@ import arrayMutators from "final-form-arrays";
 import { Select, TextField } from "components/shared";
 import { Dialog } from "../../..";
 import { StyledForm } from "./tab-dialog.styled";
-import { ITabParams } from "../tab-element";
+import { ITabParams } from "../../../types";
+import { generate } from "short-uuid";
 
 interface ITabDialog {
   open: boolean;
@@ -32,13 +33,7 @@ export const TabDialog: FC<ITabDialog> = ({ open, onClose, onSubmit, params }) =
             <Typography variant="h6">{t("addTabComponent")}</Typography>
 
             <div className="add-tabs">
-              <Button
-                onClick={() =>
-                  form.mutators.push("tabs", { index: values.tabs ? values.tabs.length + 1 : 1, label: "" })
-                }
-              >
-                Add Tab
-              </Button>
+              <Button onClick={() => form.mutators.push("tabs", { id: generate(), label: "" })}>Add Tab</Button>
 
               <FieldArray name="tabs">
                 {({ fields }) => (

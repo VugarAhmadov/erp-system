@@ -1,21 +1,22 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
 import { generate } from "short-uuid";
 import clsx from "clsx";
 import { addItem } from "apps/security/configuration/configurations/store";
-import { StyledMainContent } from "./main-content.styled";
+import { StyledMainContent } from "./content.styled";
 import { Components } from "..";
 import { IRow } from "../types";
 import { GridRowElementWithDnd } from "../grid-row";
 
-interface IMainContent {
+interface IContent {
   content: any[];
   className?: string;
-  isMain?: boolean;
+  type?: "main" | "tab";
+  id?: string;
 }
 
-export const MainContent: FC<IMainContent> = ({ content, className, isMain = false }) => {
+export const Content: FC<IContent> = memo(({ content, className, id, type }) => {
   const dispatch = useDispatch();
 
   const [, dropRow] = useDrop(
@@ -29,7 +30,7 @@ export const MainContent: FC<IMainContent> = ({ content, className, isMain = fal
         dispatch(
           addItem({
             id: generate(),
-            parentId: null,
+            parentId: id ?? null,
             type: "row",
             params: {
               columnSpacing: 3,
@@ -43,16 +44,16 @@ export const MainContent: FC<IMainContent> = ({ content, className, isMain = fal
         return undefined;
       },
     }),
-    [content]
+    []
   );
 
   const _content = content.map((row: IRow) => <GridRowElementWithDnd row={row} key={row.id} />);
 
-  return isMain ? (
-    <StyledMainContent ref={dropRow} className={clsx(className)}>
+  return type ? (
+    <StyledMainContent ref={dropRow} className={clsx(className)} type={type}>
       {_content}
     </StyledMainContent>
   ) : (
     <>{_content}</>
   );
-};
+});

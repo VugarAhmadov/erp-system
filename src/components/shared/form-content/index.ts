@@ -1,5 +1,5 @@
 export * from "./constants";
-export { MainContent } from "./main-content";
+export { Content } from "./content";
 export { ActionPanel } from "./action-panel";
 export { Dialog } from "./dialog";
 export * from "./grid-column";

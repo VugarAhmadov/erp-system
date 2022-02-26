@@ -31,10 +31,7 @@ export const GridRowElementWithDnd: FC<IGridRow> = memo(({ row }) => {
           addItem({
             id: generate(),
             parentId: row.id,
-            type: "column",
-            params: {
-              columnSize: item.columnSize,
-            },
+            ...item,
           })
         );
 
@@ -45,7 +42,7 @@ export const GridRowElementWithDnd: FC<IGridRow> = memo(({ row }) => {
         canDropColumn: monitor.canDrop(),
       }),
     }),
-    [row]
+    []
   );
 
   const isActiveRow = isOverColumn && canDropColumn;
