@@ -10,6 +10,7 @@ export interface IProfileImageParams {
   table?: string;
   views?: string;
   model?: string;
+  width?: number;
 }
 
 interface IProfileImageElement {
@@ -23,7 +24,7 @@ interface IProfileImageElement {
 export const ProfileImageElement: FC<IProfileImageElement> = ({ withDnd, params, ...rest }) => {
   const { model } = params;
 
-  const profileImageComp = <ProfileImage name={model || `model-${rest.id}`} />;
+  const profileImageComp = <ProfileImage name={model || `model-${rest.id}`} width={params.width} />;
 
   return withDnd ? (
     <ElementWithDnd {...rest} type="profileImage" params={params}>

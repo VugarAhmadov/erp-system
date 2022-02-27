@@ -1,8 +1,8 @@
 import React, { FC, useState } from "react";
 import { Tab, Tabs, Typography } from "@mui/material";
-import { ElementWithDnd, Element } from "../../..";
-import { TabPanel } from "components/shared";
+import { ElementWithDnd, Element, Content } from "../../..";
 import { ITabParams } from "../../../types";
+// import { TabPanel } from "components/shared";
 
 // export interface ITabParams {
 //   tabs?: ITabs[];
@@ -15,11 +15,7 @@ interface ITabs {
 }
 
 interface ITabElement {
-  withDnd?: boolean;
-  params: ITabParams;
-  id: number;
-  onEdit?(type: string, id: number): void;
-  onDelete?(id: number): void;
+  tab: any;
 }
 
 const a11yProps = (index: number) => ({
@@ -27,35 +23,27 @@ const a11yProps = (index: number) => ({
   "aria-controls": `simple-tabpanel-${index}`,
 });
 
-export const TabElement: FC<ITabElement> = ({ withDnd, params, ...rest }) => {
-  const { label, tabs } = params;
+export const TabElement: FC<ITabElement> = ({ tab }) => {
+  const { params, id, children } = tab;
 
   const [selectedTab, setSelectedTab] = useState(0);
 
-  const tabComp = (
+  return (
     <div style={{ width: "100%" }}>
       <Tabs
         value={selectedTab}
         onChange={(event, newValue) => setSelectedTab(newValue)}
         aria-label="basic tabs example"
       >
-        {tabs?.map((tab, index) => (
-          <Tab label={tab.label} {...a11yProps(index)} />
+        {tab.params.tabs.map((tab: any, index: number) => (
+          <Tab label={tab.label} {...a11yProps(index)} key={index} />
         ))}
       </Tabs>
-      {tabs?.map((tab, index) => (
-        <TabPanel value={selectedTab} index={index}>
-          {tab.label}
-        </TabPanel>
+      {children?.map((content: any, index: number) => (
+        // <TabPanel value={selectedTab} index={index} key={index}>
+        <Content content={content.children} />
+        // </TabPanel>
       ))}
     </div>
-  );
-
-  return withDnd ? (
-    <ElementWithDnd {...rest} type="tab" params={params}>
-      {tabComp}
-    </ElementWithDnd>
-  ) : (
-    <Element>{tabComp}</Element>
   );
 };
