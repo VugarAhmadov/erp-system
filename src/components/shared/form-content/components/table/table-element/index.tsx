@@ -3,12 +3,16 @@ import { Column } from "@material-table/core";
 import { ElementWithDnd, Element } from "../../..";
 import { dynamicApi } from "api";
 import { DataTable } from "components/shared";
+import { toast } from "react-toastify";
 
 export interface ITableParams {
-  viewName?: string;
   title?: string;
-  getUrl?: string;
+  viewName?: string;
   seqColumns?: string;
+  getUrl?: string;
+  deleteUrl?: string;
+  addUrl?: string;
+  editUrl?: string;
 }
 
 interface ITableElement {
@@ -20,7 +24,7 @@ interface ITableElement {
 }
 
 export const TableElement: FC<ITableElement> = ({ withDnd, params, ...rest }) => {
-  const { title, seqColumns, getUrl } = params;
+  const { title, seqColumns, getUrl, deleteUrl, editUrl, addUrl } = params;
 
   const [tableData, setTableData] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -41,7 +45,7 @@ export const TableElement: FC<ITableElement> = ({ withDnd, params, ...rest }) =>
         width: "100px",
       },
     ];
-    console.log(tableData);
+
     if (seqColumns) {
       tableData?.c?.forEach((column: any) =>
         columns.push({
@@ -74,6 +78,49 @@ export const TableElement: FC<ITableElement> = ({ withDnd, params, ...rest }) =>
       isLoading={loading}
       options={{
         showTitle: !!title,
+      }}
+      editable={{
+        // isEditHidden: (rowData) =>
+        //   rowData.name === "id" ||
+        //   rowData.name === "create_date" ||
+        //   rowData.name === "create_user_id" ||
+        //   rowData.name === "update_date" ||
+        //   rowData.name === "update_user_id" ||
+        //   rowData.name === "active",
+        // isDeleteHidden: (rowData) =>
+        //   rowData.name === "id" ||
+        //   rowData.name === "create_date" ||
+        //   rowData.name === "create_user_id" ||
+        //   rowData.name === "update_date" ||
+        //   rowData.name === "update_user_id" ||
+        //   rowData.name === "active",
+        // onRowAdd: async (newData) =>
+        //   dispatch(addColumn({ tableName: selectedTable, columnName: newData.name, columnType: newData.type })),
+        // onRowUpdate: async (newData, oldData) =>
+        //   dispatch(
+        //     editColumn({
+        //       tableName: selectedTable,
+        //       oldFieldName: oldData!.name,
+        //       oldFieldType: oldData!.type,
+        //       fieldName: newData.name,
+        //       fieldType: newData.type,
+        //     })
+        //   ),
+        onRowDelete: async (oldData: any) => {
+          if (deleteUrl && getUrl) {
+            const { id } = oldData;
+
+            const { data } = await dynamicApi.remove(deleteUrl, id);
+
+            if (data?.err.length === 0) {
+              toast.success("Column silindi");
+              await dynamicApi.getAll(getUrl).then((res) => setTableData(res.data.tbl[0]));
+            }
+          }
+        },
+        // dispatch(
+        //   removeColumn({ tableName: selectedTable, columnName: oldData.name, columnType: oldData.type })
+        // ),
       }}
     />
   );
