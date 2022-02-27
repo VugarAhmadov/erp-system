@@ -66,7 +66,7 @@ export const DialogConfig: FC<IDialogConfig> = memo(
 
     const [, dragLabel] = useDrag(() => ({
       type: Components.ELEMENT,
-      item: { type: "label", params: {}, move: false },
+      item: { type: "label", params: { label: "label", variant: "h6" }, move: false },
     }));
 
     const [, dragCheckbox] = useDrag(() => ({

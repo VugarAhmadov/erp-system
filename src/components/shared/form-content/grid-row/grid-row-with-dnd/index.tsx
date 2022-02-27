@@ -4,17 +4,17 @@ import { useDispatch } from "react-redux";
 import { generate } from "short-uuid";
 import { addItem, deleteItem, editItem } from "apps/security/configuration/configurations/store";
 import { Components } from "../..";
-import { StyledGridRowElementWithDnd } from "./grid-row-element-with-dnd.styled";
+import { StyledGridRowWithDnd } from "./grid-row-with-dnd.styled";
 import { ActionPanel } from "../../action-panel";
-import { ICloumn, IGridRowParams, IRow } from "../../types";
-import { GridColumnElementWithDnd } from "../../grid-column";
+import { IColumn, IGridRowParams, IRow } from "../../types";
+import { GridColumnWithDnd } from "../../grid-column";
 import { GridRowDialog } from "..";
 
 interface IGridRow {
   row: IRow;
 }
 
-export const GridRowElementWithDnd: FC<IGridRow> = memo(({ row }) => {
+export const GridRowWithDnd: FC<IGridRow> = memo(({ row }) => {
   const dispatch = useDispatch();
 
   const [dialogOpened, setDialogOpened] = useState(false);
@@ -42,7 +42,7 @@ export const GridRowElementWithDnd: FC<IGridRow> = memo(({ row }) => {
         canDropColumn: monitor.canDrop(),
       }),
     }),
-    []
+    [row]
   );
 
   const isActiveRow = isOverColumn && canDropColumn;
@@ -55,7 +55,7 @@ export const GridRowElementWithDnd: FC<IGridRow> = memo(({ row }) => {
 
   return (
     <>
-      <StyledGridRowElementWithDnd
+      <StyledGridRowWithDnd
         container
         ref={dropColumn}
         style={{ backgroundColor }}
@@ -64,10 +64,10 @@ export const GridRowElementWithDnd: FC<IGridRow> = memo(({ row }) => {
         alignItems={row?.params?.alignItems}
       >
         <ActionPanel onDeleteClick={() => dispatch(deleteItem(row.id))} onEditClick={() => setDialogOpened(true)} />
-        {row.children.map((column: ICloumn) => (
-          <GridColumnElementWithDnd key={column.id} column={column} />
+        {row.children.map((column: IColumn) => (
+          <GridColumnWithDnd key={column.id} column={column} />
         ))}
-      </StyledGridRowElementWithDnd>
+      </StyledGridRowWithDnd>
       <GridRowDialog
         open={dialogOpened}
         onClose={() => setDialogOpened(false)}

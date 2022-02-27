@@ -9,23 +9,9 @@ import { IAddOrEditApplicationRequest } from "../../store/types";
 import { StyledDialog } from "./add-or-edit-dialog.styled";
 import i18n from "translation";
 import { IName } from "apps/auth/store/types";
-// import {
-//   InputElement,
-//   SelectElement,
-//   DatepickerElement,
-//   ButtonElement,
-//   LabelElement,
-//   CheckboxElement,
-//   TableElement,
-//   RadioElement,
-//   TabElement,
-//   ImageElement,
-//   FileUploadElement,
-// } from "apps/security/configuration/configurations/components/html-form-dialog/components/elements-with-dnd/components";
 import { Button, HiddenInput } from "components/shared";
 import { createTree } from "helpers";
-import { IRow } from "apps/security/configuration/configurations/components/html-form-dialog/components/types";
-import { GridRow } from "./grid-row";
+import { Content } from "components/shared/form-content/content/content";
 
 interface IAddOrEditDialog {
   dialog: IDialog;
@@ -49,7 +35,7 @@ export const AddOrEditDialog: FC<IAddOrEditDialog> = memo(({ dialog, onClose, on
   const _initialData = formInputs ? Object.fromEntries(formInputs.map((c: any) => [c, initialData[c]])) : {};
 
   const _content = formHtml ? createTree(formHtml.formContent) : [];
-
+  console.log(_content);
   return (
     <StyledDialog
       open={(dialog.type === "add" || dialog.type === "edit") && dialog.opened}
@@ -90,9 +76,7 @@ export const AddOrEditDialog: FC<IAddOrEditDialog> = memo(({ dialog, onClose, on
 
               <div className="form-body">
                 {dialog.type === "edit" && <HiddenInput name="id" />}
-                {_content?.map((row: IRow) => (
-                  <GridRow row={row} key={row.id} />
-                ))}
+                <Content content={_content} />
               </div>
             </form>
           )}

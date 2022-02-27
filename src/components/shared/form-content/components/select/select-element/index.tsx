@@ -32,29 +32,29 @@ export const SelectElement: FC<ISelectElement> = ({ withDnd, params, ...rest }) 
   const [selectData, setSelectData] = useState<any[]>([]);
 
   useEffect(() => {
-    if (dataType === "dic") {
-      dictionaryApi
-        .getDictionariesListByCommon({ typeId: dicId!, parentId: parentId })
-        .then((res) => setSelectData(res.data.tbl[0].r));
-    } else if (dataType === "rest") {
-      dynamicApi.getAll(dataUrl!).then((res) => setSelectData(res.data.tbl[0].r));
+    if (dicId || dataUrl) {
+      if (dataType === "dic") {
+        dictionaryApi
+          .getDictionariesListByCommon({ typeId: dicId!, parentId: parentId })
+          .then((res) => setSelectData(res.data.tbl[0].r));
+      } else if (dataType === "rest") {
+        dynamicApi.getAll(dataUrl!).then((res) => setSelectData(res.data.tbl[0].r));
+      }
     }
-  }, []);
+  }, [dataType]);
 
   const select = (
     <Select
       name={model || `model-${rest.id}`}
-      data={selectData.map((row) => ({ value: row.id, label: dataType === "dic" ? row.name : row[dataName!] }))}
+      data={selectData.map((row) => ({ value: row.id, label: dataType === "dic" ? row.name : row[dataName!] })) || []}
       required={!!required}
       label={label}
       style={{ minWidth: "120px" }}
-      inputProps={
-        {
-          // onChange: (e: any) => {
-          //   onSelectChange(selectData.find((data) => data.id === e.target.value));
-          // },
-        }
-      }
+      // inputProps={{
+      //   onChange: (e: any) => {
+      //     onSelectChange(selectData.find((data) => data.id === e.target.value));
+      //   },
+      // }}
       fullWidth
     />
   );

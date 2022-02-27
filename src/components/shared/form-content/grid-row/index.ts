@@ -1,2 +1,3 @@
 export { GridRowDialog } from "./grid-row-dialog";
-export { GridRowElementWithDnd } from "./grid-row-element-with-dnd";
+export { GridRowWithDnd } from "./grid-row-with-dnd";
+export { GridRow } from "./grid-row";

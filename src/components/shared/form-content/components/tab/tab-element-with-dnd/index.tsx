@@ -1,7 +1,7 @@
 import React, { FC, memo, useState } from "react";
 import { useDrag } from "react-dnd";
 import { Tab, Tabs } from "@mui/material";
-import { ActionPanel, Components, Content } from "../../..";
+import { ActionPanel, Components, ContentWithDnd } from "../../..";
 import { StyledTabElementWithDnd } from "./tab-element-with-dnd.styled";
 import { TabPanel } from "components/shared";
 
@@ -52,7 +52,7 @@ export const TabElementWithDnd: FC<ITabElementWithDnd> = memo(({ tab, onEdit, on
         </Tabs>
         {children?.map((content: any, index: number) => (
           <TabPanel value={selectedTab} index={index} key={index}>
-            <Content content={content.children} id={content.id} type="tab" />
+            <ContentWithDnd content={content.children} id={content.id} type="tab" />
           </TabPanel>
         ))}
       </div>

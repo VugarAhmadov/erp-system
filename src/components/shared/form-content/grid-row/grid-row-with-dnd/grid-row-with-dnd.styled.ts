@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Grid } from "@mui/material";
 
-export const StyledGridRowElementWithDnd = styled(Grid)`
+export const StyledGridRowWithDnd = styled(Grid)`
   border: 1px dashed #000;
   min-height: 60px;
   border-radius: 0.25rem;

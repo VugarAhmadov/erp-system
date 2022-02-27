@@ -2,16 +2,16 @@ import React, { FC, memo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import { generate } from "short-uuid";
-import { StyledGridColumnElementWithDnd } from "./grid-column-element-with-dnd.styled";
+import { StyledGridColumnWithDnd } from "./grid-column-with-dnd.styled";
 import { addItem, deleteItem, editItem, moveItem } from "apps/security/configuration/configurations/store";
-import { ICloumn, IGridColumnParams } from "../../types";
-import { ActionPanel, ElementsWithDnd, Components, Content, GridColumnDialog } from "../..";
+import { IColumn, IGridColumnParams } from "../../types";
+import { ActionPanel, ElementsWithDnd, Components, ContentWithDnd, GridColumnDialog } from "../..";
 
-interface IGridColumnElementWithDnd {
-  column: ICloumn;
+interface IGridColumnWithDnd {
+  column: IColumn;
 }
 
-export const GridColumnElementWithDnd: FC<IGridColumnElementWithDnd> = memo(({ column }) => {
+export const GridColumnWithDnd: FC<IGridColumnWithDnd> = memo(({ column }) => {
   const dispatch = useDispatch();
   const [dialogOpened, setDialogOpened] = useState(false);
 
@@ -67,7 +67,7 @@ export const GridColumnElementWithDnd: FC<IGridColumnElementWithDnd> = memo(({ c
         canDropGridElement: monitor.canDrop(),
       }),
     }),
-    []
+    [column]
   );
 
   const isActiveGridElement = isOverGridElement && canDropGridElement;
@@ -80,14 +80,16 @@ export const GridColumnElementWithDnd: FC<IGridColumnElementWithDnd> = memo(({ c
 
   return (
     <>
-      <StyledGridColumnElementWithDnd item xs={column.params.columnSize} ref={dropElement} style={{ backgroundColor }}>
+      <StyledGridColumnWithDnd item xs={column.params.columnSize} ref={dropElement} style={{ backgroundColor }}>
         <ActionPanel
           onDeleteClick={() => dispatch(deleteItem(column.id))}
           onEditClick={() => setDialogOpened(true)}
           align="left"
         />
 
-        {column.children.length > 0 && column.children[0].type === "row" && <Content content={column.children} />}
+        {column.children.length > 0 && column.children[0].type === "row" && (
+          <ContentWithDnd content={column.children} />
+        )}
 
         {column.children.length === 1 && column.children[0].type !== "row" && (
           <ElementsWithDnd
@@ -104,7 +106,7 @@ export const GridColumnElementWithDnd: FC<IGridColumnElementWithDnd> = memo(({ c
             // }
           />
         )}
-      </StyledGridColumnElementWithDnd>
+      </StyledGridColumnWithDnd>
       <GridColumnDialog
         open={dialogOpened}
         onClose={() => setDialogOpened(false)}

@@ -4,7 +4,7 @@ import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Button } from "components/shared";
-import { Content } from "components/shared/form-content";
+import { ContentWithDnd } from "components/shared/form-content";
 import { StyledDialogContent } from "./dialog-content.styled";
 import { AppState } from "store";
 import { createTree } from "helpers";
@@ -42,7 +42,7 @@ export const DialogContent: FC<IDialogContent> = ({ onSubmit, onClose, gridView 
         subscription={{ submitting: true }}
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
-            <Content content={_content} className={gridView === "on" ? "grid-view" : ""} type="main" />
+            <ContentWithDnd content={_content} className={gridView === "on" ? "grid-view" : ""} type="main" />
           </form>
         )}
       />

@@ -1,19 +1,19 @@
 import React, { FC } from "react";
 
-// import {
-//   InputElement,
-//   SelectElement,
-//   DatepickerElement,
-//   ButtonElement,
-//   LabelElement,
-//   CheckboxElement,
-//   TableElement,
-//   RadioElement,
-//   TabElement,
-//   ImageElement,
-//   FileUploadElement,
-//   ProfileImageElement,
-// } from "apps/security/configuration/configurations/components/html-form-dialog/components/elements-with-dnd/components";
+import {
+  InputElement,
+  SelectElement,
+  DatepickerElement,
+  ButtonElement,
+  LabelElement,
+  CheckboxElement,
+  TableElement,
+  RadioElement,
+  // TabElement,
+  ImageElement,
+  FileUploadElement,
+  ProfileImageElement,
+} from "../../components";
 
 interface IElements {
   element: any;
@@ -22,7 +22,7 @@ interface IElements {
 export const Elements: FC<IElements> = ({ element }) => {
   return (
     <>
-      {/* {element.type === "input" && (
+      {element.type === "input" && (
         <InputElement
           params={element.params}
           id={element.id}
@@ -54,7 +54,7 @@ export const Elements: FC<IElements> = ({ element }) => {
       {element.type === "checkbox" && <CheckboxElement params={element.params} id={element.id} />}
       {element.type === "table" && <TableElement params={element.params} id={element.id} />}
       {element.type === "radio" && <RadioElement params={element.params} id={element.id} />}
-      {element.type === "tab" && <TabElement params={element.params} id={element.id} />}
+      {/* {element.type === "tab" && <TabElement params={element.params} id={element.id} />} */}
       {element.type === "image" && (
         <ImageElement
           params={element.params}
@@ -67,7 +67,7 @@ export const Elements: FC<IElements> = ({ element }) => {
         />
       )}
       {element.type === "fileUpload" && <FileUploadElement params={element.params} id={element.id} />}
-      {element.type === "profileImage" && <ProfileImageElement params={element.params} id={element.id} />} */}
+      {element.type === "profileImage" && <ProfileImageElement params={element.params} id={element.id} />}
     </>
   );
 };

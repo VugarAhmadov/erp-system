@@ -4,19 +4,18 @@ import { useDispatch } from "react-redux";
 import { generate } from "short-uuid";
 import clsx from "clsx";
 import { addItem } from "apps/security/configuration/configurations/store";
-import { StyledMainContent } from "./content.styled";
-import { Components } from "..";
-import { IRow } from "../types";
-import { GridRowElementWithDnd } from "../grid-row";
+import { StyledContentWithDnd } from "./content-with-dnd.styled";
+import { Components, GridRowWithDnd } from "../..";
+import { IRow } from "../../types";
 
-interface IContent {
-  content: any[];
+interface IContentWithDnd {
+  content: any;
   className?: string;
   type?: "main" | "tab";
   id?: string;
 }
 
-export const Content: FC<IContent> = memo(({ content, className, id, type }) => {
+export const ContentWithDnd: FC<IContentWithDnd> = memo(({ content, className, id, type }) => {
   const dispatch = useDispatch();
 
   const [, dropRow] = useDrop(
@@ -44,15 +43,15 @@ export const Content: FC<IContent> = memo(({ content, className, id, type }) => 
         return undefined;
       },
     }),
-    []
+    [content]
   );
 
-  const _content = content.map((row: IRow) => <GridRowElementWithDnd row={row} key={row.id} />);
+  const _content = content.map((row: IRow) => <GridRowWithDnd row={row} key={row.id} />);
 
   return type ? (
-    <StyledMainContent ref={dropRow} className={clsx(className)} type={type}>
+    <StyledContentWithDnd ref={dropRow} className={clsx(className)} type={type}>
       {_content}
-    </StyledMainContent>
+    </StyledContentWithDnd>
   ) : (
     <>{_content}</>
   );

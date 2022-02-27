@@ -3,10 +3,10 @@ export interface IRow {
   parentId: number;
   type: "row";
   params: IGridRowParams;
-  children: ICloumn[];
+  children: IColumn[];
 }
 
-export interface ICloumn {
+export interface IColumn {
   id: number;
   parentId: number;
   type: "column";
