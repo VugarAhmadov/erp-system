@@ -3,6 +3,7 @@ import { DialogContent, Grid, Typography } from "@mui/material";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { Content } from "components/shared/form-content";
 import { AppState } from "store";
 import { IDialog } from "types";
 import { IAddOrEditApplicationRequest } from "../../store/types";
@@ -11,7 +12,6 @@ import i18n from "translation";
 import { IName } from "apps/auth/store/types";
 import { Button, HiddenInput } from "components/shared";
 import { createTree } from "helpers";
-import { Content } from "components/shared/form-content/content/content";
 
 interface IAddOrEditDialog {
   dialog: IDialog;
@@ -35,7 +35,7 @@ export const AddOrEditDialog: FC<IAddOrEditDialog> = memo(({ dialog, onClose, on
   const _initialData = formInputs ? Object.fromEntries(formInputs.map((c: any) => [c, initialData[c]])) : {};
 
   const _content = formHtml ? createTree(formHtml.formContent) : [];
-  console.log(_content);
+
   return (
     <StyledDialog
       open={(dialog.type === "add" || dialog.type === "edit") && dialog.opened}

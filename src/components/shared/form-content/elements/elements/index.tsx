@@ -9,7 +9,7 @@ import {
   CheckboxElement,
   TableElement,
   RadioElement,
-  // TabElement,
+  TabElement,
   ImageElement,
   FileUploadElement,
   ProfileImageElement,
@@ -54,7 +54,7 @@ export const Elements: FC<IElements> = ({ element }) => {
       {element.type === "checkbox" && <CheckboxElement params={element.params} id={element.id} />}
       {element.type === "table" && <TableElement params={element.params} id={element.id} />}
       {element.type === "radio" && <RadioElement params={element.params} id={element.id} />}
-      {/* {element.type === "tab" && <TabElement params={element.params} id={element.id} />} */}
+      {element.type === "tab" && <TabElement tab={element} />}
       {element.type === "image" && (
         <ImageElement
           params={element.params}

@@ -27,7 +27,7 @@ export const SelectDialog: FC<ISelectDialog> = ({ open, onClose, onSubmit, param
 
   const urlLists = useSelector((state: AppState) => state.auth.user.privilegeList);
 
-  const dicTypes = useSelector((state: AppState) => state.common.dictionaryTpyeList);
+  const dicTypes = useSelector((state: AppState) => state.common.dictionaryTypeList);
 
   useEffect(() => {
     dispatch(getDictionaryTypeList());

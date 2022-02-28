@@ -36,7 +36,7 @@ const Img = (props: any) => {
     useSuspense: true,
     // imgPromise:
   });
-  console.log(props.width);
+
   return <img src={src} className="img" width={props.width} />;
 };
 

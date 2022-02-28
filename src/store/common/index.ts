@@ -6,13 +6,13 @@ import { IDictionyType } from "./types";
 export interface ICommonState {
   selectedModule: IModule | null;
   dictionaryLoading: boolean;
-  dictionaryTpyeList: IDictionyType[];
+  dictionaryTypeList: IDictionyType[];
 }
 
 const initialState: ICommonState = {
   selectedModule: null,
   dictionaryLoading: false,
-  dictionaryTpyeList: [],
+  dictionaryTypeList: [],
 };
 
 export const commonSlice = createSlice({
@@ -30,11 +30,11 @@ export const commonSlice = createSlice({
     },
     [getDictionaryTypeList.rejected.type]: (state) => {
       state.dictionaryLoading = false;
-      state.dictionaryTpyeList = [];
+      state.dictionaryTypeList = [];
     },
     [getDictionaryTypeList.fulfilled.type]: (state, action: PayloadAction<IDictionyType[]>) => {
       state.dictionaryLoading = false;
-      state.dictionaryTpyeList = action.payload;
+      state.dictionaryTypeList = action.payload;
     },
     //* GET_DICTIONARY_TYPE_LIST END
   },

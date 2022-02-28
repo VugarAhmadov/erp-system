@@ -1,8 +1,8 @@
 import React, { FC, useState } from "react";
-import { Tab, Tabs, Typography } from "@mui/material";
-import { ElementWithDnd, Element, Content } from "../../..";
+import { Tab, Tabs } from "@mui/material";
+import { Content } from "../../..";
 import { ITabParams } from "../../../types";
-// import { TabPanel } from "components/shared";
+import { TabPanel } from "components/shared";
 
 // export interface ITabParams {
 //   tabs?: ITabs[];
@@ -40,9 +40,9 @@ export const TabElement: FC<ITabElement> = ({ tab }) => {
         ))}
       </Tabs>
       {children?.map((content: any, index: number) => (
-        // <TabPanel value={selectedTab} index={index} key={index}>
-        <Content content={content.children} />
-        // </TabPanel>
+        <TabPanel value={selectedTab} index={index} key={index}>
+          <Content content={content.children} />
+        </TabPanel>
       ))}
     </div>
   );
