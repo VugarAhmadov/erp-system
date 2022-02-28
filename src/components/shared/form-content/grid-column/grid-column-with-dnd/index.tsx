@@ -47,14 +47,6 @@ export const GridColumnWithDnd: FC<IGridColumnWithDnd> = memo(({ column }) => {
                 params: {},
               })
             );
-            dispatch(
-              addItem({
-                id: item.params.tabs[1].id,
-                parentId: id,
-                type: "tabContent",
-                params: {},
-              })
-            );
           }
         } else if (column.children.length === 0 && item.type !== "row" && item.move) {
           dispatch(moveItem({ id: item.id, movedColumnId: column.id }));

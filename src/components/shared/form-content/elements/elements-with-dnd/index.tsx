@@ -1,6 +1,6 @@
 import React, { FC, Fragment, memo, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
-import { deleteItem, editItem } from "apps/security/configuration/configurations/store";
+import { addItem, deleteItem, editItem } from "apps/security/configuration/configurations/store";
 import {
   ButtonDialog,
   ButtonElement,
@@ -40,6 +40,7 @@ import {
 } from "../../components";
 import {} from "../../components";
 import { IDialogState, ITabParams } from "../../types";
+import { differenceWith, isEqual } from "lodash";
 
 interface IElementsWithDnd {
   element: any;
@@ -92,7 +93,6 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
       | ICheckboxParams
       | IRadioParams
       | ITableParams
-      // | ITabParams
       | IImageParams
       | IFileUploadParams
   ) => {
@@ -100,11 +100,32 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
   };
 
   const handleTabEdit = (tab: any, data: ITabParams) => {
-    const prevArr = tab.params.tabs;
-    const newArr = data.tabs;
+    dispatch(editItem({ id: tab.id, params: data }));
 
-    // find deleted tabs
-    console.log(prevArr.filter((p: any) => newArr?.find((n) => n.id === p.id)));
+    const prevArr = tab.params.tabs.map((p: any) => p.id);
+    const newArr = data.tabs?.map((n) => n.id);
+
+    const deleted = differenceWith(prevArr, newArr as any, isEqual);
+    const newAdded = differenceWith(newArr, prevArr, isEqual);
+
+    if (deleted.length > 0) {
+      deleted.map((d) => {
+        dispatch(deleteItem(d));
+      });
+    }
+
+    if (newAdded.length > 0) {
+      newAdded.map((n) => {
+        dispatch(
+          addItem({
+            id: n,
+            parentId: tab.id,
+            type: "tabContent",
+            params: {},
+          })
+        );
+      });
+    }
   };
 
   return (

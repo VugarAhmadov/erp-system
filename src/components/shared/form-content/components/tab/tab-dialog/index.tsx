@@ -42,11 +42,13 @@ export const TabDialog: FC<ITabDialog> = ({ open, onClose, onSubmit, params }) =
                       <div key={name} className="tab-field">
                         <span className="field-index">{index + 1}.</span>
                         <TextField name={`${name}.label`} required label={t("label")} />
-                        <Tooltip title={t("remove") as string}>
-                          <IconButton onClick={() => fields.remove(index)} size="small">
-                            <Icon fontSize="small">delete</Icon>
-                          </IconButton>
-                        </Tooltip>
+                        {fields.length !== 1 && (
+                          <Tooltip title={t("remove") as string}>
+                            <IconButton onClick={() => fields.remove(index)} size="small">
+                              <Icon fontSize="small">delete</Icon>
+                            </IconButton>
+                          </Tooltip>
+                        )}
                       </div>
                     ))}
                   </div>

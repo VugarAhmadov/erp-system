@@ -94,10 +94,7 @@ export const DialogConfig: FC<IDialogConfig> = memo(
       item: {
         type: "tab",
         params: {
-          tabs: [
-            { id: generate(), label: "tab1" },
-            { id: generate(), label: "tab2" },
-          ],
+          tabs: [{ id: generate(), label: "tab1" }],
         },
         move: false,
       },
