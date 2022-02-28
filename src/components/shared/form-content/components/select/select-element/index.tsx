@@ -10,7 +10,7 @@ export interface ISelectParams {
   model?: string;
   label?: string;
   required?: string;
-  dataType: "dic" | "rest";
+  dataType?: "dic" | "rest";
   dicId?: string;
   parentId?: string;
   dataUrl?: string;

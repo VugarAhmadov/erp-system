@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Paper } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import { AppState } from "store";
 import { closeDialog, setDialogSize } from "../../store";
 import { StyledDialog } from "./html-form-dialog.styled";
@@ -32,31 +34,33 @@ export const HtmlFormDialog = () => {
   };
 
   return (
-    <StyledDialog
-      open={opened}
-      onClose={handleClose}
-      aria-labelledby="Add-form-dialog"
-      aria-describedby="Add-form-dialog"
-      fullWidth
-      maxWidth={selectedOperation.dialogSize}
-      scroll="paper"
-      PaperComponent={({ children, ...rest }) => (
-        <>
-          <Paper {...rest}>
-            <DialogContent
-              onClose={() => handleClose({}, "closeButtonClick")}
-              onSubmit={handleSubmit}
+    <DndProvider backend={HTML5Backend}>
+      <StyledDialog
+        open={opened}
+        onClose={handleClose}
+        aria-labelledby="Add-form-dialog"
+        aria-describedby="Add-form-dialog"
+        fullWidth
+        maxWidth={selectedOperation.dialogSize}
+        scroll="paper"
+        PaperComponent={({ children, ...rest }) => (
+          <>
+            <Paper {...rest}>
+              <DialogContent
+                onClose={() => handleClose({}, "closeButtonClick")}
+                onSubmit={handleSubmit}
+                gridView={gridView}
+              />
+            </Paper>
+            <DialogConfig
+              dialogSize={selectedOperation.dialogSize}
               gridView={gridView}
+              onDialogSizeChange={(dialogSize) => dispatch(setDialogSize(dialogSize))}
+              onGridViewChange={(gridView) => setGridView(gridView)}
             />
-          </Paper>
-          <DialogConfig
-            dialogSize={selectedOperation.dialogSize}
-            gridView={gridView}
-            onDialogSizeChange={(dialogSize) => dispatch(setDialogSize(dialogSize))}
-            onGridViewChange={(gridView) => setGridView(gridView)}
-          />
-        </>
-      )}
-    />
+          </>
+        )}
+      />
+    </DndProvider>
   );
 };

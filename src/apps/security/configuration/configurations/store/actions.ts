@@ -3,23 +3,6 @@ import { configurationApi, dictionaryApi } from "api";
 import { snakeCase } from "lodash";
 import { IGetViewFormResponse, IGetHtmlFormOrViewnameRequest, IGetHtmlFormResponse, IOperationHtml } from "./types";
 
-export const getDictionaryTypeList = createAsyncThunk(
-  "dictionary/getDictionaryTypeList",
-  async (_, { rejectWithValue }) => {
-    try {
-      const { data } = await dictionaryApi.getDictionaryTypeList();
-      if (data?.err?.length === 0) {
-        return data.tbl[0].r;
-      } else {
-        return rejectWithValue(data);
-      }
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
-);
-
 export const getHtmlForm = createAsyncThunk(
   "configuration/getHtmlForm",
   async (request: IGetHtmlFormOrViewnameRequest, { rejectWithValue, dispatch }) => {

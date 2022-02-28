@@ -5,6 +5,7 @@ import {
   ButtonDialog,
   ButtonElement,
   IButtonParams,
+  TabDialog,
   TabElementWithDnd,
   CheckboxDialog,
   CheckboxElement,
@@ -12,17 +13,32 @@ import {
   DatepickerDialog,
   DatepickerElement,
   IDatepickerParams,
+  FileUploadDialog,
+  FileUploadElement,
+  IFileUploadParams,
+  ImageDialog,
+  ImageElement,
+  IImageParams,
+  InputDialog,
+  InputElement,
+  IInputParams,
+  LabelDialog,
+  LabelElement,
+  ILabelParams,
+  RadioDialog,
+  RadioElement,
+  IRadioParams,
+  SelectDialog,
+  SelectElement,
+  ISelectParams,
+  TableDialog,
+  TableElement,
+  ITableParams,
+  ProfileImageDialog,
+  ProfileImageElement,
+  IProfileImageParams,
 } from "../../components";
-
-import { FileUploadDialog, FileUploadElement, IFileUploadParams } from "../../components";
-import { ImageDialog, ImageElement, IImageParams } from "../../components";
-import { InputDialog, InputElement, IInputParams } from "../../components";
-import { LabelDialog, LabelElement, ILabelParams } from "../../components";
-import { RadioDialog, RadioElement, IRadioParams } from "../../components";
-import { SelectDialog, SelectElement, ISelectParams } from "../../components";
-import { TabDialog } from "../../components";
-import { TableDialog, TableElement, ITableParams } from "../../components";
-import { ProfileImageDialog, ProfileImageElement, IProfileImageParams } from "../../components";
+import {} from "../../components";
 import { IDialogState, ITabParams } from "../../types";
 
 interface IElementsWithDnd {

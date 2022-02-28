@@ -8,8 +8,8 @@ import { Autocomplete, Select, Switches, TextField } from "components/shared";
 import { AppState } from "store";
 import { Dialog } from "../../..";
 import { StyledForm } from "./select-dialog.styled";
-import { getDictionaryTypeList } from "apps/security/configuration/configurations/store/actions";
 import { ISelectParams } from "../select-element";
+import { getDictionaryTypeList } from "store/common/actions";
 
 interface ISelectDialog {
   open: boolean;
@@ -27,7 +27,7 @@ export const SelectDialog: FC<ISelectDialog> = ({ open, onClose, onSubmit, param
 
   const urlLists = useSelector((state: AppState) => state.auth.user.privilegeList);
 
-  const dicTypes = useSelector((state: AppState) => state.configurations.dictionaryTpyeList);
+  const dicTypes = useSelector((state: AppState) => state.common.dictionaryTpyeList);
 
   useEffect(() => {
     dispatch(getDictionaryTypeList());

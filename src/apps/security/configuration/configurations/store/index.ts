@@ -1,9 +1,8 @@
 import { Breakpoint } from "@mui/material";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IOperation } from "apps/auth/store/types";
 import { deleteTreeNode } from "helpers";
-import { getViewForm, getDictionaryTypeList, getHtmlForm } from "./actions";
-import { IDictionyType, IEditElementPayload, IGetHtmlFormResponse, IGetViewFormResponse, ILoading } from "./types";
+import { getViewForm, getHtmlForm } from "./actions";
+import { IGetHtmlFormResponse, IGetViewFormResponse, ILoading } from "./types";
 
 export interface IConfigurationsState {
   loading: ILoading;
@@ -11,12 +10,10 @@ export interface IConfigurationsState {
   viewFormDialogOpened: boolean;
   selectedOperationHtmlForm: IGetHtmlFormResponse;
   selectedOperationViewForm: IGetViewFormResponse;
-  dictionaryTpyeList: IDictionyType[];
 }
 
 const initialState: IConfigurationsState = {
   loading: {
-    getDictionaryTypeList: false,
     getHtmlForm: false,
     getViewForm: false,
   },
@@ -24,7 +21,6 @@ const initialState: IConfigurationsState = {
   viewFormDialogOpened: false,
   selectedOperationHtmlForm: {} as IGetHtmlFormResponse,
   selectedOperationViewForm: {} as IGetViewFormResponse,
-  dictionaryTpyeList: [],
 };
 
 export const configurationsSlice = createSlice({
@@ -69,19 +65,6 @@ export const configurationsSlice = createSlice({
     },
   },
   extraReducers: {
-    //* GET_DICTIONARY_TYPE_LIST
-    [getDictionaryTypeList.pending.type]: (state) => {
-      state.loading.getDictionaryTypeList = true;
-    },
-    [getDictionaryTypeList.rejected.type]: (state) => {
-      state.loading.getDictionaryTypeList = false;
-      state.dictionaryTpyeList = [];
-    },
-    [getDictionaryTypeList.fulfilled.type]: (state, action: PayloadAction<IDictionyType[]>) => {
-      state.loading.getDictionaryTypeList = false;
-      state.dictionaryTpyeList = action.payload;
-    },
-    //* GET_DICTIONARY_TYPE_LIST END
     //* GET HTML FORM
     [getHtmlForm.pending.type]: (state) => {
       state.loading.getHtmlForm = true;
@@ -89,13 +72,11 @@ export const configurationsSlice = createSlice({
     [getHtmlForm.rejected.type]: (state) => {
       state.loading.getHtmlForm = false;
       state.htmlFormDialogOpened = false;
-      // state.dictionaryTpyeList = [];
     },
     [getHtmlForm.fulfilled.type]: (state, action: PayloadAction<IGetHtmlFormResponse>) => {
       state.loading.getHtmlForm = false;
       state.htmlFormDialogOpened = true;
       state.selectedOperationHtmlForm = action.payload;
-      // state.dictionaryTpyeList = action.payload;
     },
     //* GET HTML FORM END
     //* GET VIEW FORM
@@ -105,13 +86,11 @@ export const configurationsSlice = createSlice({
     [getViewForm.rejected.type]: (state) => {
       state.loading.getViewForm = false;
       state.viewFormDialogOpened = false;
-      // state.dictionaryTpyeList = [];
     },
     [getViewForm.fulfilled.type]: (state, action: PayloadAction<IGetViewFormResponse>) => {
       state.loading.getViewForm = false;
       state.viewFormDialogOpened = true;
       state.selectedOperationViewForm = action.payload;
-      // state.dictionaryTpyeList = action.payload;
     },
     //* GET VIEW FORM END
   },
