@@ -36,9 +36,9 @@ export const SelectElement: FC<ISelectElement> = ({ withDnd, params, ...rest }) 
       if (dataType === "dic") {
         dictionaryApi
           .getDictionariesListByCommon({ typeId: dicId!, parentId: parentId })
-          .then((res) => setSelectData(res.data.tbl[0].r));
+          .then((res) => res.data.tbl.length > 0 && setSelectData(res.data.tbl[0].r));
       } else if (dataType === "rest") {
-        dynamicApi.getAll(dataUrl!).then((res) => setSelectData(res.data.tbl[0].r));
+        dynamicApi.getAll(dataUrl!).then((res) => res.data.tbl.length > 0 && setSelectData(res.data.tbl[0].r));
       }
     }
   }, [dataType]);

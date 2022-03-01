@@ -40,7 +40,7 @@ export const TabElement: FC<ITabElement> = ({ tab }) => {
         ))}
       </Tabs>
       {children?.map((content: any, index: number) => (
-        <TabPanel value={selectedTab} index={index} key={index}>
+        <TabPanel value={selectedTab} index={index} key={index} style={{ padding: "1.5rem 0" }}>
           <Content content={content.children} />
         </TabPanel>
       ))}

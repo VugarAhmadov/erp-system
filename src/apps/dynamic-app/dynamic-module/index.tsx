@@ -131,7 +131,7 @@ export const DynamicModule = () => {
     );
   }, []);
 
-  return module && datas ? (
+  return module ? (
     <>
       <StyledDynamicModule>
         <FilterBar
