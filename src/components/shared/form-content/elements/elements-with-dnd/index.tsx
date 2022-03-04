@@ -192,6 +192,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
+            onCopy={handleElementCopy}
             id={element.id}
             params={element.params}
             // onSelectChange={(data: any) => onSelectChange(data)}

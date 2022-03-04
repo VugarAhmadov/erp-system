@@ -4,7 +4,7 @@ import { StyledIconButton, StyledMenu } from "./action-panel.styled";
 
 interface IActionPanel {
   align?: "left" | "right";
-  onEditClick?(): void;
+  onEditClick(): void;
   onDeleteClick(): void;
   onCopyClick?(): void;
 }

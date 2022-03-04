@@ -63,6 +63,7 @@ export const configurationsSlice = createSlice({
 
       state.selectedOperationHtmlForm.formContent = copy;
     },
+    copyItem: (state, action: PayloadAction<any>) => {},
   },
   extraReducers: {
     //* GET HTML FORM

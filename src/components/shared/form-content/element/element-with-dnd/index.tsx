@@ -7,12 +7,13 @@ import { ActionPanel, Components } from "components/shared/form-content";
 export interface IElementWithDnd {
   onEdit?(type: string, id: number): void;
   onDelete?(id: number): void;
+  onCopy?(id: number): void;
   type: string;
   id: number;
   params: any;
 }
 
-export const ElementWithDnd: FC<IElementWithDnd> = memo(({ children, onEdit, onDelete, type, id, params }) => {
+export const ElementWithDnd: FC<IElementWithDnd> = memo(({ children, onEdit, onDelete, onCopy, type, id, params }) => {
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: Components.ELEMENT,
@@ -33,7 +34,11 @@ export const ElementWithDnd: FC<IElementWithDnd> = memo(({ children, onEdit, onD
       }}
     >
       {children}
-      <ActionPanel onDeleteClick={() => onDelete!(id)} onEditClick={() => onEdit!(type, id)} />
+      <ActionPanel
+        onDeleteClick={() => onDelete!(id)}
+        onEditClick={() => onEdit!(type, id)}
+        onCopyClick={() => (onCopy ? onCopy(id) : {})}
+      />
     </StyledElement>
   );
 });
