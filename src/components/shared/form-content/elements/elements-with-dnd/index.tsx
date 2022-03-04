@@ -128,6 +128,8 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
     }
   };
 
+  const handleElementCopy = (id: string) => {};
+
   return (
     <Fragment key={element.index}>
       {element.type === "button" && (
