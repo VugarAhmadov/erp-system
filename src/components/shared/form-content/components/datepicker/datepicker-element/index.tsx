@@ -15,9 +15,9 @@ export interface IDatepickerParams {
 interface IDatepickerElement {
   withDnd?: boolean;
   params: IDatepickerParams;
-  id: number;
-  onEdit?(type: string, id: number): void;
-  onDelete?(id: number): void;
+  id: string;
+  onEdit?(type: string, id: string): void;
+  onDelete?(id: string): void;
 }
 
 export const DatepickerElement: FC<IDatepickerElement> = ({ withDnd, params, ...rest }) => {

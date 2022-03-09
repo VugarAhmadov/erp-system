@@ -15,9 +15,9 @@ export interface IRadioParams {
 interface IRadioElement {
   withDnd?: boolean;
   params: IRadioParams;
-  id: number;
-  onEdit?(type: string, id: number): void;
-  onDelete?(id: number): void;
+  id: string;
+  onEdit?(type: string, id: string): void;
+  onDelete?(id: string): void;
 }
 
 export const RadioElement: FC<IRadioElement> = ({ withDnd, params, ...rest }) => {

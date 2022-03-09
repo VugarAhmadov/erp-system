@@ -20,9 +20,9 @@ interface IInputElement {
   withDnd?: boolean;
   params: IInputParams;
   dependedFieldData?: any;
-  id: number;
-  onEdit?(type: string, id: number): void;
-  onDelete?(id: number): void;
+  id: string;
+  onEdit?(type: string, id: string): void;
+  onDelete?(id: string): void;
 }
 
 export const InputElement: FC<IInputElement> = ({ withDnd, params, dependedFieldData, ...rest }) => {

@@ -15,9 +15,9 @@ interface IImageElement {
   withDnd?: boolean;
   params: IImageParams;
   dependedFieldData?: any;
-  id: number;
-  onEdit?(type: string, id: number): void;
-  onDelete?(id: number): void;
+  id: string;
+  onEdit?(type: string, id: string): void;
+  onDelete?(id: string): void;
 }
 
 export const ImageElement: FC<IImageElement> = ({ withDnd, params, dependedFieldData, ...rest }) => {

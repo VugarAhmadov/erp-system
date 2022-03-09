@@ -24,9 +24,9 @@ export interface ILabelParams {
 interface ILabelElement {
   withDnd?: boolean;
   params: ILabelParams;
-  id: number;
-  onEdit?(type: string, id: number): void;
-  onDelete?(id: number): void;
+  id: string;
+  onEdit?(type: string, id: string): void;
+  onDelete?(id: string): void;
 }
 
 export const LabelElement: FC<ILabelElement> = ({ withDnd, params, ...rest }) => {

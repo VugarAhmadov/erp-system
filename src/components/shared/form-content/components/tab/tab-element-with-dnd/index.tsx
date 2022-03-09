@@ -7,8 +7,8 @@ import { TabPanel } from "components/shared";
 
 interface ITabElementWithDnd {
   tab: any;
-  onEdit(type: string, id: number): void;
-  onDelete(id: number): void;
+  onEdit(type: string, id: string): void;
+  onDelete(id: string): void;
 }
 
 export const TabElementWithDnd: FC<ITabElementWithDnd> = memo(({ tab, onEdit, onDelete }) => {

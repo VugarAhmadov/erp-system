@@ -15,10 +15,10 @@ export interface IButtonParams {
 
 interface IButtonElement {
   withDnd?: boolean;
-  id: number;
+  id: string;
   params: IButtonParams;
-  onEdit?(type: string, id: number): void;
-  onDelete?(id: number): void;
+  onEdit?(type: string, id: string): void;
+  onDelete?(id: string): void;
 }
 
 export const ButtonElement: FC<IButtonElement> = ({ withDnd, params, ...rest }) => {

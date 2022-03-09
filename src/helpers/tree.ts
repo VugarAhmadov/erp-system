@@ -16,7 +16,7 @@ export const createTree = (datas: any[]) => {
   return dataTree;
 };
 
-export const deleteTreeNode = (datas: any[], nodeId: number) => {
+export const deleteTreeNode = (datas: any[], nodeId: string) => {
   //first time it's called id is put into an array
   let del = Array.isArray(nodeId) ? nodeId : [nodeId];
 
@@ -41,7 +41,7 @@ export const deleteTreeNode = (datas: any[], nodeId: number) => {
   // since original array may not be sorted and deep grandchildren
   // are found in the beginning of the array
   if (datas.length !== newArr.length) {
-    newArr = deleteTreeNode(newArr, del as number);
+    newArr = deleteTreeNode(newArr, del as string);
   }
 
   // when no further changes are made, we return the result

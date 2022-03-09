@@ -68,7 +68,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
     },
   });
 
-  const handleDialogEdit = (type: string, id: number) => {
+  const handleDialogEdit = (type: string) => {
     setDialog((state) => ({
       open: { ...state.open, [type]: true },
     }));
@@ -78,7 +78,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
     setDialog((state) => ({ open: { ...state.open, [type]: false } }));
   }, []);
 
-  const handleElementDelete = (id: number) => {
+  const handleElementDelete = (id: string) => {
     dispatch(deleteItem(id));
   };
 

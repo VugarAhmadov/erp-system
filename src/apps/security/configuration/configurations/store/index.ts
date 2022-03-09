@@ -50,7 +50,7 @@ export const configurationsSlice = createSlice({
 
       state.selectedOperationHtmlForm.formContent = copy;
     },
-    deleteItem: (state, action: PayloadAction<number>) => {
+    deleteItem: (state, action: PayloadAction<string>) => {
       let copy = [...state.selectedOperationHtmlForm.formContent];
 
       state.selectedOperationHtmlForm.formContent = deleteTreeNode(copy, action.payload);

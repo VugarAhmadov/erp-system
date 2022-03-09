@@ -16,9 +16,9 @@ export interface IProfileImageParams {
 interface IProfileImageElement {
   withDnd?: boolean;
   params: IProfileImageParams;
-  id: number;
-  onEdit?(type: string, id: number): void;
-  onDelete?(id: number): void;
+  id: string;
+  onEdit?(type: string, id: string): void;
+  onDelete?(id: string): void;
 }
 
 export const ProfileImageElement: FC<IProfileImageElement> = ({ withDnd, params, ...rest }) => {

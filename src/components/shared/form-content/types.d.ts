@@ -1,22 +1,22 @@
 export interface IRow {
-  id: number;
-  parentId: number;
+  id: string;
+  parentId: string;
   type: "row";
   params: IGridRowParams;
   children: IColumn[];
 }
 
 export interface IColumn {
-  id: number;
-  parentId: number;
+  id: string;
+  parentId: string;
   type: "column";
   params?: any;
   children: IRow[] | [IComponent];
 }
 
 export interface IComponent {
-  id: number;
-  parentId: number;
+  id: string;
+  parentId: string;
   type: "input";
   params?: any;
 }

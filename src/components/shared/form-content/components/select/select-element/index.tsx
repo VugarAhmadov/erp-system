@@ -21,10 +21,10 @@ interface ISelectElement {
   withDnd?: boolean;
   params: ISelectParams;
   // onSelectChange(data: any): void;
-  id: number;
-  onEdit?(type: string, id: number): void;
-  onDelete?(id: number): void;
-  onCopy?(id: string);
+  id: string;
+  onEdit?(type: string, id: string): void;
+  onDelete?(id: string): void;
+  onCopy?(id: string): void;
 }
 
 export const SelectElement: FC<ISelectElement> = ({ withDnd, params, ...rest }) => {
