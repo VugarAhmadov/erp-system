@@ -18,6 +18,8 @@ import { StyledDialogConfig } from "./dialog-config.styled";
 import { useDrag } from "react-dnd";
 import { Components } from "components/shared/form-content";
 import { generate } from "short-uuid";
+import { useSelector } from "react-redux";
+import { AppState } from "store";
 
 interface IDialogConfig {
   dialogSize: Breakpoint;
@@ -29,7 +31,7 @@ interface IDialogConfig {
 export const DialogConfig: FC<IDialogConfig> = memo(
   ({ dialogSize, gridView, onDialogSizeChange, onGridViewChange }) => {
     const { t } = useTranslation("common");
-
+    const copiedItem = useSelector((state: AppState) => state.configurations.copiedItem);
     const [columnSize, setColumnSize] = useState("6");
 
     const [, dragGridRow] = useDrag(() => ({
@@ -94,6 +96,7 @@ export const DialogConfig: FC<IDialogConfig> = memo(
       item: {
         type: "tab",
         params: {
+          orientation: "horizontal",
           tabs: [{ id: generate(), label: "tab1" }],
         },
         move: false,
@@ -143,6 +146,13 @@ export const DialogConfig: FC<IDialogConfig> = memo(
             </Select>
           </FormControl>
         </div>
+        {copiedItem && (
+          <div className="copied-item">
+            <Typography variant="subtitle1" className="heading">
+              {t("copyied")}
+            </Typography>
+          </div>
+        )}
         <div className="layout-components">
           <Typography variant="subtitle1" className="heading">
             {t("layoutComponents")}

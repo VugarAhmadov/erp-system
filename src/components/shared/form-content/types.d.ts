@@ -53,5 +53,5 @@ export interface IDialogState {
 
 export interface ITabParams {
   tabs?: ITabs[];
-  label?: string;
+  orientation?: "horizontal" | "vertical";
 }

@@ -29,7 +29,7 @@ export const GridColumnWithDnd: FC<IGridColumnWithDnd> = memo(({ column }) => {
           (column.children.length === 0 && item.type !== "row" && !item.move)
         ) {
           const id = generate();
-
+          console.log(item);
           dispatch(
             addItem({
               id,

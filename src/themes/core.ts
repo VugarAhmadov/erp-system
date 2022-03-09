@@ -83,5 +83,12 @@ export const coreTheme = {
         },
       },
     },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          fontSize: "1rem",
+        },
+      },
+    },
   },
 } as ThemeOptions;

@@ -34,6 +34,8 @@ export const TabElement: FC<ITabElement> = ({ tab }) => {
         value={selectedTab}
         onChange={(event, newValue) => setSelectedTab(newValue)}
         aria-label="basic tabs example"
+        variant="scrollable"
+        scrollButtons="auto"
       >
         {tab.params.tabs.map((tab: any, index: number) => (
           <Tab label={tab.label} {...a11yProps(index)} key={index} />

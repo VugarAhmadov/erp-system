@@ -4,9 +4,10 @@ interface ITabPanel {
   index: number;
   value: number;
   style?: CSSProperties;
+  className?: string;
 }
 
-export const TabPanel: FC<ITabPanel> = ({ children, index, value, style }) => {
+export const TabPanel: FC<ITabPanel> = ({ children, index, value, style, className }) => {
   return (
     <div
       role="tabpanel"
@@ -14,6 +15,7 @@ export const TabPanel: FC<ITabPanel> = ({ children, index, value, style }) => {
       id={`tabpanel-${index}`}
       aria-labelledby={`tab-${index}`}
       style={style}
+      className={className}
     >
       {value === index && children}
     </div>

@@ -10,6 +10,7 @@ export interface IConfigurationsState {
   viewFormDialogOpened: boolean;
   selectedOperationHtmlForm: IGetHtmlFormResponse;
   selectedOperationViewForm: IGetViewFormResponse;
+  copiedItem: any;
 }
 
 const initialState: IConfigurationsState = {
@@ -21,6 +22,7 @@ const initialState: IConfigurationsState = {
   viewFormDialogOpened: false,
   selectedOperationHtmlForm: {} as IGetHtmlFormResponse,
   selectedOperationViewForm: {} as IGetViewFormResponse,
+  copiedItem: {},
 };
 
 export const configurationsSlice = createSlice({
@@ -63,7 +65,9 @@ export const configurationsSlice = createSlice({
 
       state.selectedOperationHtmlForm.formContent = copy;
     },
-    copyItem: (state, action: PayloadAction<any>) => {},
+    copyItem: (state, action: PayloadAction<any>) => {
+      state.copiedItem = action.payload;
+    },
   },
   extraReducers: {
     //* GET HTML FORM
@@ -97,4 +101,5 @@ export const configurationsSlice = createSlice({
   },
 });
 
-export const { closeDialog, setDialogSize, addItem, editItem, deleteItem, moveItem } = configurationsSlice.actions;
+export const { closeDialog, setDialogSize, addItem, editItem, deleteItem, moveItem, copyItem } =
+  configurationsSlice.actions;

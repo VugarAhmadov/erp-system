@@ -1,13 +1,15 @@
 import React, { FC } from "react";
-import { Button, Grid, Icon, Paper } from "@mui/material";
+import { Button, Grid, Icon } from "@mui/material";
 import { StyledPaper } from "./filter-bar.styled";
-import { IFilterBar, IFilterBarConfig } from "./type";
-import { Link as RouterLink } from "react-router-dom";
-import { DialogFormContent } from "./form";
-import { useDialog } from "hooks";
+import { IFilterBar } from "./type";
 import { SectionHeader } from "..";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 export const FilterBar: FC<IFilterBar> = ({ addButton, title }) => {
+  const { t } = useTranslation("common");
+  const navigate = useNavigate();
+
   // const initialConfig: IFilterBarConfig = {
   //   addButton: {
   //     show: true,
@@ -17,17 +19,27 @@ export const FilterBar: FC<IFilterBar> = ({ addButton, title }) => {
   // };
 
   return (
-    <StyledPaper elevation={2}>
-      <Grid container>
-        <Grid item xs={2} className="title">
-          <SectionHeader title={title || ""} />
-        </Grid>
-        <Grid item xs={4}>
+    <StyledPaper elevation={1}>
+      <div>
+        <SectionHeader title={title || ""} />
+
+        <div className="action-buttons">
+          <Button
+            color="primary"
+            variant="outlined"
+            className="back-button"
+            size="small"
+            startIcon={<Icon>chevron_left</Icon>}
+            onClick={() => navigate(-1)}
+          >
+            {t("back")}
+          </Button>
           {addButton.show && (
             <Button
               // component={RouterLink}
               // to={addButton.link!}
               startIcon={<Icon>{addButton.icon ?? "add"}</Icon>}
+              size="small"
               variant="contained"
               color="success"
               onClick={addButton.onClick}
@@ -35,9 +47,9 @@ export const FilterBar: FC<IFilterBar> = ({ addButton, title }) => {
               {addButton.title}
             </Button>
           )}
-        </Grid>
-        <Grid item xs={6}></Grid>
-      </Grid>
+        </div>
+      </div>
+      <div className="right-side"></div>
     </StyledPaper>
   );
 };

@@ -32,6 +32,16 @@ export const TabDialog: FC<ITabDialog> = ({ open, onClose, onSubmit, params }) =
           <StyledForm onSubmit={handleSubmit}>
             <Typography variant="h6">{t("addTabComponent")}</Typography>
 
+            <Select
+              name="orientation"
+              data={[
+                { label: "horizontal", value: "horizontal" },
+                { label: "vertical", value: "vertical" },
+              ]}
+              required
+              label={t("orientation")}
+            />
+
             <div className="add-tabs">
               <Button onClick={() => form.mutators.push("tabs", { id: generate(), label: "" })}>Add Tab</Button>
 

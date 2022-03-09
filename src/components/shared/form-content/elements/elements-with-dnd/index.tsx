@@ -1,6 +1,6 @@
 import React, { FC, Fragment, memo, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addItem, deleteItem, editItem } from "apps/security/configuration/configurations/store";
+import { addItem, copyItem, deleteItem, editItem } from "apps/security/configuration/configurations/store";
 import {
   ButtonDialog,
   ButtonElement,
@@ -128,7 +128,9 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
     }
   };
 
-  const handleElementCopy = (id: string) => {};
+  const handleElementCopy = (id: string) => {
+    dispatch(copyItem(id));
+  };
 
   return (
     <Fragment key={element.index}>
@@ -213,6 +215,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
+            onCopy={handleElementCopy}
             id={element.id}
             params={element.params}
           />

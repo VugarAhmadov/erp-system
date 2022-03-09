@@ -1,11 +1,11 @@
 import React, { FC } from "react";
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Icon, Typography } from "@mui/material";
+import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Icon, Typography, Tooltip } from "@mui/material";
 import { StyledSidebar } from "./sidebar.styled";
 import { useSelector } from "react-redux";
 import { AppState } from "store";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { checkUserAccess } from "helpers";
+// import { checkUserAccess } from "helpers";
 
 export const Sidebar: FC = () => {
   const location = useLocation();
@@ -25,18 +25,20 @@ export const Sidebar: FC = () => {
       <nav aria-label="sidebarnav" className="nav-menu">
         <List>
           {apps.map((app) => (
-            <ListItem key={app.id}>
-              <ListItemButton
-                selected={app.url === `/${location.pathname.split("/")[1]}`}
-                component={Link}
-                to={app.url ?? "/"}
-              >
-                <ListItemIcon>
-                  <Icon fontSize="large">{app.icon || "layers"}</Icon>
-                </ListItemIcon>
-                <ListItemText primary={app.shortName[i18n.language as keyof typeof app.shortName]} />
-              </ListItemButton>
-            </ListItem>
+            <Tooltip key={app.id} title={app.name[i18n.language as keyof typeof app.shortName]} placement="right" arrow>
+              <ListItem key={app.id}>
+                <ListItemButton
+                  selected={app.url === `/${location.pathname.split("/")[1]}`}
+                  component={Link}
+                  to={app.url ?? "/"}
+                >
+                  <ListItemIcon>
+                    <Icon fontSize="large">{app.icon || "layers"}</Icon>
+                  </ListItemIcon>
+                  <ListItemText primary={app.shortName[i18n.language as keyof typeof app.shortName]} />
+                </ListItemButton>
+              </ListItem>
+            </Tooltip>
           ))}
           {/* {selectedApp.modules
             ?.filter((module) => checkUserAccess(module, "ALL_VIEW"))

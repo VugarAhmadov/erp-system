@@ -39,19 +39,23 @@ export const TabElementWithDnd: FC<ITabElementWithDnd> = memo(({ tab, onEdit, on
         height: isDragging ? 0 : "auto",
         opacity: isDragging ? 0 : 1,
       }}
+      orientation={params.orientation}
     >
-      <div style={{ width: "100%" }}>
+      <div className="tab-container">
         <Tabs
           value={selectedTab}
           onChange={(event, newValue) => setSelectedTab(newValue)}
           aria-label="basic tabs example"
+          variant="scrollable"
+          scrollButtons="auto"
+          orientation={params.orientation}
         >
           {tab.params.tabs.map((tab: any, index: number) => (
             <Tab label={tab.label} {...a11yProps(index)} key={index} />
           ))}
         </Tabs>
         {children?.map((content: any, index: number) => (
-          <TabPanel value={selectedTab} index={index} key={index}>
+          <TabPanel value={selectedTab} index={index} key={index} className="tab-panel">
             <ContentWithDnd content={content.children} id={content.id} type="tab" />
           </TabPanel>
         ))}
