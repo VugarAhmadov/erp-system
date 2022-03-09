@@ -19,7 +19,7 @@ export const FilterBar: FC<IFilterBar> = ({ addButton, title }) => {
   // };
 
   return (
-    <StyledPaper elevation={1}>
+    <StyledPaper variant="outlined">
       <div>
         <SectionHeader title={title || ""} />
 

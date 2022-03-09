@@ -12,7 +12,7 @@ import { AddOrEditDialog } from "./components";
 import { setDialog } from "./store";
 import { useLocation, useNavigate } from "react-router-dom";
 import { setSelectedModule } from "store/common";
-import { Icon, IconButton } from "@mui/material";
+import { Icon, IconButton, Paper } from "@mui/material";
 
 export const DynamicModule = () => {
   const dispatch = useDispatch();
@@ -144,9 +144,10 @@ export const DynamicModule = () => {
         />
         <DataTable
           columns={buildColumns()}
-          style={{ marginTop: "1.5rem" }}
+          style={{ marginTop: "1rem" }}
           data={buildData()}
           isLoading={loading.getAll}
+          components={{ Container: (props) => <Paper variant="outlined" {...props} /> }}
           options={{
             toolbar: false,
             pageSize: 20,
