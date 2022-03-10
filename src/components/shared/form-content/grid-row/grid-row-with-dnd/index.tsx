@@ -62,6 +62,7 @@ export const GridRowWithDnd: FC<IGridRow> = memo(({ row }) => {
         direction={row?.params?.direction}
         justifyContent={row?.params?.justifyContent}
         alignItems={row?.params?.alignItems}
+        // columnSpacing={Number(row?.params?.columnSpacing)}
       >
         <ActionPanel onDeleteClick={() => dispatch(deleteItem(row.id))} onEditClick={() => setDialogOpened(true)} />
         {row.children.map((column: IColumn) => (

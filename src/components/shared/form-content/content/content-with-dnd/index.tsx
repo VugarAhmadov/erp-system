@@ -32,7 +32,7 @@ export const ContentWithDnd: FC<IContentWithDnd> = memo(({ content, className, i
             parentId: id ?? null,
             type: "row",
             params: {
-              columnSpacing: 3,
+              columnSpacing: "3",
               direction: "row",
               justifyContent: "flex-start",
               alignItems: "flex-start",

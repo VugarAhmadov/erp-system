@@ -14,7 +14,7 @@ export const GridRow: FC<IGridRow> = ({ row }) => {
       direction={row.params?.direction}
       justifyContent={row?.params?.justifyContent}
       alignItems={row.params?.alignItems}
-      columnSpacing={row.params?.columnSpacing ?? 3}
+      columnSpacing={Number(row.params?.columnSpacing)}
     >
       {row.children.map((column: IColumn) => (
         <GridColumn key={column.id} column={column} />

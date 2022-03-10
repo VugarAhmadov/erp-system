@@ -102,7 +102,7 @@ export const User = () => {
   };
 
   const handleSubmit = (data: IAddOrEditUserRequest) => {
-    console.log(data);
+    // console.log(data);
     // dialog.type === "edit"
     //   ? dispatch(edit({ ...data, id: selectedUser }))
     //   : dispatch(add({ ...data, viewName: data.userName === "VIEW" ? snakeCase(data.entity) : undefined }));
@@ -121,7 +121,7 @@ export const User = () => {
         />
         <DataTable
           columns={buildColumns()}
-          style={{ marginTop: "1.5rem" }}
+          style={{ marginTop: "1rem" }}
           data={buildData()}
           isLoading={loading.getAll}
           options={{
