@@ -9,7 +9,15 @@ interface IGridColumn {
 
 export const GridColumn: FC<IGridColumn> = ({ column }) => {
   return (
-    <Grid item xs={column.params.columnSize}>
+    <Grid
+      item
+      xs={column.params.columnSize}
+      style={{
+        height: `${column.params.height}px`,
+        marginBottom: `${column.params.marginBottom}px`,
+        marginTop: `${column.params.marginTop}px`,
+      }}
+    >
       {column.children.length > 0 &&
         column.children[0].type === "row" &&
         column.children.map((row) => <GridRow row={row as IRow} key={row.id} />)}

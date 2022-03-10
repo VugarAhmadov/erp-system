@@ -26,10 +26,20 @@ export interface IGridRowParams {
   direction: "row" | "column";
   justifyContent: "flex-start" | "center" | "flex-end";
   alignItems: "flex-start" | "center" | "flex-end";
+  width: string;
+  height: string;
+  marginBottom: string;
+  marginTop: string;
 }
 
 export interface IGridColumnParams {
   columnSize: number;
+  direction: "row" | "column";
+  justifyContent: "flex-start" | "center" | "flex-end";
+  alignItems: "flex-start" | "center" | "flex-end";
+  height: string;
+  marginBottom: string;
+  marginTop: string;
 }
 
 export interface IDialogOpen {

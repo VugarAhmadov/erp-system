@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Button, Typography } from "@mui/material";
 import { Form } from "react-final-form";
 import { useTranslation } from "react-i18next";
-import { Select } from "components/shared";
+import { Select, TextField } from "components/shared";
 import { Dialog } from "../../dialog";
 import { StyledForm } from "./grid-column-dialog.styled";
 import { IGridColumnParams } from "../../types";
@@ -36,6 +36,44 @@ export const GridColumnDialog: FC<IGridColumnDialog> = ({ open, onClose, onSubmi
                 }))}
                 required
               />
+            </div>
+
+            <div className="styles">
+              <Typography variant="h6">{t("Styles")}</Typography>
+              <Select
+                name="direction"
+                label={t("direction")}
+                data={[
+                  { label: "row", value: "row" },
+                  { label: "column", value: "column" },
+                ]}
+                required
+              />
+
+              <Select
+                name="justifyContent"
+                label={t("justifyContent")}
+                data={[
+                  { label: "flex-start", value: "flex-start" },
+                  { label: "center", value: "center" },
+                  { label: "flex-end", value: "flex-end" },
+                ]}
+                required
+              />
+
+              <Select
+                name="alignItems"
+                label={t("alignItems")}
+                data={[
+                  { label: "flex-start", value: "flex-start" },
+                  { label: "center", value: "center" },
+                  { label: "flex-end", value: "flex-end" },
+                ]}
+                required
+              />
+              <TextField name="height" label="height" className="field" />
+              <TextField name="marginBottom" label="marginBottom" className="field" />
+              <TextField name="marginTop" label="marginBottom" className="field" />
             </div>
 
             <div className="action-buttons">

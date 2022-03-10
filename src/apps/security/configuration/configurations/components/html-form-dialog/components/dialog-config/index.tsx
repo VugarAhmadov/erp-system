@@ -38,11 +38,32 @@ export const DialogConfig: FC<IDialogConfig> = memo(
       type: Components.ROW,
       item: {
         type: "row",
+        params: {
+          marginTop: "0",
+          marginBottom: "0",
+          columnSpacing: "3",
+          direction: "row",
+          justifyContent: "flex-start",
+          alignItems: "flex-start",
+        },
       },
     }));
 
     const [, dragGridColumn] = useDrag(
-      () => ({ type: Components.COLUMN, item: { type: "column", params: { columnSize: Number(columnSize) } } }),
+      () => ({
+        type: Components.COLUMN,
+        item: {
+          type: "column",
+          params: {
+            columnSize: Number(columnSize),
+            direction: "row",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+            marginTop: "0",
+            marginBottom: "0",
+          },
+        },
+      }),
       [columnSize]
     );
 

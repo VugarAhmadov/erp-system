@@ -7,6 +7,7 @@ export const StyledGridColumnWithDnd = styled(Grid)`
   position: relative;
   border: 1px dashed #3498db;
   padding: 0.5rem;
+  display: flex;
 
   & .column-delete-btn {
     position: absolute;
