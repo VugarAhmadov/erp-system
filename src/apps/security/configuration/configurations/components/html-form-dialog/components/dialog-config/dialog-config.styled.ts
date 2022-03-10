@@ -48,13 +48,23 @@ export const StyledDialogConfig = styled.div`
     }
   }
 
+  & .copied-item {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+
+    & .item {
+      padding: 0.25rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 0.25rem;
+      margin-bottom: 1rem;
+      cursor: move;
+      color: #fff;
+    }
+  }
+
   & .layout-components {
     margin-bottom: 1rem;
-
-    & .heading {
-      color: #fff;
-      margin-bottom: 0.25rem;
-    }
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 
     & .MuiList-root {
       padding: 0;
@@ -98,5 +108,10 @@ export const StyledDialogConfig = styled.div`
         }
       }
     }
+  }
+
+  & .heading {
+    color: #fff;
+    margin-bottom: 0.25rem;
   }
 `;

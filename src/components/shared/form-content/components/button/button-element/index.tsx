@@ -18,6 +18,7 @@ interface IButtonElement {
   id: string;
   params: IButtonParams;
   onEdit?(type: string, id: string): void;
+  onCopy?(type: string, id: string): void;
   onDelete?(id: string): void;
 }
 

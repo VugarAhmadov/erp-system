@@ -1,11 +1,20 @@
 import React, { FC, memo, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { generate } from "short-uuid";
 import { StyledGridColumnWithDnd } from "./grid-column-with-dnd.styled";
-import { addItem, deleteItem, editItem, moveItem } from "apps/security/configuration/configurations/store";
+import {
+  addItem,
+  applyCopiedItem,
+  copyItem,
+  deleteItem,
+  editItem,
+  moveItem,
+} from "apps/security/configuration/configurations/store";
 import { IColumn, IGridColumnParams } from "../../types";
 import { ActionPanel, ElementsWithDnd, Components, ContentWithDnd, GridColumnDialog } from "../..";
+import { AppState } from "store";
+import { copyTreeNode } from "helpers";
 
 interface IGridColumnWithDnd {
   column: IColumn;
@@ -14,10 +23,11 @@ interface IGridColumnWithDnd {
 export const GridColumnWithDnd: FC<IGridColumnWithDnd> = memo(({ column }) => {
   const dispatch = useDispatch();
   const [dialogOpened, setDialogOpened] = useState(false);
+  const formContet = useSelector((state: AppState) => state.configurations.selectedOperationHtmlForm.formContent);
 
   const [{ isOverGridElement, canDropGridElement }, dropElement] = useDrop(
     () => ({
-      accept: [Components.ELEMENT, Components.GRID],
+      accept: [Components.ELEMENT, Components.ROW],
       drop(item: any, monitor) {
         const didDrop = monitor.didDrop();
 
@@ -29,7 +39,14 @@ export const GridColumnWithDnd: FC<IGridColumnWithDnd> = memo(({ column }) => {
           (column.children.length === 0 && item.type !== "row" && !item.move)
         ) {
           const id = generate();
-          console.log(item);
+
+          if (item.copied) {
+            dispatch(applyCopiedItem({ copiedItemId: item.id, appliedItemId: column.id }));
+
+            console.log(copyTreeNode(formContet, item.id, column.id));
+            return;
+          }
+
           dispatch(
             addItem({
               id,
@@ -76,6 +93,7 @@ export const GridColumnWithDnd: FC<IGridColumnWithDnd> = memo(({ column }) => {
         <ActionPanel
           onDeleteClick={() => dispatch(deleteItem(column.id))}
           onEditClick={() => setDialogOpened(true)}
+          onCopyClick={() => dispatch(copyItem({ type: "column", id: column.id }))}
           align="left"
         />
 

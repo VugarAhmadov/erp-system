@@ -21,6 +21,7 @@ interface ITableElement {
   id: string;
   onEdit?(type: string, id: string): void;
   onDelete?(id: string): void;
+  onCopy?(type: string, id: string): void;
 }
 
 export const TableElement: FC<ITableElement> = ({ withDnd, params, ...rest }) => {

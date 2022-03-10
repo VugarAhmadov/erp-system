@@ -35,7 +35,7 @@ export const DialogConfig: FC<IDialogConfig> = memo(
     const [columnSize, setColumnSize] = useState("6");
 
     const [, dragGridRow] = useDrag(() => ({
-      type: Components.GRID,
+      type: Components.ROW,
       item: {
         type: "row",
       },
@@ -113,6 +113,19 @@ export const DialogConfig: FC<IDialogConfig> = memo(
       item: { type: "profileImage", params: {}, move: false },
     }));
 
+    const [, dragCopiedItem] = useDrag(
+      () => ({
+        type:
+          copiedItem.type === "row"
+            ? Components.ROW
+            : copiedItem.type === "column"
+            ? Components.COLUMN
+            : Components.ELEMENT,
+        item: { ...copiedItem, copied: true, move: false },
+      }),
+      [copiedItem]
+    );
+
     return (
       <StyledDialogConfig>
         <div className="controls">
@@ -146,10 +159,13 @@ export const DialogConfig: FC<IDialogConfig> = memo(
             </Select>
           </FormControl>
         </div>
-        {copiedItem && (
+        {Object.keys(copiedItem).length > 0 && (
           <div className="copied-item">
             <Typography variant="subtitle1" className="heading">
-              {t("copyied")}
+              {t("copied item")}
+            </Typography>
+            <Typography variant="body1" className="item" ref={dragCopiedItem}>
+              {copiedItem.type}
             </Typography>
           </div>
         )}

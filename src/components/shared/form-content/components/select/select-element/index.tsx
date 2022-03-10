@@ -24,7 +24,7 @@ interface ISelectElement {
   id: string;
   onEdit?(type: string, id: string): void;
   onDelete?(id: string): void;
-  onCopy?(id: string): void;
+  onCopy?(type: string, id: string): void;
 }
 
 export const SelectElement: FC<ISelectElement> = ({ withDnd, params, ...rest }) => {

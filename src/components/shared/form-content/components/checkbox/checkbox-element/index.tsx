@@ -15,6 +15,7 @@ interface ICheckboxElement {
   id: string;
   onEdit?(type: string, id: string): void;
   onDelete?(id: string): void;
+  onCopy?(type: string, id: string): void;
 }
 
 export const CheckboxElement: FC<ICheckboxElement> = ({ withDnd, params, ...rest }) => {

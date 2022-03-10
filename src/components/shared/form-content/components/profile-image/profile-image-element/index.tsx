@@ -19,6 +19,7 @@ interface IProfileImageElement {
   id: string;
   onEdit?(type: string, id: string): void;
   onDelete?(id: string): void;
+  onCopy?(type: string, id: string): void;
 }
 
 export const ProfileImageElement: FC<IProfileImageElement> = ({ withDnd, params, ...rest }) => {

@@ -1,3 +1,5 @@
+import { generate } from "short-uuid";
+
 export const createTree = (datas: any[]) => {
   let hashTable = Object.create(null);
 
@@ -48,24 +50,15 @@ export const deleteTreeNode = (datas: any[], nodeId: string) => {
   return newArr;
 };
 
-// function removeDataWithRelationships(id) {
-//   // find root parent to remove
-//   var itemToRemoveIndex = dataStore.findIndex(ds => ds.id === id);
+export const copyTreeNode = (datas: any[], copiedNodeId: string, appliedNodeId: string) => {
+  let copiedNode = datas.find((data) => data.id === copiedNodeId);
 
-//   // grab reference to remove
-//   var currentReference = dataStore[itemToRemoveIndex]
+  let copy = { ...copiedNode };
 
-//   // remove current item
-//   dataStore.splice(itemToRemoveIndex,1);
+  copy.id = generate();
+  copy.parentId = appliedNodeId;
 
-//   // look for children on currentReference
-//   var childrenToRemove = dataStore.find(ds => ds.parentid === currentReference.id);
+  datas.push(copy);
 
-//   // if there are children, look for parents and run recursive operation
-//   if (childrenToRemove) {
-//         //recursively call this function to remove all children
-//        childrenToRemove.forEach(id =>  {
-//             removeDataWithRelationship(id);
-//        });
-//   }
-// }
+  return datas;
+};

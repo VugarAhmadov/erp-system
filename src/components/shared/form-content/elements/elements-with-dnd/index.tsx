@@ -128,8 +128,8 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
     }
   };
 
-  const handleElementCopy = (id: string) => {
-    dispatch(copyItem(id));
+  const handleElementCopy = (type: string, id: string) => {
+    dispatch(copyItem({ type, id }));
   };
 
   return (
@@ -140,6 +140,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
+            onCopy={handleElementCopy}
             id={element.id}
             params={element.params}
           />
@@ -157,6 +158,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
+            onCopy={handleElementCopy}
             id={element.id}
             params={element.params}
             dependedFieldData={
@@ -179,6 +181,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
+            onCopy={handleElementCopy}
             id={element.id}
             params={element.params}
           />
@@ -233,6 +236,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
+            onCopy={handleElementCopy}
             id={element.id}
             params={element.params}
           />
@@ -244,13 +248,13 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
           />
         </>
       )}
-
       {element.type === "radio" && (
         <>
           <RadioElement
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
+            onCopy={handleElementCopy}
             id={element.id}
             params={element.params}
           />
@@ -268,6 +272,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
+            onCopy={handleElementCopy}
             id={element.id}
             params={element.params}
           />
@@ -281,7 +286,12 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
       )}
       {element.type === "tab" && (
         <>
-          <TabElementWithDnd tab={element} onEdit={handleDialogEdit} onDelete={handleElementDelete} />
+          <TabElementWithDnd
+            tab={element}
+            onEdit={handleDialogEdit}
+            onDelete={handleElementDelete}
+            onCopy={handleElementCopy}
+          />
           <TabDialog
             open={dialog.open.tab}
             onClose={() => handleDialogClose("tab")}
@@ -296,6 +306,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
+            onCopy={handleElementCopy}
             id={element.id}
             params={element.params}
             // dependedFieldData={
@@ -318,6 +329,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
+            onCopy={handleElementCopy}
             id={element.id}
             params={element.params}
           />
@@ -335,6 +347,7 @@ export const ElementsWithDnd: FC<IElementsWithDnd> = memo(({ element, onSelectCh
             withDnd
             onEdit={handleDialogEdit}
             onDelete={handleElementDelete}
+            onCopy={handleElementCopy}
             id={element.id}
             params={element.params}
           />

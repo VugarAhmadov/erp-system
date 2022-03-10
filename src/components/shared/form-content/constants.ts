@@ -1,5 +1,5 @@
 export enum Components {
-  GRID = "grid",
+  ROW = "row",
   COLUMN = "column",
   ELEMENT = "element",
 }

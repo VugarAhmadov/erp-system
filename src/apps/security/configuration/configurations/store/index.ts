@@ -1,6 +1,6 @@
 import { Breakpoint } from "@mui/material";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { deleteTreeNode } from "helpers";
+import { copyTreeNode, deleteTreeNode } from "helpers";
 import { getViewForm, getHtmlForm } from "./actions";
 import { IGetHtmlFormResponse, IGetViewFormResponse, ILoading } from "./types";
 
@@ -34,6 +34,7 @@ export const configurationsSlice = createSlice({
       state.viewFormDialogOpened = false;
       state.selectedOperationHtmlForm = {} as IGetHtmlFormResponse;
       state.selectedOperationViewForm = {} as IGetViewFormResponse;
+      state.copiedItem = {};
     },
     setDialogSize: (state, action: PayloadAction<Breakpoint>) => {
       state.selectedOperationHtmlForm.dialogSize = action.payload;
@@ -68,6 +69,11 @@ export const configurationsSlice = createSlice({
     copyItem: (state, action: PayloadAction<any>) => {
       state.copiedItem = action.payload;
     },
+    applyCopiedItem: (state, action: PayloadAction<any>) => {
+      const { copiedItemId, appliedItemId } = action.payload;
+      let copy = [...state.selectedOperationHtmlForm.formContent];
+      state.selectedOperationHtmlForm.formContent = copyTreeNode(copy, copiedItemId, appliedItemId);
+    },
   },
   extraReducers: {
     //* GET HTML FORM
@@ -101,5 +107,5 @@ export const configurationsSlice = createSlice({
   },
 });
 
-export const { closeDialog, setDialogSize, addItem, editItem, deleteItem, moveItem, copyItem } =
+export const { closeDialog, setDialogSize, addItem, editItem, deleteItem, moveItem, copyItem, applyCopiedItem } =
   configurationsSlice.actions;

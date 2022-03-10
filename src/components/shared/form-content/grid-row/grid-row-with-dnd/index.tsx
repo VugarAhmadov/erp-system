@@ -1,14 +1,16 @@
 import React, { FC, memo, useState } from "react";
 import { useDrop } from "react-dnd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { generate } from "short-uuid";
-import { addItem, deleteItem, editItem } from "apps/security/configuration/configurations/store";
+import { addItem, copyItem, deleteItem, editItem } from "apps/security/configuration/configurations/store";
 import { Components } from "../..";
 import { StyledGridRowWithDnd } from "./grid-row-with-dnd.styled";
 import { ActionPanel } from "../../action-panel";
 import { IColumn, IGridRowParams, IRow } from "../../types";
 import { GridColumnWithDnd } from "../../grid-column";
 import { GridRowDialog } from "..";
+import { copyTreeNode } from "helpers";
+import { AppState } from "store";
 
 interface IGridRow {
   row: IRow;
@@ -18,15 +20,20 @@ export const GridRowWithDnd: FC<IGridRow> = memo(({ row }) => {
   const dispatch = useDispatch();
 
   const [dialogOpened, setDialogOpened] = useState(false);
+  const formContet = useSelector((state: AppState) => state.configurations.selectedOperationHtmlForm.formContent);
 
   const [{ isOverColumn, canDropColumn }, dropColumn] = useDrop(
     () => ({
       accept: Components.COLUMN,
-      drop(item: { columnSize: number }, monitor) {
+      drop(item: any, monitor) {
         const didDrop = monitor.didDrop();
 
         if (didDrop) return;
 
+        if (item.copied) {
+          console.log(copyTreeNode(formContet, item.id, row.id));
+          return;
+        }
         dispatch(
           addItem({
             id: generate(),
@@ -64,7 +71,11 @@ export const GridRowWithDnd: FC<IGridRow> = memo(({ row }) => {
         alignItems={row?.params?.alignItems}
         // columnSpacing={Number(row?.params?.columnSpacing)}
       >
-        <ActionPanel onDeleteClick={() => dispatch(deleteItem(row.id))} onEditClick={() => setDialogOpened(true)} />
+        <ActionPanel
+          onDeleteClick={() => dispatch(deleteItem(row.id))}
+          onEditClick={() => setDialogOpened(true)}
+          onCopyClick={() => dispatch(copyItem({ type: "row", id: row.id }))}
+        />
         {row.children.map((column: IColumn) => (
           <GridColumnWithDnd key={column.id} column={column} />
         ))}

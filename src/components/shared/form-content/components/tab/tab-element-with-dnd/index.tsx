@@ -9,9 +9,10 @@ interface ITabElementWithDnd {
   tab: any;
   onEdit(type: string, id: string): void;
   onDelete(id: string): void;
+  onCopy(type: string, id: string): void;
 }
 
-export const TabElementWithDnd: FC<ITabElementWithDnd> = memo(({ tab, onEdit, onDelete }) => {
+export const TabElementWithDnd: FC<ITabElementWithDnd> = memo(({ tab, onEdit, onDelete, onCopy }) => {
   const { params, id, children } = tab;
 
   const [selectedTab, setSelectedTab] = useState(0);
@@ -61,7 +62,11 @@ export const TabElementWithDnd: FC<ITabElementWithDnd> = memo(({ tab, onEdit, on
         ))}
       </div>
 
-      <ActionPanel onDeleteClick={() => onDelete!(id)} onEditClick={() => onEdit!("tab", id)} />
+      <ActionPanel
+        onDeleteClick={() => onDelete!(id)}
+        onEditClick={() => onEdit!("tab", id)}
+        onCopyClick={() => onCopy("tab", id)}
+      />
     </StyledTabElementWithDnd>
   );
 });

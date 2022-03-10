@@ -7,7 +7,7 @@ import { ActionPanel, Components } from "components/shared/form-content";
 export interface IElementWithDnd {
   onEdit?(type: string, id: string): void;
   onDelete?(id: string): void;
-  onCopy?(id: string): void;
+  onCopy?(type: string, id: string): void;
   type: string;
   id: string;
   params: any;
@@ -37,7 +37,7 @@ export const ElementWithDnd: FC<IElementWithDnd> = memo(({ children, onEdit, onD
       <ActionPanel
         onDeleteClick={() => onDelete!(id)}
         onEditClick={() => onEdit!(type, id)}
-        onCopyClick={() => (onCopy ? onCopy(id) : {})}
+        onCopyClick={() => onCopy!(type, id)}
       />
     </StyledElement>
   );

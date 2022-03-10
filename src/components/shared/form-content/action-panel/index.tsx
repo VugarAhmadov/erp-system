@@ -6,7 +6,7 @@ interface IActionPanel {
   align?: "left" | "right";
   onEditClick(): void;
   onDeleteClick(): void;
-  onCopyClick?(): void;
+  onCopyClick(): void;
 }
 
 export const ActionPanel: FC<IActionPanel> = ({ align = "right", onEditClick, onDeleteClick, onCopyClick }) => {

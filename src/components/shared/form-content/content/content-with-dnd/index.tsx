@@ -20,7 +20,7 @@ export const ContentWithDnd: FC<IContentWithDnd> = memo(({ content, className, i
 
   const [, dropRow] = useDrop(
     () => ({
-      accept: Components.GRID,
+      accept: Components.ROW,
       drop(item: any, monitor) {
         const didDrop = monitor.didDrop();
 

@@ -18,6 +18,7 @@ interface IImageElement {
   id: string;
   onEdit?(type: string, id: string): void;
   onDelete?(id: string): void;
+  onCopy?(type: string, id: string): void;
 }
 
 export const ImageElement: FC<IImageElement> = ({ withDnd, params, dependedFieldData, ...rest }) => {
