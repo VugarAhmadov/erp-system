@@ -9,8 +9,8 @@ import { IDialog } from "types";
 import { IAddOrEditOperationRequest } from "../../store/types";
 import { StyledDialog } from "./add-or-edit.styled";
 import { getAll as getAllModules } from "apps/security/module/store/actions";
-import {getAll as getAllTables} from "apps/security/configuration/tables/store/actions";
-import {getAll as getAllViews} from "apps/security/configuration/views/store/actions";
+import { getAll as getAllTables } from "apps/security/configuration/tables/store/actions";
+import { getAll as getAllViews } from "apps/security/configuration/views/store/actions";
 import { camelCase, upperFirst } from "lodash";
 import { useValidators } from "hooks";
 
@@ -44,7 +44,7 @@ export const AddOrEdit: FC<IAddOrEdit> = ({ dialog, onClose, onSubmit }) => {
       nameAz: operation.nameAz,
       nameEn: operation.nameEn,
       nameRu: operation.nameRu,
-      url: operation.url,
+      url: operation.url.substring(18),
       code: operation.code,
       viewName: operation.viewName,
       applicationId: operation.applicationId,

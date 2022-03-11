@@ -104,8 +104,14 @@ export const Operation = () => {
 
   const handleSubmit = (data: IAddOrEditOperationRequest) => {
     dialog.type === "edit"
-      ? dispatch(edit({ ...data, id: selectedOperation }))
-      : dispatch(add({ ...data, viewName: data.operationName === "VIEW" ? snakeCase(data.entity) : undefined }));
+      ? dispatch(edit({ ...data, id: selectedOperation, url: `/jwt/CodiumSystem/${data.url}` }))
+      : dispatch(
+          add({
+            ...data,
+            viewName: data.operationName === "VIEW" ? snakeCase(data.entity) : undefined,
+            url: `/jwt/CodiumSystem/${data.url}`,
+          })
+        );
   };
 
   return (
