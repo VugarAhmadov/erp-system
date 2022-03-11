@@ -65,6 +65,6 @@ export const SelectElement: FC<ISelectElement> = ({ withDnd, params, ...rest }) 
       {select}
     </ElementWithDnd>
   ) : (
-    <Element>{select}</Element>
+    <Element params={params}>{select}</Element>
   );
 };

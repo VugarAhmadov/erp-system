@@ -37,6 +37,6 @@ export const CheckboxElement: FC<ICheckboxElement> = ({ withDnd, params, ...rest
       {checkbox}
     </ElementWithDnd>
   ) : (
-    <Element>{checkbox}</Element>
+    <Element params={params}>{checkbox}</Element>
   );
 };

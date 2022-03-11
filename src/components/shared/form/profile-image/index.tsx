@@ -10,7 +10,6 @@ import { commonApi } from "api";
 interface IProfileImage {
   name: string;
   fieldProps?: Partial<Omit<FieldProps<any, any>, "validate">>;
-  width?: number;
 }
 
 export const ProfileImage = (props: IProfileImage) => {
@@ -37,7 +36,7 @@ const Img = (props: any) => {
     // imgPromise:
   });
 
-  return <img src={src} className="img" width={props.width} />;
+  return <img src={src} className="img" />;
 };
 
 interface IProfileImageWrapper {}

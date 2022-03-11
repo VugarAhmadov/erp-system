@@ -39,6 +39,6 @@ export const RadioElement: FC<IRadioElement> = ({ withDnd, params, ...rest }) =>
       {radio}
     </ElementWithDnd>
   ) : (
-    <Element>{radio}</Element>
+    <Element params={params}>{radio}</Element>
   );
 };

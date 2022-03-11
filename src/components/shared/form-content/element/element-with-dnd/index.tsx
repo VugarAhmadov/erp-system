@@ -29,7 +29,10 @@ export const ElementWithDnd: FC<IElementWithDnd> = memo(({ children, onEdit, onD
     <StyledElement
       ref={drag}
       style={{
-        height: isDragging ? 0 : "auto",
+        height: isDragging ? 0 : params.height && `${params.height}px`,
+        width: params.width && `${params.width}px`,
+        marginTop: params.marginTop && `${params.marginTop}px`,
+        marginBottom: params.marginBottom && `${params.marginBottom}px`,
         opacity: isDragging ? 0 : 1,
       }}
     >

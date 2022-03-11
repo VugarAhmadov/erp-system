@@ -40,6 +40,6 @@ export const LabelElement: FC<ILabelElement> = ({ withDnd, params, ...rest }) =>
       {labelComp}
     </ElementWithDnd>
   ) : (
-    <Element>{labelComp}</Element>
+    <Element params={params}>{labelComp}</Element>
   );
 };

@@ -131,6 +131,6 @@ export const TableElement: FC<ITableElement> = ({ withDnd, params, ...rest }) =>
       {table}
     </ElementWithDnd>
   ) : (
-    <Element>{table}</Element>
+    <Element params={params}>{table}</Element>
   );
 };

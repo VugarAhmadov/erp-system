@@ -35,6 +35,6 @@ export const FileUploadElement: FC<IFileUploadElement> = ({ withDnd, params, ...
       {fileComp}
     </ElementWithDnd>
   ) : (
-    <Element>{fileComp}</Element>
+    <Element params={params}>{fileComp}</Element>
   );
 };

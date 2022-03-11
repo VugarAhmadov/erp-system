@@ -33,8 +33,6 @@ export const ProfileImageDialog: FC<IProfileImageDialog> = ({ open, onClose, onS
             <Typography variant="h6">{t("addProfileImageComponent")}</Typography>
 
             <div>
-              {/* <TextField name="label" label={t("label")} required className="field" /> */}
-
               <Autocomplete
                 name="table"
                 id="table"
@@ -59,9 +57,10 @@ export const ProfileImageDialog: FC<IProfileImageDialog> = ({ open, onClose, onS
 
             <div className="styles">
               <Typography variant="h6">{t("Styles")}</Typography>
-              <TextField name="top" label="top" className="field" />
-              <TextField name="left" label="left" className="field" />
               <TextField name="width" label="width" className="field" />
+              <TextField name="height" label="height" className="field" />
+              <TextField name="marginTop" label="marginTop" className="field" />
+              <TextField name="marginBottom" label="marginBottom" className="field" />
             </div>
 
             <div className="action-buttons">

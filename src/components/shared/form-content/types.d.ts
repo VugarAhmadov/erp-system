@@ -10,7 +10,7 @@ export interface IColumn {
   id: string;
   parentId: string;
   type: "column";
-  params?: any;
+  params: IGridColumnParams;
   children: IRow[] | [IComponent];
 }
 

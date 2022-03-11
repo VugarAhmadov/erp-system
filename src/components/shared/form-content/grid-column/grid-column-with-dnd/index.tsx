@@ -95,10 +95,11 @@ export const GridColumnWithDnd: FC<IGridColumnWithDnd> = memo(({ column }) => {
         ref={dropElement}
         style={{
           backgroundColor,
-          height: `${column.params.height}px`,
-          marginBottom: `${column.params.marginBottom}px`,
-          marginTop: `${column.params.marginTop}px`,
+          height: column.params.height && `${column.params.height}px`,
+          marginBottom: column.params.marginBottom && `${column.params.marginBottom}px`,
+          marginTop: column.params.marginTop && `${column.params.marginTop}px`,
         }}
+        flexDirection={column.params.direction}
         justifyContent={column.params.justifyContent}
         alignItems={column.params.alignItems}
       >

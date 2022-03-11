@@ -58,6 +58,6 @@ export const InputElement: FC<IInputElement> = ({ withDnd, params, dependedField
       {input}
     </ElementWithDnd>
   ) : (
-    <Element>{input}</Element>
+    <Element params={params}>{input}</Element>
   );
 };

@@ -8,15 +8,20 @@ interface IGridColumn {
 }
 
 export const GridColumn: FC<IGridColumn> = ({ column }) => {
+  console.log(column.params);
   return (
     <Grid
       item
       xs={column.params.columnSize}
       style={{
-        height: `${column.params.height}px`,
-        marginBottom: `${column.params.marginBottom}px`,
-        marginTop: `${column.params.marginTop}px`,
+        display: "flex",
+        height: column.params.height && `${column.params.height}px`,
+        marginBottom: column.params.marginBottom && `${column.params.marginBottom}px`,
+        marginTop: column.params.marginTop && `${column.params.marginTop}px`,
       }}
+      flexDirection={column.params.direction}
+      justifyContent={column.params.justifyContent}
+      alignItems={column.params.alignItems}
     >
       {column.children.length > 0 &&
         column.children[0].type === "row" &&

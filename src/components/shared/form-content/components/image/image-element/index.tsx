@@ -36,6 +36,6 @@ export const ImageElement: FC<IImageElement> = ({ withDnd, params, dependedField
       {image}
     </ElementWithDnd>
   ) : (
-    <Element>{image}</Element>
+    <Element params={params}>{image}</Element>
   );
 };

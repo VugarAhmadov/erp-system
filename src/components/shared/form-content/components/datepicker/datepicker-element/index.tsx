@@ -39,6 +39,6 @@ export const DatepickerElement: FC<IDatepickerElement> = ({ withDnd, params, ...
       {datepicker}
     </ElementWithDnd>
   ) : (
-    <Element>{datepicker}</Element>
+    <Element params={params}>{datepicker}</Element>
   );
 };

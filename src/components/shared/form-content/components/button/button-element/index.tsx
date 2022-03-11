@@ -56,7 +56,7 @@ export const ButtonElement: FC<IButtonElement> = ({ withDnd, params, ...rest }) 
     </>
   ) : (
     <>
-      <Element>{button}</Element>
+      <Element params={params}>{button}</Element>
     </>
   );
 };
