@@ -60,12 +60,6 @@ export const GridRowDialog: FC<IGridRowDialog> = ({ open, onClose, onSubmit, par
                 ]}
                 required
               />
-
-              <Typography variant="h6">{t("Styles")}</Typography>
-              <TextField name="width" label="width" className="field" />
-              <TextField name="height" label="height" className="field" />
-              <TextField name="marginBottom" label="marginBottom" className="field" />
-              <TextField name="marginTop" label="marginBottom" className="field" />
             </div>
 
             <div className="action-buttons">

@@ -11,16 +11,10 @@ export const GridRow: FC<IGridRow> = ({ row }) => {
   return (
     <Grid
       container
-      direction={row.params.direction}
-      justifyContent={row.params.justifyContent}
-      alignItems={row.params.alignItems}
-      columnSpacing={Number(row.params.columnSpacing)}
-      style={{
-        width: row.params.width && `${row.params.width}px`,
-        height: row.params.height && `${row.params.height}px`,
-        marginBottom: row.params.marginBottom && `${row.params.marginBottom}px`,
-        marginTop: row.params.marginTop && `${row.params.marginTop}px`,
-      }}
+      direction={row.params?.direction}
+      justifyContent={row?.params?.justifyContent}
+      alignItems={row.params?.alignItems}
+      columnSpacing={Number(row.params?.columnSpacing)}
     >
       {row.children.map((column: IColumn) => (
         <GridColumn key={column.id} column={column} />

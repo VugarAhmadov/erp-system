@@ -89,20 +89,7 @@ export const GridColumnWithDnd: FC<IGridColumnWithDnd> = memo(({ column }) => {
 
   return (
     <>
-      <StyledGridColumnWithDnd
-        item
-        xs={column.params.columnSize}
-        ref={dropElement}
-        style={{
-          backgroundColor,
-          height: column.params.height && `${column.params.height}px`,
-          marginBottom: column.params.marginBottom && `${column.params.marginBottom}px`,
-          marginTop: column.params.marginTop && `${column.params.marginTop}px`,
-        }}
-        flexDirection={column.params.direction}
-        justifyContent={column.params.justifyContent}
-        alignItems={column.params.alignItems}
-      >
+      <StyledGridColumnWithDnd item xs={column.params.columnSize} ref={dropElement} style={{ backgroundColor }}>
         <ActionPanel
           onDeleteClick={() => dispatch(deleteItem(column.id))}
           onEditClick={() => setDialogOpened(true)}
